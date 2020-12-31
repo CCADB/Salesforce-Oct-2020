@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Project Activity</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Project Activities</value>
+    </caseValues>
+    <fields>
+        <label><!-- Activity Date --></label>
+        <name>Activity_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Activity Date --></label>
+        <name>Activity_Date_for_Reports__c</name>
+    </fields>
+    <fields>
+        <label><!-- Activity Request --></label>
+        <name>Activity_Request__c</name>
+    </fields>
+    <fields>
+        <label><!-- Activity Desc --></label>
+        <name>Activity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal --></label>
+        <name>Goal__c</name>
+    </fields>
+    <fields>
+        <help><!-- 1 = 1 hr
+.75 = 45 min
+.50 = 30 min
+.25 = 15 min --></help>
+        <label><!-- Hours --></label>
+        <name>Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Id --></label>
+        <name>Project_Goal__c</name>
+        <relationshipLabel><!-- Project Activities --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Project Name --></label>
+        <name>Project_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Date --></label>
+        <name>Request_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Activity Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Complete</masterLabel>
+            <translation><!-- Complete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incomplete</masterLabel>
+            <translation><!-- Incomplete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Yet Started</masterLabel>
+            <translation><!-- Not Yet Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Postponed</masterLabel>
+            <translation><!-- Postponed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Work In Progress</masterLabel>
+            <translation><!-- Work In Progress --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Project Activity Layout</layout>
+        <sections>
+            <label><!-- Activity Performed --></label>
+            <section>Activity Performed</section>
+        </sections>
+        <sections>
+            <label><!-- Activity Request --></label>
+            <section>Activity Request</section>
+        </sections>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Project Goal Details --></label>
+            <section>Project Goal Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

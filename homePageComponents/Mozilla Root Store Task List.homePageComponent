@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <height>1000</height>
+    <page>RSHomePage</page>
+    <pageComponentType>visualforcePage</pageComponentType>
+    <showLabel>false</showLabel>
+    <showScrollbars>true</showScrollbars>
+    <width>wide</width>
+</HomePageComponent>

@@ -1,0 +1,135 @@
+<!--
+ *******************************************************************************************************
+ Name: LeadAction
+
+ Dependencies: LeadActionController controller class, LeadAction VF page, LeadActionTest class
+
+ Description: This is a visualforce page for LeadAction. Once the Lead is converted, email is sent
+ to the CA (Lead Convert email template). Another email is sent to admin@ccadb.org to issue license (no 
+ template used). Lead conversion creates CA Owner and a Contact records.
+ 
+ Instructions: Lead standard fields are automatically mapped by the lead conversion process.
+ *******************************************************************************************************
+ Revision History:
+ 
+     4/30/2019 - Created new class
+ ******************************************************************************************************
+ -->
+ 
+ <apex:page standardController="Lead" extensions="LeadActionController" sidebar="false" docType="html-5.0" action="{!BackToRecord}">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+            .slds-section__title {
+                color: black !important;
+                font-size:15px !important;
+                font-weight:bold !important;
+            }
+            .slds-form-element__label {
+                font-size:14px !important;
+                font-weight:bold !important;
+            }
+            .dateFormat {
+                display:none;
+            }
+        </style>
+        <body>
+            <div class="slds scope" style="padding-left: 10px;padding-right: 10px;">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="slds-page-header" style="margin-top:10px;">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                    <div class="slds-media slds-no-space slds-grow">
+                                        <div class="slds-media__figure">
+                                            <svg class="slds-icon slds-icon-standard-lead" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#lead")}"></use>
+                                            </svg>
+                                            <!--<apex:image value="{!$Resource.CCADB}" width="150" height="80"/>-->
+                                        </div>
+                                        <div class="slds-media__body"><!--style="margin-top: 8px;"-->
+                                            <p class="slds-text-title--caps slds-line-height--reset">Lead</p>
+                                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="">{!Lead.Name}</h1>
+                                        </div>              
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Body-->
+                        <div id="mainbody" style="margin-top:15px;">
+                            <apex:form >
+                                <apex:outputPanel style="height: 4rem;" rendered="{!strError != null && strError != ''}" layout="block">
+                                    <div class="slds-notify_container slds-is-relative">
+                                        <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
+                                            <div class="slds-notify__content">
+                                                <h2 class="slds-text-heading_small ">{!strError}</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;">
+                                        <apex:commandButton value="Back" action="{!Cancel}" styleClass="slds-button slds-button_neutral" rendered="{!strType != 'close' || strError != ''}"/>
+                                    </div>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!(strError == null || strError == '') && strType == 'close'}">
+                                    <div class="slds-col slds-size--1-of-2">
+                                        <div class="slds-form-element" style="padding-right:15px;padding-bottom:10px;">
+                                            <label class="slds-form-element__label">Denied on Date</label>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputField value="{!objLead.Denied_on_Date__c}" required="true" styleClass="slds-input"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element"></div>
+                                    </div>
+                                    <div class="slds-col slds-size--1-of-1">
+                                        <div class="slds-form-element" style="padding-right:15px;padding-bottom:10px;">
+                                            <label class="slds-form-element__label">Reason for Denial</label>
+                                            <div class="slds-form-element__control">
+                                                <apex:inputField value="{!objLead.Reason_for_Denial__c}" required="true" styleClass="slds-input"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align:center;">
+                                        <apex:commandButton value="Submit" action="{!CloseLeadWOConvert}" styleClass="slds-button slds-button_brand"/>
+                                        <apex:commandButton value="Back" immediate="true" action="{!Cancel}" html-formnovalidate="formnovalidate"
+                                            styleClass="slds-button slds-button_neutral"/>
+                                    </div>
+                                </apex:outputPanel>
+                            </apex:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </html>
+</apex:page>

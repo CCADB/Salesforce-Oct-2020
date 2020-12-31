@@ -1,0 +1,130 @@
+<apex:page standardController="Mass_Email__c" sideBar="false" docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+        </style>
+        <body>
+            <!--<hr style="margin:0px;border-top: 2px solid black;"/>-->
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Mass Email Help</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle">{!Mass_Email__c.Name}</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="mainbody" style="margin-top:25px;">
+                                <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;padding-left:5px;background-color:lightblue;margin-top:5px;">
+                                        Filter Help
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content" style="margin:15px;">
+                                        <!-- <b>Auto update filter condition using "Add/Update Filter Conditions" button</b>
+                                        <ul style="list-style:circle;">
+                                            <li style="margin-left:25px;">Use this button to create simple filters using AND condition.</li>
+                                            <li style="margin-left:25px;">More details are on the button.</li>
+                                             <br/>
+                                        </ul> -->
+                                       
+                                        <b>Manually update "SOQL Filter Conditions" field</b>
+                                        <ul style="list-style:circle;">
+                                            <li style="margin-left:25px;">Edit the Mass Email record and enter the filter condition. Please see the examples below. </li>
+                                            <li style="margin-left:25px;">Make sure that you are entering correct API field name from Account object. 
+                                               <apex:outputLink value="https://ccadb.my.salesforce.com/p/setup/layout/LayoutFieldList?type=Account&retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DAccount&setupid=AccountFields" id="theLink"> Click here to see all fields.</apex:outputLink></li>                                            
+                                            <li style="margin-left:25px;">Use AND and OR operator to join conditions like 1 OR (2 AND 3).</li>          
+                                            <li style="margin-left:25px;">Use IN operator for picklist fields. i.e Trust_Bits__c IN ('Code','Email')</li>
+                                            <li style="margin-left:25px;">For boolean field use True/False values eg: Technically_Constrained__c = True </li>
+                                            <li style="margin-left:25px;color:red;">You cannot filter on Long Text Area type field.</li>
+                                        </ul>
+                                        <br/> 
+ 
+                                        <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;padding-left:5px;background-color:lightblue;margin-top:5px;">
+                                             Filter Examples
+                                        </h3> 
+                                        <br/>
+                                        <ul style="list-style:circle;">
+                                            <li style="margin-left:25px;">CAs in Apple’s program</li>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apple_Status__c IN ('Included')
+                                                <br/><br/>
+                                                
+                                            <li style="margin-left:25px;">CAs in Mozilla’s program</li>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Record_Type_Name__c = 'CA Owner' AND (Status__c = 'Included' OR Status__c = 'Change Requested')
+                                                <br/><br/>
+
+                                            <li style="margin-left:25px;">CAs in Microsoft’s program</li>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Record_Type_Name__c = 'CA Owner' AND (Microsoft_Status__c = 'Included' OR Microsoft_Status__c = ' Change Requested')
+                                                 <br/><br/>
+                                                
+                                            <li style="margin-left:25px;">CAs issuing TLS certs in either Microsoft or Mozilla’s programs</li> 
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Status__c IN ('Included','Change Requested') OR Microsoft_Status__c IN ('Included','Change Requested')) AND <br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Trust_Bits__c INCLUDES ('Websites') OR Microsoft_Trust_Bits__c INCLUDES ('Server Authentication')) AND <br/>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Distrust_for_TLS_After_Date__c = null OR Distrust_for_TLS_After_Date__c > TODAY)
+                                                <br/><br/>                                              
+                                        </ul>
+
+<div style="width:50%">
+                                            <!-- 
+                                            <b>WIP .... Use the field mappings from the table below:</b><br/>
+                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" width="50%">
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th width="50%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            Field Label
+                                                        </th>
+                                                        <th width="50%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            API Name
+                                                        </th> 
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    <tr>
+                                                        <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            Mozilla Trust Bits
+                                                        </td>
+                                                        <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            Trust_Bits__c
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            Microsoft Trust Bits
+                                                        </td>
+                                                        <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            Microsoft_Trust_Bits__c
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table> -->
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

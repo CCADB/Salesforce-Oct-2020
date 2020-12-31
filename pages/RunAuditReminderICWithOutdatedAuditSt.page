@@ -1,0 +1,42 @@
+<apex:page controller="AuditReminderICWithOutdatedAuditStCtrl">
+    <apex:sectionHeader title="Run Audit Reminder for Intermediate Certs with Outdated Audits" />
+    
+    <apex:form >
+        <br/>
+        
+        <apex:pageBlock id="idAuditReminderBatch" mode="edit">
+            <apex:pageMessages />
+            
+            <p/>
+                <apex:outputText value="CAUTION: Click on the button below ONLY when you need to send audit reminder emails to CA representatives and summary email to Mozilla CA Program Manager" style="color:red;font-weight:bold"/> 
+            <p/>
+            
+            <div align="left" draggable="false" >
+                <apex:commandButton value="Start Audit Reminder Batch Job For Mozilla (Intermediate Certs)" action="{!startBatch}" reRender="jobs,error" /> 
+            </div>
+            
+            <apex:outputText id="error" value="{!errorText}" style="font-weight: bold; color: red"/>
+            
+            <br/>    
+        </apex:pageBlock>
+        
+        <apex:pageBlock id="idAuditReminderBatchFieldUpdate" mode="edit">
+            <apex:pageMessages />
+            
+            <p/>
+                <apex:outputText value="CAUTION: Click on the button below to update Mozilla Audit Alert (field) on intermediate certificates. Summary email and audit reminder emails will NOT be sent out." style="color:red;font-weight:bold"/> 
+            <p/>
+            
+            <div align="left" draggable="false" >
+                <apex:commandButton value="Start Audit Reminder Batch Job For Mozilla (Intermediate Certs) to Update Audit Alert (Field)" action="{!startBatchToUpdateAuditAlert}" reRender="jobs,errorFieldUpdate" /> 
+            </div>
+            
+            <apex:outputText id="errorFieldUpdate" value="{!errorText}" style="font-weight: bold; color: red"/>
+            
+            <br/>    
+        </apex:pageBlock>
+        
+        <br/>
+        <c:BatchJobs id="jobs" numberOfJob="10"/>
+    </apex:form>
+</apex:page>

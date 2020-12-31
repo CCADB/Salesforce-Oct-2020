@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>CA Communications to all POCs</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>CA:Communications - March 2016</name>
+    <style>none</style>
+    <subject>Mozilla Communication: Action requested by April 22, 2016</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,36 @@
+<apex:page controller="GetUrlsController">
+
+    <style type = "text/css">
+        .colHeadr {text-align:center;}     
+    </style>
+
+    <apex:pageBlock title="URL Info">
+    
+        <apex:pageBlockSection columns="1">
+                 
+            <apex:pageBlockSectionItem >           
+                <apex:outputLabel >CAs may access this page via: </apex:outputLabel>
+                <apex:outputLabel >{!communityUserUrl}</apex:outputLabel>          
+            </apex:pageBlockSectionItem>
+ 
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >Root Store Operators may access this page via: </apex:outputLabel>
+                <apex:outputLabel >{!internalUserUrl}</apex:outputLabel>
+            </apex:pageBlockSectionItem>
+            
+            <apex:pageBlockSectionItem rendered="{!MozillaRootInclusionUrl != null}">
+                <apex:outputLabel >Mozilla Root Inclusion Case Information: </apex:outputLabel>
+                <apex:outputLabel >{!MozillaRootInclusionUrl}</apex:outputLabel>
+            </apex:pageBlockSectionItem>
+                         
+        </apex:pageBlockSection>
+         
+        <apex:pageBlockButtons location="bottom">
+            <apex:form >
+                <!-- <apex:commandButton action="{!goBack}" value="Go Back" title="Go Back"/> -->
+                <apex:commandButton action="window.close()" onclick="window.close()" value="Close" title="Close"/>
+            </apex:form>
+        </apex:pageBlockButtons>
+        
+    </apex:pageBlock>
+</apex:page>

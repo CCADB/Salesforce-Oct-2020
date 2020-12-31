@@ -1,0 +1,29 @@
+<apex:page controller="ProcessPEMInfoBatchController">
+ 
+ <apex:sectionHeader title="Process PEM Info Batch Job" />
+ 
+ <apex:form >
+  
+  <br/>
+  
+  <apex:pageBlock id="idProcessPEMInfoBatch" mode="edit">
+    <apex:pageMessages />
+    
+    <div align="center" draggable="false" >  
+      <br/>
+        <apex:outputText value="CAUTION: Click on the button below ONLY when you need to reprocess PEM info and update PEM fields." style="color:red;font-weight:bold"/> <br/>
+        <apex:outputText value="IMPORTANT: Validation rule 'Check_PEM_Derived_Fields' must be deactivated before starting the batch job." style="color:red;font-weight:bold"/> <br/>
+        <apex:outputText value="After the process completes, please run 'ProcessPEMInfoBatch Messages' report to check for any error messages. " style="color:red;font-weight:bold"/> <br/><br/> 
+        <apex:commandButton value="Process PEM Info Batch Job" action="{!startBatch}" reRender="jobs,error" /> 
+     <br/>
+     </div>
+    
+    <apex:outputText id="error" value="{!errorText}" style="font-weight: bold; color: red"/>
+    
+    <br/>    
+  </apex:pageBlock>
+  
+    <br/>
+  <c:BatchJobs id="jobs" numberOfJob="10"/>
+ </apex:form>
+</apex:page>

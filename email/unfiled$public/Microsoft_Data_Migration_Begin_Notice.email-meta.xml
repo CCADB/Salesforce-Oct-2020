@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Microsoft Data Migration - Begin Notice</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Microsoft Data Migration - Begin Notice</name>
+    <style>none</style>
+    <subject>CA Community in Salesforce - Planned Outage - Starting Now</subject>
+    <type>text</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

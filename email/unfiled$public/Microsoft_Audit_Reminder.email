@@ -1,0 +1,17 @@
+Dear Microsoft Root Certificate Program partner, <br><br>
+
+You are receiving this email because you are a member of the Microsoft Trusted Root Certificate Program, and, according to our records, we do not have evidence of a Qualifying Audit on file for one or more of your roots.<br><br>
+ 
+According to Section 3(b) of the Agreement you signed with Microsoft, you are required to provide proof of a Qualifying Audit every 12 months. The report below lists each root that we are missing audit information for. This report lists the reason that we are sending you this message.<br><br>
+ 
+If you see “BR Audit” NULL, this means that, according to our records, your root is enabled for TLS, but you have not provided us evidence of an SSL Baseline audit. If you see “EV Audit” NULL, this means that your root is enabled for EV, but you have not provided us with evidence of a qualifying EV audit. If you are receiving this and the report lists an audit date that is more than 12 months in the past, the problem is that your audit date is too far in the past and we require a new attestation.<br><br>
+ 
+Please review the root(s) listed below, and provide Microsoft the requested audit information within the next 14 days, via the Common CA Database (CCADB). The steps are described here:
+http://ccadb.org/cas/updates
+
+If you have questions, please email msroot@microsoft.com.<br><br>
+
+{!RootCertificateList} <br><br>
+
+Thank you, <br>
+Microsoft Crypto Ecosystem. <br>

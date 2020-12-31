@@ -1,0 +1,332 @@
+<!-- 
+ *******************************************************************************************************
+ Name: AccessRequestForm
+
+ Dependencies: AccessRequestFormController controller class, AccessRequestForm vf page, 
+ AccessRequestFormController test class
+
+ Description: This is a custom webform for CAs to request access to CCADB. CAs can use this form to 
+ request access to CCADB. The form has field level validations and reCaptch (from Google) logic. 
+ 'Submit' button create Lead record in Salesforce. Lead is assigned to Microsoft (org-wide email) 
+ if 'Sponsered By' is Microsoft all others are assigned to Mozilla (org-wide email). Email templates 
+ for lead assignment are "Lead Assignment To Mozilla For CCADB Access Form" and
+ "Lead Assignment To Microsoft For CCADB Access Form".
+ 
+ Instructions: The form uses Google webservice reCaptch v2 to detect spam traffic without user interaction.
+ Remote site setting must have active entry for https://www.google.com and register site with Goggle 
+ recaptcha at https://www.google.com/recaptcha/admin
+ *******************************************************************************************************
+ Revision History:
+ 
+     3/18/2019 - Created new class
+ ******************************************************************************************************
+ -->  
+  
+<apex:page standardController="Lead" showHeader="false" sidebar="false" docType="html-5.0" extensions="AccessRequestFormController" 
+            standardStylesheets="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
+        <body>
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-5">
+                        </div>
+                        <div class="slds-col slds-size_3-of-5" style="background-color:#C4DFE6;">
+                            <div class="slds-page-header" style="margin-top:10px;">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!--<svg class="slds-icon slds-icon-standard-lead" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#lead")}"></use>
+                                                </svg>-->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Application</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="">CCADB Access Request for New CA</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="slds-page-header__col-actions">
+                                        <div class="slds-page-header__controls">
+                                            <div class="slds-page-header__control">
+                                                <apex:image value="{!$Resource.CommonCADatabaseOnlyLogo}" width="100" height="50"/>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <apex:pageMessages ></apex:pageMessages>
+                                <apex:outputPanel rendered="{!!isLeadCreated}">
+                                    <div class="slds-section slds-is-open">
+                                        <h3 class="slds-section__title slds-theme_shade" style="color: black;">
+                                            <b><span class="slds-p-horizontal_small" style="padding-left:0;" title="CAs who are new to the CCADB may request access by submitting the following information.">CAs who are new to the CCADB may request access by submitting the following information.</span></b>
+                                        </h3>
+                                        <div aria-hidden="false" class="slds-section__content">
+                                            <div class="slds-form--compound" style="margin-top:10px;">
+                                                <div class="form-element__group">
+                                                    <div class="slds-form-element__row">
+                                                        <!-- <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Confirm that you are a member of one of the Root Store Members’ programs, or are sponsored by one of the Root Store Members, or have an active request to have a qualified root certificate be included in a participating root store.</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Confirm_that_you_are_a__c}" styleClass="slds-input" />
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Which root store are you sponsored by, or are applying for inclusion to?<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Sponsored_By__c}" styleClass="slds-input" required="true"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">CA Organization name as it appears in your CA’s CP/CPS and audit statements<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Company}" styleClass="slds-input"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Legal name of the company, if different from the CA Organization name in CP/CPS.</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Alternate_CA_Name_s__c}" styleClass="slds-textarea"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">URL to Company or CA Website<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Website}" styleClass="slds-input" required="true"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">URLs to the CA’s CP/CPS documents</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.CP_CPS_document_URLs__c}" styleClass="slds-textarea"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                                                  
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Describe what the company does and what the CA organization does, how long the company has been in business, and how long the CA organization has been operating as a CA.<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Describe_Company_CA_Organization__c}" required="true" styleClass="slds-textarea"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Physical address of your organization <br/>Street<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Street}" required="true" styleClass="slds-textarea"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">City</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.City}" styleClass="slds-input"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">State/Province<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.State}" required="true" styleClass="slds-input"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Postal Code</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.PostalCode}" styleClass="slds-input"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Country<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Country}" required="true" styleClass="slds-input"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Organization Type<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Organization_Type__c}" required="true" styleClass="slds-input"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Country or geographic region where CA typically sells certificates</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Geographic_Focus__c}" styleClass="slds-textarea"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Types of customers the CA serves, vertical market segments, types of certificates issued</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Primary_Market_Customer_Base__c}" styleClass="slds-textarea"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Name and email address of the employee who you are requesting the CCADB CA Community License for</label>                                                    
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">First Name<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.FirstName}" styleClass="slds-input" required="true"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Last Name<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.LastName}" styleClass="slds-input"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Email Address<span style="color:red;">* </span> (An email will be sent to this email address to confirm this request)</label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Email}" id="ipEmail" styleClass="slds-input" required="true"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Confirm email address by entering it again<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!strConfirmEmail}" id="ipConfirmEmail" styleClass="slds-input" required="true"/> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="slds-form-element__row">
+                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                            <label class="slds-form-element__label">Confirm that you can abide by the &nbsp;<apex:outputLink value="https://www.salesforce.com/company/legal/sfdc-website-terms-of-service/" target="_blank">Salesforce Terms of Service</apex:outputLink>.<span style="color:red;">*</span></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputField value="{!Lead.Salesforce_Terms_of_Service__c}" styleClass="slds-input" required="true"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="g-recaptcha" data-sitekey="{!sitekey}"></div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <center>
+                                                <div id="buttons">
+                                                    <apex:commandButton value="Submit" action="{!doVerify}" styleClass="slds-button slds-button--brand"/><!--onclick="checkEmail();return false;" -->
+                                                    <apex:commandButton value="Clear" styleClass="slds-button slds-button--neutral" />
+                                                </div>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-5">
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $(document).ready(function(){
+                        overridePageMessages();
+                    });
+                    
+                    function overridePageMessages(){    
+                        var textureEffect = '';
+                        //Uncomment below line for texture effect on page messages
+                        textureEffect = 'slds-theme--alert-texture';
+                                     
+                        $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);          
+                        $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);    
+                        $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+                        $('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);    
+                                         
+                        $('.errorM3').removeClass('errorM3'); 
+                        $('.confirmM3').removeClass('confirmM3'); 
+                        $('.infoM3').removeClass('infoM3');   
+                        $('.warningM3').removeClass('warningM3');  
+                    }
+                </script>
+                <style>
+                    .msgIcon {
+                        display: none!important
+                    }
+                    .customMessage * {
+                        color: #fff!important
+                    }
+                    .customMessage {
+                        margin: 5px 0!important;
+                        opacity: 1!important;
+                        width: 100%;
+                        //font-size: 12px;
+                        border: 0px;
+                        padding-left: 10px;
+                    }
+                    .slds-scope .slds-form-element__label {
+                        font-size: 1rem !important;
+                        color: black !important;
+                    }
+                    .slds-form-element__row {
+                        margin-bottom:0.50rem !important;
+                    }
+                </style>
+            </apex:form>
+        </body>
+    </html>
+     
+</apex:page>

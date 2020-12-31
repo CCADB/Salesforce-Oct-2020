@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>End point url for Jixi Service web service to validates audit documents. It is invoked from audit case pages.</description>
+    <disableProtocolSecurity>false</disableProtocolSecurity>
+    <isActive>true</isActive>
+    <url>https://ccadbwebapiservice.azurewebsites.net</url>
+</RemoteSiteSetting>

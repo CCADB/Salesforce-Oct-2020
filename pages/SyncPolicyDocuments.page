@@ -1,0 +1,493 @@
+<!--Page is developed to use for Sycn Policy documents. -->
+<apex:page standardController="Case" sideBar="false" docType="html-5.0" extensions="SyncPolicyDocumentsController">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            .slds-button_brand {
+                background-color:dimgray !important;
+            }
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+                font-weight:700;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+            .deletedRecord, .deletedRecord td  {
+                font-style:italic !important;
+                color:red !important;
+            }
+        </style>
+        <body>
+            <!--<hr style="margin:0px;border-top: 2px solid black;"/>-->
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Sync Policy Documents</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle">{!objCase.CaseNumber}</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <apex:pageMessages rendered="{!isError}"></apex:pageMessages>
+                                <apex:outputPanel layout="block" styleClass="slds-section slds-is-open" rendered="{!!isError}">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;background-color:lightgray;">
+                                        <span style="padding-left:10px;text-align:left;">CP/CPS Information to be Synced</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-form" role="list">
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <span class="slds-form-element__label">CA Document Repository</span>
+                                                        <div class="slds-form-element__control" style="padding-left:25%;">
+                                                            <apex:outputText value="{!objCase.CA_Document_Repository__c}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <span class="slds-form-element__label">Policy Documentation</span>
+                                                        <div class="slds-form-element__control" style="padding-left:25%;">
+                                                            {!objCase.Policy_Documentation__c}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                                <apex:outputPanel layout="block" styleClass="slds-section slds-is-open" rendered="{!!isError}">
+                                    <apex:pageMessages ></apex:pageMessages>
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;background-color:lightgray;">
+                                        <span style="padding-left:10px;text-align:left;">
+                                            <apex:outputText rendered="{!policydocumentcase.Action__c != null && policydocumentcase.Action__c == 'Delete'}">
+                                                **DELETE** Policy Document ID - {!policydocumentcase.Name} to be Deleted
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!policydocumentcase.Action__c != null && policydocumentcase.Action__c != 'Delete'}">
+                                                Policy Document ID - {!policydocumentcase.Name} to be Synced
+                                            </apex:outputText>
+                                        </span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-grid slds-gutters">
+                                            <div style="width:50%" class="slds-col {!if(policydocumentcase.Action__c != null && policydocumentcase.Action__c == 'Delete','deletedRecord','')}">
+                                                <div class="slds-text-body_regular" style="padding:5px;text-align:center;font-weight:bold;font-size:14px">
+                                                    <apex:outputText value="Source (Case Policy Document ID - {!policydocumentcase.Name}) {!if(policydocumentcase.Action__c != null && policydocumentcase.Action__c = 'Delete', 'Marked DELETED','')}" escape="false"></apex:outputText>
+                                                </div>   
+                                                <div class="slds-form" role="list">
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Document Type</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;">
+                                                                    <apex:outputField value="{!policydocumentcase.Document_Type__c}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Document Link</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;">
+                                                                    {!policydocumentcase.Document_Link__c}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Document Last Update Date</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;">
+                                                                    <apex:outputField value="{!policydocumentcase.Document_Last_Updated_Date__c}" rendered="{!policydocumentcase.Document_Last_Updated_Date__c != null}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Associated Trust Bits</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;">
+                                                                    <apex:outputField value="{!policydocumentcase.Associated_Trust_Bits__c}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Policy Identifiers</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;">
+                                                                    <apex:outputText value="{!policyIdentifiersCase }" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--<div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Additional Policy Identifiers</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;">
+                                                                    <apex:outputField value="{!policydocumentcase.Additional_Policy_Identifiers__c}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>-->
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Comments</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;">
+                                                                    <apex:outputField value="{!policydocumentcase.Comments__c}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                                        <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;background-color:lightgray;">
+                                                            <span style="padding-left:10px;text-align:left;">Associated Root Certificates</span>
+                                                        </h3>
+                                                        <div aria-hidden="false" class="slds-section__content">
+                                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                                <thead>
+                                                                    <tr class="slds-line-height_reset">
+                                                                        <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);width:40%">
+                                                                            <div  title="Root Certificate Name">Root Certificate Name</div>
+                                                                        </th>
+                                                                        <!--<th scope="col">
+                                                                            <div  title="Mozilla Status">Mozilla Status</div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div  title="Microsoft Status">Microsoft Status</div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div  title="Valid From (GMT)">Valid From (GMT)</div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div  title="Valid To (GMT)">Valid To (GMT)</div>
+                                                                        </th>-->
+                                                                        <th scope="col" style="border-right: 1px solid rgb(221, 219, 218);width:60%">
+                                                                            <div  title="SHA 256 Fingerprint">SHA 256 Fingerprint</div>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:repeat value="{!policydocumentcase.Policy_Document_Associations__r}" var="applyPolicy">
+                                                                        <tr class="dataRow {!if(applyPolicy.Id != null && applyPolicy.Action__c = 'Delete','deletedRecord','')}">
+                                                                            <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                                                {!applyPolicy.Certificate_Name__r.Name}
+                                                                            </td>
+                                                                            <!--<td class="datacell">
+                                                                                <apex:outputField value="{!applyPolicy.Certificate_Name__r.Status__c}"/>
+                                                                            </td>
+                                                                            <td class="datacell">
+                                                                                <apex:outputField value="{!applyPolicy.Certificate_Name__r.Microsoft_Status__c}"/>
+                                                                            </td>
+                                                                            <td class="datacell">
+                                                                                <apex:outputField value="{!applyPolicy.Certificate_Name__r.Valid_From_GMT__c}"/>
+                                                                            </td>
+                                                                            <td class="datacell">
+                                                                                <apex:outputField value="{!applyPolicy.Certificate_Name__r.Valid_To_GMT__c}"/>
+                                                                            </td>-->
+                                                                            <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);" title="{!applyPolicy.Certificate_Name__r.SHA_256_Fingerprint__c}">
+                                                                                {!applyPolicy.Certificate_Name__r.SHA_256_Fingerprint__c}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </apex:repeat>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                </div>
+                                            </div>
+                                            <div style="width:50%" class="slds-col">
+                                                <apex:outputPanel layout="block" styleClass="slds-form"><!--rendered="{!policydocumentcert.Id != null}"-->
+                                                    <div class="slds-text-body_regular" style="padding:5px;text-align:center;font-weight:bold;font-size:14px">
+                                                        <apex:outputText value="Target (Root Cert Policy Document ID - {!policydocumentcert.Name})" escape="false"></apex:outputText>
+                                                    </div> 
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Document Type</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;{!If(policydocumentcase.Document_Type__c != policydocumentcert.Document_Type__c, 'color:blue;','')}">
+                                                                    <apex:outputField value="{!policydocumentcert.Document_Type__c}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Document Link</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;{!If(policydocumentcase.Document_Link__c != policydocumentcert.Document_Link__c, 'color:blue;','')}">
+                                                                    {!policydocumentcert.Document_Link__c}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Document Last Update Date</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;{!If(policydocumentcase.Document_Last_Updated_Date__c != policydocumentcert.Document_Last_Updated_Date__c, 'color:blue;','')}">
+                                                                    <apex:outputField value="{!policydocumentcert.Document_Last_Updated_Date__c}" rendered="{!policydocumentcert.Document_Last_Updated_Date__c != null}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Associated Trust Bits</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;{!If(policydocumentcase.Associated_Trust_Bits__c != policydocumentcert.Associated_Trust_Bits__c, 'color:blue;','')}">
+                                                                    <apex:outputField value="{!policydocumentcert.Associated_Trust_Bits__c}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Policy Identifiers</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;{!If(policyIdentifiersCase != policydocumentcert.Policy_Identifiers__c, 'color:blue;','')}">
+                                                                    <apex:outputField value="{!policydocumentcert.Policy_Identifiers__c}" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_horizontal">
+                                                                <span class="slds-form-element__label">Comments</span>
+                                                                <div class="slds-form-element__control" style="padding-left:25%;{!If(policydocumentcase.Comments__c != policydocumentcert.Comments__c, 'color:blue;','')}">
+                                                                    <apex:outputField value="{!policydocumentcert.Comments__c}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                                        <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;background-color:lightgray;">
+                                                            <span style="padding-left:10px;text-align:left;">Associated Root Certificates</span>
+                                                        </h3>
+                                                        <div aria-hidden="false" class="slds-section__content">
+                                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                                <thead>
+                                                                    <tr class="slds-line-height_reset">
+                                                                        <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);width:40%">
+                                                                            <div  title="Root Certificate Name">Root Certificate Name</div>
+                                                                        </th>
+                                                                        <!--<th scope="col">
+                                                                            <div  title="Mozilla Status">Mozilla Status</div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div  title="Microsoft Status">Microsoft Status</div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div  title="Valid From (GMT)">Valid From (GMT)</div>
+                                                                        </th>
+                                                                        <th scope="col">
+                                                                            <div  title="Valid To (GMT)">Valid To (GMT)</div>
+                                                                        </th>-->
+                                                                        <th scope="col" style="border-right: 1px solid rgb(221, 219, 218);width:60%">
+                                                                            <div  title="SHA 256 Fingerprint">SHA 256 Fingerprint</div>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:repeat value="{!policydocumentcert.Policy_Document_Associations__r}" rendered="{!policydocumentcert != null && policydocumentcert.Policy_Document_Associations__r.size > 0}" var="applyPolicy">
+                                                                        <tr class="dataRow" style="display:{!if(applyPolicy.Is_Deleted__c,'none','')}">
+                                                                            <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                                                {!applyPolicy.Certificate_Name__r.Name}
+                                                                            </td>
+                                                                            <!--<td class="datacell">
+                                                                                <apex:outputField value="{!applyPolicy.Certificate_Name__r.Status__c}"/>
+                                                                            </td>
+                                                                            <td class="datacell">
+                                                                                <apex:outputField value="{!applyPolicy.Certificate_Name__r.Microsoft_Status__c}"/>
+                                                                            </td>
+                                                                            <td class="datacell">
+                                                                                <apex:outputField value="{!applyPolicy.Certificate_Name__r.Valid_From_GMT__c}"/>
+                                                                            </td>
+                                                                            <td class="datacell">
+                                                                                <apex:outputField value="{!applyPolicy.Certificate_Name__r.Valid_To_GMT__c}"/>
+                                                                            </td>-->
+                                                                            <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                                                {!applyPolicy.Certificate_Name__r.SHA_256_Fingerprint__c}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </apex:repeat>
+                                                                    <tr class="dataRow" style="{!if(policydocumentcert != null && policydocumentcert.Policy_Document_Associations__r.size > 0, 'display:none;','')}">
+                                                                        <td colspan="2" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                                            <i>No records to display.</i>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </div>
+                                        </div>
+                                        <apex:outputPanel rendered="{!!isError && isRecordUpdated}">
+                                            <article class="slds-card"> 
+                                                <div class="slds-card__header slds-grid">
+                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__body">
+                                                            <h2 class="slds-card__header-title">
+                                                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate">
+                                                                    <span>Policy Document {!(curretndocument + 1)} of {!totaldocuments}</span>
+                                                                </a>
+                                                            </h2>
+                                                        </div>
+                                                    </header>
+                                                </div>
+                                                <div class="slds-card__body slds-card__body_inner">
+                                                    Please click on the next button to continue.
+                                                    <apex:commandButton value="Next" action="{!nextPolicyDocument}" status="Processing" reRender="frm" styleClass="slds-button slds-button_brand" style="margin-left:10px;margin-right:3px;"/>
+                                                </div>
+                                            </article>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!!isError && !isRecordUpdated}"> 
+                                            <article class="slds-card">
+                                                <div class="slds-card__header slds-grid">
+                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__body">
+                                                            <h2 class="slds-card__header-title">
+                                                                <a href="javascript:void(0);" class="slds-card__header-link slds-truncate">
+                                                                    <span>Policy Document {!(curretndocument + 1)} of {!totaldocuments}</span>
+                                                                </a>
+                                                            </h2>
+                                                        </div>
+                                                    </header>
+                                                </div>
+                                                <div class="slds-card__body slds-card__body_inner">
+                                                    {!if(policydocumentcase.Action__c != null && policydocumentcase.Action__c == 'Delete','Do you want to delete the policy document?','Do you want to sync policy document?')}
+                                                    <apex:commandButton value="Yes" action="{!SyncPolicyDocument}" status="Processing" reRender="frm" styleClass="slds-button slds-button_brand" style="margin-left:10px;margin-right:3px;"/>
+                                                    <apex:commandButton value="No" action="{!nextPolicyDocument}" status="Processing" reRender="frm" styleClass="slds-button slds-button_brand" style="margin-right:3px;"/><br/>
+                                                    <!--<i style="color:red;">*Note: If records are highlighted in red and italics, they are marked for deletion.</i>-->
+                                                </div>
+                                            </article>
+                                        </apex:outputPanel>
+                                    </div>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+            <!------------- Start: Processing Div---------------------------------------->
+            <style>
+                .msgIcon {
+                    display: none!important
+                }
+                .messageCell {
+                    width:100%;
+                }
+                .customMessage * {
+                    color: #fff!important
+                }
+                .customMessage {
+                    margin: 5px 0!important;
+                    opacity: 1!important;
+                    width: 100%;
+                    //font-size: 12px;
+                    border: 0px;
+                    padding-left: 10px;
+                }
+                .ProcessingBackground {
+                    background-color: #fff;
+                    opacity: 0.60;
+                    filter: alpha(opacity = 50);
+                    width: 100%;
+                    height: 100%;
+                    position: fixed;
+                    z-index: 9998;
+                    top:0;
+                    left:0;
+                }
+                .Processing {
+                    z-index: 9999;
+                    left: 47.5%;
+                    top: 50%;
+                    text-align: center;
+                    position: fixed;
+                }
+                .CPCPSMessageWarning {
+                    color:red;
+                }
+        
+            </style>
+            <div id="divProcessing" style="display:none;">
+                <div class="ProcessingBackground"></div>
+                <div class="Processing">    
+                    <div class="slds-spinner_container">
+                        <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                            <span class="slds-assistive-text">Loading</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div> 
+                </div>
+                <apex:actionStatus id="Processing" onstart="document.getElementById('divProcessing').style.display = '';" onstop="document.getElementById('divProcessing').style.display = 'none';" />                            
+    
+            </div>  
+            <!------------- End: Processing Div---------------------------------------->
+        </body>
+    </html>
+</apex:page>

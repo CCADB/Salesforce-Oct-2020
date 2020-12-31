@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Audit reminder template for over 1 year plus 150 days past due</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Audit_Reminder_Level_3</name>
+    <style>none</style>
+    <subject>Mozilla Audit Reminder - Level 3</subject>
+    <textOnly>Dear Certification Authority,
+
+Your root certificates as listed below are in danger of being removed from Mozilla&apos;s root store, because the audit statements that we have on record are very old.  If you do not respond promptly with updated audit information, we will initiate the process of removing these root certificates.  {!RootCertificateList}  Here is the audit statement information that we have for these root certificates:
+
+{!standardAuditInfoStr} {!brAuditInfoStr} {!evAuditInfoStr}
+
+As per Mozilla&apos;s Root Store Policy, we require that all  CAs whose certificates are distributed with our software products   provide us an updated statement annually of attestation of their   conformance to the stated verification requirements and other   operational criteria by a competent independent party or parties.  A failure to provide required  updates in a timely manner are grounds for disabling a  CA’s root  certificates or removing them from Mozilla products. According to the  policy &quot;a timely manner&quot; means within 30 days of when the appropriate  documentation becomes available to the CA.
+
+Please provide your annual updates via the Common CA Database (CCADB), as described here:
+https://ccadb.org/cas/updates
+
+This is an automated email that will be sent regularly until the audit statements have been updated in our records or the corresponding root certificates have been disabled or removed from NSS.
+
+Regards,
+
+{!User.FirstName} {!User.LastName}
+{!User.CompanyName}
+{!User.Title}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

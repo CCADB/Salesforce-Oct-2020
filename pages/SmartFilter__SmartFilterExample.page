@@ -1,0 +1,40 @@
+<apex:page controller="SmartFilter.SmartFilterExampleController">
+    <apex:form >
+        
+      
+        <apex:pageBlock >
+             <apex:pageBlockSection >
+                 <c:SmartFilter pageCont="{!this}" object="Account" />
+             </apex:pageBlockSection>
+             
+             <apex:pageBlockSection >
+                <apex:commandButton value="Fetch" action="{!fetchAccounts}" rerender="accountList"/>
+             </apex:pageBlockSection> 
+       
+       
+        <apex:pageBlockTable value="{!objectList}" var="a" id="accountList">
+          
+            <apex:column value="{!a.Name}"/>
+           <!-- <apex:column value="{!a.Account__r.name}"/>
+            <apex:column value="{!a.AutoNumber__c}"/>
+            <apex:column value="{!a.Contact__r.name}"/>
+            <apex:column value="{!a.Date__c}"/>
+            <apex:column value="{!a.Date_And_Time__c}"/>
+            <apex:column value="{!a.Formula__c}"/>
+            <apex:column value="{!a.isChecked__c}"/>
+            <apex:column value="{!a.Email__c}"/>
+            <apex:column value="{!a.multiPick__c}"/>
+            <apex:column value="{!a.Number__c}"/>
+            <apex:column value="{!a.Paisa__c}"/>
+            <apex:column value="{!a.Percentage__c}"/>
+            <apex:column value="{!a.Phone__c}"/>
+            <apex:column value="{!a.PickList__c}"/>
+            <apex:column value="{!a.Text_Encrypted__c}"/>
+            <apex:column value="{!a.TextArea__c}"/>
+            <apex:column value="{!a.Text_Area_Rich__c}"/>
+            <apex:column value="{!a.Text_Area_Long__c}"/>
+            <apex:column value="{!a.URL__c}"/>-->
+        </apex:pageBlockTable>
+         </apex:pageBlock>
+    </apex:form>         
+</apex:page>

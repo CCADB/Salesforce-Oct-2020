@@ -1,0 +1,7 @@
+<apex:page standardController="Lead" sidebar="false" showHeader="false">
+    <apex:variable value="{!RIGHT(Lead.Email, (LEN(Lead.Email)-FIND("@", Lead.Email)))}" var="emailDomain"/>
+    <apex:variable value="{!FIND(emailDomain, Lead.WebSite)}" var="websiteDomain"/>
+    <apex:outputPanel rendered="{!websiteDomain <= 0}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+        <apex:outputText value="Website domain does not match email domain."/>
+    </apex:outputPanel>
+</apex:page>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.Standard_Audit_Statement_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account.Mozilla_Verified_Audit_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account.Removal_Bug_No_or_Date__c</field>
+    </columns>
+    <columns>
+        <field>Account.Comments_by_Mozilla_on_Root__c</field>
+    </columns>
+    <columns>
+        <field>Account.Comments__c</field>
+    </columns>
+    <description>Reports on Mozilla Verified Audit Date &lt;&gt; Standard Audit Statement Date</description>
+    <filter>
+        <criteriaItems>
+            <column>Account.Status__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Change Requested,Included</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Account.Root_Certificate</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Audit_Date_Same__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>0</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>PARENT.NAME</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Mozilla Verified Audit Date Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>ACCOUNT.NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

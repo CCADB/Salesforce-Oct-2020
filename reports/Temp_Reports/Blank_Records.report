@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_39020924</developerName>
+        <masterLabel>Common Name or Certificate Name</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>ACCOUNT.NAME</sourceColumnName>
+        <useOther>false</useOther>
+    </buckets>
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_98558394</developerName>
+        <masterLabel>Parent Certificate Name</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>PARENT.NAME</sourceColumnName>
+        <useOther>false</useOther>
+    </buckets>
+    <columns>
+        <field>Account.CA_Owner__c</field>
+    </columns>
+    <columns>
+        <field>Account.Certificate_Name__c</field>
+    </columns>
+    <columns>
+        <field>Account.Certificate_Subject_Organization__c</field>
+    </columns>
+    <columns>
+        <field>Account.SHA_1_Fingerprint__c</field>
+    </columns>
+    <columns>
+        <field>Account.Comments__c</field>
+    </columns>
+    <filter>
+        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Account.Intermediate_Certificate,Account.Root_Certificate</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>ACCOUNT.NAME</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>contains</operator>
+            <value>&lt;Fill in Cert Name&gt;</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.X_509_Certificate_PEM__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <name>Blank Records</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>Account.CA_Owner__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

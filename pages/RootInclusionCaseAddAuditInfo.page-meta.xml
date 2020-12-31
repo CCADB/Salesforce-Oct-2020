@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>42.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Allows users to select a root cert and then copy auditor, audit, cp/cps info from Root Cert to Case</description>
+    <label>RootInclusionCaseAddAuditInfo</label>
+</ApexPage>

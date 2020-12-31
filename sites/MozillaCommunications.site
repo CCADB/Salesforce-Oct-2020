@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomSite xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowHomePage>false</allowHomePage>
+    <allowStandardAnswersPages>false</allowStandardAnswersPages>
+    <allowStandardIdeasPages>false</allowStandardIdeasPages>
+    <allowStandardLookups>false</allowStandardLookups>
+    <allowStandardPortalPages>true</allowStandardPortalPages>
+    <allowStandardSearch>false</allowStandardSearch>
+    <authorizationRequiredPage>CustomUnauthorized</authorizationRequiredPage>
+    <bandwidthExceededPage>CustomBandwidthExceeded</bandwidthExceededPage>
+    <browserXssProtection>false</browserXssProtection>
+    <clickjackProtectionLevel>SameOriginOnly</clickjackProtectionLevel>
+    <contentSniffingProtection>false</contentSniffingProtection>
+    <cspUpgradeInsecureRequests>false</cspUpgradeInsecureRequests>
+    <description>This site is for CA Communications</description>
+    <enableAuraRequests>true</enableAuraRequests>
+    <fileNotFoundPage>CustomFileNotFound</fileNotFoundPage>
+    <genericErrorPage>CustomException</genericErrorPage>
+    <inMaintenancePage>CustomInMaintenance</inMaintenancePage>
+    <inactiveIndexPage>CustomInMaintenance</inactiveIndexPage>
+    <indexPage>SiteLogin</indexPage>
+    <masterLabel>MozillaCommunications</masterLabel>
+    <referrerPolicyOriginWhenCrossOrigin>false</referrerPolicyOriginWhenCrossOrigin>
+    <requireHttps>true</requireHttps>
+    <siteAdmin>kwilsonadmin@mozilla.com</siteAdmin>
+    <siteTemplate>SiteTemplate</siteTemplate>
+    <siteType>Visualforce</siteType>
+    <subdomain>ccadb-public</subdomain>
+    <urlPathPrefix>mozillacommunications</urlPathPrefix>
+</CustomSite>

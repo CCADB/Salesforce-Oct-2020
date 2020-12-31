@@ -1,0 +1,31 @@
+<!-- 
+This inline page displays reminder messages for CAs to fill in the missing information
+-->
+
+<apex:page standardController="Case">
+
+    <style>
+        .formStyle {                      
+            color: red; 
+            font-weight: bold; 
+            text-align: center;             
+        }
+    </style>
+    
+    <apex:form styleClass="formStyle">   
+        
+         <apex:outputText value="Fill in Auditor Information" rendered="{!ISBLANK(Case.Auditor_New__c)}"/><apex:outputPanel rendered="{!ISBLANK(Case.Auditor_New__c)}"><br/></apex:outputPanel>
+         <apex:outputText value="Fill in links to Audit Statements" rendered="{!ISBLANK(Case.Standard_Audit_Statement_Link__c) && ISBLANK(Case.Code_Signing_Audit_Statement_Link__c) && ISBLANK(Case.BR_Audit_Statement_Link__c) && ISBLANK(Case.EV_Audit_Statement_Link__c) && ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)}"/> 
+         <apex:outputPanel rendered="{!ISBLANK(Case.Standard_Audit_Statement_Link__c) && ISBLANK(Case.Code_Signing_Audit_Statement_Link__c) && ISBLANK(Case.BR_Audit_Statement_Link__c) && ISBLANK(Case.EV_Audit_Statement_Link__c) && ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)}"><br/></apex:outputPanel>
+         
+         <apex:outputText value="Fill in Standard Audit Period Start and End dates. In a period‐of‐time audit, the period between the first day (start) and the last day of operations (end) covered by the auditors in their engagement. (This is not the same as the period of time when the auditors are on‐site at the CA.)" rendered="{!NOT(ISBLANK(Case.Standard_Audit_Statement_Link__c)) && (ISBLANK(Case.Standard_Audit_Period_Start_Date__c) || ISBLANK(Case.Standard_Audit_Period_End_Date__c))}"/> <apex:outputPanel rendered="{!NOT(ISBLANK(Case.Standard_Audit_Statement_Link__c)) && (ISBLANK(Case.Standard_Audit_Period_Start_Date__c) || ISBLANK(Case.Standard_Audit_Period_End_Date__c))}"><br/></apex:outputPanel>
+         <apex:outputText value="Fill in BR Audit Period Start and End dates. In a period‐of‐time audit, the period between the first day (start) and the last day of operations (end) covered by the auditors in their engagement. (This is not the same as the period of time when the auditors are on‐site at the CA.)" rendered="{!NOT(ISBLANK(Case.BR_Audit_Statement_Link__c)) && (ISBLANK(Case.BR_Audit_Period_Start_Date__c) || ISBLANK(Case.BR_Audit_Period_End_Date__c))}"/> <apex:outputPanel rendered="{!NOT(ISBLANK(Case.BR_Audit_Statement_Link__c)) && (ISBLANK(Case.BR_Audit_Period_Start_Date__c) || ISBLANK(Case.BR_Audit_Period_End_Date__c))}"><br/></apex:outputPanel>
+         <apex:outputText value="Fill in EV SSL Audit Period Start and End dates. In a period‐of‐time audit, the period between the first day (start) and the last day of operations (end) covered by the auditors in their engagement. (This is not the same as the period of time when the auditors are on‐site at the CA.)" rendered="{!NOT(ISBLANK(Case.EV_Audit_Statement_Link__c)) && (ISBLANK(Case.EV_Audit_Period_Start_Date__c) || ISBLANK(Case.EV_Audit_Period_End_Date__c))}"/> <apex:outputPanel rendered="{!NOT(ISBLANK(Case.EV_Audit_Statement_Link__c)) && (ISBLANK(Case.EV_Audit_Period_Start_Date__c) || ISBLANK(Case.EV_Audit_Period_End_Date__c))}"><br/></apex:outputPanel>
+         <apex:outputText value="Fill in EV Code Signing Audit Period Start and End dates. In a period‐of‐time audit, the period between the first day (start) and the last day of operations (end) covered by the auditors in their engagement. (This is not the same as the period of time when the auditors are on‐site at the CA.)" rendered="{!NOT(ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)) && (ISBLANK(Case.EV_Code_Signing_Audit_Period_Start_Date__c) || ISBLANK(Case.EV_Code_Signing_Audit_Period_End_Date__c))}"/> <apex:outputPanel rendered="{!NOT(ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)) && (ISBLANK(Case.EV_Code_Signing_Audit_Period_Start_Date__c) || ISBLANK(Case.EV_Code_Signing_Audit_Period_End_Date__c))}"><br/></apex:outputPanel>
+         
+         <apex:outputText value="Fill in CP/CPS Information" rendered="{!ISBLANK(Case.Certificate_Policy_Link__c) && ISBLANK(Case.Certification_Practice_Statement_Link__c)}"/>  <apex:outputPanel rendered="{!ISBLANK(Case.Certificate_Policy_Link__c) && ISBLANK(Case.Certification_Practice_Statement_Link__c)}"><br/></apex:outputPanel>
+         <apex:outputText value="Indicate which root certificates were in scope of this audit by clicking on the 'Add/Update Root Cases' and 'Edit Test Websites' buttons" rendered="{!Case.Count_of_Root_Case_s__c == 0}"/><apex:outputPanel rendered="{!Case.Count_of_Root_Case_s__c == 0}"><br/></apex:outputPanel>
+        
+    </apex:form>                
+    
+</apex:page>

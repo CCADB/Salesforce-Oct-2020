@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Actual_Hours__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum of Actual Hours for all goals</inlineHelpText>
+        <label>Actual Hours</label>
+        <summarizedField>Project_Goal__c.Actual_Hours__c</summarizedField>
+        <summaryForeignKey>Project_Goal__c.Project_Name__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budgeted_Hours__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum of Budgeted Hours for all goals related to this project
+* Should not exceed Max Hours *</inlineHelpText>
+        <label>Budgeted Hours</label>
+        <summarizedField>Project_Goal__c.Budgeted_Hours__c</summarizedField>
+        <summaryForeignKey>Project_Goal__c.Project_Name__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Current__c</fullName>
+        <externalId>false</externalId>
+        <formula>AND (TODAY() &gt;=  Start_Date__c, TODAY() &lt;= End_Date__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Max_Hours__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Max Hours in SOW</inlineHelpText>
+        <label>Max Hours</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Project_Alert__c</fullName>
+        <externalId>false</externalId>
+        <formula>/* Show alert if Budgeted Hours exceed Max Hours */
+IF (Budgeted_Hours__c &gt; Max_Hours__c, IMAGE (&quot;/resource/Flag_Red&quot;, &quot;Flag Red&quot;) + &quot; Exceeding Max Hours by &quot; + TEXT (Budgeted_Hours__c - Max_Hours__c) + &quot; hrs&quot;, 
+/* If Actual Hours exceed Budgeted Hours */
+IF (Actual_Hours__c &gt; Budgeted_Hours__c, IMAGE (&quot;/resource/Flag_Red&quot;, &quot;Flag Red&quot;) + &quot; Exceeding &quot; + TEXT (Actual_Hours__c - Budgeted_Hours__c) + &quot; hrs&quot;, 
+/* If Actual Hours same as Budgeted Hours */
+IF (Actual_Hours__c = Budgeted_Hours__c, IMAGE (&quot;/resource/Flag_Green&quot;, &quot;Flag Green&quot;)+ &quot; Remaining 0 hrs&quot;,
+/* If Actual Hours are within 10% of Budgeted Hours */
+IF ((Budgeted_Hours__c - Actual_Hours__c) &lt;= (Budgeted_Hours__c/10), IMAGE (&quot;/resource/Flag_Yellow&quot;, &quot;Flag Yellow&quot;) + &quot; Remaining &quot; + TEXT (Budgeted_Hours__c - Actual_Hours__c) + &quot; hrs&quot;, 
+/* Else Actual Hours are more than 10% of Budgeted Hours */
+IMAGE (&quot;/resource/Flag_Green&quot;, &quot;Flag Green&quot;) + &quot; Remaining &quot; + TEXT (Budgeted_Hours__c - Actual_Hours__c) + &quot; hrs&quot;
+))
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Red if Budgeted &gt; Max
+Red, if Actual &gt;= Budgeted
+Yellow, if Actual &lt;= 10% of Budgeted
+Green, if Actual &gt; 10% of Budgeted</inlineHelpText>
+        <label>Project Alert</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SOW_and_PO__c</fullName>
+        <externalId>false</externalId>
+        <label>SOW # &amp; PO #</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Project Tracker</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Current__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Project_Alert__c</columns>
+        <columns>Max_Hours__c</columns>
+        <columns>Budgeted_Hours__c</columns>
+        <columns>Actual_Hours__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Project Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Project Tracker</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Current__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>End_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Project_Alert__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Max_Hours__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Budgeted_Hours__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Actual_Hours__c</customTabListAdditionalFields>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Project_Activities_Not_Yet_Started</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Project Activities - Not Yet Started</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/00O1J000005hgwW?pv0={!Project_Tracker__c.Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Project_Activities_Timesheet</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Project Activities - Timesheet</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/00Oo0000005k7oZ?pv0={!Project_Tracker__c.Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Project_Goals_Activities</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Project Goals &amp; Activities</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/00Oo0000005k7pS?pv0={!Project_Tracker__c.Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Project_Goals_And_Goal_Details</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Project Goals &amp; Goal Details</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/00O1J000005hkP0?pv0={!Project_Tracker__c.Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Project_Goals_Budget_vs_Actual_Hrs</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Project Goals - Budget vs Actual Hrs</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/00Oo0000005k7Xk?pv0={!Project_Tracker__c.Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>SOW_Listing</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>SOW Listing</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/00O1J000005hkZy?pv0={!Project_Tracker__c.Name}</url>
+    </webLinks>
+</CustomObject>

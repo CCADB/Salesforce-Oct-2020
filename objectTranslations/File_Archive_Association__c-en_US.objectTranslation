@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>File Archive Association</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>File Archive Associations</value>
+    </caseValues>
+    <fields>
+        <label><!-- Audit Statement Date --></label>
+        <name>Audit_Statement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Owner/Certificate No --></label>
+        <name>CA_Owner_Certificate_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Name --></label>
+        <name>Certificate_Name__c</name>
+        <relationshipLabel><!-- File Archive Associations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Certificate Type --></label>
+        <name>Certificate_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Document Type --></label>
+        <name>Document_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Archive ID --></label>
+        <name>File_Archive__c</name>
+        <relationshipLabel><!-- File Archive Associations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Period End Date --></label>
+        <name>Period_End_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Period Start Date --></label>
+        <name>Period_Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- SHA-1 Fingerprint --></label>
+        <name>SHA_1_Fingerprint__c</name>
+    </fields>
+    <layouts>
+        <layout>File Archive Association Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>File Archive Detail Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

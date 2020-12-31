@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Jixi Integration Tokens</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Jixi Integration Tokens</value>
+    </caseValues>
+    <fields>
+        <label><!-- Client Certification Name --></label>
+        <name>Client_Certification_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- HTTP Method --></label>
+        <name>HTTP_Method__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Endpoint --></label>
+        <name>Service_Endpoint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Timeout (Millis) --></label>
+        <name>Timeout__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

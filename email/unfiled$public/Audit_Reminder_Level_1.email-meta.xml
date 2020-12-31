@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Audit reminder template for over 1 year plus 31 days to 93 days past due</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Audit_Reminder_Level_1</name>
+    <style>none</style>
+    <subject>Mozilla Audit Reminder - Level 1</subject>
+    <textOnly>Dear Certification Authority,
+
+This is a courtesy reminder from Mozilla that updated audit statements are due for the following root certificates:  {!RootCertificateList}  Here is the audit statement information we have for these root certificates.
+
+{!standardAuditInfoStr} {!brAuditInfoStr} {!evAuditInfoStr}
+
+As per Mozilla&apos;s Root Store Policy, we require that all CAs whose certificates are distributed with our software products provide us an updated statement annually of attestation of their conformance to the stated verification requirements and other operational criteria by a competent independent party or parties.
+
+Please provide your annual updates via the Common CA Database (CCADB), as described here:
+https://ccadb.org/cas/updates
+
+This is an automated email that will be sent regularly until the audit statements have been updated in our records.
+
+Regards,
+
+{!User.FirstName} {!User.LastName}
+{!User.CompanyName}
+{!User.Title}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -1,0 +1,62 @@
+<apex:page renderAs="pdf" standardController="Account" extensions="JixiServiceInterCertsController" applyBodyTag="false" >
+          <!--<head>
+                <style>
+                    #ErrorLogAndActions {
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    
+                    #ErrorLogAndActions td, #ErrorLogAndActions th {
+                        border: 1px solid black;
+                        padding: 5px;
+                    }
+                    
+                    #ErrorLogAndActions th {
+                        padding-top: 2px;
+                        padding-bottom: 2px;
+                        text-align: left;
+                        vertical-align:top;                  
+                    }
+                </style>
+          </head>-->
+                         
+          <center>
+                  <h1>Summary Report</h1>
+                  <h4>Account #{!Account.CA_Owner_Certificate_No__c}</h4>
+          </center>
+                
+          <apex:pageBlock >                            
+               
+               <apex:pageBlockSection columns="1">                       
+                    <apex:outputText label="1) Audit Statement URLs"/><br/>
+                    <!--render when Audit same as Parent is not checked-->
+                    <apex:outputText label="" value="Standard: {!Account.Standard_Audit__c}" rendered="{!IF(Account.Standard_Audit__c != null && !Account.Audits_Same_as_Parent__c,true,false)}"/>
+                    <!-- <apex:outputText label="" value="Code Signing: {!Account.Code_Signing_Audit__c}" rendered="{!IF(Account.Code_Signing_Audit__c != null && !Account.Audits_Same_as_Parent__c,true,false)}"/> -->
+                    <apex:outputText label="" value="BR: {!Account.BR_Audit__c}" rendered="{!IF(Account.BR_Audit__c != null && !Account.Audits_Same_as_Parent__c,true,false)}"/>
+                    <!-- <apex:outputText label="" value="EV SSL: {!Account.EV_Audit__c}" rendered="{!IF(Account.EV_Audit__c != null && !Account.Audits_Same_as_Parent__c,true,false)}"/> ->
+                    <!--render when audit same as parent is checked-->
+                    <apex:outputText label="" value="Standard: {!parentaccountSO.Standard_Audit__c}" rendered="{!IF(parentaccountSO.Standard_Audit__c != null && Account.Audits_Same_as_Parent__c,true,false)}"/>
+                    <!-- <apex:outputText label="" value="Code Signing: {!parentaccountSO.Code_Signing_Audit__c}" rendered="{!IF(parentaccountSO.Code_Signing_Audit__c != null && Account.Audits_Same_as_Parent__c,true,false)}"/> -->
+                    <apex:outputText label="" value="BR: {!parentaccountSO.BR_Audit__c}" rendered="{!IF(parentaccountSO.BR_Audit__c != null && Account.Audits_Same_as_Parent__c,true,false)}"/>
+                    <!-- <apex:outputText label="" value="EV SSL: {!parentaccountSO.EV_Audit__c}" rendered="{!IF(parentaccountSO.EV_Audit__c != null && Account.Audits_Same_as_Parent__c,true,false)}"/> -->
+                </apex:pageBlockSection>
+                <br/>
+                <apex:pageBlockSection columns="1"> 
+                    <apex:outputText style="margin-top:20px;" label="2) Errors in Audit Statements"/><br/>
+                </apex:pageBlockSection> 
+                
+           </apex:pageBlock>     
+                          
+            <table id="ErrorLogAndActionTable" style="width:100%;border-collapse:collapse;border: 1px solid black;" border="1">
+                <tr>
+                    <th style="border: 1px solid black;padding: 5px;">Error(s)</th>
+                    <th style="border: 1px solid black;padding: 5px;">Recommended Actions</th>
+                </tr>
+                <apex:repeat value="{!lstErrorLog}" var="ErrorAndAction">
+                     <tr>
+                         <td style="border: 1px solid black;padding: 5px;"><apex:outputText >{!ErrorAndAction.ErrorLog}<br/></apex:outputText></td>
+                         <td style="border: 1px solid black;padding: 5px;"><apex:outputText >{!ErrorAndAction.RecommendedAction}<br/></apex:outputText></td>
+                     </tr>
+                </apex:repeat>
+            </table>
+</apex:page>

@@ -1,0 +1,123 @@
+<!--
+*******************************************************************************************************
+ Name: PublicAllIntermediateCerts
+
+ Dependencies: PublicAllIntermediateCertsController, PublicAllIntermediateCerts,
+ PublicAllIntermediateCertsCSV, PublicAllIntermediateCertsWithPEMCSV, 
+ PublicAllIntermediateCertsControllerTest
+ 
+ Description: This report generates list intermediate certs (Non-revoked) in hierarchy. 
+ Report name used is 'Public Non-Revoked Intermediate Certificates'
+ 
+ Instructions: None
+
+ *******************************************************************************************************
+ Revision History:
+ 
+     05/16/2016 - Created new
+     11/20/2019 - Added Subordinate CA Owner field to the report
+
+ ******************************************************************************************************
+ -->
+ 
+ <apex:page controller="PublicAllIntermediateCertsController" showHeader="false" sideBar="false" cache="true" expires="3600" readOnly="true">
+    <br/> 
+     <apex:pagemessages />
+
+     <apex:sectionHeader title="Public Non-Revoked Intermediate Certificates"/>
+    
+    <style>
+         tr.dataRow {
+           background-color:white;
+         }
+         tr.dataRow:hover {
+           background-color: #e3f3ff;
+         };
+         td.datacell {
+         border-right-width:1px;
+         };
+         .bPageBlock {
+         padding-left:50px !important;
+         };
+     </style>
+
+<div class="apexp" style="padding-left:40px;padding-right:50px;width:320%;">
+    <div id="pageBlockBody" class="bPageBlock brandSecondaryBrd apexDefaultPageBlock secondaryPalette">
+        <div class="pbHeader">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr><td class="pbTitle"><h2 class="mainTitle">As Of {!currentDate}</h2></td><td>&nbsp;</td></tr></tbody>
+            </table>
+       </div>
+     <div class="pbBody">
+     <table class="list " border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed;">
+           <tr class="headerRow" >
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;word-wrap:break-word;">CA Owner</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;word-wrap:break-word;">Subordinate CA Owner</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;word-wrap:break-word;">Parent Name</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;word-wrap:break-word;">Certificate Name</th>
+              <!--<th class="headerRow" style="width:0.5%;white-space:pre-wrap;">Type</th>-->
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;">Certificate Issuer Common Name</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;">Certificate Issuer Organization</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;">Certificate Subject Common Name</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;">Certificate Subject Organization</th>
+              <th class="headerRow" style="width:3.3%;white-space:pre-wrap;">Certificate Serial Number</th>
+              <th class="headerRow" style="width:3.3%;white-space:pre-wrap;">SHA-256 Fingerprint</th>
+              <th class="headerRow" style="width:3.3%;white-space:pre-wrap;">Subject + SPKI SHA256</th>
+              <th class="headerRow" style="width:0.75%;white-space:pre-wrap;">Valid From [GMT]</th>
+              <th class="headerRow" style="width:0.75%;white-space:pre-wrap;">Valid To [GMT]</th>
+              <th class="headerRow" style="width:0.7%;white-space:pre-wrap;">Public Key Algorithm</th>
+              <th class="headerRow" style="width:1.4%;white-space:pre-wrap;">Signature Hash Algorithm</th>         
+              <th class="headerRow" style="width:0.75%;white-space:pre-wrap;">Extended Key Usage</th>
+              <!-- <th class="headerRow" style="width:0.75%;white-space:pre-wrap;">TESTTechnically Constrained</th> -->
+              <th class="headerRow" style="width:0.5%;white-space:pre-wrap;">CP/CPS Same As Parent</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;">Certificate Policy (CP)</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;">Certification Practice Statement (CPS)</th>
+              <th class="headerRow" style="width:0.5%;white-space:pre-wrap;">Audits Same As Parent</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;">Standard Audit</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;">BR Audit</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;">Auditor</th>
+              <th class="headerRow" style="width:0.75%;white-space:pre-wrap;">Standard Audit Statement Dt</th>
+              <!--<th class="headerRow" style="width:1.5%;white-space:pre-wrap;">Management Assertions By</th>-->
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;">Comments</th>
+              <!-- <th class="headerRow" style="width:9.5%;white-space:pre-wrap;">PEM Info</th> -->             
+           </tr>
+           <apex:repeat value="{!accountHierarchySoLst}"  var="accountSo"> 
+           <tr class="dataRow">
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.CA_Owner__c}</td> 
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Subordinate_CA_Owner__c}</td> 
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.parent.name}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.name}</td>
+              <!-- <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.type}</td> -->
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Certificate_Issuer_Common_Name__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Certificate_Issuer_Organization__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Certificate_Subject_Common_Name__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Certificate_Subject_Organization__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Certificate_Serial_Number__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.SHA_256_Fingerprint__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Subject_SPKI_SHA256__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Valid_From_YYYY_MMM_DD__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Valid_To_YYYY_MMM_DD__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Public_Key_Algorithm__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Signature_Hash_Algorithm__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Extended_Key_Usage__c}</td>
+              <!-- <td class="datacell" style="border-right-width:1px;word-wrap:break-word;"> {!accountSo.Technically_Constrained__c}</td> -->
+              <!-- <td class="datacell" style="border-right-width:1px;word-wrap:break-word;"> {If(accountSo.CP_CPS_Same_as_Parent__c=false, '✘', '✔' )}</td> -->             
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!If(accountSo.CP_CPS_Same_as_Parent__c=false, '', '✔' )}</td>                            
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Certificate_Policy_CP__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Certification_Practice_Statement_CPS__c}</td>
+              <!-- <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!If(accountSo.Audits_Same_as_Parent__c=false, '✘', '✔' )}</td> -->             
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!If(accountSo.Audits_Same_as_Parent__c=false, '', '✔' )}</td>                
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Standard_Audit__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.BR_Audit__c}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Auditor_New__r.Name}</td>
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Standard_Audit_Statement_Dt__c}</td>
+              <!--<td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Management_Assertions_By__c}</td>-->
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.Comments__c}</td>
+              <!-- <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">{!accountSo.X_509_Certificate_PEM__c}</td> -->
+
+           </tr>
+           </apex:repeat>
+       </table>
+   </div><div class="pbFooter secondaryPalette"><div class="bg"></div></div></div></div>
+
+ </apex:page>

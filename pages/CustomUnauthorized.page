@@ -1,0 +1,87 @@
+<apex:page showHeader="false" title="{!$Label.site.authorization_required}" id="CustomUnauthorized" cache="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds {
+                padding: 10px;
+            }
+            .slds-scope .slds-list_horizontal .slds-item_detail {
+                width:80% !important;
+            }
+            .slds-scope .slds-list_horizontal .slds-item_label {
+                width:20% !important;
+            }
+            .slds-section__error_msg
+            {
+                   display: table-cell;
+                   height: 320px;
+                   vertical-align: middle;
+                   text-align: center;
+            }
+            .slds-section__error_msgs
+            {
+                width: 75%;
+                margin: auto;
+                font-size: 1.15rem;
+                font-weight: 800;
+                line-height: 2.5rem;
+            }
+        </style>
+        <body>
+                <div class="slds" style="margin-top:6rem">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-6">
+                        </div>
+                        <div class="slds-col slds-size_4-of-6">
+                            <div class="slds-page-header" style="margin-top:10px;">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 12px;">
+                                                
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="Unauthorized">Common CA Database</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div id="mainbody" style="margin-top:25px;">
+                                 <div class="slds-section__error_msg slds-theme_shade slds-page-header">
+                                     <div class="slds-section__error_msgs">
+                                     <p style="color:Red;">
+                                         Authorization Required!
+                                     </p>
+                                     
+                                     <p >
+                                         You must first login at https://ccadb.force.com/CustomLogin before accessing this page.                                    
+                                     </p>
+                                     </div>
+                                 </div>
+                             </div>
+                    </div></div></div>
+              </body>
+           </html>
+           </apex:page>

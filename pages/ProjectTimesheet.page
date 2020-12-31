@@ -1,0 +1,62 @@
+<apex:page controller="ProjectTimesheetController" showHeader="false" sideBar="false" cache="true" expires="3600" readOnly="true">
+ 
+     <apex:pagemessages />
+
+     <apex:sectionHeader title="Project Tracker Timesheet"/>
+    
+    <style>
+         tr.dataRow {
+           background-color:white;
+         }
+         tr.dataRow:hover {
+           background-color: #e3f3ff;
+         };
+         td.datacell {
+         border-right-width:1px;
+         };
+         .bPageBlock {
+           padding-left:50px !important;
+         };
+     </style>
+
+<div class="apexp" style="padding-left:40px; padding-right:50px; width:80%;">
+    <div id="pageBlockBody"  class="bPageBlock brandSecondaryBrd apexDefaultPageBlock secondaryPalette">
+        <div class="pbHeader">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr><td class="pbTitle"><h2 class="mainTitle">As of {!currentDate}</h2></td><td>&nbsp;</td></tr></tbody>
+            </table>
+       </div>
+     <div class="pbBody">
+     <table class="list " border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed;" >
+           <tr class="headerRow">
+              <th class="headerRow" style="width:0.2%;white-space:pre-wrap;"   >Activity Date</th>
+              <th class="headerRow" style="width:1.5%;white-space:pre-wrap;"   >Activities</th>
+              <th class="headerRow" style="width:0.2%;white-space:pre-wrap;"   >Hours</th>
+           </tr>
+           <apex:repeat value="{!lstActivities}"  var="activity"> 
+           <tr class="dataRow">
+           
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputText value="{!activity.ActivityDate}"> </apex:outputText>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputText value="{!activity.Activity}"> </apex:outputText>
+                </apex:outputPanel>
+              </td>
+              
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputText value="{!activity.Hours}"> </apex:outputText>
+                </apex:outputPanel>
+              </td>                                                                   
+
+           </tr>
+           </apex:repeat>
+       </table>
+   </div><div class="pbFooter secondaryPalette"><div class="bg"></div></div></div></div>
+
+ </apex:page>

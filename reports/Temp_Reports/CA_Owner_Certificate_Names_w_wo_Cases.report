@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Account$Name</field>
+    </columns>
+    <columns>
+        <field>Account$Type</field>
+    </columns>
+    <columns>
+        <field>Account$Status__c</field>
+    </columns>
+    <columns>
+        <field>Account.Cases$CaseNumber</field>
+    </columns>
+    <columns>
+        <field>Account.Cases.Root_Cases__r$Name</field>
+    </columns>
+    <columns>
+        <field>Account.Cases.Root_Cases__r$Root_Certificate_Name__c</field>
+    </columns>
+    <columns>
+        <field>Account.Cases.Root_Cases__r$Request_Status__c</field>
+    </columns>
+    <columns>
+        <field>Account.Cases.Root_Cases__r$CA_Owner_Name_Existing__c</field>
+    </columns>
+    <columns>
+        <field>Account.Cases.Root_Cases__r$Root_Certificate_Name_Existing__c</field>
+    </columns>
+    <description>Temp report for Kathleen</description>
+    <filter>
+        <criteriaItems>
+            <column>Account$Type</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>equals</operator>
+            <value>Owner,Root</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>CA Owner/Certificate Names w/wo Cases</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CA_Owner_Certificate_Name_w_wo_Cases_Root_Cases__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>Account$Name</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Account$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

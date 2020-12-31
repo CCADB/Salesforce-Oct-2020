@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Policy Document</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Policy Documents</value>
+    </caseValues>
+    <fields>
+        <label><!-- Associated Trust Bits --></label>
+        <name>Associated_Trust_Bits__c</name>
+        <picklistValues>
+            <masterLabel>Client Authentication</masterLabel>
+            <translation><!-- Client Authentication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Code Signing</masterLabel>
+            <translation><!-- Code Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Document Signing</masterLabel>
+            <translation><!-- Document Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Encrypting File System</masterLabel>
+            <translation><!-- Encrypting File System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security End System</masterLabel>
+            <translation><!-- IP Security End System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security IKE Intermediate</masterLabel>
+            <translation><!-- IP Security IKE Intermediate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security Tunnel Termination</masterLabel>
+            <translation><!-- IP Security Tunnel Termination --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security User</masterLabel>
+            <translation><!-- IP Security User --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OCSP Signing</masterLabel>
+            <translation><!-- OCSP Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Private Key Archival</masterLabel>
+            <translation><!-- Private Key Archival --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Secure Email</masterLabel>
+            <translation><!-- Secure Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Server Authentication</masterLabel>
+            <translation><!-- Server Authentication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Time Stamping</masterLabel>
+            <translation><!-- Time Stamping --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- Policy document Last Updated Date must be filled for policy document link --></help>
+        <label><!-- Document Last Updated Date --></label>
+        <name>Document_Last_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL to policy documentation specific to the listed root certs. Documents may be attached to Bugzilla Bugs as described here https://www.ccadb.org/cas/fields#uploading-documents. --></help>
+        <label><!-- Document Link --></label>
+        <name>Document_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Document Type --></label>
+        <name>Document_Type__c</name>
+        <picklistValues>
+            <masterLabel>CP</masterLabel>
+            <translation><!-- CP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CP/CPS</masterLabel>
+            <translation><!-- CP/CPS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CPS</masterLabel>
+            <translation><!-- CPS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Mark when the record is deleted --></help>
+        <label><!-- Is Deleted? --></label>
+        <name>Is_Deleted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Policy Doc Id (18 digit) --></label>
+        <name>Policy_Doc_Id_18_digit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Policy Doc (On Cert) External Id --></label>
+        <name>Policy_Doc_On_Cert_External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Policy Document On Case (18 digit) --></label>
+        <name>Policy_Document_On_Case_18_digit__c</name>
+    </fields>
+    <fields>
+        <help><!-- Policy Identifiers --></help>
+        <label><!-- Policy Identifiers --></label>
+        <name>Policy_Identifiers__c</name>
+    </fields>
+    <fields>
+        <label><!-- Policy Document (On Case) --></label>
+        <name>Sync_Policy_Doc_Id__c</name>
+        <relationshipLabel><!-- Policy Documents --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Policy Document On Cert Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used by &quot;Data Integrity - OneCRL cert-storage&quot; Report (OneCRLCertStorageReport)</description>
+    <disableProtocolSecurity>false</disableProtocolSecurity>
+    <isActive>true</isActive>
+    <url>http://34.107.213.59</url>
+</RemoteSiteSetting>

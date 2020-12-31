@@ -1,0 +1,43 @@
+<apex:page standardController="Case" extensions="CloneAuditCaseController"> 
+<apex:pagemessages ></apex:pagemessages>
+<apex:sectionHeader title="{!Case.CaseNumber}" subtitle="Clone Audit Case {!Case.CaseNumber}"/>
+    
+    <apex:form id="theForm">
+    <apex:pageBlock title="Instructions"  id="theBlock">
+    <apex:pageBlockSection columns="1">         
+        DO NOT PROCEED IF YOU ARE TRYING TO CREATE ANOTHER AUDIT CASE WITH THE SAME AUDIT STATEMENTS.
+        <br/><br/>
+        Only click on the 'Clone Audit Case' button below if you have separate audit statements for each root certificate. The button will copy the auditor, audit dates, and CP/CPS information. It will not copy the links to the audit statements.
+        <br/><br/>
+        Click on the 'Go Back' button if the audits in your Audit Case cover more than one root certificate, because you do not need to create additional Audit Cases. In the Audit Case page click on the 'Add/Update Root Cases' button to create a set of corresponding Root Cases to tell the CCADB which Root Certificate records the audit statements in that Audit Case apply to.
+        <br/>        
+    </apex:pageBlockSection>     
+    
+    <apex:pageBlockButtons location="bottom">      
+        <apex:commandButton value="Clone Audit Case" action="{!CloneAuditCase}" style="width: 100px;"/>           
+        <apex:commandButton value="Go Back"  action="{!cancel}" style="width: 60px;"/>               
+    </apex:pageBlockButtons>   
+    
+    </apex:pageBlock>
+    </apex:Form>  
+    
+    <!--
+    <apex:form id="theForm">
+        <apex:pageBlock title="User Confirmation"  id="confirmPanel">    
+            <apex:outputText value="Select a button" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton action="{!CloneAuditCase}" value="Clone Audit Case" id="yesButton" />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton value="Go Back" id="exitButton" action="{!cancel}"/>
+            &nbsp;&nbsp;&nbsp;
+        </apex:pageBlock>
+    </apex:form>  
+     --> 
+      
+    <style>
+        .mainTitle{
+            width:200% !important;
+        }
+        .btn{ width:50px;}
+    </style>                            
+</apex:page>

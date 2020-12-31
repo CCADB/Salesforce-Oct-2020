@@ -1,0 +1,24 @@
+Dear Certification Authority, <br><br>
+
+This is a courtesy reminder from Mozilla that updated audit statements are due for the following root certificates:
+
+{!RootCertificateList} 
+
+Here is the audit statement information we have for these root certificates. <br><br>
+
+{!standardAuditInfoStr} 
+{!brAuditInfoStr} 
+{!evAuditInfoStr} 
+<br><br>
+As per Mozilla's Root Store Policy, we require that all CAs whose certificates are distributed with our software products provide us an updated statement annually of attestation of their conformance to the stated verification requirements and other operational criteria by a competent independent party or parties. <br><br>
+
+Please provide your annual updates via the Common CA Database (CCADB), as described here:<br>
+https://ccadb.org/cas/updates<br><br>
+
+This is an automated email that will be sent regularly until the audit statements have been updated in our records. <br><br>
+ 
+Regards,  <br><br>
+
+{!User.FirstName} {!User.LastName} <br>
+{!User.CompanyName} <br>
+{!User.Title} <br>

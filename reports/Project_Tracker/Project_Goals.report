@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Project_Tracker__c.Project_Goals__r$Name</field>
+    </columns>
+    <columns>
+        <field>Project_Tracker__c.Project_Goals__r$Goal__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>Project_Tracker__c.Project_Goals__r$Budgeted_Hours__c</field>
+    </columns>
+    <description>List of Goals</description>
+    <filter>
+        <criteriaItems>
+            <column>Project_Tracker__c$Name</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>2019</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <name>Project Goals</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Project_Tracker_w_Goals_Activities__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Project_Tracker__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

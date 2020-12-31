@@ -1,0 +1,101 @@
+<!--
+Intermediate Certificates With Same Issuer & Serial Number
+-->
+<apex:page controller="InterCertsSameIssuerAndSerialNoReptCtlr" showHeader="false" sideBar="false" 
+cache="true" expires="3600" readOnly="true">
+
+    <apex:sectionHeader title="Mozilla Intermediate Certificates With Same Issuer and Serial Number"/>
+    
+    <style>
+         tr.dataRow {
+           background-color:white;
+         }
+         tr.dataRow:hover {
+           background-color: #e3f3ff;
+         };
+         td.datacell {
+         border-right-width:1px;
+         };
+         .bPageBlock {
+           padding-left:50px !important;
+         };
+     </style>
+
+    <div class="apexp" style="padding-left:40px; padding-right:50px; width:180%;">
+        <div id="pageBlockBody"  class="bPageBlock brandSecondaryBrd apexDefaultPageBlock secondaryPalette">
+            <div class="pbHeader">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tbody><tr><td class="pbTitle"><h2 class="mainTitle">As of {!currentDate}</h2></td><td>&nbsp;</td></tr></tbody>
+                </table>
+            </div>
+            
+     <div class="pbBody">
+     
+     <table class="list " border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed;" >
+           
+           <tr class="headerRow">
+              
+              <th class="headerRow" style="width:1%;white-space:pre-wrap;"   >CA Owner</th>
+              <th class="headerRow" style="width:1%;white-space:pre-wrap;"   >Intermediate Certificate Name</th>
+              <th class="headerRow" style="width:1%;white-space:pre-wrap;"   >Certificate Issuer Common Name</th>
+              <th class="headerRow" style="width:1%;white-space:pre-wrap;"   >Certificate Issuer Organization</th>
+              <th class="headerRow" style="width:1%;white-space:pre-wrap;"   >Certificate Issuer Organizational Unit</th>
+              <th class="headerRow" style="width:0.8%;white-space:pre-wrap;" >Certificate Serial Number</th>
+              <th class="headerRow" style="width:2.2%;white-space:pre-wrap;" >SHA-256 Fingerprint</th>
+
+           </tr>
+           
+           <apex:repeat value="{!mapDuplicateAccounts}"  var="key">
+               <apex:repeat value="{!mapDuplicateAccounts[key]}"  var="account"> 
+           <tr class="dataRow">
+           
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.CA_Owner__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Name}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Certificate_Issuer_Common_Name__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Certificate_Issuer_Organization__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Certificate_Issuer_Organizational_Unit__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Certificate_Serial_Number__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.SHA_256_Fingerprint__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>                                                                                                           
+
+           </tr>
+           </apex:repeat>
+           </apex:repeat>
+           
+       </table>
+   </div><div class="pbFooter secondaryPalette"><div class="bg"></div></div></div></div>
+   
+</apex:page>

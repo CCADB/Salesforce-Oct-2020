@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Policy Document Association</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Policy Document Associations</value>
+    </caseValues>
+    <fields>
+        <label><!-- Certificate Name --></label>
+        <name>Certificate_Name__c</name>
+        <relationshipLabel><!-- Policy Document Associations (On Certificate) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Document Last Update Date --></label>
+        <name>Document_Last_Update_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Document Link --></label>
+        <name>Document_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Document Type --></label>
+        <name>Document_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Deleted? --></label>
+        <name>Is_Deleted__c</name>
+    </fields>
+    <fields>
+        <label><!-- Policy Doc Assoc (On Cert) External Id --></label>
+        <name>Policy_Doc_Assoc_On_Cert_External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Document Id --></label>
+        <name>Policy_Document__c</name>
+        <relationshipLabel><!-- Policy Document Associations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Policy Document Association (On Case) --></label>
+        <name>Source_Policy_Doc_Assoc_Id__c</name>
+        <relationshipLabel><!-- Policy Document Associations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- WRONG Case Policy Doc Assoc Id --></label>
+        <name>WRONG_Source_Policy_Doc_Assoc_Id__c</name>
+        <relationshipLabel><!-- Policy Document Associations --></relationshipLabel>
+    </fields>
+    <layouts>
+        <layout>Policy Document Association Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

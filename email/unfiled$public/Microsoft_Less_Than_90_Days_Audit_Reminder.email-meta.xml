@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Audit reminder template for Microsoft</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Microsoft Less Than 90 Days Audit Reminder</name>
+    <style>none</style>
+    <subject>Microsoft Trusted Root Certificate Program Notice of Upcoming Audit Deadline</subject>
+    <textOnly>Dear Microsoft Root Certificate Program partner,
+
+You are receiving this email because you are a member of the Microsoft Trusted Root Certificate Program, and, according to our records, the audit(s) you have on file for one or more of your roots has expired.
+
+According to Section 3(b) of the Agreement you signed with Microsoft, you are required to provide proof of an audit every 12 months. You have a 90-day grace period after the 12 months are complete to provide this audit letter. This is a reminder email to provide the necessary audits within the grace period provided.
+
+•	If you see “BR Audit” NULL, this means that, according to our records, your root is enabled for TLS, but you have not provided us evidence of an SSL Baseline audit.
+
+•	If you see “EV Audit” NULL and Microsoft EV Enable: TRUE, this means that your root is enabled for EV, but you have not provided us with evidence of an EV audit.
+
+Please review the root(s) listed below and provide Microsoft the requested audit information within 90 days of the date(s) specified below, via the Common CA Database (CCADB). The steps are described here: http://ccadb.org/cas/updates.
+
+{!RootCertificateList}
+
+If you have questions, please email msroot@microsoft.com.
+
+Thank you,
+Microsoft Crypto Ecosystem.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

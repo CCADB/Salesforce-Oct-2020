@@ -1,0 +1,44 @@
+<apex:page controller="RunAuditArchiveBatchController">
+ 
+ <apex:sectionHeader title="Run Audit Archive Batch Job" />
+ 
+ <apex:form >
+  
+  <br/>
+  
+  <apex:pageBlock id="idAuditArchiveBatch" mode="edit">
+    
+    <apex:pageMessages />
+  
+    <p align="center">
+       <apex:outputText value="** THIS BATCH PROCESS IS NOT BEING USED ** " style="color:red;font-weight:bold"/> <br/><br/>  
+       <apex:outputText value="The button below has been disabled. Audit files are archived automatically by an account trigger." style="color:red;font-weight:bold"/> <br/><br/>    
+    </p>  
+     
+    <p>
+       <apex:outputText value="CAUTION: Click on the button below ONLY when you need to start archiving audit files." style="font-weight:bold"/> <br/><br/>    
+    </p>
+    
+    <div align="left" draggable="false" >
+       <apex:commandButton value="Start 'Archiving Audit Files Batch Job' for all root certificates"/> 
+    </div>
+         
+    <!-- <div align="left" draggable="false" >
+       <apex:commandButton value="Start 'Archiving Audit Files Batch Job' for all root certificates" action="{!startBatch}" reRender="jobs,error" /> 
+    </div> -->
+    
+    <apex:outputText id="error" value="{!errorText}" style="font-weight: bold; color: red"/>
+      
+    <p>
+        <apex:outputText value="To check the batch processing results, please run the following reports:"/> <br/> 
+        <apex:outputText value="1. Audit Archive Batch Program Status"/> <br/> 
+        <apex:outputText value="2. List of All File Archive Records"/> <br/>
+        <apex:outputText value="3. Audit Archive Batch - Failed Records"/> <br/>                  
+    </p> 
+      
+  </apex:pageBlock>
+  
+    <br/>
+  <c:BatchJobs id="jobs" numberOfJob="10"/>
+ </apex:form>
+</apex:page>

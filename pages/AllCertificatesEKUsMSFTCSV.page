@@ -1,0 +1,5 @@
+<apex:page controller="AllCertificatesEKUsControllerMSFT" cache="true" expires="3600" showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/csv#All_Root_Certs_Inter_Certs_EKUs.csv;charset=UTF-8" readOnly="true">"CA Owner","Record Type","Root/Intermediate Certificate","Microsoft EKUs/Extended Key Usage"
+<apex:repeat value="{!lstAllCertificates}" var="account">
+"{!account.CA_Owner__c}","{!account.RecordType.Name}","{!account.name}","{!if(account.RecordType.Name == 'Root Certificate',account.Microsoft_EKU__c,account.Extended_Key_Usage__c)}"
+</apex:repeat>
+</apex:page>

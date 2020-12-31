@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Custom Reports and Processes</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Custom Reports and Processes</value>
+    </caseValues>
+    <fields>
+        <label><!-- Deprecated? --></label>
+        <name>Deprecated__c</name>
+    </fields>
+    <fields>
+        <help><!-- List the logic for the process/report --></help>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lightning Enabled --></label>
+        <name>Lightning_Enabled__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Name --></label>
+        <name>Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Technical Notes --></label>
+        <name>Technical_Notes__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicate if this report is internal only or public-facing. If public-facing, which web pages provide links to the report. --></help>
+        <label><!-- Type --></label>
+        <name>Type__c</name>
+        <picklistValues>
+            <masterLabel>Batch Program</masterLabel>
+            <translation><!-- Batch Program --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Custom Button</masterLabel>
+            <translation><!-- Custom Button --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Custom Form</masterLabel>
+            <translation><!-- Custom Form --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Custom Process</masterLabel>
+            <translation><!-- Custom Process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Custom Report</masterLabel>
+            <translation><!-- Custom Report --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Custom Tab</masterLabel>
+            <translation><!-- Custom Tab --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- URL --></label>
+        <name>URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Used By --></label>
+        <name>Used_By__c</name>
+        <picklistValues>
+            <masterLabel>All</masterLabel>
+            <translation><!-- All --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CAs Only</masterLabel>
+            <translation><!-- CAs Only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Microsoft Internal</masterLabel>
+            <translation><!-- Microsoft Internal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Microsoft Public</masterLabel>
+            <translation><!-- Microsoft Public --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mozilla Internal</masterLabel>
+            <translation><!-- Mozilla Internal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mozilla Public</masterLabel>
+            <translation><!-- Mozilla Public --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Custom Reports and Processes Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Technical Information --></label>
+            <section>Technical Information</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

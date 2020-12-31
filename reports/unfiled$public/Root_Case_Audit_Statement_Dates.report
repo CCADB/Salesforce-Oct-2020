@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case.Root_Cases__r$Name</field>
+    </columns>
+    <columns>
+        <field>Case.Root_Cases__r$Root_Certificate_Name__c</field>
+    </columns>
+    <columns>
+        <field>Case.Root_Cases__r$Request_Status__c</field>
+    </columns>
+    <columns>
+        <field>Case.Root_Cases__r$Valid_From_YYYY_MMM_DD__c</field>
+    </columns>
+    <columns>
+        <field>Case.Root_Cases__r$Valid_To_YYYY_MMM_DD__c</field>
+    </columns>
+    <columns>
+        <field>Case.Root_Cases__r$Trust_Bits__c</field>
+    </columns>
+    <columns>
+        <field>Case.Root_Cases__r$EV_Policy_OID_s__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>Case$Request_Status__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>In Public Discussion,​In Public Discussion,Pending Approval,​Pending Approval,&quot;Approved, Pending Inclusion&quot;,&quot;​Approved, Pending Inclusion&quot;</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case$RecordType</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Case.CA_Owner_Root_Inclusion_Request</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <name>Root Case Audit Statement Dates</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Cases_with_Root_Cases__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Case$ClosedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

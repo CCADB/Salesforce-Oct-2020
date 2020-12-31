@@ -1,0 +1,37 @@
+<!--
+User confrmation page before deleting a cert
+-->
+<apex:page standardController="Account" extensions="DeleteCertsController" showHeader="true" sidebar="true" cache="false" tabStyle="Account" >
+<apex:sectionHeader title="Delete Certificate" subtitle="{!Account.Name}"/>
+<apex:form id="frm">
+    <apex:pageMessages />
+    <apex:pageBlock title="User Confirmation">
+        <apex:outputPanel rendered="{!!isNotValid}">
+            <apex:outputPanel rendered="{!Account.X_509_Certificate_PEM__c != null}">
+                <apex:outputText value="PEM Info is provided. Are you sure you want to delete this record from the CCADB?"/><br/><br/>
+                CA Owner/Certificate Name: <b><apex:outputText value="{!Account.Name}"/></b><br/>
+                Parent CA Owner/Certificate: <b><apex:outputText value="{!Account.Parent.Name}"/></b><br/>
+                Subject: <b><apex:outputText value="{!Account.Subject__c}"/></b><br/>
+                Issuer: <b><apex:outputText value="{!Account.Issuer__c}"/></b><br/>
+                Certificate Serial Number: <b><apex:outputText value="{!Account.Certificate_Serial_Number__c}"/></b><br/>
+                SHA-256 Fingerprint: <b><apex:outputText value="{!Account.SHA_256_Fingerprint__c}"/></b><br/>
+                <br/>
+                <apex:commandButton value="Delete Certificate" action="{!deleteAccount}"  reRender="frm"/>
+                <apex:commandButton value="Go Back" action="{!cancel}" reRender="frm" style="margin-left:10px;"/>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!Account.X_509_Certificate_PEM__c == null}">
+                <apex:outputText value="Are you sure you want to delete {!Account.Name}?"/>
+                <apex:commandButton value="Yes" action="{!deleteAccount}"  reRender="frm" style="margin-left:20px;"/>
+                <apex:commandButton value="No" action="{!cancel}" reRender="frm" style="margin-left:20px;"/>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!isNotValid}">
+            {!strMessage}<br/><br/>
+        <apex:commandButton value="Go Back" action="{!cancel}" reRender="frm" />
+        </apex:outputPanel>
+    </apex:pageBlock>
+    <style>
+     
+     </style>
+</apex:form>
+</apex:page>

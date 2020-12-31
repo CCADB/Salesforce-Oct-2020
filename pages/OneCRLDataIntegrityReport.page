@@ -1,0 +1,750 @@
+<!-- THIS REPORT IS OBSOLETED - IT HAS BEEN REPLACED BY OneCRLCertStorageReport "OneCRL Cert Storage Report"
+ *******************************************************************************************************
+ Name: OneCRLDataIntegrityReport
+
+ Dependencies: OneCRLDataIntegrityReport controller class, OneCRLDataIntegrityReport vf page, 
+ OneCRLDataIntegrityReportControllerTest test class
+
+ Description: This program generates a user friendly report for Salesforce users to show
+ discrepancies between CCADB public report (PublicIntermediateCertsRevokedWithPEMCSV) and 
+ the OneCRL Raw Data file (https://firefox.settings.services.mozilla.com/v1/buckets/blocklists/collections/certificates/records) 
+ using a tool https://onecrldiff-dot-ccadb-231121.appspot.com/
+
+ Tool details can be found on Github
+ https://github.com/mozilla/CCADB-Tools/blob/master/oneCRLDiffCCADB/oneCRL/oneCRL.go
+  
+ The tool output has JOSN format:
+ type Cert struct {
+    serial           string // Decimal representation
+    revocationStatus string // "OneCRL Status" from the CCADB report
+    issuerCN         string // Issuer Common Name
+    issuerON         string // Issuer Organization Name
+    fingerprint      string // "SHA-256 Fingerprint" from the CCADB report
+ }
+ 
+ Tool produces 9 different errors categories:
+
+    "Added to OneCRL" and in OneCRL
+    "Cert Expired" and in OneCRL
+    "Ready to Add" and in OneCRL 
+    Not in CCADB but in OneCRL 
+    "Added to OneCRL" but not in OneCRL 
+    "Cert Expired" and not in OneCRL
+    "Ready to Add" and not in OneCRL 
+    No "OneCRL Status" given in the CCADB report - Revocation Status of "Parent Cert Revoked" 
+    No "OneCRL Status" given in the CCADB report - Revocation Status of "Not Revoked" or blank
+    
+
+ Instructions: Remote site setting for the tool should be active in the Salesforce org
+ *******************************************************************************************************
+ Revision History:
+ 
+     6/28/2019 - Created new
+     8/5/2019 - For No "OneCRL Status"section, separated the records with Revocation Status of 
+                “Parent Cert Revoked” and other status
+     2/9/2020 - Updated report description           
+ ******************************************************************************************************
+ -->
+ 
+<apex:page title="OneCRL Ingegrity Report" controller="OneCRLDataIntegrityReportController" sidebar="false" showHeader="false" docType="html-5.0" cache="true" expires="3600" readOnly="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            <!--.slds-scope .slds-section__content table{
+                width: auto;
+                table-layout:fixed;
+            }
+            .slds-scope .slds-section__content table td {
+                white-space:normal !important;
+            }
+            
+            .slds-scope .slds-size_1-of-1{
+                 width: auto; 
+            }
+            -->
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+        </style>
+        <body>
+            <div class="slds">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="slds-page-header" style="margin-top:10px;">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                    <div class="slds-media slds-no-space slds-grow">
+                                        <div class="slds-media__figure">
+                                            <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                            </svg> -->
+                                            <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                        </div>
+                                        <div class="slds-media__body" style="margin-top: 8px;">
+                                            <p class="slds-text-title--caps slds-line-height--reset">Mozilla</p>
+                                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="">OneCRL Integrity Report</h1>
+                                        </div>              
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:20px;margin-left:10px;margin-right:10px">   
+                            <apex:outputText > Shows discrepancies between CCADB public report (PublicIntermediateCertsRevokedWithPEMCSV)  </apex:outputText>
+                            <apex:outputText > and the OneCRL Raw Data file (https://firefox.settings.services.mozilla.com/v1/buckets/blocklists/collections/certificates/records) </apex:outputText>                   
+                            <apex:outputText > using a tool https://onecrldiff-dot-ccadb-231121.appspot.com/ </apex:outputText><br/>
+                        </div>
+                        <!--"Added to OneCRL" and actually in OneCRL-->
+                        <div style="margin-top:20px;">
+                            <div class="slds-section slds-is-close">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">"Added to OneCRL" and in OneCRL (Number of records: {!wrapOneCRLs.AddedAndPresentInOneCRL.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    OneCRL Status
+                                                </th>
+                                                <th width="30%">
+                                                    SHA256 Fingerprint
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Common Name
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Organization Name
+                                                </th>
+                                                <th width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Serial
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!wrapOneCRLs.AddedAndPresentInOneCRL}" var="result" rendered="{!wrapOneCRLs.AddedAndPresentInOneCRL != null && wrapOneCRLs.AddedAndPresentInOneCRL.size > 0}">
+                                                <tr>
+                                                    <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        {!result.revocationStatus}
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputLink value="/{!result.objAccount.Id}" target="_blank" rendered="{!result.objAccount != null && result.objAccount.Id != null}">{!result.fingerprint}</apex:outputLink>
+                                                        <apex:outputText rendered="{!result.objAccount == null || result.objAccount.Id == null}">{!result.fingerprint}</apex:outputText>
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerCN}
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerON}
+                                                    </td>
+                                                    <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.serial}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!wrapOneCRLs.AddedAndPresentInOneCRL == null || wrapOneCRLs.AddedAndPresentInOneCRL.size == 0}">
+                                                <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--"Cert Expired" and in OneCRL-->
+                            <div class="slds-section slds-is-close">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">"Cert Expired" and in OneCRL (Number of records: {!wrapOneCRLs.ExpiredAndPresentInOneCRL.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    OneCRL Status
+                                                </th>
+                                                <th width="30%">
+                                                    SHA256 Fingerprint
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Common Name
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Organization Name
+                                                </th>
+                                                <th width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Serial
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!wrapOneCRLs.ExpiredAndPresentInOneCRL}" var="result" rendered="{!wrapOneCRLs.ExpiredAndPresentInOneCRL != null && wrapOneCRLs.ExpiredAndPresentInOneCRL.size > 0}">
+                                                <tr>
+                                                    <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        {!result.revocationStatus}
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputLink value="/{!result.objAccount.Id}" target="_blank" rendered="{!result.objAccount != null && result.objAccount.Id != null}">{!result.fingerprint}</apex:outputLink>
+                                                        <apex:outputText rendered="{!result.objAccount == null || result.objAccount.Id == null}">{!result.fingerprint}</apex:outputText>
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerCN}
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerON}
+                                                    </td>
+                                                    <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.serial}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!wrapOneCRLs.ExpiredAndPresentInOneCRL == null || wrapOneCRLs.ExpiredAndPresentInOneCRL.size == 0}">
+                                                <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <!--"Ready to Add" and in OneCRL-->
+                            <div class="slds-section slds-is-close">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">"Ready to Add" and in OneCRL (Number of records: {!wrapOneCRLs.ReadyToAddAndPresentInOneCRL.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    OneCRL Status
+                                                </th>
+                                                <th width="30%">
+                                                    SHA256 Fingerprint
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Common Name
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Organization Name
+                                                </th>
+                                                <th width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Serial
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!wrapOneCRLs.ReadyToAddAndPresentInOneCRL}" var="result" rendered="{!wrapOneCRLs.ReadyToAddAndPresentInOneCRL != null && wrapOneCRLs.ReadyToAddAndPresentInOneCRL.size > 0}">
+                                                <tr>
+                                                    <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        {!result.revocationStatus}
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputLink value="/{!result.objAccount.Id}" target="_blank" rendered="{!result.objAccount != null && result.objAccount.Id != null}">{!result.fingerprint}</apex:outputLink>
+                                                        <apex:outputText rendered="{!result.objAccount == null || result.objAccount.Id == null}">{!result.fingerprint}</apex:outputText>
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerCN}
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerON}
+                                                    </td>
+                                                    <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.serial}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!wrapOneCRLs.ReadyToAddAndPresentInOneCRL == null || wrapOneCRLs.ReadyToAddAndPresentInOneCRL.size == 0}">
+                                                <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--Not in CCADB but in OneCRL-->
+                            <div class="slds-section slds-is-close">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">Not in CCADB but in OneCRL (Number of records: {!wrapOneCRLs.AbsentFromCCADBAndPresentInOneCRL.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    OneCRL Status
+                                                </th>
+                                                <th width="30%">
+                                                    SHA256 Fingerprint
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Common Name
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Organization Name
+                                                </th>
+                                                <th width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Serial
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!wrapOneCRLs.AbsentFromCCADBAndPresentInOneCRL}" var="result" rendered="{!wrapOneCRLs.AbsentFromCCADBAndPresentInOneCRL != null && wrapOneCRLs.AbsentFromCCADBAndPresentInOneCRL.size > 0}">
+                                                <tr>
+                                                    <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        {!result.revocationStatus}
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputLink value="/{!result.objAccount.Id}" target="_blank" rendered="{!result.objAccount != null && result.objAccount.Id != null}">{!result.fingerprint}</apex:outputLink>
+                                                        <apex:outputText rendered="{!result.objAccount == null || result.objAccount.Id == null}">{!result.fingerprint}</apex:outputText>
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerCN}
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerON}
+                                                    </td>
+                                                    <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.serial}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!wrapOneCRLs.AbsentFromCCADBAndPresentInOneCRL == null || wrapOneCRLs.AbsentFromCCADBAndPresentInOneCRL.size == 0}">
+                                                <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <!--"Added to OneCRL" but not actually in OneCRL-->
+                            <div class="slds-section slds-is-close">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">"Added to OneCRL" but not in OneCRL (Number of records: {!wrapOneCRLs.AddedAndAbsentFromOneCRL.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    OneCRL Status
+                                                </th>
+                                                <th width="30%">
+                                                    SHA256 Fingerprint
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Common Name
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Organization Name
+                                                </th>
+                                                <th width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Serial
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!wrapOneCRLs.AddedAndAbsentFromOneCRL}" var="result" rendered="{!wrapOneCRLs.AddedAndAbsentFromOneCRL != null && wrapOneCRLs.AddedAndAbsentFromOneCRL.size > 0}">
+                                                <tr>
+                                                    <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        {!result.revocationStatus}
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputLink value="/{!result.objAccount.Id}" target="_blank" rendered="{!result.objAccount != null && result.objAccount.Id != null}">{!result.fingerprint}</apex:outputLink>
+                                                        <apex:outputText rendered="{!result.objAccount == null || result.objAccount.Id == null}">{!result.fingerprint}</apex:outputText>
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerCN}
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerON}
+                                                    </td>
+                                                    <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.serial}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!wrapOneCRLs.AddedAndAbsentFromOneCRL == null || wrapOneCRLs.AddedAndAbsentFromOneCRL.size == 0}">
+                                                <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <!--"Cert Expired" and not in OneCRL-->
+                            <div class="slds-section slds-is-close">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">"Cert Expired" and not in OneCRL (Number of records: {!wrapOneCRLs.ExpiredAndAbsentFromOneCRL.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    OneCRL Status
+                                                </th>
+                                                <th width="30%">
+                                                    SHA256 Fingerprint
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Common Name
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Organization Name
+                                                </th>
+                                                <th width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Serial
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!wrapOneCRLs.ExpiredAndAbsentFromOneCRL}" var="result" rendered="{!wrapOneCRLs.ExpiredAndAbsentFromOneCRL != null && wrapOneCRLs.ExpiredAndAbsentFromOneCRL.size > 0}">
+                                                <tr>
+                                                    <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        {!result.revocationStatus}
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputLink value="/{!result.objAccount.Id}" target="_blank" rendered="{!result.objAccount != null && result.objAccount.Id != null}">{!result.fingerprint}</apex:outputLink>
+                                                        <apex:outputText rendered="{!result.objAccount == null || result.objAccount.Id == null}">{!result.fingerprint}</apex:outputText>
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerCN}
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerON}
+                                                    </td>
+                                                    <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.serial}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!wrapOneCRLs.ExpiredAndAbsentFromOneCRL == null || wrapOneCRLs.ExpiredAndAbsentFromOneCRL.size == 0}">
+                                                <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--"Ready to Add" and not in OneCRL-->
+                            <div class="slds-section slds-is-close">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">"Ready to Add" and not in OneCRL (Number of records: {!wrapOneCRLs.ReadyToAddAndAbsentFromOneCRL.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    OneCRL Status
+                                                </th>
+                                                <th width="30%">
+                                                    SHA256 Fingerprint
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Common Name
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Organization Name
+                                                </th>
+                                                <th width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Serial
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!wrapOneCRLs.ReadyToAddAndAbsentFromOneCRL}" var="result" rendered="{!wrapOneCRLs.ReadyToAddAndAbsentFromOneCRL != null && wrapOneCRLs.ReadyToAddAndAbsentFromOneCRL.size > 0}">
+                                                <tr>
+                                                    <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        {!result.revocationStatus}
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputLink value="/{!result.objAccount.Id}" target="_blank" rendered="{!result.objAccount != null && result.objAccount.Id != null}">{!result.fingerprint}</apex:outputLink>
+                                                        <apex:outputText rendered="{!result.objAccount == null || result.objAccount.Id == null}">{!result.fingerprint}</apex:outputText>
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerCN}
+                                                    </td>
+                                                    <td>
+                                                        {!result.issuerON}
+                                                    </td>
+                                                    <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.serial}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!wrapOneCRLs.ReadyToAddAndAbsentFromOneCRL == null || wrapOneCRLs.ReadyToAddAndAbsentFromOneCRL.size == 0}">
+                                                <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--Record count for No "OneCRL Status" given in the CCADB report both type-->
+                            <apex:variable value="{!0}" var="countParentCertRevoked"/>
+                            <apex:variable value="{!0}" var="countWOParentCertRevoked"/>
+                            <apex:repeat value="{!wrapOneCRLs.NoRevocationStatus}" var="result" rendered="{!wrapOneCRLs.NoRevocationStatus != null && wrapOneCRLs.NoRevocationStatus.size > 0}">
+                                <apex:outputPanel rendered="{!result.objAccount != null && result.objAccount.Id != null && result.objAccount.Revocation_Status__c == 'Parent Cert Revoked'}">
+                                    <apex:variable value="{!countParentCertRevoked + 1}" var="countParentCertRevoked"/>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!(result.objAccount != null && result.objAccount.Id != null && result.objAccount.Revocation_Status__c != 'Parent Cert Revoked') || result.objAccount == null || result.objAccount.Id == null}">
+                                    <apex:variable value="{!countWOParentCertRevoked + 1}" var="countWOParentCertRevoked"/>
+                                </apex:outputPanel>
+                            </apex:repeat>
+                            <!--No "OneCRL Status" given in the CCADB report - Revocation Status of "Parent Cert Revoked"-->
+                            <div class="slds-section slds-is-close">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">No "OneCRL Status" given in the CCADB report - Revocation Status of "Parent Cert Revoked" (Number of records: {!countParentCertRevoked})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    Revocation Status
+                                                </th>
+                                                <th width="30%">
+                                                    SHA256 Fingerprint
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Common Name
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Organization Name
+                                                </th>
+                                                <th width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Serial
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!wrapOneCRLs.NoRevocationStatus}" var="result" rendered="{!countParentCertRevoked > 0}">
+                                                <apex:outputPanel rendered="{!result.objAccount != null && result.objAccount.Id != null && result.objAccount.Revocation_Status__c == 'Parent Cert Revoked'}">
+                                                    <apex:variable value="{!countParentCertRevoked + 1}" var="countParentCertRevoked"/>
+                                                    <tr>
+                                                        <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputText value="{!if(result.objAccount != null && result.objAccount.Id != null, result.objAccount.Revocation_Status__c, result.revocationStatus)}"></apex:outputText>
+                                                            <!--{!result.revocationStatus}-->
+                                                        </td>
+                                                        <td>
+                                                            <apex:outputLink value="/{!result.objAccount.Id}" target="_blank" rendered="{!result.objAccount != null && result.objAccount.Id != null}">{!result.fingerprint}</apex:outputLink>
+                                                            <apex:outputText rendered="{!result.objAccount == null || result.objAccount.Id == null}">{!result.fingerprint}</apex:outputText>
+                                                        </td>
+                                                        <td>
+                                                            {!result.issuerCN}
+                                                        </td>
+                                                        <td>
+                                                            {!result.issuerON}
+                                                        </td>
+                                                        <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            {!result.serial}
+                                                        </td>
+                                                    </tr>
+                                                </apex:outputPanel>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!countParentCertRevoked == 0}">
+                                                <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--No "OneCRL Status" given in the CCADB report - No Revocation Status-->
+                            <div class="slds-section slds-is-close">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                        <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                        </svg>
+                                    </span>
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">No "OneCRL Status" given in the CCADB report - Revocation Status other than "Parent Cert Revoked" (Number of records: {!countWOParentCertRevoked})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    Revocation Status
+                                                </th>
+                                                <th width="30%">
+                                                    SHA256 Fingerprint
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Common Name
+                                                </th>
+                                                <th width="20%">
+                                                    Issuer Organization Name
+                                                </th>
+                                                <th width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Serial
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!wrapOneCRLs.NoRevocationStatus}" var="result" rendered="{!countWOParentCertRevoked > 0}">
+                                                <apex:outputPanel rendered="{!(result.objAccount != null && result.objAccount.Id != null && result.objAccount.Revocation_Status__c != 'Parent Cert Revoked') || result.objAccount == null || result.objAccount.Id == null}">
+                                                    <apex:variable value="{!countParentCertRevoked + 1}" var="countParentCertRevoked"/>
+                                                    <tr>
+                                                        <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputText value="{!if(result.objAccount != null && result.objAccount.Id != null, result.objAccount.Revocation_Status__c, result.revocationStatus)}"></apex:outputText>
+                                                            <!--{!result.revocationStatus}-->
+                                                        </td>
+                                                        <td>
+                                                            <apex:outputLink value="/{!result.objAccount.Id}" target="_blank" rendered="{!result.objAccount != null && result.objAccount.Id != null}">{!result.fingerprint}</apex:outputLink>
+                                                            <apex:outputText rendered="{!result.objAccount == null || result.objAccount.Id == null}">{!result.fingerprint}</apex:outputText>
+                                                        </td>
+                                                        <td>
+                                                            {!result.issuerCN}
+                                                        </td>
+                                                        <td>
+                                                            {!result.issuerON}
+                                                        </td>
+                                                        <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            {!result.serial}
+                                                        </td>
+                                                    </tr>
+                                                </apex:outputPanel>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!countWOParentCertRevoked == 0}">
+                                                <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+        <script>
+            $(document).on('click','.clsExpandCollapse',function(){
+                var downarrow = '<svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;margin-right:3px;">\
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevrondown")}"></use> \
+                                        </svg>';
+                var rightarrow = '<svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">\
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use> \
+                                        </svg>';
+                
+                var selected = false;
+                if($(this).hasClass('slds-custom-down')){
+                    selected = true;
+                }
+                if(selected == false){
+                    $(this).removeClass('slds-custom-right').addClass('slds-custom-down');
+                    $(this).html('');
+                    $(this).html(downarrow);
+                    $(this).closest('div.slds-section').removeClass('slds-is-close').addClass('slds-is-open');
+                } else {
+                    $(this).removeClass('slds-custom-down').addClass('slds-custom-right');
+                    $(this).html('');
+                    $(this).html(rightarrow);
+                    $(this).closest('div.slds-section').removeClass('slds-is-open').addClass('slds-is-close');
+                }
+            });
+        </script>
+    </html>
+</apex:page>

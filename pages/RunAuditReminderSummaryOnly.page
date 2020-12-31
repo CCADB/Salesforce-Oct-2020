@@ -1,0 +1,40 @@
+<apex:page controller="AuditReminderSummaryOnlyController" >
+    <apex:sectionHeader title="Mozilla" subtitle="Run Audit Reminder Summary Only"/>
+    <apex:form >
+    
+        <br/>
+        
+        <apex:pageBlock id="idAuditReminderBatch" mode="edit">
+            <apex:pageMessages />
+            
+            <p/>
+            <apex:outputText value="CAUTION: Click on the button below ONLY when you need to send audit reminder emails summary to Mozilla CA Program Manager. This batch job will not send audit alerts to the CAs." style="color:red;font-weight:bold"/> 
+            <p/>
+            
+            <div align="left" draggable="false" >
+            <apex:commandButton value="Start Audit Reminder Summary Batch Job For Mozilla" action="{!startBatch}" reRender="jobs,error" /> 
+            </div>
+            
+            <apex:outputText id="error" value="{!errorText}" style="font-weight: bold; color: red"/>
+            
+            <br/>    
+        </apex:pageBlock>
+        <apex:pageBlock id="idAuditReminderBatchFieldUpdate" mode="edit">
+            <apex:pageMessages />
+          
+            <p/>
+               <apex:outputText value="CAUTION: Click on the button below to update Mozilla Audit Alert (field) on root certificates. Summary email and audit reminder emails will NOT be sent out." style="color:red;font-weight:bold"/> 
+            <p/>
+                    
+            <div align="left" draggable="false" >
+               <apex:commandButton value="Start Audit Reminder Batch Job For Mozilla to Update Audit Alert (Field)" action="{!startBatchToUpdateAuditAlert}" reRender="jobs,errorFieldUpdate" /> 
+            </div>
+            
+            <apex:outputText id="errorFieldUpdate" value="{!errorText}" style="font-weight: bold; color: red"/>
+            
+            <br/>    
+          </apex:pageBlock>
+        <br/>
+        <c:BatchJobs id="jobs" numberOfJob="10"/>
+    </apex:form>
+</apex:page>

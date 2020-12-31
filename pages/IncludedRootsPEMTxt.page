@@ -1,0 +1,3 @@
+<apex:page controller="IncludedRootsPEMController" cache="true" expires="3600" showHeader="false" sidebar="false" contentType="text/csv#IncludedRootsPEM.txt;charset=UTF-8" standardStylesheets="false"  readOnly="true">
+<apex:repeat value="{!lstPEMs}" var="PEM">{!PEM}</apex:repeat>
+</apex:page>

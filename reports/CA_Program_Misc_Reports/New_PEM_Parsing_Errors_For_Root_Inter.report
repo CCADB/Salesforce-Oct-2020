@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>TYPE</field>
+    </columns>
+    <columns>
+        <field>Account.SHA_256_Fingerprint__c</field>
+    </columns>
+    <columns>
+        <field>Account.Extraction_Results__c</field>
+    </columns>
+    <columns>
+        <field>USERS.NAME</field>
+    </columns>
+    <description>Using TLS Obs for Root and Intermediate Certs</description>
+    <filter>
+        <criteriaItems>
+            <column>Account.Extraction_Results__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>startsWith</operator>
+            <value>Error</value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>New PEM Parsing Errors For Root &amp; Inter</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

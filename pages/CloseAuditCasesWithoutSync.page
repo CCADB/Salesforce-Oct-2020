@@ -1,0 +1,22 @@
+<apex:page standardController="Case" extensions="CloseAuditCasesWithoutSyncController" cache="false">
+<apex:sectionHeader title="{!Case.CaseNumber}" subtitle="Close Case without Sync"/>
+    <apex:form id="frm">
+        <apex:pageMessages ></apex:pageMessages>
+        <apex:outputPanel id="opCompleteCase">
+            <apex:pageBlock title="Cannot close case" rendered="{!isCaseComplete}">
+                <apex:outputText value="Case Request Status is already Complete."/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:commandButton value="Go Back" id="redirectToCaseButton"  action="{!cancel}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </apex:pageBlock>
+        </apex:outputPanel> 
+        <apex:outputPanel id="opCloseCase">
+            <apex:pageBlock title="Enter the reason" rendered="{!!isCaseComplete}">
+                <apex:pageBlockButtons location="bottom">
+                    <apex:commandButton value="Close Case" action="{!CloseCaseWithoutSync}" reRender="frm"/> &nbsp;
+                    <apex:commandButton value="Go Back" action="{!cancel}" reRender="frm" />
+                </apex:pageBlockButtons>
+                <apex:outputLabel value="Reason for Close without Sync" style="vertical-align:top;"/> &nbsp;&nbsp;
+                <apex:inputTextarea value="{!ReasontoCloseCase}" cols="40" rows="5"/>
+            </apex:pageBlock>
+        </apex:outputPanel> 
+    </apex:form>
+</apex:page>

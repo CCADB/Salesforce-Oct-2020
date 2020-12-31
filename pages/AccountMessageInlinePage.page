@@ -1,0 +1,215 @@
+<!--
+/*******************************************************************************************************
+ Name: AccountMessageInlinePage
+
+ Dependencies:  AccountMessageInlineController controller class, AccountMessageInlinePage VF page,
+ AccountMessageInlineControllerTest
+
+ Description: Vf page for AccountMessageInline.
+ 
+    The Controller class is for Inline Account page. This is specifically to check
+ 
+     Audit urls, Audit Same As Parent, CP/CPS urls, CP/CPS Same As Parent fields.
+    
+    -> only the non blank urls (audit/cp/cps) are ckecked 
+    -> When CP and CPS Link is blank and 'CP/CPS Same As Parent' is not True then it display error message.
+    -> When CP or CPS link is populated and Parent Cert's 'CP/CPS Same As Parent' is not True then check if they have same CP and CPS. 
+       If they match then display message to check CP/CPS Same As Parent checkbox.
+    -> When CP or CPS link is populated and Parent Cert's 'CP/CPS Same As Parent' is True then we are checking parent's Parent and compare CP and CPS. 
+       If match then display message to check CP/CPS Same As Parent checkbox.
+    
+    Same logic is used for Audits (Std, Code Sign, BR, EV SSL only)
+
+ Instructions: None
+    
+ *******************************************************************************************************
+ Revision History:
+ 
+    2/8/2019 - Created new
+    4/4/2019 - Rendered Audit messsages when audit archive is failed for Standard/BR/EV SSL and EV Code Signing.
+    4/15/2019 - Added Message if CPA Canada Report url has changed then show message.
+    
+ ******************************************************************************************************/
+ -->
+<apex:page standardController="Account" extensions="AccountMessageInlineController">
+
+    <!-- This div is hidden by default, the javascipt below checks the value of the checkbox and displays the message
+     only if the checkbox is checked -->     
+     
+     <!-- <h2> CA Owner: {!Account.CA_Owner_For_Inter_Cert__c} </h2> -->
+     
+    <div id="AddUpdatePemInfoMessage" style="display:none; color: red; font-weight: bold; text-align: center;">      
+         Please use the "Add/Update PEM Info" button to add or update PEM info on this record.
+    </div>
+  
+    <div id="UpdateAccountNameMessage" style="display:none; color: red; font-weight: bold; text-align: center;">      
+         Please Update the Intermediate Cert Name.
+    </div>
+    
+    <div id="ParentNameDoesNotMatchMessage" style="display:none; color: red; font-weight: bold; text-align: center;">      
+         For intermediate certificates, Parent Certificate Name must be the certificate's Issuer Common Name or Issuer  Organization. Additional characters may be added at the end of the name, but must be kept consistent within the hierarchy.
+    </div>
+ 
+     <div id="AccountNameDoesNotMatchMessage" style="display:none; color: red; font-weight: bold; text-align: center;">      
+         Certificate Name must be the certificate's Subject Common Name or Subject Organization. Additional characters may be added at the end of the name, but must be kept consistent within the hierarchy.
+     </div>
+        
+     <!--<div id="FillAuditInfoOrCheckAuditSameAsParentMessage" style="display:none; color: red; font-weight: bold; text-align: center;">      
+        Please fill in Audit Information section or mark the checkbox 'Audits Same as Parent'
+     </div>
+    
+     <div id="FillCPCPSInfoOrCheckCPCPSSameAsParentMessage" style="display:none; color: red; font-weight: bold; text-align: center;">      
+        Please fill in Policies and Practices Information section or mark the checkbox 'CP/CPS Same as Parent'
+     </div>-->
+     <apex:outputPanel rendered="{!(Account.Standard_Audit_Update_Status__c != null && Account.Standard_Audit_Update_Status__c == 'Failed') || Account.Standard_Audit_Update_Message__c != null}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         <apex:outputText value="Audit Archiving has failed for Standard Audit with error: {!Account.Standard_Audit_Update_Message__c}"/>
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!(Account.Code_Signing_Audit_Update_Status__c != null && Account.Code_Signing_Audit_Update_Status__c == 'Failed') || Account.Code_Signing_Audit_Update_Message__c != null}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         <apex:outputText value="Audit Archiving has failed for Code Signing Audit with error: {!Account.Code_Signing_Audit_Update_Message__c}"/>
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!(Account.BR_Audit_Update_Status__c != null && Account.BR_Audit_Update_Status__c == 'Failed') || Account.BR_Audit_Update_Message__c != null}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         <apex:outputText value="Audit Archiving has failed for BR Audit with error: {!Account.BR_Audit_Update_Message__c}"/>
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!(Account.EV_Audit_Update_Status__c != null && Account.EV_Audit_Update_Status__c == 'Failed') || Account.EV_Audit_Update_Message__c != null}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         <apex:outputText value="Audit Archiving has failed for EV SSL Audit with error: {!Account.EV_Audit_Update_Message__c}"/>
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!(Account.EV_Code_Signing_Audit_Update_Status__c != null && Account.EV_Code_Signing_Audit_Update_Status__c == 'Failed') || Account.EV_Code_Signing_Audit_Update_Message__c != null}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         <apex:outputText value="Audit Archiving has failed for EV Code Signing Audit with error: {!Account.EV_Code_Signing_Audit_Update_Message__c}"/>
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!strAuditSameAsParent != ''}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         {!strAuditSameAsParent}
+     </apex:outputPanel>
+     <apex:outputPanel rendered="{!strCPCPSSameAsParent != ''}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         {!strCPCPSSameAsParent}
+     </apex:outputPanel>
+     
+     <!--Message for intermediate certs-->
+     <apex:outputPanel rendered="{!Account.RecordType.Name == 'Intermediate Certificate' && Account.Revocation_Status__c == 'Not Revoked' && Account.Valid_To_GMT__c != null && Account.Valid_To_GMT__c < TODAY()}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         This intermediate certificate is expired, Valid To date is older than today.
+     </apex:outputPanel>
+     <!--Message When Parent Cert is revoked-->
+     <apex:outputPanel rendered="{!Account.RecordType.Name == 'Intermediate Certificate' && Account.Parent.Revocation_Status__c = 'Revoked'}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         The parent of this certificate is revoked.
+     </apex:outputPanel>
+     <!--Message When Cert is revoked-->
+     <apex:outputPanel rendered="{!Account.RecordType.Name == 'Intermediate Certificate' && Account.Revocation_Status__c = 'Revoked'}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         This certificate is revoked.
+     </apex:outputPanel>
+     
+     
+     <!--Message for Auditor Verification Date-->
+     <apex:outputPanel rendered="{!Account.RecordType.Name == 'Intermediate Certificate'}" style="display: block; color: red; font-weight: bold; text-align: center; ">
+         <apex:outputPanel rendered="{!ISNULL(Account.Date_Qualifications_Verified__c)}"></apex:outputPanel><apex:outputText style="display:block;" value="Auditor Verification Date is blank" rendered="{!ISNULL(Account.Date_Qualifications_Verified__c) && Account.Auditor_New__c != null && Account.Auditor_Location_New__c != null}"/>
+         <apex:outputPanel rendered="{!Account.Date_Qualifications_Verified__c != null && ADDMONTHS(TODAY(),-12) > Account.Date_Qualifications_Verified__c}"></apex:outputPanel><apex:outputText style="display:block;" value="Auditor Verification Date is is older than a year" rendered="{!Account.Date_Qualifications_Verified__c != null && ADDMONTHS(TODAY(),-12) > Account.Date_Qualifications_Verified__c}"/>
+     </apex:outputPanel>
+     
+     <!-- Message when CPA Canada Report URL Changed-->
+     <apex:outputPanel rendered="{!isStandardAuditReportURLNotFound}"><br/></apex:outputPanel>
+     <apex:outputText value="Standard Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." style="display: block; color: red; font-weight: bold; text-align: center; " rendered="{!isStandardAuditReportURLNotFound}"></apex:outputText>
+     <apex:outputPanel rendered="{!isCodeSigningAuditReportURLNotFound}"><br/></apex:outputPanel>
+     <apex:outputText value="Code Signing Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." style="display: block; color: red; font-weight: bold; text-align: center; " rendered="{!isCodeSigningAuditReportURLNotFound}"></apex:outputText>
+     <apex:outputPanel rendered="{!isBRAuditReportURLNotFound}"><br/></apex:outputPanel>
+     <apex:outputText value="BR Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." style="display: block; color: red; font-weight: bold; text-align: center; " rendered="{!isBRAuditReportURLNotFound}"></apex:outputText>
+     <apex:outputPanel rendered="{!isEVSSLAuditReportURLNotFound}"><br/></apex:outputPanel>
+     <apex:outputText value="EV SSL Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." style="display: block; color: red; font-weight: bold; text-align: center; " rendered="{!isEVSSLAuditReportURLNotFound}"></apex:outputText>
+     <apex:outputPanel rendered="{!isEVCodeSigningAuditReportURLNotFound}"><br/></apex:outputPanel>
+     <apex:outputText value="EV Code Signing Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." style="display: block; color: red; font-weight: bold; text-align: center; " rendered="{!isEVCodeSigningAuditReportURLNotFound}"></apex:outputText>
+     
+     <!--Message for ReProcess ALV-->
+     <apex:outputPanel rendered="{!strALVProcessed != null && strALVProcessed != ''}"><br/></apex:outputPanel>
+     <apex:outputText value="{!strALVProcessed}" rendered="{!strALVProcessed != null && strALVProcessed != ''}" style="display: block; color: red; font-weight: bold; text-align: center; "></apex:outputText>
+     
+     <!--Message for Technical Constrained-->
+     <apex:outputPanel rendered="{!strWarningTechnicalConstrained != null && strWarningTechnicalConstrained != ''}"><br/></apex:outputPanel>
+     <apex:outputText value="{!strWarningTechnicalConstrained }" rendered="{!strWarningTechnicalConstrained != null && strWarningTechnicalConstrained != ''}" style="display: block; color: red; font-weight: bold; text-align: center; "></apex:outputText>
+ <!--    
+   <div id="WebserviceFailed" style="display:none; background-color:#F0F5F5; border:1px solid #ccc; color: red; font-weight: bold; text-align: center; ">      
+         Parsing of cert data has failed with errors. Please provided correct PEM format for the Intermediate cert.
+    </div>
+ -->
+ <apex:outputText value="{!Account.Name}" rendered="false"/> 
+ <apex:outputText value="{!Account.AccountParentName__c}" rendered="false"/> 
+ <apex:outputText value="{!Account.Display_PEM_Info_Warning_Message__c}" rendered="false"/>
+ <apex:outputText value="{!Account.Audits_Same_as_Parent__c}" rendered="false"/>
+ <apex:outputText value="{!Account.Standard_Audit__c}" rendered="false"/>
+ <apex:outputText value="{!Account.BR_Audit__c}" rendered="false"/>
+ <apex:outputText value="{!Account.EV_Audit__c}" rendered="false"/>
+ <apex:outputText value="{!Account.CP_CPS_Same_as_Parent__c}" rendered="false"/>
+ <apex:outputText value="{!Account.Certificate_Policy_CP__c}" rendered="false"/>
+ <apex:outputText value="{!Account.Certification_Practice_Statement_CPS__c}" rendered="false"/>
+ <apex:outputText value="{!Account.Certificate_Issuer_Common_Name__c}" rendered="false"/>
+ <apex:outputText value="{!Account.Certificate_Issuer_Organization__c }" rendered="false"/>
+ <apex:outputText value="{!Account.Record_Type_name__c }" rendered="false"/>
+ <apex:outputText value="{!Account.Certificate_Subject_Common_Name__c }" rendered="false"/>
+ <apex:outputText value="{!Account.Certificate_Subject_Organization__c }" rendered="false"/>
+ <apex:outputText value="{!Account.Revocation_Status__c}" rendered="false"/>
+ 
+ <script type="text/javascript">
+ 
+    if ({!Account.Display_PEM_Info_Warning_Message__c==true} ) {
+         document.getElementById('AddUpdatePemInfoMessage').style.display = "block";
+    }
+    if ({!Account.name=='<Fill in Cert Name>'} ) {
+         document.getElementById('UpdateAccountNameMessage').style.display = "block";
+    } 
+    
+    var accRecordType = "{!Account.Record_Type_Name__c}";   
+    var accountName = "{!Account.Name}";   
+    var subjectCommonName = "{!Account.Certificate_Subject_Common_Name__c}";    
+    if(!subjectCommonName) { subjectCommonName = 'BLANK'; }   
+    var subjectOrganization = "{!Account.Certificate_Subject_Organization__c}";   
+    if(!subjectOrganization) { subjectOrganization = 'BLANK'; }
+    var accNameOfLenSubCommName = accountName.substring(0, subjectCommonName.length);
+    var accNameOfLenSubOrg = accountName.substring(0, subjectOrganization.length);  
+    var accParentName = "{!Account.AccountParentName__c}";
+    var issuerCommonName = "{!Account.Certificate_Issuer_Common_Name__c}";
+    var issuerOrg = "{!Account.Certificate_Issuer_Organization__c}";    
+    if(!issuerOrg){ issuerOrg = 'BLANK'; }
+    if(!issuerCommonName) { issuerCommonName = 'BLANK';}    
+    var accParentNameOfLenIssCommName = accParentName.substring(0, issuerCommonName.length); 
+    var accParentNameOfLenIssOrg = accParentName.substring(0, issuerOrg.length) 
+   
+    // console.log('subjectCommonName: '+subjectCommonName);
+    // console.log('accRecordType: '+accRecordType);     
+    // console.log('issuerOrg: '+issuerOrg);   
+    // console.log('issuerCommonName: '+issuerCommonName);
+    // console.log('accParentName: '+accParentName); 
+    // console.log('accParentNameOfLenIssCommName: '+accParentNameOfLenIssCommName);
+    // console.log('accParentNameOfLenIssOrg: '+accParentNameOfLenIssOrg); 
+    
+    // 'Parent CA Owner/Certificate' must equal issuerCN or issuerO from the PEM data  
+    //  Compare first part of 'Account.Parent.Name' to match Account.Certificate_Issuer_Common_Name__c or
+    //  Account.Certificate_Issuer_Organization__c. 'Account.Parent.Name' can have additional characters. 
+    
+    if (accRecordType == 'Intermediate Certificate')
+    {  
+         if (accParentNameOfLenIssCommName == issuerCommonName || accParentNameOfLenIssOrg == issuerOrg){          
+         } else {
+         document.getElementById('ParentNameDoesNotMatchMessage').style.display = "block";
+         }
+    } 
+        
+     // 'CA Owner/Certificate Name' must equal subjectCN or subjectO from the PEM data */
+     // Compare first part of 'CA Owner/Certificate Name' with 'Subject Common Name' or Subject Organization.
+     // 'CA Owner/Certificate Name' can have additional characters
+     
+    if (accRecordType == 'Intermediate Certificate') {
+        if (accNameOfLenSubCommName == subjectCommonName || accNameOfLenSubOrg == subjectOrganization){         
+        } else {
+            document.getElementById('AccountNameDoesNotMatchMessage').style.display = "block";    
+        } 
+           
+    }
+
+    //if ({!Account.Audits_Same_as_Parent__c == false && Account.Standard_Audit__c == null && Account.BR_Audit__c == null && Account.EV_Audit__c == null}) {
+    //     document.getElementById('FillAuditInfoOrCheckAuditSameAsParentMessage').style.display = "block";
+    //} 
+    
+    //if ({!Account.CP_CPS_Same_as_Parent__c == false && Account.Certificate_Policy_CP__c == null && Account.Certification_Practice_Statement_CPS__c == null}) {
+    //     document.getElementById('FillCPCPSInfoOrCheckCPCPSSameAsParentMessage').style.display = "block";
+    //}
+    
+    
+   </script>
+
+</apex:page>

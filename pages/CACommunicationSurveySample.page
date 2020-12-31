@@ -1,0 +1,86 @@
+<apex:page id="thePage" controller="CACommunicationSurveySampleController" cache="false"  readOnly="true" showHeader="false" docType="html-5.0">
+    <style type="text/css">
+        #survey_container{
+            padding: 20px 30px 20px 30px;       
+            margin: 0 auto; 
+            width: 1000px; 
+            box-shadow: 0 0 34px #CCCCCC;
+            -moz-box-shadow: 0 0 34px #CCCCCC;
+            -webkit-box-shadow: 0 0 34px #CCCCCC;
+        }
+        
+        .requiredText{
+            color:red;
+        }
+        
+        td.pbTitle {
+            width: 60% !important;
+        }
+    </style>
+    <apex:form id="theFrm">
+      
+      <div id="survey_container">
+        
+        <apex:pageBlock rendered="{!hasError}">
+            <apex:pageMessages />
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="{!communicationTitle}" id="queTable" rendered="{!!hasError}">
+            
+            <h1 class="question">
+                <apex:outputPanel >
+                    <apex:outputText value="{!communicationMessage}" escape="false" /><p/>
+                </apex:outputPanel>
+            </h1>
+            
+            <apex:repeat value="{!lstQuestions}" var="qPreview">
+
+                <div id="{!qPreview.id}" >
+                    
+                    <apex:pageBlock >
+                        
+                        <h1 class="question">
+                             
+                             <apex:outputText escape="false" value="{!qPreview.iQuestion}"/>
+                             
+                                <apex:outputPanel rendered="{!qPreview.isRequired}" styleClass="requiredText">
+                                    (Required)
+                                </apex:outputPanel>
+                                
+                                <br/><br/>
+                        </h1>
+                        
+                        <div id="radio"> 
+                          <apex:selectRadio layout="pageDirection" rendered="{!qPreview.renderSelectRadio}" value="{!qPreview.selectedOption}" disabled="true">
+                            <apex:selectOptions value="{!qPreview.singleOptions}"/>
+                          </apex:selectRadio>
+                        </div>
+                        
+                        <div id="checkbox">           
+                          <apex:selectCheckboxes layout="pageDirection" rendered="{!qPreview.renderSelectCheckboxes}" value="{!qPreview.selectedOptions}" disabled="true">
+                            <apex:selectOptions value="{!qPreview.multiOptions}"/>
+                          </apex:selectCheckboxes> 
+                        </div>
+                        
+                        <div id="text"> 
+                           <apex:inputTextArea cols="150" rows="10" rendered="{!qPreview.renderFreeText}" value="{!qPreview.choices}" disabled="true"/>  
+                        </div>
+                        
+                        <div id="dateType"> 
+                           <apex:input type="date" rendered="{!qPreview.renderDateType}" value="{!qPreview.dateResonse}" disabled="true"/>  
+                          
+                        </div>
+                         
+                    </apex:pageBlock>
+                    
+                </div>
+                    
+            </apex:repeat>
+            
+        </apex:pageBlock>
+        
+      </div>
+      
+    </apex:form>
+
+</apex:page>

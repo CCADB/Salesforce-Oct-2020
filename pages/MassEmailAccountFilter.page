@@ -1,0 +1,76 @@
+<apex:page standardController="Mass_Email__c"  extensions="MassEmailAccountFilterController" showHeader="false">
+
+
+ <apex:form id="filterForm">
+ 
+   <apex:pageBlock rendered="{!isSaved}">
+      <apex:pageBlockSection columns="1">
+         <font color="blue">
+            <b>Filter Conditions have been saved on the record. Go back to the detail record to preview/send emails.</b>
+         </font> 
+      </apex:pageBlockSection>
+   </apex:pageBlock>
+ 
+   <apex:pageBlock >
+     <br/>
+
+     <apex:pageBlockSection columns="2">
+
+          <SmartFilter:SmartFilter pageCont="{!this}" object="Account" />
+          
+          <font color="red">
+              <b> <br/>Caution:<br/> </b>        
+              <br/>Remove any unwanted leading/trailing blank spaces in 'Value' field.         
+              <br/>It can cause the filter to produce unexpected results.
+          </font>
+          
+     </apex:pageBlockSection>
+     
+     <apex:pageBlockSection columns="1"> 
+   
+        <font color="blue">
+            <b>Examples:</b> <br/><br/>
+        </font> 
+        
+        <b>1.</b>&nbsp; To create a filter for all CA Owners with Mozilla Status not equal to 'Removed' or 'Obsolete', select the following values from the drop down list and hit the 'Update Filter' button:<br/><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Field:</b> Record Type Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Operator:</b> equals &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Value:</b> CA Owner<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Field:</b> Mozilla Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Operator:</b> equals to&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Value:</b> Included,Change Requested &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        *** Please do not add quotes or blank spaces to list multiple values
+        <br/><br/>  
+         
+        <b>2.</b>&nbsp; To create a filter for all CA Owners with Mozilla Status not equal to 'Removed' or 'Obsolete', select the following values from the drop down list and hit the 'Update Filter' button:<br/><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Field:</b> Record Type Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Operator:</b> equals &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Value:</b> CA Owner<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Field:</b> Mozilla Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Operator:</b> not equal to&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Value:</b> Removed,Obsolete &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        *** Please do not add quotes or blank spaces to list multiple values
+        <br/><br/>
+        
+        <b>3.</b>&nbsp; To create a filter for all Root Certificates with Microsoft Status as 'Included' or 'Change Requested', select the following values from the drop down list and hit the 'Update Filter' button:<br/><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Field:</b> Record Type Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Operator:</b> equals&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Value:</b> Root Certificate<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Field:</b> Microsoft Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Operator:</b> equals&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Value:</b> Included,Change Requested &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        *** Please do not add quotes or blank spaces to list multiple values
+        <br/><br/>
+        
+        <b>4.</b>&nbsp; To create a filter for all Intermediate Certificates with Mozilla Status as 'Provided by CA' and Revocation Status as 'Not Revoked', select the following values from the drop down list and hit the 'Update Filter' button:<br/><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Field:</b> Record Type Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Operator:</b> equals&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Value:</b> Intermediate Certificate<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Field:</b> Mozilla Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Operator:</b> equals&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Value:</b> Provided by CA <br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Field:</b> Revocation Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Operator:</b> equals&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Value:</b> Not Revoked <br/>
+        <br/>
+                
+        <!-- <font color="forestgreen">
+              <b>*** Only POCs with active Salesforce license will be included in 'To' and 'CC' list. </b><br/><br/>       
+        </font> -->
+        
+     </apex:pageBlockSection>
+
+     <apex:commandButton value="Go Back" action="{!goBackToMassEmailRecord}" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     <apex:commandButton value="Update Filter Condition on Mass Email Record" action="{!fetchAccounts}" rerender="filterForm"/>
+
+      <apex:pageBlockTable value="{!objectList}" var="a" id="accountList">
+         <apex:column value="{!a.Name}"/>
+      </apex:pageBlockTable>
+    
+   </apex:pageBlock>
+
+ </apex:form>
+ 
+</apex:page>

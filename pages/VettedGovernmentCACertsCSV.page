@@ -1,0 +1,5 @@
+<apex:page controller="VettedGovernmentCACertsReportController" cache="true" expires="3600" showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/csv#VettedGovernmentCAsWithPEMReport.csv;charset=UTF-8" readOnly="true">"CA Owner Name","Certificate Name","Certificate SHA-256 Fingerprint","CA Website","Geographic Focus","Certificate Policies","Standard Audit Statement Link","Certificate PEM"
+<apex:repeat value="{!lstwrapAccounts}" var="wrapacc">
+"{!wrapacc.objAccount.Parent.Name}","{!wrapacc.objAccount.Name}","{!wrapacc.objAccount.SHA_256_Fingerprint__c}","{!wrapacc.objAccount.Parent.Company_Website__c}","{!wrapacc.objAccount.Parent.Geographic_Focus__c}","{!wrapacc.objAccount.Certificate_Policy_CP__c}","{!wrapacc.objAccount.Standard_Audit__c}","'{!wrapacc.objAccount.X_509_Certificate_PEM__c}'"
+</apex:repeat>
+</apex:page>

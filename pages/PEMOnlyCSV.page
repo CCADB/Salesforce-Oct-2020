@@ -1,0 +1,5 @@
+<apex:page controller="PEMOnlyReportController" cache="true" expires="3600" showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/csv#PEMOnlyReport.csv;charset=UTF-8" readOnly="true">"PEM"
+<apex:repeat value="{!lstRootCertificates}" var="rootcert">
+"'{!rootcert.X_509_Certificate_PEM__c}'"
+</apex:repeat>
+</apex:page>

@@ -1,0 +1,9 @@
+Dear {!Contact.FirstName}, 
+
+... Please add your message here .... 
+
+Regards, 
+
+{!User.FirstName} {!User.LastName} 
+{!User.CompanyName} 
+{!User.Title}

@@ -1,0 +1,121 @@
+<apex:component controller="batchJobs" selfClosing="true">
+    <apex:attribute name="numberOfJob" type="Integer" assignTo="{!numberOfJobs}" description="The number of batch jobs to display in the table."/>
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            .slds-scope .slds-table_cell-buffer tr > th:first-child, .slds-scope .slds-table_cell-buffer tr > td:first-child, .slds-scope .slds-table--cell-buffer tr > th:first-child, .slds-scope .slds-table--cell-buffer tr > td:first-child {
+                padding-left: 0.5rem !important;
+            }
+        </style>
+        <body>
+            <!-- This action poller will check the status of the batch jobs every 5 seconds -->
+            <apex:actionPoller rerender="jobs" interval="5" />
+            
+            <apex:outputPanel id="jobs">
+                <div id="SearchResults" style="margin-top:20px;">
+                    <table width="100%" class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--col-bordered" 
+                            style="border-spacing:0px !important;">
+                        <thead>
+                            <tr>
+                                <th width="12%" style="border-left: 1px solid rgb(221, 219, 218);"><b>Apex Class</b></th>
+                                <th width="10%"><b>Created Date</b></th>
+                                <th width="10%"><b>Created By</b></th>
+                                <th width="10%"><b>Status</b></th>
+                                <th width="7%"><b>Total Batches</b></th>
+                                <th width="7%"><b>Total Batches Processed</b></th>
+                                <th width="7%"><b>Number of Failures</b></th>
+                                <th width="28%"><b>Batch Progess</b></th>
+                                <th width="10%" style="border-right: 1px solid rgb(221, 219, 218);"><b>Completion Date</b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!batchJobs}" var="b" rendered="{!batchJobs != null && batchJobs.size > 0}">
+                                <tr>
+                                    <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                        {!b.job.ApexClass.Name}
+                                    </td>
+                                    <td>
+                                        <apex:outputField value="{!b.job.CreatedDate}"/>
+                                    </td>
+                                    <td>
+                                        <apex:outputField value="{!b.job.CreatedById}"/>
+                                    </td>
+                                    <td>
+                                        <apex:outputField value="{!b.job.Status}"/>
+                                    </td>
+                                    <td>
+                                        <apex:outputField value="{!b.job.TotalJobItems}"/>
+                                    </td>
+                                    <td>
+                                        <apex:outputField value="{!b.job.JobItemsProcessed}"/>
+                                    </td>
+                                    <td>
+                                        <apex:outputField value="{!b.job.NumberOfErrors}"/>
+                                    </td>
+                                    <td>
+                                        <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{!b.percentComplete}" role="progressbar">
+                                            <span class="slds-progress-bar__value" style="width: {!b.percentComplete}%;">
+                                                <span class="slds-assistive-text">Progress: {!b.percentComplete}%</span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                        <apex:outputField value="{!b.job.CompletedDate}"/>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                            <tr style="display:{!if(batchJobs == null || batchJobs.size == 0, '','none')}">
+                                <td colspan="100%"><i>No records to display.</i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </apex:outputPanel>
+        </body>
+    </html>
+    <!--
+    <style>
+        .progressBar{
+            background-color: #f8f8f8;
+            border:1px solid #DDDDDD;
+            height: 19px;
+            width: 300px;
+            -moz-border-radius: 5px; 
+            -webkit-border-radius: 5px;
+        }
+        .progress{
+            background-color: #F7B64B;
+            border:1px solid #E78F08;
+            height: 100%;
+            margin: -1px;
+            text-align: center;
+            -moz-border-radius: 5px; 
+            -webkit-border-radius: 5px;
+            line-height: 18px;
+        }
+    </style>
+ 
+    <apex:actionPoller rerender="jobs" interval="5"/>
+ 
+    <apex:pageBlock title="Batch Apex Jobs">
+        <apex:pageBlockTable value="{!batchJobs}" var="b" id="jobs">
+            <apex:column headerValue="Apex Class" value="{!b.job.ApexClass.Name}"/>
+            <apex:column value="{!b.job.CreatedDate}"/>
+            <apex:column value="{!b.job.CreatedById}"/>
+            <apex:column value="{!b.job.Status}"/>
+            <apex:column width="320px" >
+ 
+                <div class="progressBar">
+                    <div class="progress" style="width: {!b.percentComplete}%;">
+                        {!b.percentComplete}%
+                    </div>
+                </div>
+ 
+            </apex:column>
+            <apex:column value="{!b.job.CompletedDate}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>-->
+ 
+</apex:component>

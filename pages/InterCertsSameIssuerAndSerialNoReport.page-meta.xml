@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>40.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Intermediate Certificates with same Issuer &amp; Serial Number
+the intermediate certs for which the following fields are the same:
+
+Certificate Issuer Common Name
+Certificate Issuer Organization
+Certificate Issuer Organizational Unit
+Certificate Serial Number</description>
+    <label>InterCertsSameIssuerAndSerialNoReport</label>
+</ApexPage>

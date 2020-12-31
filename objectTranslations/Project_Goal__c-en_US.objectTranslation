@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Project Goal</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Project Goals</value>
+    </caseValues>
+    <fields>
+        <help><!-- Count of all activities related to this goal --></help>
+        <label><!-- Activity Count --></label>
+        <name>Activity_Count__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sum of all activities related to this goal --></help>
+        <label><!-- Actual Hours --></label>
+        <name>Actual_Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- As planned in SOW --></help>
+        <label><!-- Budgeted Hours --></label>
+        <name>Budgeted_Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- Red, if Actual &gt;= Budgeted
+Yellow, if Actual &lt;= 10% of Budgeted
+Green, if Actual &gt; 10% of Budgeted --></help>
+        <label><!-- Goal Alert --></label>
+        <name>Goal_Alert__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal Details --></label>
+        <name>Goal_Details__c</name>
+    </fields>
+    <fields>
+        <label><!-- Goal + Alert --></label>
+        <name>Goal_Plus_Alert__c</name>
+    </fields>
+    <fields>
+        <help><!-- As planned in SOW --></help>
+        <label><!-- Goal --></label>
+        <name>Goal__c</name>
+    </fields>
+    <fields>
+        <help><!-- Give a number to identify the relative importance of this goal --></help>
+        <label><!-- Priority --></label>
+        <name>Priority__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Name --></label>
+        <name>Project_Name__c</name>
+        <relationshipLabel><!-- Project Goals --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incomplete</masterLabel>
+            <translation><!-- Incomplete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Yet Started</masterLabel>
+            <translation><!-- Not Yet Started --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Postponed</masterLabel>
+            <translation><!-- Postponed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Work In Progress</masterLabel>
+            <translation><!-- Work In Progress --></translation>
+        </picklistValues>
+    </fields>
+    <layouts>
+        <layout>Project Goals Layout</layout>
+        <sections>
+            <label><!-- Comments --></label>
+            <section>Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Goal Budgeted vs Actual --></label>
+            <section>Goal Budgeted vs Actual</section>
+        </sections>
+        <sections>
+            <label><!-- Goal Details --></label>
+            <section>Goal Details</section>
+        </sections>
+        <sections>
+            <label><!-- Project Goal Details --></label>
+            <section>Project Goal Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Send_Email --></label>
+        <name>Send_Email</name>
+    </webLinks>
+</CustomObjectTranslation>

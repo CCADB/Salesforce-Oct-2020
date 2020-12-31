@@ -1,0 +1,186 @@
+<!-- *******************************************************************************************************
+ Name: RunBatchProcesses
+
+ Dependencies: RunBatchProcessesController controller class, RunBatchProcesses VF page, 
+ RunBatchProcessesControllerTest test class
+
+ Description: VF page for to run any batch processes.
+
+ Instructions: Can be accessed from 'Batch Processes' custom VF tab
+    
+ *******************************************************************************************************
+ Revision History:
+ 
+     7/9/2019 - Created new
+   
+ ****************************************************************************************************** -->
+  <apex:page controller="RunBatchProcessesController" showHeader="true" sideBar="false" docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+                font-weight:700;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+        </style>
+        <body>
+            <!--<hr style="margin:0px;border-top: 2px solid black;"/>-->
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header" style="margin-top:10px;">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Run</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle">Batch Processes</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <apex:pageMessages id="pgerror"></apex:pageMessages>
+                                <!--ALV Batch Process for Inter Certs-->
+                                <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;padding-left:10px;">
+                                        <span>ALV Batch Process for Inter Certs</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content" style="margin-top:10px;">
+                                        <span  style="color:red;">CAUTION: Click on the button below ONLY when you want to run ALV for intermediate certs.</span><br/><br/>
+                                        <apex:commandButton value="Run ALV Batch Job For Intermediate Certs" styleClass="slds-button slds-button_destructive" action="{!RunALVBatch}" reRender="jobs,pgerror" /> 
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--Batch Process for Inter Certs To Check Revocation-->
+                                <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;padding-left:10px;">
+                                        <span>Batch Process for Inter Certs To Verify Revocation</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content" style="margin-top:10px;">
+                                        <span  style="color:red;">CAUTION: Click on the button below ONLY when you want to verify revocation for Intermediate Certs and update the Revocation Verifctaion field. This program processes intermedate certs with Revocation Status = Revoked and Revocation Verfication = blank. No updates will be made to OneCRL Status field.</span><br/><br/>
+                                        <apex:commandButton value="Run Verify Revocation Batch Job For Intermediate Certs" styleClass="slds-button slds-button_destructive" action="{!RunVerifyRevocationBatch}" reRender="jobs,pgerror" /> 
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--Batch to Update Has Non constrained_Doppelganger-->
+                                <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;padding-left:10px;">
+                                        <span>Run Batch To Update 'Has Non Constrained Doppelganger?' field on Intermediate Certs</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content" style="margin-top:10px;">
+                                        <span  style="color:blue;">You can run this process anytime to populate 'Has Non constrained Doppelganger?' field.</span><br/><br/>
+                                        <apex:commandButton value="Run Batch Job to Update 'Has Non Constrained Doppelganger?' field" styleClass="slds-button slds-button_brand" action="{!RunBatchToUpdateDoppelganger}" reRender="jobs,pgerror" /> 
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--Batch to Update EV OIDs-->
+                                <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;padding-left:10px;">
+                                        <span>Run Batch To Update 'ExtendedValidation.cpp OIDs' field on Root Certs</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content" style="margin-top:10px;">
+                                        <span style="color:blue;">You can run this process anytime to populate 'ExtendedValidation.cpp OIDs' field.</span><br/><br/>
+                                        <apex:commandButton value="Run Batch Job to Update 'ExtendedValidation.cpp OIDs' field" styleClass="slds-button slds-button_brand" action="{!RunBatchToUpdateEVOIDs}" reRender="jobs,pgerror" /> 
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--Batch to Update PII User fields-->
+                                <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;padding-left:10px;">
+                                        <span>Run Batch To Update PII field on Users</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content" style="margin-top:10px;">
+                                        <span style="color:blue;">You can run this process anytime to clear PII field on User.</span><br/><br/>
+                                        <apex:commandButton value="Run Batch Job to Clear PII fields on User" styleClass="slds-button slds-button_brand" action="{!RunBatchToUpdateUserFields}" reRender="jobs,pgerror" /> 
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <!--AdditionalBatch programs-->
+                                <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;padding-left:10px;">
+                                        <span>Batch Programs - Sends Email Reminders to CAs and Summary Email to Root Store</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content" style="margin-top:10px;">
+                                        <span style="color:blue;">
+                                            The buttons to run these processes have not been added to avoid unintentional execution.<br/><br/>
+                                            1. Microsoft: Trusted Root Certificate Program Notice of Audit Non-Compliance<br/>
+                                            2. Mozilla: Audit Reminder, Overdue Audit Statements, Your root is in danger of being removed<br/>
+                                            3. Mozilla: Need Audit or CP/CPS for Intermediate Certificates<br/>
+                                            4. Outdated Audit Statements for Intermediate Certificates<br/>
+                                        </span><br/><br/>
+                                        
+                                        <!-- <apex:commandButton value="Add button names here' field" styleClass="slds-button slds-button_brand" action="{!pgm}" reRender="jobs,pgerror" /> -->
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                <br/>
+                                <c:BatchJobs id="jobs" numberOfJob="10"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

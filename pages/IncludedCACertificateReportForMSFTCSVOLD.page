@@ -1,0 +1,6 @@
+<!-- NOT BEING USED; REPLACED BY ANOTHER REPORT -->
+<apex:page controller="IncludedCACertificateReportCtlrForMSFT" cache="true" expires="3600" showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/csv#IncludedCACertificateReportForMSFT.csv;charset=UTF-8" readOnly="true">"CA Name","Root Certificate","SHA-1 Thumbprint","SHA-256 Thumbprint","Trust Bits","EV Policy OID(s)"
+<apex:repeat value="{!AccountSoLst}"  var="account">
+"{!account.Parent.Name}","{!account.Friendly_Name__c}","{!account.SHA_1_Fingerprint__c}","{!account.SHA_256_Fingerprint__c}","{!account.Microsoft_Trust_Bits__c}","{!account.Microsoft_EV_Policy_OID_s__c}"
+</apex:repeat>
+</apex:page>

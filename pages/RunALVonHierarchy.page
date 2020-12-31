@@ -1,0 +1,219 @@
+<!--
+/*******************************************************************************************************
+ Name: RunALVonHierarchy
+
+ Dependencies: RunALVonHierarchyController controller class, RunALVonHierarchy vf page, 
+ RunALVonHierarchyControllerTest
+
+ Description: This is a vf page for RunALVonHierarchyController class.
+ The controller class is created to clear the ALV fields and run ALV on hierarchy from
+ a button on root cert for all intermediate certs which have Audits Same As Parent set 
+ to True. "Run ALV on Hierarchy" button on root cert page allows root store operators to
+ rerun ALV for the certs which are in the hierarchy. One inter cert is sent to ALV for 
+ processing at a time. It calls common methods from RunALVForInterCertsBatch.
+ 
+ There is another process that is related to ALV processing on inter certs. When a user makes 
+ changes to auditor or audit fields on root or intermediate certificate records, the account 
+ trigger (UpdateALVDateProcessed method) will traverse down the hierarchy to clear all of the ALV 
+ fields for child (grandchild, etc) records that have "Audits Same as Parent" (includes 
+ expired and revoked). There are 3 ways ALV can be rerun for these certs:
+ 1. A nightly scheduled batch job "ALV Batch for Inter Certs" will automatically pick these
+ inter certs and rerun ALV.
+ 2. A system admin can initiate "ALV Batch for Inter Certs" batch process anytime from 
+ "Batch Processes" custom tab.
+ 3. "Use this "Run ALV on Hierarchy" process from a button on the root cert.
+ 
+ Instructions: 
+
+ *******************************************************************************************************
+ Revision History:
+ 
+     10/26/2019 - Created new 
+
+-->
+<apex:page standardController="Account" sideBar="false" docType="html-5.0" extensions="RunALVonHierarchyController">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+                font-weight:700;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+            .dateFormat {
+                display:none;
+            }
+            .clsMultiPicklist select {
+                width:200px !important;
+                height:100px !important;
+            }
+            .clsPIMultiPicklist select {
+                width:200px !important;
+                height:265px !important;
+            }
+            .slds-scope .slds-dueling-list__column_responsive {
+                flex-wrap: nowrap;
+            }
+        </style>
+        <body>
+            <!--<hr style="margin:0px;border-top: 2px solid black;"/>-->
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Run ALV on Hierarchy</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle">{!Account.Name}</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <apex:pageMessages ></apex:pageMessages>
+                                <apex:outputPanel layout="block" rendered="{!!isRunALV}">
+                                    Do you want to run ALV on this root hierarchy where Audits Same as Parent is checked? Click on 'Yes' to initiate the job. <br/><br/>
+                                </apex:outputPanel>
+                                <apex:commandButton value="Yes" status="Processing" reRender="frm"  action="{!RunALVForChildAccounts}" styleClass="slds-button slds-button_brand" 
+                                        oncomplete="overridePageMessages();" rendered="{!!isRunALV}"/>
+                                <apex:commandButton value="Go Back"  action="{!Cancel}" styleClass="slds-button slds-button_outline-brand"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+            <script>
+                function overridePageMessages(){    
+                    var textureEffect = '';
+                    //Uncomment below line for texture effect on page messages
+                    textureEffect = 'slds-theme--alert-texture';
+                                 
+                    $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);          
+                    $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);    
+                    $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+                    $('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);    
+                                     
+                    $('.errorM3').removeClass('errorM3'); 
+                    $('.confirmM3').removeClass('confirmM3'); 
+                    $('.infoM3').removeClass('infoM3');   
+                    $('.warningM3').removeClass('warningM3'); 
+                    $('.btnTempClickLeftclass').trigger('click'); 
+                }
+            </script>
+        </body>
+        <!------------- Start: Processing Div---------------------------------------->
+        <style>
+            .msgIcon {
+                display: none!important
+            }
+            .messageCell {
+                width:100%;
+            }
+            .customMessage * {
+                color: #fff!important
+            }
+            .customMessage {
+                margin: 5px 0!important;
+                opacity: 1!important;
+                width: 100%;
+                //font-size: 12px;
+                border: 0px;
+                padding-left: 10px;
+            }
+            .ProcessingBackground {
+                background-color: #fff;
+                opacity: 0.60;
+                filter: alpha(opacity = 50);
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                z-index: 9998;
+                top:0;
+                left:0;
+            }
+            .Processing {
+                z-index: 9999;
+                left: 47.5%;
+                top: 50%;
+                text-align: center;
+                position: fixed;
+            } 
+    
+        </style>
+        <div id="divProcessing" style="display:none;">
+            <div class="ProcessingBackground"></div>
+            <div class="Processing">    
+                <div class="slds-spinner_container">
+                    <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                        <span class="slds-assistive-text">Loading</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div> 
+            </div>
+            <apex:actionStatus id="Processing" onstart="document.getElementById('divProcessing').style.display = '';" onstop="document.getElementById('divProcessing').style.display = 'none';" />                            
+
+        </div>  
+        <!------------- End: Processing Div---------------------------------------->
+    </html>
+</apex:page>

@@ -1,0 +1,23 @@
+<apex:page controller="CACommSummaryReportController" showHeader="false" sideBar="false" cache="true" expires="3600">
+
+ <style> .pbTitle{width: 100% !important;}</style>
+<apex:pagemessages />
+
+  <apex:sectionHeader title="CA Responses to {!surveyName}"/>
+     
+  <apex:repeat value="{!resultMap2}" var="outerKey">
+   <apex:pageBlock title="{!outerKey}">
+    <apex:repeat value="{!resultMap2[outerKey]}" var="innerKey">
+       <apex:pageBlock >
+        <apex:repeat value="{!resultMap2[outerKey][innerKey]}" var="answerLst">
+              <apex:pageBlockTable value="{!answerLst}" var="QnA" style="width:100%;table-layout:fixed;"> 
+                  <apex:column headerValue="Action"   style="width:50%;word-wrap:break-word;"> <apex:outputText value="{!QnA.question}" escape="false"/></apex:column>
+                  <apex:column headerValue="Response" style="width:50%;word-wrap:break-word;"> <apex:outputText value="{!QnA.answer}" style="white-space: pre-wrap; layout='block'"/></apex:column>        
+             </apex:pageBlockTable>
+        </apex:repeat>
+       </apex:pageBlock>
+    </apex:repeat>
+   </apex:pageBlock>
+ </apex:repeat>
+
+</apex:page>

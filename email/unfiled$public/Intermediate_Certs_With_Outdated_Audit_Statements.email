@@ -1,0 +1,24 @@
+Dear Certification Authority, <br><br>
+
+Your CA has <#> intermediate certificate records in the Common CA Database (CCADB) that have outdated audit statements. Please login to the CCADB to provide audit and policy information as described here:
+<br><br>
+ccadb.org/cas/intermediates
+<br><br>
+A report of the intermediate certificates that need to be updated may be found by logging into the CCADB, clicking on the 'Reports' tab and the 'CA Community Reports' folder. The report is called "My Outdated Audit Statements for ICs"
+<br><br>
+
+{!IntermediateCertificateList} 
+<br>
+
+(#10#)
+<br><br>
+
+This is an automated email that will be sent regularly until the audit statements have been updated in your CA's intermediate certificate records in the CCADB. 
+
+<br><br> 
+Regards,  
+<br><br>
+
+{!User.FirstName} {!User.LastName} <br>
+{!User.CompanyName} <br>
+{!User.Title} <br>

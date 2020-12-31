@@ -1,0 +1,654 @@
+<!--
+ *******************************************************************************************************
+ Name: CAHomePage
+
+ Dependencies: CAHomePageController controller class, CAHomePage vf page, 
+ CAHomePageControllerTest test class
+
+ Description: This is CA's Task List report (added to home page). It generates
+ various reports and a summary wih record count for the CA Owner to which the logged in user is 
+ associated. Detail report is only displayed when the record count is greater than 1.
+ 
+ Root Certs with Outdated Audit Statements
+ Intermediate Certs with Outdated Audit Statements
+ Intermediate Certs with no audit information provided
+ Intermediate Certs with no CP/CPS information provided
+ Externally Operated Intermediate Certs missing Owner or Auditor Info
+ Contacts who may be obsolete
+ 
+ Instructions: Add the VF page to CA's home page
+ *******************************************************************************************************
+ Revision History:
+ 
+     5/31/2019 - Created new class
+    12/16/2019 - Updated columns "Check failed Audit Letter Validation (ALV) results"
+ ******************************************************************************************************
+ -->
+<apex:page controller="CAHomePageController" showHeader="false" sideBar="false" docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+                font-weight:700;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+        </style>
+        <body>
+            <!--<hr style="margin:0px;border-top: 2px solid black;"/>-->
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header" style="margin-top:10px;">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Task List</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle">For {!strCAOwnerName}</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <!--summary of all sections-->
+                                <div class = "slds-section slds-is-open"> 
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-truncate slds-p-horizontal_small">
+                                            Summary <apex:outputPanel rendered="{!(lstOutDatedRootCerts != null && lstOutDatedRootCerts.size > 0) || (lstOutDatedIntermediateCerts != null && lstOutDatedIntermediateCerts.size > 0) || (lstIntermediateCertsNoAudits != null && lstIntermediateCertsNoAudits.size > 0) || (lstIntermediateCertsNoCPCPS != null && lstIntermediateCertsNoCPCPS.size > 0) || (lstUsersNotUsed != null && lstUsersNotUsed.size > 0)}"> (Click on the arrows to see the details)</apex:outputPanel> 
+                                        </span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Root Certs with Outdated Audit Statements: {!lstOutDatedRootCerts.size}</label>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Intermediate Certs with Outdated Audit Statements: {!lstOutDatedIntermediateCerts.size}</label>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Intermediate Certs with no audit information provided: {!lstIntermediateCertsNoAudits.size}</label>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Intermediate Certs with no CP/CPS information provided: {!lstIntermediateCertsNoCPCPS.size}</label>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Intermediate Certs missing Subordinate CA Owner or Auditor Info: {!lstIntermediateCertsMissingInfo.size}</label>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Intermediate Certs with Failed ALV Results: {!lstIntermediateCertsALVResults.size}</label>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Contacts who may be obsolete: {!lstUsersNotUsed.size}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!--outdated Root certs-->
+                                <apex:outputPanel rendered="{!lstOutDatedRootCerts != null && lstOutDatedRootCerts.size > 0}" layout="block" styleClass="slds-section slds-is-close">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                            <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                            </svg>
+                                        </span>
+                                        <span>Provide updated Audit Statements for these Root Certs</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-form-element" style="text-align:left;margin-bottom:10px;">
+                                            <label class="slds-form-element__label" style="font-weight:bold;">
+                                                Instructions: Create an Audit Case to submit updated audits for root certs, as described here: <a href="https://ccadb.org/cas/updates" target="_blank">https://ccadb.org/cas/updates</a>
+                                            </label>
+                                        </div>
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="Root Certificate Name">Root Certificate Name</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Standard Audit Period End Date">Standard Audit Period End Date</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Code Signing Audit Period End Date">Code Signing Audit Period End Date</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="BR Audit Period End Date">BR Audit Period End Date</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="EV SSL Audit Period End Date">EV SSL Audit Period End Date</div>
+                                                    </th>
+                                                    <th scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="EV Code Signing Audit Period End Date">EV Code Signing Audit Period End Date</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstOutDatedRootCerts}" var="account" rendered="{!lstOutDatedRootCerts != null && lstOutDatedRootCerts.size > 0}">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputLink value="/{!account.Id}" target="_blank">{!account.Name}</apex:outputLink>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!account.Standard_Audit_Period_End_Date__c}" /> </apex:outputText>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!account.Code_Signing_Audit_Period_End_Date__c}" /> </apex:outputText>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!account.BR_Audit_Period_End_Date__c}" /> </apex:outputText>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!account.EV_Audit_Period_End_Date__c}" /> </apex:outputText>
+                                                        </td>
+                                                        <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!account.EV_Code_Signing_Audit_Period_End_Date__c}" /> </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(lstOutDatedRootCerts == null || lstOutDatedRootCerts.size == 0,'','none')}">
+                                                    <td colspan="6" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                                <!--outdated Intermediate certs-->
+                                <apex:outputPanel rendered="{!lstOutDatedIntermediateCerts != null && lstOutDatedIntermediateCerts.size > 0}" layout="block" styleClass="slds-section slds-is-close">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                            <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                            </svg>
+                                        </span>
+                                        <span>Provide updated Audit Statements for these Intermediate Certs</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-form-element" style="text-align:left;margin-bottom:10px;">
+                                            <label class="slds-form-element__label" style="font-weight:bold;">
+                                                Instructions: Directly edit each intermediate cert record to provide updated audit information.
+                                            </label>
+                                        </div>
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="Intermediate Certificate Name">Intermediate Certificate Name</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Standard Audit Period End Date">Standard Audit Period End Date</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Code Signing Audit Period End Date">Code Signing Audit Period End Date</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="BR Audit Period End Date">BR Audit Period End Date</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="EV SSL Audit Period End Date">EV SSL Audit Period End Date</div>
+                                                    </th>
+                                                    <th scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="EV Code Signing Audit Period End Date">EV Code Signing Audit Period End Date</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstOutDatedIntermediateCerts}" var="account" rendered="{!lstOutDatedIntermediateCerts != null && lstOutDatedIntermediateCerts.size > 0}">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputLink value="/{!account.Id}" target="_blank">{!account.Name}</apex:outputLink>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!account.Standard_Audit_Period_End_Date__c}" /> </apex:outputText>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!account.Code_Signing_Audit_Period_End_Date__c}" /> </apex:outputText>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!account.BR_Audit_Period_End_Date__c}" /> </apex:outputText>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!account.EV_Audit_Period_End_Date__c}" /> </apex:outputText>
+                                                        </td>
+                                                        <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!account.EV_Code_Signing_Audit_Period_End_Date__c}" /> </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(lstOutDatedIntermediateCerts == null || lstOutDatedIntermediateCerts.size == 0,'','none')}">
+                                                    <td colspan="6" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                                <!--Intermediate Certs with no audit information provided-->
+                                <apex:outputPanel rendered="{!lstIntermediateCertsNoAudits != null && lstIntermediateCertsNoAudits.size > 0}" layout="block" styleClass="slds-section slds-is-close">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                            <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                            </svg>
+                                        </span>
+                                        <span>Provide Audit Information for these Intermediate Certs</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-form-element" style="text-align:left;margin-bottom:10px;">
+                                            <label class="slds-form-element__label" style="font-weight:bold;">
+                                                Instructions: Directly edit each intermediate cert record to provide audit information or select the "Audits Same as Parent" box.
+                                            </label>
+                                        </div>
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="Intermediate Certificate Name">Intermediate Certificate Name</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstIntermediateCertsNoAudits}" var="account" rendered="{!lstIntermediateCertsNoAudits != null && lstIntermediateCertsNoAudits.size > 0}">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputLink value="/{!account.Id}" target="_blank">{!account.Name}</apex:outputLink>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(lstIntermediateCertsNoAudits == null || lstIntermediateCertsNoAudits.size == 0,'','none')}">
+                                                    <td colspan="1" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                                <!--Intermediate Certs with no CP/CPS info provided-->
+                                <apex:outputPanel rendered="{!lstIntermediateCertsNoCPCPS != null && lstIntermediateCertsNoCPCPS.size > 0}" layout="block" styleClass="slds-section slds-is-close">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                            <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                            </svg>
+                                        </span>
+                                        <span>Provide CP/CPS Information for these Intermediate Certs</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-form-element" style="text-align:left;margin-bottom:10px;">
+                                            <label class="slds-form-element__label" style="font-weight:bold;">
+                                                Instructions: Directly edit each intermediate cert record to provide CP/CPS information or select the "CP/CPS Same as Parent" box.
+                                            </label>
+                                        </div>
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="Intermediate Certificate Name">Intermediate Certificate Name</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstIntermediateCertsNoCPCPS}" var="account" rendered="{!lstIntermediateCertsNoCPCPS != null && lstIntermediateCertsNoCPCPS.size > 0}">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputLink value="/{!account.Id}" target="_blank">{!account.Name}</apex:outputLink>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(lstIntermediateCertsNoCPCPS == null || lstIntermediateCertsNoCPCPS.size == 0,'','none')}">
+                                                    <td colspan="1" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                                <!--Externally Operated Intermediate Certs missing Owner or Auditor Info-->
+                                <apex:outputPanel rendered="{!lstIntermediateCertsMissingInfo != null && lstIntermediateCertsMissingInfo.size > 0}" layout="block" styleClass="slds-section slds-is-close">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                            <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                            </svg>
+                                        </span>
+                                        <span>Provide missing Subordinate CA Owner or Auditor Info for these Intermediate Certs </span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-form-element" style="text-align:left;margin-bottom:10px;">
+                                            <label class="slds-form-element__label" style="font-weight:bold;">
+                                                Instructions: Click on the link in the 'Certificate Name' column to go to the 
+                                                intermediate certificate record, then Edit the record to fill in the 
+                                                'Subordinate CA Owner' and  'Auditor' fields. When an intermediate                                                                                           
+                                                certificate record in the CCADB corresponds to a certificate which has
+                                                an audit for the operational and issuance activities that names an
+                                                organization different than the organization named in the audit
+                                                statement of the parent record in CCADB, then fill in the 'Subordinate
+                                                CA Owner' field to indicate the name of the organization as it appears<!--'-->
+                                                in the intermediate certificate's operational audit. Also fill in the<!--'-->
+                                                Auditor name as it appears in the audit statements.
+                                            </label>
+                                        </div>
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <div title="Certificate Name">Certificate Name
+                                                        </div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div title="Valid To (GMT)">Valid To (GMT)</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div title="Subordinate CA Owner">Subordinate CA Owner</div>
+                                                    </th>
+                                                    <th scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div title="Auditor">Auditor</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstIntermediateCertsMissingInfo}" var="account" rendered="{!lstIntermediateCertsMissingInfo != null && lstIntermediateCertsMissingInfo.size > 0}">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputLink value="/{!account.Id}" target="_blank">{!account.Name}</apex:outputLink>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Valid_To_GMT__c}"/>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Subordinate_CA_Owner__c}"/>
+                                                        </td>
+                                                        <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputField value="{!account.Auditor_New__c}"/>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(lstIntermediateCertsMissingInfo == null || lstIntermediateCertsMissingInfo.size == 0,'','none')}">
+                                                    <td colspan="6" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                                <!--Intermediate certs with ALV Results-->
+                                <apex:outputPanel rendered="{!lstIntermediateCertsALVResults != null && lstIntermediateCertsALVResults.size > 0}" layout="block" styleClass="slds-section slds-is-close">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                            <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                            </svg>
+                                        </span>
+                                        <span>Check failed Audit Letter Validation (ALV) results</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-form-element" style="text-align:left;margin-bottom:10px;">
+                                            <label class="slds-form-element__label" style="font-weight:bold;">
+                                                Instructions: The intermediate
+                                                            certificates listed below have a failed Audit Letter Validation (ALV)
+                                                            result. Please check the intermediate certificate to make sure it’s
+                                                            SHA-256 Fingerprint is correctly listed in the corresponding audit
+                                                            statements. If you do not agree with the ALV results, add comments to
+                                                            the ‘Standard Audit ALV Comments’ or ‘BR Audit ALV Comments’ fields in
+                                                            the intermediate certificate record.
+                                            </label>
+                                        </div>
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <div title="Certificate Name">Certificate Name
+                                                        </div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div title="SHA-256 Fingerprint">SHA-256 Fingerprint</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div title="Audits Same As Parent">Audits Same As Parent</div>
+                                                    </th>
+                                                    <!-- <th scope="col">
+                                                        <div title="Valid To (GMT)">Valid To (GMT)</div>
+                                                    </th>
+                                                     
+                                                    <th scope="col">
+                                                        <div title="OneCRL Status">OneCRL Status</div>
+                                                    </th>    
+                                                     -->                                    
+                                                    <th scope="col">
+                                                        <div title="Mozilla Root Status">Mozilla Root Status</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div title="Microsoft Root Status">Microsoft Root Status</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div title="Standard Audit ALV Found Cert">Standard Audit ALV Found Cert</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div title="Standard Audit ALV Comments">Standard Audit ALV Comments</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div title="BR Audit ALV Found Cert">BR Audit ALV Found Cert</div>
+                                                    </th>
+                                                    <th scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div title="BR Audit ALV Comments">BR Audit ALV Comments</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstIntermediateCertsALVResults}" var="account" rendered="{!lstIntermediateCertsALVResults != null && lstIntermediateCertsALVResults.size > 0}">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputLink value="/{!account.Id}" target="_blank">{!account.Name}</apex:outputLink>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.SHA_256_Fingerprint__c}"/>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Audits_Same_as_Parent__c}"/>
+                                                        </td>
+                                                        <!-- 
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Valid_To_GMT__c}"/>
+                                                        </td>
+                                                        
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.OneCRL_Status__c}"/>
+                                                        </td> 
+                                                        -->
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Root_Cert_Id__r.Status__c}"/>
+                                                        </td>                                                      
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Root_Cert_Id__r.Microsoft_Status__c}"/>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Standard_Audit_ALV_Found_Cert__c}"/>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Standard_Audit_ALV_Comments__c}"/>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.BR_Audit_ALV_Found_Cert__c}"/>
+                                                        </td>
+                                                        <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputField value="{!account.BR_Audit_ALV_Comments__c}"/>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(lstIntermediateCertsALVResults == null || lstIntermediateCertsALVResults.size == 0,'','none')}">
+                                                    <td colspan="6" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                                <!-- Missing information on CA Owner record such as Address, CAA, Problem Reporting Mechanism -->
+                                <!--<apex:outputPanel rendered="{!strMissingCAOwnerInfo != null && strMissingCAOwnerInfo != ''}" layout="block" styleClass="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-truncate slds-p-horizontal_small">Missing information on CA Owner record</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content" style="margin-left:25px;">
+                                        <apex:outputText escape="false" value="{!strMissingCAOwnerInfo}"></apex:outputText>
+                                    </div>
+                                </apex:outputPanel>-->
+                                <!--Contacts that not login more than 2 years--> 
+                                <apex:outputPanel rendered="{!lstUsersNotUsed != null && lstUsersNotUsed.size > 0}" layout="block" styleClass="slds-section slds-is-close">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-icon_container slds-icon__svg--default clsExpandCollapse slds-custom-right" style="margin-left:5px;cursor:pointer;">
+                                            <svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use>
+                                            </svg>
+                                        </span>
+                                        <span>Determine which of these Contacts are Obsolete</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-form-element" style="text-align:left;margin-bottom:10px;">
+                                            <label class="slds-form-element__label" style="font-weight:bold;">
+                                                Instructions: Send email to <a href="mailto:support@ccadb.org">support@ccadb.org</a> to indicate obsolete users who no longer need access to the CCADB.
+                                            </label>
+                                        </div>
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="Contact Name">Contact Name</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Type">Type</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Email">Email</div>
+                                                    </th>
+                                                    <th scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="Last Login On">Last Login On</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstUsersNotUsed}" var="user" rendered="{!lstUsersNotUsed != null && lstUsersNotUsed.size > 0}">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <!--<apex:outputLink value="/{!user.Id}" target="_blank">{!user.Name}</apex:outputLink>-->
+                                                            {!user.Name}
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!user.Contact.Type__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!user.Email}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputField value="{!user.LastLoginDate} "> </apex:outputField>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(lstUsersNotUsed == null || lstUsersNotUsed.size == 0,'','none')}">
+                                                    <td colspan="4" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+            <script>
+                $(document).on('click','.clsExpandCollapse',function(){
+                    var downarrow = '<svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;margin-right:3px;">\
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevrondown")}"></use> \
+                                            </svg>';
+                    var rightarrow = '<svg class="slds-icon slds-icon-text-default" aria-hidden="true" style="width:1.2rem;fill:black;">\
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#chevronright")}"></use> \
+                                            </svg>';
+                    
+                    var selected = false;
+                    if($(this).hasClass('slds-custom-down')){
+                        selected = true;
+                    }
+                    if(selected == false){
+                        $(this).removeClass('slds-custom-right').addClass('slds-custom-down');
+                        $(this).html('');
+                        $(this).html(downarrow);
+                        $(this).closest('div.slds-section').removeClass('slds-is-close').addClass('slds-is-open');
+                    } else {
+                        $(this).removeClass('slds-custom-down').addClass('slds-custom-right');
+                        $(this).html('');
+                        $(this).html(rightarrow);
+                        $(this).closest('div.slds-section').removeClass('slds-is-open').addClass('slds-is-close');
+                    }
+                });
+            </script>
+        </body>
+    </html>
+</apex:page>

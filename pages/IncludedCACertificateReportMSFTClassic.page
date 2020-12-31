@@ -1,0 +1,124 @@
+<apex:page controller="IncludedCACertificateReportCtlrForMSFT" showHeader="false" sideBar="false" cache="true" expires="3600" readOnly="true">>
+ 
+     <apex:pagemessages />
+
+     <apex:sectionHeader title="Microsoft Trusted Root Certificate Program: Participants"/>
+    
+    <style>
+         tr.dataRow {
+           background-color:white;
+         }
+         tr.dataRow:hover {
+           background-color: #e3f3ff;
+         };
+         td.datacell {
+         border-style: none;
+         };
+
+         .bPageBlock {
+           padding-left:50px !important;
+         };
+     </style>
+
+<div class="apexp" style="padding-left:40px; padding-bottom:50px; width:135%;">
+    <div id="pageBlockBody"  class="bPageBlock brandSecondaryBrd apexDefaultPageBlock secondaryPalette">
+        <div class="pbHeader">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr><td class="pbTitle"><h2 class="mainTitle">As of {!currentDate}</h2></td><td>&nbsp;</td></tr></tbody>
+            </table>
+       </div>
+     <div class="pbBody">
+      <table class="list " border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed;" >
+           <tr class="headerRow"> 
+              <th class="headerRow" style="width:20%;font-size:135%;font-weight:bold;white-space:pre-wrap;">CA Name</th>
+              <th class="headerRow" style="width:15%;font-size:135%;font-weight:bold;white-space:pre-wrap;">Root Certificate</th>
+              <th class="headerRow" style="width:11%;font-size:135%;font-weight:bold;white-space:pre-wrap;">SHA-1 Thumbprint</th>
+              <th class="headerRow" style="width:18%;font-size:135%;font-weight:bold;white-space:pre-wrap;">SHA-256 Thumbprint</th>
+              <th class="headerRow" style="width:28%;font-size:135%;font-weight:bold;white-space:pre-wrap;">Trust Bits</th>
+              <th class="headerRow" style="width:15%;font-size:135%;font-weight:bold;white-space:pre-wrap;">EV Policy OID(s)</th>
+           </tr>
+
+           <apex:variable var="prevCAOwner" value="Null"/>
+           
+           <apex:repeat value="{!AccountSoLst}"  var="account"> 
+    
+             <apex:outputPanel rendered="{!account.Parent.Name != prevCAOwner}"> 
+             
+               <tr class="dataRow">
+               
+                 <td class="headercell" style="border-style:none;">
+                   <br/>
+                 </td>
+                 
+               </tr>
+               <tr class="dataRow">
+               
+                  <td class="headercell" style="font-size:135%;font-weight:bold;border-bottom-width:1px;">
+                     <apex:outputText value="{!account.Parent.Name}" />
+                  </td> 
+                  <td class="headercell" style="font-size:135%;font-weight:bold;border-bottom-width:1px;">
+                     <apex:outputText value="" />
+                  </td>
+                  
+                  <td class="headercell" style="font-size:135%;font-weight:bold;border-bottom-width:1px;">
+                     <apex:outputText value="" />
+                  </td>                  
+                  <td class="headercell" style="font-size:135%;font-weight:bold;border-bottom-width:1px;">
+                     <apex:outputText value="" />
+                  </td>  
+                  <td class="headercell" style="font-size:135%;font-weight:bold;border-bottom-width:1px;">
+                     <apex:outputText value="" />
+                  </td> 
+                  <td class="headercell" style="font-size:135%;font-weight:bold;border-bottom-width:1px;">
+                     <apex:outputText value="" />
+                  </td>                
+               </tr>
+               
+             </apex:outputPanel>       
+           
+           <tr class="dataRow">
+           
+             <td class="datacell" style="border-style:none;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Parent.Name}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-style:none;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputText value="{!account.Friendly_Name__c}" escape="false" > </apex:outputText>
+                </apex:outputPanel>
+              </td>  
+              
+              <td class="datacell" style="border-style:none;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.SHA_1_Fingerprint__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td> 
+              
+              <td class="datacell" style="border-style:none;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.SHA_256_Fingerprint__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>                                                                             
+
+             <td class="datacell" style="border-style:none;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Microsoft_Trust_Bits__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>                                                                             
+
+             <td class="datacell" style="border-style:none;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Microsoft_EV_Policy_OID_s__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td> 
+            </tr>
+
+            <apex:variable var="prevCAOwner" value="{!account.Parent.Name}" />
+            
+           </apex:repeat>
+       </table>
+   </div><div class="pbFooter secondaryPalette"><div class="bg"></div></div></div></div>
+
+ </apex:page>

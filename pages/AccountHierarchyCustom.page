@@ -1,0 +1,85 @@
+<apex:page standardController="Account" tabStyle="Account" extensions="AccountStructureCustom" readOnly="true" sidebar="false" 
+            standardStylesheets="false" action="{!CheckChildSize}" lightningStylesheets="true"> 
+    <apex:sectionHeader title="Account Hierarchy" subtitle="{!Account.Name}" rendered="{!isShowHeader}"/>
+    <div style="margin:10px;"> <!--style="height: 25000px" class="bodyDiv" onclick="resizeFrame();"-->
+        <div class="treeNode">
+            <apex:repeat value="{!lstObjectStructure}" var="pos" >
+            <apex:repeat value="{!pos.levelFlag}" var="flag" first="0">
+                <apex:image url="/img/tree/empty.gif" height="16" width="20" rendered="{!IF(flag,false,true)}"/>
+                <apex:image url="/s.gif" alt="" width="3" height="16" rendered="{!IF(flag,true,false)}"/>
+                <apex:image url="/img/tree/chain.gif" height="16" width="20" rendered="{!IF(flag,true,false)}"/>
+            </apex:repeat>
+
+            <span height="16" v="top">
+
+            <apex:outputText rendered="{!IF(pos.nodeType=='start',true,false)}">
+                <apex:image id="tree_start" url="/img/tree/minusStart.gif" height="16" width="20" title="Click to expand/collapse nested items." onClick="TreeNodeElement.prototype.toggle(this,'{!pos.nodeId}')"/>
+                <!--<apex:image id="Icon_start" url="/img/icon/custom51_100/globe16.png" width="16" height="16" rendered="{!IF(pos.currentNode,false,true)}"/>-->
+                <apex:image id="Icon_start" url="{!URLFOR($Resource.Office15x15)}" width="16" height="16" rendered="{!IF(pos.currentNode,false,true)}"/>
+                <apex:image id="Icon_start_current" url="/img/icon/star16.png" width="16" height="16" rendered="{!IF(pos.currentNode,true,false)}"/>
+            </apex:outputText>
+            <apex:outputText rendered="{!IF(OR(pos.nodeType=='parent',pos.nodeType=='parent_end'),true,false)}">
+                <apex:image id="Tree_parent" url="/img/tree/minus.gif" rendered="{!IF(pos.nodeType=='parent',true,false)}" height="16" width="20" title="Click to expand/collapse nested items." onClick="TreeNodeElement.prototype.toggle(this,'{!pos.nodeId}')"/>
+                <apex:image id="Tree_parent_end" url="/img/tree/minusEnd.gif" rendered="{!IF(pos.nodeType=='parent_end',true,false)}" height="16" width="20" title="Click to expand/collapse nested items." onClick="TreeNodeElement.prototype.toggle(this,'{!pos.nodeId}')"/>                
+                <!-- <apex:image id="Icon_parent" url="/img/icon/factory16.png" width="16" height="16" rendered="{!IF(pos.currentNode,false,true)}"/> -->
+                
+                <apex:image id="Icon_parent" url="{!URLFOR($Resource.DoubleLock20x20)}" width="16" height="16" rendered="{!IF(pos.currentNode,false,true)}"/>
+                
+                <apex:image id="Icon_parent_current" url="/img/icon/star16.png" width="16" height="16" rendered="{!IF(pos.currentNode,true,false)}"/>
+            </apex:outputText>
+            <apex:outputText rendered="{!IF(OR(pos.nodeType=='child',pos.nodeType=='child_end'),true,false)}">
+                <apex:image id="Tree_child" url="/img/tree/node.gif" rendered="{!IF(pos.nodeType=='child',true,false)}" height="16" width="20" title="Click to expand/collapse nested items." onClick="TreeNodeElement.prototype.toggle(this,'{!pos.nodeId}')"/>
+                <apex:image id="Tree_child_current" url="/img/tree/nodeEnd.gif" rendered="{!IF(pos.nodeType=='child_end',true,false)}" height="16" width="20" title="Click to expand/collapse nested items." onClick="TreeNodeElement.prototype.toggle(this,'{!pos.nodeId}')"/>
+                <!--<apex:image id="Icon_child" url="/img/icon/desk16.png" width="16" height="16" rendered="{!IF(pos.currentNode,false,true)}"/> -->
+                <apex:image id="Icon_child" url="{!URLFOR($Resource.Lock20x20)}" width="16" height="16" rendered="{!IF(pos.currentNode,false,true)}"/>
+                <apex:image id="Icon_child_current" url="/img/icon/star16.png" width="16" height="16" rendered="{!IF(pos.currentNode,true,false)}"/>
+            </apex:outputText>
+            <apex:outputText rendered="{!IF(pos.nodeType=='end',true,false)}">
+                <apex:image id="Tree_end" url="/img/tree/nodeEnd.gif" height="16" width="20"/>&nbsp;
+                <!--<apex:image id="Icon_end" url="/img/icon/desk16.png" width="16" height="16" rendered="{!IF(pos.currentNode,false,true)}"/>-->
+                <apex:image id="Icon_end" url="{!URLFOR($Resource.Lock20x20)}" width="16" height="16" rendered="{!IF(pos.currentNode,false,true)}"/>
+                <apex:image id="Icon_end_current" url="/img/icon/star16.png" width="16" height="16" rendered="{!IF(pos.currentNode,true,false)}"/>
+            </apex:outputText>
+            
+<!-- Change Account Name display -->
+
+            <apex:image style="padding-right:2px" id="Icon_Revoked" url="{!URLFOR($Resource.Symbol_Wrong)}" width="9" height="11" rendered="{!IF(pos.account.Revocation_Status__c == 'Revoked'|| pos.account.Revocation_Status__c == 'Parent Cert Revoked', true, false)}"/>
+            <apex:outputLink value="/{!pos.account.id}" style="{!IF(pos.currentNode,'font-weight: bold;color : blue;','color : blue;')}{!if(pos.account.Type == 'Root', 'color:crimson;', if(pos.account.Type == 'Intermediate Certificate','color:green;',''))}" styleClass="columnHeadActiveBlack" target="_top">{!pos.account.name}</apex:outputLink>
+
+<!-- Include the following if you uses sites with accounts -->
+
+            <apex:outputText style="{!IF(pos.currentNode,'font-weight: bold;','')}" value=" [Type: {!pos.account.Type}]" rendered="{!IF(pos.account.Type != '', true, false)}"/>
+            <apex:outputText style="{!IF(pos.currentNode,'font-weight: bold;','')}" value=" [SHA2: {!LEFT(pos.account.SHA_256_Fingerprint__c,11)}...]" rendered="{!IF(pos.account.SHA_256_Fingerprint__c != '' && pos.account.Type != 'Intermediate Certificate', true, false)}"/>
+            <apex:outputText style="{!IF(pos.currentNode,'font-weight: bold;','')}" value=" [SHA2: {!LEFT(pos.account.SHA_256_Fingerprint__c,32)}...]" rendered="{!IF(pos.account.SHA_256_Fingerprint__c != '' && pos.account.Type == 'Intermediate Certificate', true, false)}"/>          
+            <apex:outputText style="{!IF(pos.currentNode,'font-weight: bold;','')}" value=" [Mozilla:  {!pos.account.Status__c}]" rendered="{!IF(pos.account.Status__c!= '' && pos.account.Type != 'Intermediate Certificate', true, false)}"/>
+            <apex:outputText style="{!IF(pos.currentNode,'font-weight: bold;','')}" value=" [Microsoft:  {!pos.account.Microsoft_Status__c}]" rendered="{!IF(pos.account.Microsoft_Status__c != '' && pos.account.Type != 'Intermediate Certificate', true, false)}"/>           
+            <apex:outputText style="{!IF(pos.currentNode,'font-weight: bold;','')}" value=" [{!pos.account.Revocation_Status__c}]" rendered="{!IF(pos.account.Revocation_Status__c == 'Revoked' || pos.account.Revocation_Status__c == 'Parent Cert Revoked', true, false)}"/>&nbsp;
+            <!-- <apex:outputText style="{!IF(pos.currentNode,'font-weight: bold;','')}" value=" [Trust Bits:  {!pos.account.Trust_Bits__c}]" rendered="{!IF(pos.account.Trust_Bits__c!= '', true, false)}"/> -->
+ 
+<!-- Stop -->            
+            
+           </span>
+            <div> </div>
+             
+             
+            <apex:outputText rendered="{!IF(OR(pos.nodeType=='child_end',pos.nodeType=='child'),false,true)}">
+             <div id='{!pos.nodeId}'>  
+              <!-- </div> added this to avoid errors in V 42.0 -->     
+ </apex:outputText>            
+
+
+            <apex:outputText rendered="{!IF(OR(pos.nodeType=='child_end',pos.nodeType=='child'),true,false)}">
+                 <div id='{!pos.nodeId}'><apex:image url="/s.gif" alt="" width="1" height="1"/></div>
+            </apex:outputText>
+
+            <apex:repeat value="{!pos.closeFlag}" var="close">
+               <!--  <div> added this to avoid errors in V 42.0 -->   
+                
+                </div>
+            </apex:repeat>            
+
+    </apex:repeat>
+    <br/><br/><br/>
+    </div>
+    </div>
+</apex:page>

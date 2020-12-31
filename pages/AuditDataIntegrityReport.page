@@ -1,0 +1,510 @@
+<!--
+    Description: Display report for Audit Data Integrity. 
+                 It's has two parts:
+                 1) Shows discrepancies between audit info for Root/intermediate records and File Archive records
+                 2) Shows missing Root/Inter certs entries in File Archive object
+    Create Date: 3/21/2018
+    Updates    :
+    04/076/18        Changed all outputlinks to commandlinks for Cross-Site Request Forgery (CSRF) protection.
+                     Also, unchecked "Require CSRF protection on GET requests" for this VF page
+    07/03/19         Updated Page to add CA Owner Column.
+-->
+<apex:page title="Audit Data Ingegrity Report" controller="AuditDataIntegrityReportController" sidebar="false" showHeader="false" docType="html-5.0" cache="true" expires="3600" readOnly="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            <!--.slds-scope .slds-section__content table{
+                width: auto;
+                table-layout:fixed;
+            }
+            .slds-scope .slds-section__content table td {
+                white-space:normal !important;
+            }
+            
+            .slds-scope .slds-size_1-of-1{
+                 width: auto; 
+            }
+            -->
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+        </style>
+        <body>
+            <div class="slds">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-1">
+                        <apex:outputPanel style="margin-top:10px;" styleClass="slds-page-header" rendered="{!ISNULL($CurrentPage.parameters.showpgheader)}" layout="block">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                    <div class="slds-media slds-no-space slds-grow">
+                                        <div class="slds-media__figure">
+                                            <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                            </svg> -->
+                                            <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                        </div>
+                                        <div class="slds-media__body" style="margin-top: 8px;">
+                                            <p class="slds-text-title--caps slds-line-height--reset">Mozilla</p>
+                                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="">Audit Data Integrity Report</h1>
+                                        </div>              
+                                    </div>
+                                </div>
+                            </div>
+                        </apex:outputPanel> 
+                        <apex:outputPanel layout="block" style="margin-top:20px;margin-left:10px;margin-right:10px" rendered="{!ISNULL($CurrentPage.parameters.showpgheader)}">
+                            <apex:outputText > [1] Shows discrepancies between audit info for Root/Intermediate records and File Archive records </apex:outputText><br/>
+                            <apex:outputText > &nbsp;&nbsp;&nbsp;&nbsp;Root/Inter cert audit fields are highlighted in red when the dates do not match the File Archived record data (highlightd in blue) </apex:outputText><br/>
+                            <apex:outputText > [2] Shows missing Root/Intermediate certs entries in File Archive object</apex:outputText><br/>
+                            <apex:outputText > &nbsp;&nbsp;&nbsp;&nbsp;If any of the audit file for Root/Inter cert is not archived then they are shown in the report </apex:outputText><br/><br/>
+                            <apex:outputText > If the report URL has parameter "Type=All", then all records are shown regardless of their Status as "Included" or "Change Requested".</apex:outputText><br/>
+                            <apex:outputText > If the report URL has parameter "Type=Mozilla", then only the CA Owners and Root Certs with Mozilla Status = "Included" or "Change Requested" are shown.</apex:outputText><br/>
+                            <apex:outputText > If the report URL has parameter "Type=Microsoft", then only the CA Owners and Root Certs with Microsoft Status = "Included" or "Change Requested" are shown.</apex:outputText><br/>
+                        </apex:outputPanel>
+                    
+                        <!--Root Certs - Inconsistent Audit Dates-->
+                        <div style="margin-top:20px;margin-left:10px;margin-right:10px">
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">{!reportType} - Root Certs - Inconsistent Audit Dates</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="20%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    File Archive / Root Certificate
+                                                </th>
+                                                <th width="10%">
+                                                    Audit Type
+                                                </th>
+                                                <th width="20%">
+                                                    Audit URL
+                                                </th>
+                                                <th width="10%">
+                                                    Statement Date
+                                                </th>
+                                                <th width="10%">
+                                                    Period Start Date
+                                                </th>
+                                                <th width="10%">
+                                                    Period End Date
+                                                </th>
+                                                <th width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Comments
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!lstInconsistentRootCerts}" var="wrapaccount" rendered="{!lstInconsistentRootCerts != null && lstInconsistentRootCerts.size > 0}">
+                                                <tr class="dataRow">
+                                                    <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <apex:outputLink value="/{!wrapaccount.objFileArchive.Id}" target="_blank">{!wrapaccount.objFileArchive.Name}</apex:outputLink>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!wrapaccount.objFileArchive.Document_Type__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!wrapaccount.objFileArchive.External_Link__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                            <apex:param value="{!wrapaccount.objFileArchive.Audit_Statement_Date__c}" /> 
+                                                        </apex:outputText>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                            <apex:param value="{!wrapaccount.objFileArchive.Period_Start_Date__c}" /> 
+                                                        </apex:outputText>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                            <apex:param value="{!wrapaccount.objFileArchive.Period_End_Date__c}" /> 
+                                                        </apex:outputText>
+                                                    </td>
+                                                    <td style="border-right: 1px solid rgb(221, 219, 218);"></td>
+                                                </tr>
+                                                <apex:repeat value="{!wrapaccount.lstWrapperAccount}" var="inneraccount">
+                                                    <apex:variable value="{!0}" var="index"/>
+                                                    <apex:repeat value="{!inneraccount.lstWrapperAuditDetail}" var="auditdetail">
+                                                        <tr class="dataRow">
+                                                            <apex:outputPanel rendered="{!index == 0}">
+                                                                <td width="20%" style="border-left: 1px solid rgb(221, 219, 218);" class="datacell" rowspan="{!inneraccount.lstWrapperAuditDetail.size}">
+                                                                    <apex:outputLink value="/{!inneraccount.objAccount.Id}" target="_blank">{!inneraccount.objAccount.Name}</apex:outputLink>
+                                                                </td>
+                                                            </apex:outputPanel>
+                                                            <td width="10%" class="datacell">
+                                                                {!auditdetail.AuditType}
+                                                            </td>
+                                                            <td width="20%" class="datacell">
+                                                                {!auditdetail.AuditURL}
+                                                            </td>
+                                                            <td width="10%" class="datacell" style="color:{!if(auditdetail.isDiffStatementDate,'red','')};font-weight:{!if(auditdetail.isDiffStatementDate,'bold','')};">
+                                                                <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                    <apex:param value="{!auditdetail.StatementDate}" /> 
+                                                                </apex:outputText>
+                                                            </td>
+                                                            <td width="10%" class="datacell" style="color:{!if(auditdetail.isDiffPeriodStartDate,'red','')};font-weight:{!if(auditdetail.isDiffPeriodStartDate,'bold','')};">
+                                                                <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                    <apex:param value="{!auditdetail.PeriodStartDate}" /> 
+                                                                </apex:outputText>
+                                                            </td>
+                                                            <td width="10%" class="datacell" style="color:{!if(auditdetail.isDiffPeriodEndDate,'red','')};font-weight:{!if(auditdetail.isDiffPeriodEndDate,'bold','')};">
+                                                                <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                    <apex:param value="{!auditdetail.PeriodEndDate}" /> 
+                                                                </apex:outputText>
+                                                            </td>
+                                                            <td width="20%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                                <!--<apex:outputField value="{!inneraccount.objAccount.Comments__c}"/>-->
+                                                                <apex:outputText value="{!if(inneraccount.objAccount.Comments__c != null && LEN(inneraccount.objAccount.Comments__c) > 100, LEFT(inneraccount.objAccount.Comments__c,100)+'...', inneraccount.objAccount.Comments__c)}" title="{!inneraccount.objAccount.Comments__c}"></apex:outputText>
+                                                            </td>
+                                                        </tr>
+                                                        <apex:variable value="{!index+1}" var="index"/>
+                                                    </apex:repeat>
+                                                </apex:repeat>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!lstInconsistentRootCerts == null || lstInconsistentRootCerts.size == 0}">
+                                                <td colspan="6" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <!--Root Certs - Missing Audit Archives-->
+                        <div style="margin-top:20px;margin-left:10px;margin-right:10px">
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">{!reportType} - Root Certs - Missing Audit Archives</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    CA Owner
+                                                </th>
+                                                <th width="15%">
+                                                    Root Certificate
+                                                </th>
+                                                <th width="15%">
+                                                    Audit Type
+                                                </th>
+                                                <th width="30%">
+                                                    Audit URL
+                                                </th>
+                                                <th width="10%">
+                                                    Statement Date
+                                                </th>
+                                                <th width="10%">
+                                                    Period Start Date
+                                                </th>
+                                                <th width="10%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Period End Date
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!lstMissingAuditArchivesRootCerts}" var="inneraccount" rendered="{!lstMissingAuditArchivesRootCerts != null && lstMissingAuditArchivesRootCerts.size > 0}">
+                                                <apex:variable value="{!0}" var="count"/>
+                                                <apex:repeat value="{!inneraccount.lstWrapperAuditDetail}" var="auditdetail">
+                                                    <tr>
+                                                        <apex:outputPanel rendered="{!count== 0}">
+                                                            <td width="10%" style="border-left: 1px solid rgb(221, 219, 218);" class="datacell" rowspan="{!inneraccount.lstWrapperAuditDetail.size}">
+                                                                {!inneraccount.objAccount.CA_Owner__c}
+                                                            </td>
+                                                            <td width="15%" class="datacell" rowspan="{!inneraccount.lstWrapperAuditDetail.size}">
+                                                                <apex:outputLink value="/{!inneraccount.objAccount.Id}" target="_blank">{!inneraccount.objAccount.Name}</apex:outputLink>
+                                                            </td>
+                                                        </apex:outputPanel>
+                                                        <td width="15%" class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            {!auditdetail.AuditType}
+                                                        </td>
+                                                        <td width="30%" class="datacell">
+                                                            {!auditdetail.AuditURL}
+                                                        </td>
+                                                        <td width="10%" class="datacell" style="color:{!if(auditdetail.isDiffStatementDate,'red','')};font-weight:{!if(auditdetail.isDiffStatementDate,'bold','')};">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                <apex:param value="{!auditdetail.StatementDate}" /> 
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td width="10%" class="datacell" style="color:{!if(auditdetail.isDiffPeriodStartDate,'red','')};font-weight:{!if(auditdetail.isDiffPeriodStartDate,'bold','')};">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                <apex:param value="{!auditdetail.PeriodStartDate}" /> 
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td width="10%" class="datacell" style="border-right: 1px solid rgb(221, 219, 218);color:{!if(auditdetail.isDiffPeriodEndDate,'red','')};font-weight:{!if(auditdetail.isDiffPeriodEndDate,'bold','')};">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                <apex:param value="{!auditdetail.PeriodEndDate}" /> 
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                    <apex:variable value="{!count+1}" var="count"/>
+                                                </apex:repeat>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!lstMissingAuditArchivesRootCerts == null || lstMissingAuditArchivesRootCerts.size == 0}">
+                                                <td colspan="6" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <!--Intermediate Certs - Inconsistent Audit Dates-->
+                        <div style="margin-top:20px;margin-left:10px;margin-right:10px">
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">{!reportType} - Intermediate Certs - Inconsistent Audit Dates</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="15%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    File Archive / Inter Cert
+                                                </th>
+                                                <th width="15%">
+                                                    Audit Type
+                                                </th>
+                                                <th width="30%">
+                                                    Audit URL
+                                                </th>
+                                                <th width="10%">
+                                                    Statement Date
+                                                </th>
+                                                <th width="10%">
+                                                    Period Start Date
+                                                </th>
+                                                <th width="10%">
+                                                    Period End Date
+                                                </th>
+                                                <th width="10%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Comments
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!lstInconsistentInterCerts}" var="wrapaccount" rendered="{!lstInconsistentInterCerts != null && lstInconsistentInterCerts.size > 0}">
+                                                <tr style="background-color:#c9ecf7">
+                                                    <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <apex:outputLink value="/{!wrapaccount.objFileArchive.Id}" target="_blank">{!wrapaccount.objFileArchive.Name}</apex:outputLink>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!wrapaccount.objFileArchive.Document_Type__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!wrapaccount.objFileArchive.External_Link__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                            <apex:param value="{!wrapaccount.objFileArchive.Audit_Statement_Date__c}" /> 
+                                                        </apex:outputText>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                            <apex:param value="{!wrapaccount.objFileArchive.Period_Start_Date__c}" /> 
+                                                        </apex:outputText>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                            <apex:param value="{!wrapaccount.objFileArchive.Period_End_Date__c}" /> 
+                                                        </apex:outputText>
+                                                    </td>
+                                                    <td style="border-right: 1px solid rgb(221, 219, 218);"></td>
+                                                </tr>
+                                                <apex:repeat value="{!wrapaccount.lstWrapperAccount}" var="inneraccount">
+                                                    <apex:variable value="{!0}" var="index"/>
+                                                    <apex:repeat value="{!inneraccount.lstWrapperAuditDetail}" var="auditdetail">
+                                                        <tr>
+                                                            <apex:outputPanel rendered="{!index == 0}">
+                                                                <td width="20%" class="datacell" style="border-left: 1px solid rgb(221, 219, 218);" rowspan="{!inneraccount.lstWrapperAuditDetail.size}">
+                                                                    <apex:outputLink value="/{!inneraccount.objAccount.Id}" target="_blank">{!inneraccount.objAccount.Name}</apex:outputLink>
+                                                                </td>
+                                                            </apex:outputPanel>
+                                                            <td width="20%" class="datacell">
+                                                                {!auditdetail.AuditType}
+                                                            </td>
+                                                            <td width="30%" class="datacell">
+                                                                {!auditdetail.AuditURL}
+                                                            </td>
+                                                            <td width="10%" class="datacell" style="color:{!if(auditdetail.isDiffStatementDate,'red','')};font-weight:{!if(auditdetail.isDiffStatementDate,'bold','')};">
+                                                                <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                    <apex:param value="{!auditdetail.StatementDate}" /> 
+                                                                </apex:outputText>
+                                                            </td>
+                                                            <td width="10%" class="datacell" style="color:{!if(auditdetail.isDiffPeriodStartDate,'red','')};font-weight:{!if(auditdetail.isDiffPeriodStartDate,'bold','')};">
+                                                                <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                    <apex:param value="{!auditdetail.PeriodStartDate}" /> 
+                                                                </apex:outputText>
+                                                            </td>
+                                                            <td width="10%" class="datacell" style="color:{!if(auditdetail.isDiffPeriodEndDate,'red','')};font-weight:{!if(auditdetail.isDiffPeriodEndDate,'bold','')};">
+                                                                <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                    <apex:param value="{!auditdetail.PeriodEndDate}" /> 
+                                                                </apex:outputText>
+                                                            </td>
+                                                            <td width="10%" class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                                <!-- {!inneraccount.objAccount.Comments_by_Mozilla_on_Intermediate__c} -->
+                                                                <apex:outputText value="{!if(inneraccount.objAccount.Comments__c != null && LEN(inneraccount.objAccount.Comments__c) > 100, LEFT(inneraccount.objAccount.Comments__c,100)+'...', inneraccount.objAccount.Comments__c)}" title="{!inneraccount.objAccount.Comments__c}"></apex:outputText>
+
+                                                            </td>
+                                                        </tr>
+                                                        <apex:variable value="{!index+1}" var="index"/>
+                                                    </apex:repeat>
+                                                </apex:repeat>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!lstInconsistentInterCerts == null || lstInconsistentInterCerts.size == 0}">
+                                                <td colspan="7" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <!--Intermediate Certs - Missing Audit Archives-->
+                        <div style="margin-top:20px;margin-left:10px;margin-right:10px">
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">{!reportType} - Intermediate Certs - Missing Audit Archives</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="10%" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    CA Owner
+                                                </th>
+                                                <th width="15%">
+                                                    Intermediate Certificate
+                                                </th>
+                                                <th width="15%">
+                                                    Audit Type
+                                                </th>
+                                                <th width="30%">
+                                                    Audit URL
+                                                </th>
+                                                <th width="10%">
+                                                    Statement Date
+                                                </th>
+                                                <th width="10%">
+                                                    Period Start Date
+                                                </th>
+                                                <th width="10%" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    Period End Date
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!lstMissingAuditArchivesInterCerts}" var="inneraccount" rendered="{!lstMissingAuditArchivesInterCerts != null && lstMissingAuditArchivesInterCerts.size > 0}">
+                                                <apex:variable value="{!0}" var="count"/>
+                                                <apex:repeat value="{!inneraccount.lstWrapperAuditDetail}" var="auditdetail">
+                                                    <tr>
+                                                        <apex:outputPanel rendered="{!count== 0}">
+                                                            <td width="10%" class="datacell" style="border-left: 1px solid rgb(221, 219, 218);" rowspan="{!inneraccount.lstWrapperAuditDetail.size}">
+                                                                {!inneraccount.objAccount.CA_Owner__c}
+                                                            </td>
+                                                            <td width="15%" class="datacell" rowspan="{!inneraccount.lstWrapperAuditDetail.size}">
+                                                                <apex:outputLink value="/{!inneraccount.objAccount.Id}" target="_blank">{!inneraccount.objAccount.Name}</apex:outputLink>
+                                                            </td>
+                                                        </apex:outputPanel>
+                                                        <td width="15%" class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            {!auditdetail.AuditType}
+                                                        </td>
+                                                        <td width="30%" class="datacell">
+                                                            {!auditdetail.AuditURL}
+                                                        </td>
+                                                        <td width="10%" class="datacell" style="color:{!if(auditdetail.isDiffStatementDate,'red','')};font-weight:{!if(auditdetail.isDiffStatementDate,'bold','')};">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                <apex:param value="{!auditdetail.StatementDate}" /> 
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td width="10%" class="datacell" style="color:{!if(auditdetail.isDiffPeriodStartDate,'red','')};font-weight:{!if(auditdetail.isDiffPeriodStartDate,'bold','')};">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                <apex:param value="{!auditdetail.PeriodStartDate}" /> 
+                                                            </apex:outputText>
+                                                        </td>
+                                                        <td width="10%" class="datacell" style="border-right: 1px solid rgb(221, 219, 218);color:{!if(auditdetail.isDiffPeriodEndDate,'red','')};font-weight:{!if(auditdetail.isDiffPeriodEndDate,'bold','')};">
+                                                            <apex:outputText value="{0,date,MM/dd/yy}"> 
+                                                                <apex:param value="{!auditdetail.PeriodEndDate}" /> 
+                                                            </apex:outputText>
+                                                        </td>
+                                                    </tr>
+                                                    <apex:variable value="{!count+1}" var="count"/>
+                                                </apex:repeat>
+                                            </apex:repeat>
+                                            <apex:outputPanel rendered="{!lstMissingAuditArchivesInterCerts == null || lstMissingAuditArchivesInterCerts.size == 0}">
+                                                <td colspan="6" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    <i>No Records to display.</i>
+                                                </td>
+                                            </apex:outputPanel>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </html>
+</apex:page>

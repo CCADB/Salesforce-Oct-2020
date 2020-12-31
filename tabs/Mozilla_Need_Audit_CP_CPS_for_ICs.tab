@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Mozilla: Need Audit CP/CPS for ICs</label>
+    <motif>Custom73: Highway Sign</motif>
+    <page>RunAuditReminderForICAuditCPCPSBatch</page>
+</CustomTab>

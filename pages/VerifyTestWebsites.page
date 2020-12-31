@@ -1,0 +1,241 @@
+<!--
+*******************************************************************************************************
+ Name: VerifyTestWebsites
+
+ Dependencies: VerifyTestWebsitesController, VerifyTestWebsites vf page, VerifyTestWebsitesControllerTest,
+ RootCaseTriggerHelper
+
+ Description: This VF page is invoked from case page or root case button. It displays the test website 
+ status and results for root cases(s) and allows users to rerun the validation process.
+ 
+ VerifyTestWebsitesController apex class validates test websites (valid/expired/revoked)
+ by sending HTTP request to https://ccadb-231121.appspot.com/fromCertificateDetails. The response 
+ is saved on Root Cases object (Test Websites Status and Results fields).
+ 
+ When Test Website fields are updated on root case, RootCaseTrigger launches a future callout 
+ to validate the urls. Valid PEM info is required in the request body for the webservice to 
+ process the request. The results are parsed and results and overall status of PASS/FAIL is 
+ saved on root case record. Root Inclusion cases with status 'Request Withdrawn by CA' and 
+ 'Denied' are not sent for validation. "Test Website validation" buttton provides a way to view
+ the root case no, root cert, status, reuslts. From this page validation process can be re-run.
+ 
+ Instructions: Remote site setting must have https://ccadb-231121.appspot.com  
+               HHTP timeout is 2 mins
+ *******************************************************************************************************
+ Revision History:
+ 
+     4/25/2019 - Created new
+ ******************************************************************************************************
+ -->
+ <apex:page controller="VerifyTestWebsitesController" sidebar="false" docType="html-5.0" title="Verify Test Websites">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <body>
+            <apex:form >
+                <div class="slds">
+                    <div class="slds-page-header">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <div class="slds-media slds-no-space slds-grow">
+                                    <div class="slds-media__figure">
+                                        <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <p class="slds-text-title--caps slds-line-height--reset">Verify</p>
+                                        <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="Test Websites">Test Websites</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="main" style="margin-top:15px;">
+                        <apex:pageMessages id="pgMsg"></apex:pageMessages>
+                        <div style="margin-top:10px;margin-bottom:10px;text-align:center;">
+                            <apex:commandButton value="Re-run Validation" action="{!ReValidateTestWebsites}" status="Processing" 
+                                    styleClass="slds-button slds-button_brand" reRender="opRootCases,pgMsg"/>
+                            <apex:commandButton value="Back" styleClass="slds-button slds-button_neutral" action="{!Cancel}"/>
+                        </div>
+                        <apex:outputPanel id="opRootCases">
+                            <apex:outputPanel layout="block" styleClass="slds-section slds-is-open" rendered="{!!isAnyError}">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-truncate slds-p-horizontal_small" title="Test Websites Validation Results">
+                                        Test Websites Validation Results
+                                        <!-- <apex:outputPanel rendered="{!isRootInclusionCase}" style="color:red;padding-left:10px;">
+                                            *** Validation is not done for Root Cases with Status "Request Withdrawn" and "Denied"
+                                        </apex:outputPanel> -->
+                                    </span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered" style="margin-top:20px;">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);width:10%">
+                                                    <div  title="Root Case Number">Root Case Number - Root Certificate Name</div>
+                                                </th>
+                                                <!--<th scope="col" style="width:10%">
+                                                    <div  title="Root Certificate Name">Root Certificate Name</div>
+                                                </th>-->
+                                                <th scope="col" style="width:10%">
+                                                    <div  title="Test Websites">Test Websites</div>
+                                                </th>
+                                                <th scope="col" style="width:5%">
+                                                    <div  title="Status">Status</div>
+                                                </th>
+                                                <th scope="col" style="border-right: 1px solid rgb(221, 219, 218);width:65%">
+                                                    <div  title="Results">Results</div>
+                                                </th>
+                                                <!--<th scope="col" style="width:10%">
+                                                    <div  title="Test Website Valid - Status">Test Website Valid - Status</div>
+                                                </th>
+                                                <th scope="col" style="width:20%">
+                                                    <div  title="Test Website Valid - Results">Test Website Valid - Results</div>
+                                                </th>
+                                                <th scope="col" style="width:10%">
+                                                    <div  title="Test Website Revoked - Status">Test Website Revoked - Status</div>
+                                                </th>
+                                                <th scope="col" style="width:20%">
+                                                    <div  title="Test Website Revoked - Results">Test Website Revoked - Results</div>
+                                                </th>
+                                                <th scope="col" style="width:10%">
+                                                    <div  title="Test Website Expired - Status">Test Website Expired - Status</div>
+                                                </th>
+                                                <th scope="col" style="border-right: 1px solid rgb(221, 219, 218);width:20%">
+                                                    <div  title="Test Website Expired - Results">Test Website Expired - Results</div>
+                                                </th>-->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!lstWrapperRootCases}" var="result" rendered="{!lstWrapperRootCases != null && lstWrapperRootCases.size > 0}">
+                                                <tr class="dataRow" style="vertical-align:top;">
+                                                    <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <apex:outputLink value="/{!result.rootcase.Id}" target="_blank">{!result.rootcase.Name}</apex:outputLink>&nbsp;-&nbsp;<apex:outputField value="{!result.rootcase.Root_Certificate_Name__c}"> </apex:outputField>
+                                                    </td>
+                                                    <!--<td class="datacell">
+                                                        <apex:outputField value="{!result.rootcase.Root_Certificate_Name__c}"> </apex:outputField>
+                                                    </td>-->
+                                                    <td colspan="3" style="padding:0;display:{!if(result.lstWebSiteResults != null && result.lstWebSiteResults.size > 0,'','none')}">
+                                                        <table style="width:100%" class="slds-table slds-table_cell-buffer">
+                                                            <apex:repeat value="{!result.lstWebSiteResults}" var="website" rendered="{!result.lstWebSiteResults != null && result.lstWebSiteResults.size > 0}">
+                                                                <tr class="dataRow" style="vertical-align:top;">
+                                                                    <td style="width:10%;">
+                                                                        <apex:outputText value="{!website.TestWebsite}"></apex:outputText>
+                                                                    </td>
+                                                                    <td style="width:5%;">
+                                                                        <apex:outputText value="{!website.TestWebsiteStatus}"></apex:outputText>
+                                                                    </td>
+                                                                    <td style="width:65%;border-right: 1px solid rgb(221, 219, 218);">
+                                                                        <apex:outputText value="{!website.TestWebsiteResults}"></apex:outputText>
+                                                                    </td>
+                                                                </tr>
+                                                            </apex:repeat>
+                                                        </table>
+                                                    </td>
+                                                    <td style="display:{!if(result.lstWebSiteResults == null || result.lstWebSiteResults.size == 0,'','none')}"></td>
+                                                    <td style="display:{!if(result.lstWebSiteResults == null || result.lstWebSiteResults.size == 0,'','none')}"></td>
+                                                    <td style="border-right: 1px solid rgb(221, 219, 218);display:{!if(result.lstWebSiteResults == null || result.lstWebSiteResults.size == 0,'','none')}"></td>
+                                                    <!--<td class="datacell">
+                                                        <apex:outputField value="{!rootcase.Test_Website_Valid_Status__c}"> </apex:outputField>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        <apex:outputField value="{!rootcase.Test_Website_Valid_Results__c}"> </apex:outputField>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        <apex:outputField value="{!rootcase.Test_Website_Revoked_Status__c}"> </apex:outputField>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        <apex:outputField value="{!rootcase.Test_Website_Revoked_Results__c}"> </apex:outputField>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        <apex:outputField value="{!rootcase.Test_Website_Expired_Status__c}"> </apex:outputField>
+                                                    </td>
+                                                    <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        <apex:outputField value="{!rootcase.Test_Website_Expired_Results__c}"> </apex:outputField>
+                                                    </td>-->
+                                                </tr>
+                                            </apex:repeat>
+                                            <tr style="display:{!if(lstWrapperRootCases == null || lstWrapperRootCases.size == 0,'','none')}">
+                                                <td colspan="8" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    No records to display.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        <div style="margin-top:10px;margin-bottom:10px;text-align:center;">
+                            <apex:commandButton value="Re-run Validation" action="{!ReValidateTestWebsites}" status="Processing" 
+                                    styleClass="slds-button slds-button_brand" reRender="opRootCases,pgMsg"/>
+                            <apex:commandButton value="Back" styleClass="slds-button slds-button_neutral" action="{!Cancel}" rendered="{!!isAnyError}"/>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+            <!------------- Start: Processing Div---------------------------------------->
+            <style>
+                table { 
+                    table-layout:fixed; 
+                }
+                table td, table th {
+                    word-wrap:break-word !important;
+                    white-space:normal !important;
+                }
+                .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                    padding: 0.5rem !important;
+                }
+                .slds-scope .slds-table:not(.slds-no-row-hover) tbody tr:hover>td {
+                    background-color:inherit !important;
+                }
+                .msgIcon {
+                    display: none!important
+                }
+                .customMessage * {
+                    color: #fff!important
+                }
+                .customMessage {
+                    margin: 5px 0!important;
+                    opacity: 1!important;
+                    width: 100%;
+                    //font-size: 12px;
+                    border: 0px;
+                    padding-left: 10px;
+                }
+                .ProcessingBackground {
+                    background-color: #fff;
+                    opacity: 0.60;
+                    filter: alpha(opacity = 50);
+                    width: 100%;
+                    height: 100%;
+                    position: fixed;
+                    z-index: 9998;
+                    top:0;
+                    left:0;
+                }
+                .Processing {
+                    z-index: 9999;
+                    left: 47.5%;
+                    top: 50%;
+                    text-align: center;
+                    position: fixed;
+                } 
+        
+            </style>
+            <div id="divProcessing" style="display:none;">
+                <div class="ProcessingBackground"></div>
+                <div class="slds-spinner slds-spinner_medium slds-spinner_brand"> 
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div> 
+                </div>
+                <apex:actionStatus id="Processing" onstart="document.getElementById('divProcessing').style.display = '';" onstop="document.getElementById('divProcessing').style.display = 'none';" />                            
+        
+            </div>  
+            <!------------- End: Processing Div---------------------------------------->
+        </body>
+    </html>
+</apex:page>

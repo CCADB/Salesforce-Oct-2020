@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>CPACanada seal id mapping to report id</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Record_Updated__c</fullName>
+        <externalId>false</externalId>
+        <formula>CreatedDate  &lt;&gt;  LastModifiedDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Record Updated?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Report_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <inlineHelpText>Report Id</inlineHelpText>
+        <label>Report Id</label>
+        <length>10</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Report_URL__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Report URL</inlineHelpText>
+        <label>Report URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Seal_URL__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Seal URL</inlineHelpText>
+        <label>Seal URL</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <label>CPACanada File</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Seal_URL__c</columns>
+        <columns>Report_Id__c</columns>
+        <columns>Report_URL__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Seal Id</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>CPACanada Files</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Seal_URL__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Report_Id__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Report_URL__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
+        <excludedStandardButtons>OpenListInQuip</excludedStandardButtons>
+        <excludedStandardButtons>MassChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Seal_URL__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Report_Id__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Report_URL__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Seal_URL__c</searchFilterFields>
+        <searchFilterFields>Report_Id__c</searchFilterFields>
+        <searchFilterFields>Report_URL__c</searchFilterFields>
+        <searchResultsAdditionalFields>Seal_URL__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Report_Id__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Report_URL__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>CheckforReportURL</fullName>
+        <active>true</active>
+        <description>Report URL must begin with https and have correct format</description>
+        <errorConditionFormula>NOT( 
+OR(LEN (Report_URL__c) = 0, 
+REGEX(Report_URL__c, &quot;^[hH][tT][tT][pP][sS][0-9A-Za-z+&amp;@#/%?=~\\-_|!:,.;\\[\\]()]*$&quot;) 
+) 
+)</errorConditionFormula>
+        <errorDisplayField>Report_URL__c</errorDisplayField>
+        <errorMessage>URL must begin with &apos;https&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~ -_ | ! : , . ; [ ] ( )</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>CheckforSealURL</fullName>
+        <active>true</active>
+        <description>Seal URL must begin with https and have correct format</description>
+        <errorConditionFormula>NOT( 
+OR(LEN (Seal_URL__c) = 0, 
+REGEX(Seal_URL__c, &quot;^[hH][tT][tT][pP][sS][0-9A-Za-z+&amp;@#/%?=~\\-_|!:,.;\\[\\]()]*$&quot;) 
+) 
+)</errorConditionFormula>
+        <errorDisplayField>Seal_URL__c</errorDisplayField>
+        <errorMessage>URL must begin with &apos;https&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~ -_ | ! : , . ; [ ] ( )</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>MatchReportId</fullName>
+        <active>false</active>
+        <description>Display error when Report ID does not match the number in the Report URL</description>
+        <errorConditionFormula>Report_Id__c &lt;&gt; RIGHT(Report_URL__c, LEN(Report_Id__c))</errorConditionFormula>
+        <errorMessage>Report ID does not match the number in the Report URL</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>MatchSealId</fullName>
+        <active>false</active>
+        <description>Display error when Seal ID does not match the number in the Seal URL</description>
+        <errorConditionFormula>Name &lt;&gt;  RIGHT(Seal_URL__c, LEN(Name))</errorConditionFormula>
+        <errorMessage>Seal ID does not match the number in the Seal URL</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

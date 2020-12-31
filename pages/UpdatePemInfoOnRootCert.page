@@ -1,0 +1,57 @@
+<apex:page standardController="Account" extensions="CreateRootCertController"> 
+
+    <script type="text/javascript">
+        
+        function showUpdateButton(){
+            console.log('in function.');
+            showUpdateBtn();
+        }
+    </script>
+    
+<apex:sectionHeader title="PEM Info for Root Certificate"/> 
+  <apex:form id="theFrm">
+  <apex:pageBlock id="theBlcok">
+
+        <apex:pageBlockSection id="topSection" columns="1">
+            <apex:outputPanel id="btnPanel"><br/>
+              <center>
+              <apex:commandButton id="btnValidate" rendered="{! !isCertCheckSuccessful}" action="{!submit}" value="Validate PEM Info"/>&nbsp;&nbsp;&nbsp;
+              <apex:commandButton id="btnUpdate" rendered="{! AND(isCertCheckSuccessful,isUpdatePEMInfoFlow )}" action="{!updateRootCert}" value="Update Root Cert" disabled="{!disableUpdateButton}"/> &nbsp;&nbsp;&nbsp;
+              <apex:commandButton id="btnCancel" action="{!cancel}" value="Cancel"/>&nbsp;&nbsp;&nbsp;   
+              </center>
+            </apex:outputPanel>
+        </apex:pageBlockSection>
+        
+       <apex:pageMessages escape="false"/>
+      
+       <apex:pageBlockSection id="inputMiddleSection" columns="1" rendered="{!!isCertCheckSuccessful}">
+           <apex:outputPanel id="middlePanel"><br/>
+               <apex:outputText value="Please provide the PEM Info:"  style="font-weight:bold"/><br/><br/>
+               <apex:inputTextarea label="PEM Info" value="{!pemInfoStr}" cols="1" title="PEM Info"  style="width:1100px;height:300px;"/>
+           </apex:outputPanel>
+       </apex:pageBlockSection>
+        
+       <apex:pageBlockSection id="readonlyMiddleSection" columns="1" rendered="{!isCertCheckSuccessful}">
+           <apex:outputPanel id="middlePanel"><br/> 
+               <apex:outputText value="PEM Info:" style="font-weight:bold"/><br/><br/>
+               <apex:outputText value="{!pemInfoStr}"  style="white-space:pre;"/><br/><br/>
+               <apex:outputText value="Extraction Results:"  style="font-weight:bold"/><br/><br/>  
+               <apex:outputText value="{!extractionResultsStr}"  style="white-space:pre;" /><br/>
+           </apex:outputPanel>
+       </apex:pageBlockSection>
+            
+      <apex:pageBlockSection id="bottomSection" columns="1">
+          <apex:outputPanel id="btnPanelBottom"><br/>
+               <center>
+               <apex:commandButton id="btnValidateBottom" rendered="{! !isCertCheckSuccessful}" action="{!submit}" value="Validate PEM Info"/>&nbsp;&nbsp;
+               <apex:commandButton id="btnUpdateBottom" rendered="{! AND(isCertCheckSuccessful,isUpdatePEMInfoFlow )}" action="{!updateRootCert}" value="Update Root Cert" disabled="{!disableUpdateButton}"/> &nbsp;&nbsp;
+               <apex:commandButton id="btnCancelBottom" action="{!cancel}" value="Cancel"/>   &nbsp;&nbsp;&nbsp;
+               </center>
+           </apex:outputPanel>
+       </apex:pageBlockSection>
+        
+  </apex:pageBlock>
+  
+    <apex:actionFunction name="showUpdateBtn" action="{!showUpdateButton}" id="aFuncShowButton" rerender="btnPanel,btnPanelBottom "/>
+  </apex:form>
+</apex:page>

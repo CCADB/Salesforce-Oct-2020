@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>One time batch process to reprocess PEM info on Root &amp; Inter Certs using TLS Observatory API</description>
+    <label>Process PEM Info In Batch Using TLS Obs</label>
+    <motif>Custom30: Radar dish</motif>
+    <page>PEMParserBatch</page>
+</CustomTab>

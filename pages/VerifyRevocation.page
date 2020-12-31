@@ -1,0 +1,177 @@
+<!--
+ *******************************************************************************************************
+ Name: VerifyRevocation
+
+ Dependencies: VerifyRevocationController class, VerifyRevocationControllerTest class,
+ VerifyRevocation VF page
+
+ Description: This is a vf page is created for VerifyRevocationController.
+ This controller class was created to verify revoked intermediate certs.
+ This functionility is invoked from a button "Verify Revocation" on intermediate certs page.
+ 
+ Revocation Status = Revoked and 
+ Date of Revocation not blank and 
+ Revocation Reason not blank
+ CRL URL(s) or Alternate CRL not blank
+ 
+ When above conditions are met call the tool 'https://crlverification-dot-ccadb-231121.appspot.com/'.
+ If the crlverification result is ‘PASS’ and ‘OneCRL Status’ is blank, then ‘OneCRL Status’ is 
+ updated to “Ready to Add”.
+ Whenever crlverification result is FAIL, “Revocation Verification” to say “FAILED” and 
+ update the errors that crlVerification provides regarding why it failed. 
+
+ Instructions: To test the tool use curl -d '{"crl": "http://crl.pkioverheid.nl/DomOrganisatiePersoonLatestCRL-G3.crl","serial": "329CAB52A80A2E3F","revocationDate": "2019/06/27", "revocationReason": "(4) superseded"}' https://crlverification-dot-ccadb-231121.appspot.com/ 
+
+ *******************************************************************************************************
+ Revision History:
+ 
+     10/26/2019 - Created new class
+               
+ ****************************************************************************************************** -->
+ <apex:page standardController="Account" sideBar="false" docType="html-5.0" extensions="VerifyRevocationController" action="{!CallAPIToVerifyRevocation}">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+                font-weight:700;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+            .dateFormat {
+                display:none;
+            }
+            .clsMultiPicklist select {
+                width:200px !important;
+                height:100px !important;
+            }
+            .clsPIMultiPicklist select {
+                width:200px !important;
+                height:265px !important;
+            }
+            .slds-scope .slds-dueling-list__column_responsive {
+                flex-wrap: nowrap;
+            }
+            .msgIcon {
+                display: none!important
+            }
+            .messageCell {
+                width:100%;
+            }
+            .customMessage * {
+                color: #fff!important
+            }
+            .customMessage {
+                margin: 5px 0!important;
+                opacity: 1!important;
+                width: 100%;
+                //font-size: 12px;
+                border: 0px;
+                padding-left: 10px;
+            }
+        </style>
+        <body>
+            <!--<hr style="margin:0px;border-top: 2px solid black;"/>-->
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Verify Revocation</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle">{!Account.Name}</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <apex:pageMessages ></apex:pageMessages>
+                                <apex:commandButton value="Back"  action="{!Cancel}" styleClass="slds-button slds-button_outline-brand" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+            <script>
+                $(document).ready(function () {
+                    overridePageMessages();
+                });
+                function overridePageMessages(){    
+                    var textureEffect = '';
+                    //Uncomment below line for texture effect on page messages
+                    textureEffect = 'slds-theme--alert-texture';
+                                 
+                    $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);          
+                    $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);    
+                    $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+                    $('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);    
+                                     
+                    $('.errorM3').removeClass('errorM3'); 
+                    $('.confirmM3').removeClass('confirmM3'); 
+                    $('.infoM3').removeClass('infoM3');   
+                    $('.warningM3').removeClass('warningM3'); 
+                    $('.btnTempClickLeftclass').trigger('click'); 
+                }
+            </script>
+        </body>
+    </html>
+</apex:page>

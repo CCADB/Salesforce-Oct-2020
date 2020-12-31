@@ -1,0 +1,23 @@
+<apex:page standardController="Case" sidebar="true" showHeader="true">
+
+  <!--  UNUSED VF PAGE
+  
+<apex:page standardController="Case" extensions="UploadFileController" sidebar="true" showHeader="true">
+     
+      <apex:form >             
+           <apex:pageBlock title="Choose a file and upload">
+
+              <apex:pageBlockSection title="Step 1. Click on the button below to browse and select the audit file from your computer" columns="1">
+                 <apex:inputFile value="{!fileData}" fileName="{!fileName}" title="Select audit file to upload" ></apex:inputFile><br/>
+               <apex:outputText value="{!Case.Auditor_Website__c}" rendered="false"></apex:outputText>
+               </apex:pageBlockSection>
+           
+             <apex:pageBlockSection title="Step 2. Upload the audit file to Salesforce. After the file is uploaded the internal link will be displayed on the Case page" columns="2">
+                 <apex:commandButton action="{!uploadFile}" value="Upload File" title="Upload audit file to Salesforce" id="btnUpload"/><br/>
+            </apex:pageBlockSection>
+            
+          </apex:pageBlock>
+     </apex:form>
+    
+    -->
+</apex:page>

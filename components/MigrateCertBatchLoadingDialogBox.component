@@ -1,0 +1,144 @@
+<!--
+Component      : MigrateCertsBatchLoadingDialogBox
+Created Date   : 30th April
+Description    : Displays loading dialog box
+-->
+
+
+<apex:component selfClosing="true">
+<apex:attribute name="title" description="Dialog Box Title" type="String" required="false" default="Please Wait"/>
+<apex:attribute name="message" description="Dialog Box Message" type="String" required="false" default="Working..."/>
+<apex:attribute name="width" description="Dialog Box Width" type="Integer" required="false" default="350"/>
+<style type="text/css">
+    #modalBlocker { position:absolute; z-index:10000; background:#000; width:100%; top:0; left:0; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; filter: alpha(opacity=50); -moz-opacity:0.5; -webkit-opacity:0.5; -khtml-opacity: 0.5; opacity: 0.5;}
+    #modalBox { position:fixed; _position:absolute; z-index:10001; margin:0 auto; background:#fff; width:{!width}px; -moz-border-radius: 10px; webkit-border-radius: 10px; border-radius: 10px; -moz-box-shadow: 1px 1px 10px #000; -webkit-box-shadow: 1px 1px 10px #000; box-shadow: 1px 1px 10px #000;}
+    #modalBox-inner{margin:15px;}
+    #modalBox-inner h3 { color:#000; font-size:1.3em;}
+    #modalContent {}
+    #modalButtons { text-align:right; margin-top:10px;}
+    #modalBox .spinner { background:url('../../img/loading32.gif') no-repeat; height:32px; margin:20px; padding-left:40px; padding-top:9px;}
+</style>
+<script type="text/javascript">
+    var winW;
+    var winH;
+    var docW;
+    var docH;
+    var modalShown = false;
+    var block = document.createElement('div');
+    
+    
+    function showLoadingDialog(){
+        //call helper methods to set the window and documents height and width vars
+        getWinDims();
+        getDocDims();
+        
+        //get the elements to show
+        var box = document.getElementById('modalBox');
+    
+        //show them
+        block.setAttribute('id','modalBlocker');
+        b.appendChild(block);
+        block.style.height = docH + 'px';
+        block.style.width = docW + 'px';
+        box.style.display = 'block';
+        
+        //set the position of the box
+        box.style.top = (winH - box.offsetHeight)/2 + 'px';
+        box.style.left = (winW - box.offsetWidth)/2 + 'px';
+        
+        //set the sown flag
+        modalShown = true;
+    }
+    
+    function hideLoadingDialog(){
+        //get the elements to hide
+        var box = document.getElementById('modalBox');
+        
+        //hide them
+        document.body.removeChild(block);
+        box.style.display = 'none';
+        
+        //set the sown flag
+        modalShown = false;
+    }
+    
+    function setLoadingDialogTitle(s){
+        document.getElementById("modal-m-title").innerHTML = s;
+    }
+    
+    function setLoadingDialogMessage(s){
+        document.getElementById("modal-m-message").innerHTML = s;
+    }
+    
+    
+    
+    //Helper Methods
+    function getWinDims(){
+        if (document.body && document.body.offsetWidth) {
+            winW = document.body.offsetWidth;
+            winH = document.body.offsetHeight;
+        }
+        if (document.compatMode=='CSS1Compat' &&
+            document.documentElement &&
+            document.documentElement.offsetWidth ) {
+            winW = document.documentElement.offsetWidth;
+            winH = document.documentElement.offsetHeight;
+        }
+        if (window.innerWidth && window.innerHeight) {
+            winW = window.innerWidth;
+            winH = window.innerHeight;
+        }
+    }
+    
+    
+    function getDocDims() {
+        var D = document;
+        docH = Math.max(
+            Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+            Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+            Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+        );
+        docW = Math.max(
+            Math.max(D.body.scrollHeight, D.documentElement.scrollWidth),
+            Math.max(D.body.offsetHeight, D.documentElement.offsetWidth),
+            Math.max(D.body.clientHeight, D.documentElement.clientWidth)
+        );
+    }
+    
+    
+    function recalculate(){
+        if(modalShown){
+            getWinDims();
+            getDocDims();
+          
+            //get the elements to show
+            var blocker = document.getElementById('modalBlocker');
+            var box = document.getElementById('modalBox');
+          
+            //set the blocker dimensions
+            blocker.style.height = docH + 'px';
+            blocker.style.width = docW + 'px';
+              
+            //set the position of the box
+            box.style.top = (winH - box.offsetHeight)/2 + 'px';
+            box.style.left = (winW - box.offsetWidth)/2 + 'px';
+        }
+    }
+</script>
+<!--Start Modal Dialog Box-->
+<div id="modalBlocker" style="display:none;"></div>
+<div id="modalBox" style="display:none;">
+    <div id="modalBox-inner">
+        <h3 id="modal-m-title">{!title}</h3>
+        <div id="modalContent">
+            <div id="modal-m-message" class="spinner">{!message}</div>
+        </div>
+    </div>
+</div>
+<!--End Modal Dialog Box-->
+<script type="text/javascript">
+    //Recalculate the Modal Box Location on resize
+    var b = document.body;
+    b.setAttribute('onresize', 'recalculate()');
+</script>
+</apex:component>

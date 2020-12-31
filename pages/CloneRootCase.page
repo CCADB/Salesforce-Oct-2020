@@ -1,0 +1,9 @@
+<apex:page standardController="Root_Case__c" extensions="CreateRootCertOnRootCaseController" action="{!cloneRootCase}"> 
+<apex:pagemessages />
+ <apex:form >
+      <div style="padding-left:20px;">
+      <br/>
+   <apex:commandButton action="{!cancel}" value="Go Back" rendered="{!showBackButton}" />
+   </div>
+   </apex:form>
+</apex:page>

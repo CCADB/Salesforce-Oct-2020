@@ -1,0 +1,85 @@
+<apex:page renderAs="pdf" standardController="Case" extensions="JixiServiceController" applyBodyTag="false" >
+          <head>
+                <style>
+                    #ErrorLogAndActions {
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+                    
+                    #ErrorLogAndActions td, #ErrorLogAndActions th {
+                        border: 1px;
+                        padding: 2px;
+                    }
+                    
+                    #ErrorLogAndActions th {
+                        padding-top: 2px;
+                        padding-bottom: 2px;
+                        text-align: left;
+                        vertical-align:top;                  
+                    }
+                </style>
+          </head>
+                         
+          <center>
+                  <h1>Summary Report</h1>
+                  <h4>Case #{!Case.CaseNumber}</h4>
+          </center>
+                
+          <apex:pageBlock >                            
+               
+               <apex:pageBlockSection columns="1">                       
+                    <apex:outputText label="1) Audit Statement URLs"/><br/>
+                    <apex:outputText label="" value="Standard: {!Case.Standard_Audit_Statement_Link__c}" rendered="{!IF(Case.Standard_Audit_Statement_Link__c != null,true,false)}"/>
+                    <apex:outputText label="" value="Code Signing: {!Case.Code_Signing_Audit_Statement_Link__c}" rendered="{!IF(Case.Code_Signing_Audit_Statement_Link__c != null,true,false)}"/>
+                    <apex:outputText label="" value="BR: {!Case.BR_Audit_Statement_Link__c}" rendered="{!IF(Case.BR_Audit_Statement_Link__c != null,true,false)}"/>
+                    <apex:outputText label="" value="EV SSL: {!Case.EV_Audit_Statement_Link__c}" rendered="{!IF(Case.EV_Audit_Statement_Link__c != null,true,false)}"/>
+                    <apex:outputText label="" value="EV Code Signing: {!Case.EV_Code_Signing_Audit_Statement_Link__c}" rendered="{!IF(Case.EV_Code_Signing_Audit_Statement_Link__c != null,true,false)}"/><br/>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="1"> 
+                    <apex:outputText label="2) Root Certificates"/><br/>
+                    <apex:repeat value="{!lstRootCases}" var="rootCase" >
+                         <apex:outputText label="" value="Root Case No. {!rootCase.Name}"/>   
+                         <apex:outputText label="" value="{!rootCase.Included_Certificate_Name__c}"/>                  
+                         <apex:outputText label="" value="{!rootCase.SHA_256_Fingerprint__c}" style="font-size:15px;"/> <br/>
+                    </apex:repeat>
+                </apex:pageBlockSection> 
+                
+                <apex:pageBlockSection columns="1"> 
+                    <apex:outputText label="3) Errors in Audit Statements"/><br/>
+                </apex:pageBlockSection> 
+                <table id="ErrorLogAndActionTable" style="width:100%;" border="1">
+                    <tr>
+                        <th>Error(s)</th>
+                        <th>Recommended Actions</th>
+                    </tr>
+                    <apex:repeat value="{!lstErrorLog}" var="ErrorAndAction">
+                         <tr>
+                             <td><apex:outputText ><br/>{!ErrorAndAction.ErrorLog}<br/></apex:outputText></td>
+                             <td><apex:outputText ><br/>{!ErrorAndAction.RecommendedAction}<br/></apex:outputText></td>
+                         </tr>
+                    </apex:repeat>
+                </table>
+                <br/>
+                
+                <apex:pageBlockSection columns="1"> 
+                    <apex:outputText label="4) Non Error Logs"/><br/>
+                </apex:pageBlockSection> 
+            <table id="SuccessLogAndActionTable" style="width:100%;" border="1">
+                <tr>
+                    <th>Message(s)</th>
+                    <th>Recommended Actions</th>
+                </tr>
+                <apex:repeat value="{!lstSuccessLog}" var="SuccessAndAction">
+                     <tr>
+                         <td><apex:outputText ><br/>{!SuccessAndAction.ErrorLog}<br/></apex:outputText></td>
+                         <td><apex:outputText ><br/>{!SuccessAndAction.RecommendedAction}<br/></apex:outputText></td>
+                     </tr>
+                </apex:repeat>
+            </table>
+                
+           </apex:pageBlock>     
+                          
+            
+            
+</apex:page>

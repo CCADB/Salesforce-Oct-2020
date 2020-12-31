@@ -1,0 +1,249 @@
+<apex:page standardController="Case" extensions="ViewPolicyDocumentsOnCaseController" sideBar="false" showHeader="false" docType="html-5.0" standardStylesheets="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds-scope .slds-form-element_horizontal .slds-form-element__label {
+                flex-basis: inherit !important;
+            }
+        </style>
+        <body>
+            <apex:form id="frm">
+                <apex:actionFunction action="{!BindAssociations}" name="actBindAssociations" reRender="opAssCases" oncomplete="fnOpenPopup();">
+                    <apex:param value="" name="index"/> 
+                </apex:actionFunction>
+                <div class="slds">
+                    <div class="slds-form" role="list">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal">
+                                    <span class="slds-form-element__label">Document Repository</span>
+                                    <div class="slds-form-element__control" style="padding-top:4px;">
+                                        <apex:outputField value="{!objCase.CA_Document_Repository__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal">
+                                    <label class="slds-checkbox_toggle slds-grid" style="justify-content:flex-end">
+                                        <span class="slds-form-element__label slds-m-bottom_none">Show Deleted</span>
+                                        <apex:inputCheckbox value="{!isShowDeleted}" id="chkShowDel">
+                                            <apex:actionsupport event="onchange" rerender="opPD" /> 
+                                        </apex:inputCheckbox>
+                                        <span id="{!$Component.chkShowDel}" class="slds-checkbox_faux_container" aria-live="assertive">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-checkbox_on"></span>
+                                            <span class="slds-checkbox_off"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal">
+                                    <span class="slds-form-element__label">Document Repository Description</span>
+                                    <div class="slds-form-element__control" style="padding-left:16%;padding-top:4px;">
+                                        <apex:outputField value="{!objCase.Policy_Documentation__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <apex:outputPanel id="opPD" layout="block" style="margin-top:10px;">
+                        <apex:variable var="anyRecord" value="{!0}"/>
+                        <apex:variable value="{!0}" var="index"/>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);width:5%">
+                                        <div  title="ID">ID</div>
+                                    </th>
+                                    <th scope="col" style="width:7%">
+                                        <div  title="Type">Type</div>
+                                    </th>
+                                    <th scope="col" style="width:20%">
+                                        <div  title="Link">Link</div>
+                                    </th>
+                                    <th scope="col" style="width:13%">
+                                        <div  title="Last Update Date">Last Update Date</div>
+                                    </th>
+                                    <th scope="col" style="width:25%">
+                                        <div  title="Associated Trust Bits">Associated Trust Bits</div>
+                                    </th>
+                                    <th scope="col" style="width:25%;">
+                                        <div title="Comments">Comments</div>
+                                    </th>
+                                    <th scope="col" style="width:10%;">
+                                        <div title="Verified?">Verified?</div>
+                                    </th>
+                                    <th scope="col" style="width:10%;border-right: 1px solid rgb(221, 219, 218);">
+                                        <div  title="Action">Action</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!lstPolicyDocumentsOnCases}" var="pd">
+                                    <tr class="dataRow" style="display:{!if(((isShowDeleted && pd.Action__c = 'Delete') || pd.Action__c != 'Delete'), '','none;')}">
+                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                            <apex:outputLink styleClass="clsPDLink" html-index="{!index}" value="javascript:void(0)" style="text-decoration:underline;">
+                                                {!pd.Name}
+                                            </apex:outputLink>
+                                        </td>
+                                        <td class="datacell">
+                                            {!pd.Document_Type__c}
+                                        </td>
+                                        <td scope="col">
+                                            {!pd.Document_Link__c}
+                                        </td>
+                                        <td scope="col">
+                                            <apex:outputField value="{!pd.Document_Last_Updated_Date__c}"/>
+                                        </td>
+                                        <td scope="col">
+                                            {!pd.Associated_Trust_Bits__c}
+                                        </td>
+                                        <td class="datacell" title="{!pd.Comments__c}">
+                                            <apex:outputText value="{!IF(LEN(pd.Comments__c) > 100, LEFT(pd.Comments__c, 97) + '...', pd.Comments__c)}"  />
+                                            <apex:variable value="{!anyRecord + 1}" var="anyRecord" rendered="{!(isShowDeleted && pd.Action__c = 'Deleted') || pd.Action__c != 'Deleted'}"/>
+                                        </td>
+                                        <td scope="col">
+                                            {!pd.Document_Verified__c}
+                                        </td>
+                                        <td scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                            <apex:outputField value="{!pd.Action__c}"/>
+                                        </td>
+                                    </tr>
+                                    <apex:variable value="{!index+1}" var="index"/>
+                                </apex:repeat>
+                                <tr style="display:{!if(anyRecord = 0, '','none')}">
+                                    <td colspan="7" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                        <i>No records to display.</i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </apex:outputPanel>
+                </div>
+                <!-- model popup-->
+                <div id="divModelPopup" style="display:none">
+                    <section role="dialog" aria-modal="true" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container" style="max-width:85%;width:85%">
+                            <header class="slds-modal__header" style="padding:0.5rem;">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse btnHelpClose" title="Close">
+                                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#close")}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Policy Doc Associations</h2>
+                            </header>
+                            <apex:outputPanel id="opAssCases" layout="block" styleClass="slds-modal__content slds-p-around_medium">
+                                <apex:variable var="anyRecord" value="{!0}"/>
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th width="20%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                <div  title="Root Certificate Name">Root Certificate Name</div>
+                                            </th>
+                                            <th width="10%" scope="col">
+                                                <div  title="Mozilla Status">Mozilla Status</div>
+                                            </th>
+                                            <th width="10%" scope="col">
+                                                <div  title="Microsoft Status">Microsoft Status</div>
+                                            </th>
+                                            <!--<th width="10%" scope="col">
+                                                <div  title="Valid From (GMT)">Valid From (GMT)</div>
+                                            </th>
+                                            <th width="10%" scope="col">
+                                                <div  title="Valid To (GMT)">Valid To (GMT)</div>
+                                            </th>-->
+                                            <th width="30%" scope="col">
+                                                <div  title="SHA 256 Fingerprint">SHA 256 Fingerprint</div>
+                                            </th>
+                                            <th width="10%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                <div  title="Action">Action</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!lstPDAssociations}" var="rootPA">
+                                            <tr class="dataRow" style="display:{!if(((isShowDeleted && rootPA.Action__c == 'Deleted') || rootPA.Action__c != 'Deleted'), '','none;')}">
+                                                <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    <apex:outputField value="{!rootPA.Certificate_Name__r.Name}"/>
+                                                </td>
+                                                <td class="datacell">
+                                                    <apex:outputField value="{!rootPA.Certificate_Name__r.Status__c}"/>
+                                                </td>
+                                                <td class="datacell">
+                                                    <apex:outputField value="{!rootPA.Certificate_Name__r.Microsoft_Status__c}"/>
+                                                </td>
+                                                <!--<td class="datacell">
+                                                    <apex:outputField value="{!rootPA.Certificate_Name__r.Valid_From_GMT__c}"/>
+                                                </td>
+                                                <td class="datacell">
+                                                    <apex:outputField value="{!rootPA.Certificate_Name__r.Valid_To_GMT__c}"/>
+                                                </td>-->
+                                                <td class="datacell">
+                                                    <apex:outputField value="{!rootPA.Certificate_Name__r.SHA_256_Fingerprint__c}"/>
+                                                </td>
+                                                <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    <apex:outputField value="{!rootPA.Action__c}"/>
+                                                    <apex:variable value="{!anyRecord + 1}" var="anyRecord" rendered="{!(isShowDeleted && rootPA.Action__c == 'Deleted') || rootPA.Action__c != 'Deleted'}"/>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                        <tr style="display:{!if(anyRecord = 0, '','none')}">
+                                            <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                <i>No records to display.</i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </apex:outputPanel>
+                            <footer class="slds-modal__footer" style="padding:0.5rem; 0.5rem;">
+                                <button class="slds-button slds-button_neutral btnHelpClose">Close</button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </apex:form>
+            <script>
+                $(document).on('click','.btnHelpClose',function(){
+                    $('#divModelPopup').hide();
+                    return false;
+                });
+                $(document).on('click','.clsPDLink',function(){
+                    var index = $(this).attr('index');
+                    actBindAssociations(index);
+                    return false;
+                });
+                function fnOpenPopup(){
+                    $('#divModelPopup').show();
+                    return false;
+                }
+                
+            </script>
+        </body>
+    </html>
+</apex:page>

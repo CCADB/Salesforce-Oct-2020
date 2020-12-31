@@ -1,0 +1,241 @@
+<apex:page controller="PublicIntermediateCertsRevokedController" showHeader="false" sidebar="false" docType="html-5.0" cache="true" expires="3600" readOnly="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+        </style>
+        <body>
+            <apex:form id="frm">
+                <div class="slds" style="width:5000px;">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header" style="margin-top:10px;">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 12px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset"> </p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="All Revoked Intermediate Certs">All Revoked Intermediate Certs</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-truncate slds-p-horizontal_small" title="Records Displayed">As of {!currentDate} ({!accountHierarchySoLst.size} records displayed)</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="CA Owner">CA Owner</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Revocation Status">Revocation Status</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="RFC 5280 Revocation Reason Code">RFC 5280 Revocation Reason Code</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Date of Revocation">Date of Revocation</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="OneCRL Status">OneCRL Status</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Certificate Serial Number">Certificate Serial Number</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="CA Owner/Certificate Name">CA Owner/Certificate Name</div>
+                                                    </th>
+                                                    <th  scope="col" >
+                                                        <div  title="Certificate Issuer Common Name">Certificate Issuer Common Name</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Certificate Issuer Organization">Certificate Issuer Organization</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Certificate Subject Common Name">Certificate Subject Common Name</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Certificate Subject Organization">Certificate Subject Organization</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="SHA-256 Fingerprint">SHA-256 Fingerprint</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Subject + SPKI SHA256">Subject + SPKI SHA256</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Valid From [GMT]">Valid From [GMT]</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Valid To [GMT]">Valid To [GMT]</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Public Key Algorithm">Public Key Algorithm</div>
+                                                    </th>             
+                                                    <th  scope="col">
+                                                        <div  title="Signature Hash Algorithm">Signature Hash Algorithm</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="CRL URL(s)">CRL URL(s)</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Alternate CRL">Alternate CRL</div>
+                                                    </th>         
+                                                    <!--<th  scope="col">
+                                                        <div  title="OCSP URL(s)">OCSP URL(s)</div>
+                                                    </th>-->
+                                                    <th  scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="Comments">Comments</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!accountHierarchySoLst}" var="account" rendered="{!accountHierarchySoLst != null && accountHierarchySoLst.size > 0}">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputField value="{!account.CA_Owner__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Revocation_Status__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.RFC_5280_Revocation_Reason_Code__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Date_of_Revocation_GMT__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.OneCRL_Status__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Certificate_Serial_Number__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.name}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Certificate_Issuer_Common_Name__c}"> </apex:outputField>
+                                                        </td>                            
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Certificate_Issuer_Organization__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Certificate_Subject_Common_Name__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Certificate_Subject_Organization__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.SHA_256_Fingerprint__c}"> </apex:outputField>
+                                                        </td>                     
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Subject_SPKI_SHA256__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Valid_From_YYYY_MMM_DD__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Valid_To_YYYY_MMM_DD__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Public_Key_Algorithm__c}"> </apex:outputField>
+                                                        </td>  
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Signature_Hash_Algorithm__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.CRL_URL_s__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!account.Alternate_CRL__c}"> </apex:outputField>
+                                                        </td>
+                                                        <!--<td class="datacell">
+                                                            <apex:outputField value="{!account.OCSP_URL_s__c}"> </apex:outputField>
+                                                        </td>-->
+                                                        <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputField value="{!account.Comments__c}"> </apex:outputField>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(accountHierarchySoLst == null || accountHierarchySoLst.size == 0,'','none')}">
+                                                    <td colspan="21" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

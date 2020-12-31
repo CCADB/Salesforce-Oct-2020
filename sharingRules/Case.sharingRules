@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Read_Only_Permission_To_All</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Read Only Permission To All</label>
+        <sharedTo>
+            <roleAndSubordinates>CA_Program_Manager</roleAndSubordinates>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinates>CA_Program_Manager</roleAndSubordinates>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

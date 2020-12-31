@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Audit_Deviation__c</fullName>
+        <externalId>false</externalId>
+        <label>Audit Deviation</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Standard Audit</fullName>
+                    <default>false</default>
+                    <label>Standard Audit</label>
+                </value>
+                <value>
+                    <fullName>Code Signing Audit</fullName>
+                    <default>false</default>
+                    <label>Code Signing Audit</label>
+                </value>
+                <value>
+                    <fullName>BR Audit</fullName>
+                    <default>false</default>
+                    <label>BR Audit</label>
+                </value>
+                <value>
+                    <fullName>EV SSL Audit</fullName>
+                    <default>false</default>
+                    <label>EV SSL Audit</label>
+                </value>
+                <value>
+                    <fullName>EV Code Signing Audit</fullName>
+                    <default>false</default>
+                    <label>EV Code Signing Audit</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Audit_Statement_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Audit Statement Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Auditor_Location__c</fullName>
+        <externalId>false</externalId>
+        <label>Auditor Location</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Auditor__c</fullName>
+        <externalId>false</externalId>
+        <label>Auditor</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CA_Owner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>CA Owner</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>File Archive</relationshipLabel>
+        <relationshipName>File_Archive</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Case_Safe_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASESAFEID(Id)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Case Safe ID</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Document_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Document Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Standard Audit</fullName>
+                    <default>false</default>
+                    <label>Standard Audit</label>
+                </value>
+                <value>
+                    <fullName>Code Signing Audit</fullName>
+                    <default>false</default>
+                    <label>Code Signing Audit</label>
+                </value>
+                <value>
+                    <fullName>BR Audit</fullName>
+                    <default>false</default>
+                    <label>BR Audit</label>
+                </value>
+                <value>
+                    <fullName>EV SSL Audit</fullName>
+                    <default>false</default>
+                    <label>EV SSL Audit</label>
+                </value>
+                <value>
+                    <fullName>EV Code Signing Audit</fullName>
+                    <default>false</default>
+                    <label>EV Code Signing Audit</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>External_Link__c</fullName>
+        <externalId>false</externalId>
+        <label>External Link</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Internal_Link__c</fullName>
+        <externalId>false</externalId>
+        <label>Internal Link</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Internal_Link_for_CAs__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUBSTITUTE(Internal_Link__c, &quot;my.salesforce&quot;, &quot;force&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Internal Link for CAs</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Period_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Period End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Period_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Period Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>File Archive</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>A{00000}</displayFormat>
+        <label>Archive ID</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>File Archive</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>CA_Owner__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Document_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Audit_Statement_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>External_Link__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Internal_Link__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Period_Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Period_End_Date__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>CA_Owner__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Document_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Audit_Statement_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>External_Link__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Period_Start_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Period_End_Date__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>CA_Owner__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Document_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>External_Link__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Audit_Statement_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

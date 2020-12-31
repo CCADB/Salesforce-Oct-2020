@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Batch_Run_on__c</fullName>
+        <externalId>false</externalId>
+        <label>Batch Run on</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Batch_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Batch Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Yet Started</fullName>
+                    <default>true</default>
+                    <label>Not Yet Started</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Failed</fullName>
+                    <default>false</default>
+                    <label>Failed</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>CC_To__c</fullName>
+        <externalId>false</externalId>
+        <label>CC To</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>All Primary POCs</fullName>
+                    <default>false</default>
+                    <label>All Primary POCs</label>
+                </value>
+                <value>
+                    <fullName>All POCs</fullName>
+                    <default>false</default>
+                    <label>All POCs</label>
+                </value>
+                <value>
+                    <fullName>CA Email Alias 1</fullName>
+                    <default>false</default>
+                    <label>CA Email Alias 1</label>
+                </value>
+                <value>
+                    <fullName>CA Email Alias 2</fullName>
+                    <default>false</default>
+                    <label>CA Email Alias 2</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Error_Message__c</fullName>
+        <externalId>false</externalId>
+        <label>Error Message</label>
+        <length>500</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>From_In_Text__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>A workflow updates this field from a picklist &apos;From&apos;.</inlineHelpText>
+        <label>From (In Text)</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>From__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field holds the &quot;Display Name&quot; from the Organization-Wide Email Addresses defined in your org.</inlineHelpText>
+        <label>From</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CCADB Support</fullName>
+                    <default>true</default>
+                    <label>CCADB Support</label>
+                </value>
+                <value>
+                    <fullName>Apple CA Program Manager</fullName>
+                    <default>false</default>
+                    <label>Apple CA Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Cisco CA Program Manager</fullName>
+                    <default>false</default>
+                    <label>Cisco CA Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Google CA Program Manager</fullName>
+                    <default>false</default>
+                    <label>Google CA Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Microsoft CA Program Manager</fullName>
+                    <default>false</default>
+                    <label>Microsoft CA Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Mozilla CA Program Manager</fullName>
+                    <default>false</default>
+                    <label>Mozilla CA Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Current User</fullName>
+                    <default>false</default>
+                    <label>Current User</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Message__c</fullName>
+        <externalId>false</externalId>
+        <label>Message</label>
+        <length>10000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>No_of_Emails_Failed__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Emails Failed</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>No_of_Emails_Sent__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Emails Sent</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reply_To_In_Text__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>A workflow updates this field from a picklist &apos;Reply To&apos;.</inlineHelpText>
+        <label>Reply To (In Text)</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reply_To__c</fullName>
+        <externalId>false</externalId>
+        <label>Reply To</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Reply-To Apple CA Program Manager</fullName>
+                    <default>false</default>
+                    <label>Reply-To Apple CA Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Reply-To Cisco CA Program Manager</fullName>
+                    <default>false</default>
+                    <label>Reply-To Cisco CA Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Reply-To Google CA Program Manager</fullName>
+                    <default>false</default>
+                    <label>Reply-To Google CA Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Reply-To Microsoft CA Program Manager</fullName>
+                    <default>false</default>
+                    <label>Reply-To Microsoft CA Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Reply-To Mozilla CA Program Manager</fullName>
+                    <default>false</default>
+                    <label>Reply-To Mozilla CA Program Manager</label>
+                </value>
+                <value>
+                    <fullName>Current User</fullName>
+                    <default>true</default>
+                    <label>Current User</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SOQL_Filter_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <label>SOQL Filter Conditions</label>
+        <length>1000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Send_To__c</fullName>
+        <externalId>false</externalId>
+        <label>Send To</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>All Primary POCs</fullName>
+                    <default>false</default>
+                    <label>All Primary POCs</label>
+                </value>
+                <value>
+                    <fullName>All POCs</fullName>
+                    <default>false</default>
+                    <label>All POCs</label>
+                </value>
+                <value>
+                    <fullName>CA Email Alias 1</fullName>
+                    <default>false</default>
+                    <label>CA Email Alias 1</label>
+                </value>
+                <value>
+                    <fullName>CA Email Alias 2</fullName>
+                    <default>false</default>
+                    <label>CA Email Alias 2</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Subject__c</fullName>
+        <externalId>false</externalId>
+        <label>Subject</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>User_Eligible_to_Send_Mass_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF (OR( 
+
+AND(CONTAINS(From_In_Text__c, &quot;Mozilla&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Mozilla&quot;), 
+CONTAINS($Profile.Name, &quot;Mozilla&quot;)), 
+
+AND(CONTAINS(From_In_Text__c, &quot;Microsoft&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Microsoft&quot;), 
+CONTAINS($Profile.Name, &quot;Microsoft&quot;)), 
+
+AND(CONTAINS(From_In_Text__c, &quot;Google&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Google&quot;), 
+CONTAINS($Profile.Name, &quot;Google&quot;)), 
+
+AND(CONTAINS(From_In_Text__c, &quot;Current User&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Mozilla&quot;), 
+CONTAINS($Profile.Name, &quot;Mozilla&quot;)), 
+
+AND(CONTAINS(From_In_Text__c, &quot;Current User&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Microsoft&quot;), 
+CONTAINS($Profile.Name, &quot;Microsoft&quot;)),
+
+AND(CONTAINS(From_In_Text__c, &quot;Current User&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Google&quot;), 
+CONTAINS($Profile.Name, &quot;Google&quot;)), 
+
+AND(CONTAINS(From_In_Text__c, &quot;Mozilla&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Current User&quot;), 
+CONTAINS($Profile.Name, &quot;Mozilla&quot;)), 
+
+AND(CONTAINS(From_In_Text__c, &quot;Microsoft&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Current User&quot;), 
+CONTAINS($Profile.Name, &quot;Microsoft&quot;)), 
+
+AND(CONTAINS(From_In_Text__c, &quot;Google&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Current User&quot;), 
+CONTAINS($Profile.Name, &quot;Google&quot;)), 
+
+AND(CONTAINS(From_In_Text__c, &quot;CCADB Support&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Current User&quot;)),
+
+AND(CONTAINS(From_In_Text__c, &quot;CCADB Support&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Mozilla&quot;), 
+CONTAINS($Profile.Name, &quot;Mozilla&quot;)), 
+
+AND(CONTAINS(From_In_Text__c, &quot;CCADB Support&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Microsoft&quot;), 
+CONTAINS($Profile.Name, &quot;Microsoft&quot;)),
+
+AND(CONTAINS(From_In_Text__c, &quot;CCADB Support&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Google&quot;), 
+CONTAINS($Profile.Name, &quot;Google&quot;)),
+
+AND(CONTAINS(From_In_Text__c, &quot;Current User&quot;), 
+CONTAINS(Reply_To_In_Text__c, &quot;Current User&quot;))
+), 
+TRUE, FALSE)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Match profile of current/logged in user with &apos;From&apos; user and &apos;Reply To&apos; user (Used by Mass Email Batch pgm)</inlineHelpText>
+        <label>DELETE User Eligible to Send Mass Email?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Mass Email</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Subject__c</columns>
+        <columns>From__c</columns>
+        <columns>Reply_To__c</columns>
+        <columns>Send_To__c</columns>
+        <columns>CC_To__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>E{0000}</displayFormat>
+        <label>Mass Email Id</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Mass Emails</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Subject__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>From__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Reply_To__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Send_To__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CC_To__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATEDBY_USER</customTabListAdditionalFields>
+        <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Subject__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>From__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Reply_To__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Subject__c</searchFilterFields>
+        <searchFilterFields>From__c</searchFilterFields>
+        <searchFilterFields>Reply_To__c</searchFilterFields>
+        <searchResultsAdditionalFields>Subject__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>From__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Reply_To__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Send_To__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CC_To__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>UPDATEDBY_USER</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Check_for_From_User</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF (OR (ISPICKVAL(From__c, &quot;Current User&quot;), ISPICKVAL(From__c, &quot;CCADB Support&quot;)), FALSE,
+AND(
+NOT(AND (CONTAINS($Profile.Name, &quot;Apple&quot;),
+ ISPICKVAL(From__c,&quot;Apple CA Program Manager&quot;))),
+NOT(AND (CONTAINS($Profile.Name, &quot;Cisco&quot;),
+ ISPICKVAL(From__c,&quot;Cisco CA Program Manager&quot;))),
+NOT(AND (CONTAINS($Profile.Name, &quot;Mozilla&quot;),
+ ISPICKVAL(From__c,&quot;Mozilla CA Program Manager&quot;))),
+NOT(AND (CONTAINS($Profile.Name, &quot;Microsoft&quot;),
+ ISPICKVAL(From__c,&quot;Microsoft CA Program Manager&quot;))),
+NOT(AND (CONTAINS($Profile.Name, &quot;Google&quot;),
+ ISPICKVAL(From__c,&quot;Google CA Program Manager&quot;)))
+)
+)</errorConditionFormula>
+        <errorMessage>Please select &apos;From&apos; address which represent your company or select &apos;CCADB Support&apos; &apos;Current User&apos; from the list</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_for_Reply_To_User</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF (ISPICKVAL(Reply_To__c, &quot;Current User&quot;), FALSE,
+AND(
+NOT(AND (CONTAINS($Profile.Name, &quot;Apple&quot;),
+ ISPICKVAL(Reply_To__c,&quot;Reply-To Apple CA Program Manager&quot;))),
+NOT(AND (CONTAINS($Profile.Name, &quot;Cisco&quot;),
+ ISPICKVAL(Reply_To__c,&quot;Reply-To Cisco CA Program Manager&quot;))),
+NOT(AND (CONTAINS($Profile.Name, &quot;Mozilla&quot;),
+ ISPICKVAL(Reply_To__c,&quot;Reply-To Mozilla CA Program Manager&quot;))),
+NOT(AND (CONTAINS($Profile.Name, &quot;Microsoft&quot;),
+ ISPICKVAL(Reply_To__c,&quot;Reply-To Microsoft CA Program Manager&quot;))),
+NOT(AND (CONTAINS($Profile.Name, &quot;Google&quot;),
+ ISPICKVAL(Reply_To__c,&quot;Reply-To Google CA Program Manager&quot;)))
+)
+)</errorConditionFormula>
+        <errorMessage>Please select &apos;Reply To&apos; address which represent your company or select &apos;Current User&apos; from the list</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Completed_Mass_Email</fullName>
+        <active>true</active>
+        <description>Once Mass Email Batch is completed, User can not change</description>
+        <errorConditionFormula>IF(ISCHANGED(Batch_Status__c), ISPICKVAL(PRIORVALUE(Batch_Status__c),&quot;Completed&quot;), ISPICKVAL(Batch_Status__c, &quot;Completed&quot;))</errorConditionFormula>
+        <errorMessage>Mass Email Batch is Complete. You cannot edit and reuse the record.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Add_Update_Filter_Conditions</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Deprecated Add/Update Filter Conditions</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/MassEmailAccountFilter?id={!Mass_Email__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Help</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>page</linkType>
+        <masterLabel>Help</masterLabel>
+        <openType>newWindow</openType>
+        <page>MassEmailHelp</page>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+    </webLinks>
+    <webLinks>
+        <fullName>Preview_Email</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Preview Email</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/MassEmail?id={!Mass_Email__c.Id}&amp;isPreview=true</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Send_Mass_Email</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Send Mass Email</masterLabel>
+        <openType>noSidebar</openType>
+        <protected>false</protected>
+        <url>/apex/MassEmail?id={!Mass_Email__c.Id}</url>
+    </webLinks>
+</CustomObject>

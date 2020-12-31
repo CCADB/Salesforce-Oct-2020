@@ -1,0 +1,39 @@
+<!-- *******************************************************************************************************
+ Name: IntermediateCertsSeparateAuditsCSV
+ 
+ Dependencies: IntermediateCertsSeparateAuditsCtrl class, IntermediateCertsSeparateAudits VF page, 
+ IntermediateCertsSeparateAuditsCtrlTest 
+ 
+ Description: 'Intermediate Certs's Separate Audits' reports on Intermediate certs which have their own audits.
+ 
+              Filtered By:    
+
+              CA Owner/Certificate Record Type equals Intermediate Certificate
+              AND CA Owner/Certificate Owner not equal to <Fill in Cert Name>
+              AND Revocation Status equals 'Not Revoked'
+              AND OneCRL_Status__c not equals 'Added to OneCRL'
+              AND Mozilla Status for the root cert equals Included,Change Requested
+              AND Audits Same as Parent equals False
+              AND Valid To (GMT) greater than TODAY
+              AND Technically Constrained equals False
+
+              Columns: CA Owner, Parent Certificate Name, Certificate Name, SHA-256 Fingerprint, 
+                       Valid From [GMT], Valid To [GMT], Standard Audit, Standard Audit Period End Date, 
+                       BR Audit, BR Audit Period End Date
+
+              Columns For the non-CSV version, SHA-256 fingerprints links to 
+                      https://crt.sh/?q=<SHA256-Fingerprint>
+ Instructions: None
+   
+ *******************************************************************************************************
+ Revision History:
+ 
+     3/7/2019 - Created new
+     7/9/2019 - Added "Comments" column to the report
+     8/12/2019 - Added Subordinate_CA_Owner__c to the report
+ ****************************************************************************************************** -->
+<apex:page controller="IntermediateCertsSeparateAuditsCtrl" showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/csv#IntermediateCertsSeparateAuditsReport.csv;charset=UTF-8" readOnly="true">"Subordinate CA Owner","Parent CA Owner","Parent Certificate Name","Certificate Name","SHA-256 Fingerprint","Valid From [GMT]","Valid To [GMT]","Standard Audit","Standard Audit Period End Date","BR Audit","BR Audit Period End Date","Comments"
+<apex:repeat value="{!AccountSoLst}" var="account">
+"{!account.Subordinate_CA_Owner__c}","{!account.CA_Owner__c}","{!account.Parent.Name}","{!account.Name}","{!account.SHA_256_Fingerprint__c}","{!account.Valid_From_YYYY_MMM_DD__c}","{!account.Valid_To_YYYY_MMM_DD__c}","{!account.Standard_Audit__c}","<apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!account.Standard_Audit_Period_End_Date__c}" /> </apex:outputText>","{!account.BR_Audit__c}","<apex:outputText value="{0,date,MM/dd/yyyy}"> <apex:param value="{!account.BR_Audit_Period_End_Date__c}" /> </apex:outputText>","{!account.Comments__c}"
+</apex:repeat>
+</apex:page>

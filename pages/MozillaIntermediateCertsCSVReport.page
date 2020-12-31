@@ -1,0 +1,5 @@
+<apex:page controller="MozillaIntermediateCertsReportController" cache="true" expires="3600" showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/csv#MozillaIntermediateCerts.csv;charset=UTF-8" readOnly="true">"Subject","Issuer","SHA256","PEM"
+<apex:repeat value="{!lstIntermediateCerts}" var="accountSo">
+"{!accountSo.Subject__c}","{!accountSo.Issuer__c}","{!accountSo.SHA_256_Fingerprint__c}","{!accountSo.X_509_Certificate_PEM__c}"
+</apex:repeat>
+</apex:page>

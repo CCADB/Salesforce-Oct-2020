@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_59580372</developerName>
+        <masterLabel>Owner</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>PARENT.NAME</sourceColumnName>
+        <useOther>false</useOther>
+    </buckets>
+    <buckets>
+        <bucketType>text</bucketType>
+        <developerName>BucketField_35465067</developerName>
+        <masterLabel>Root Certificate</masterLabel>
+        <nullTreatment>n</nullTreatment>
+        <sourceColumnName>ACCOUNT.NAME</sourceColumnName>
+        <useOther>false</useOther>
+    </buckets>
+    <colorRanges>
+        <columnName>RowCount</columnName>
+        <highBreakpoint>100.0</highBreakpoint>
+        <highColor>#54C28B</highColor>
+        <lowBreakpoint>50.0</lowBreakpoint>
+        <lowColor>#FFFFFF</lowColor>
+        <midColor>#54C28B</midColor>
+    </colorRanges>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <columns>
+        <field>Account.Status__c</field>
+    </columns>
+    <columns>
+        <field>Account.Microsoft_Status__c</field>
+    </columns>
+    <description>Count of all records which chain up to the CA Owner. Hierarchy with 50+ records is highlighted in green.</description>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Count__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.CA_Owner__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Account Hierarchy Record Count</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

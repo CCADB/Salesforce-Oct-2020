@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Auditor__c.Auditor_Locations__r.Contacts__r$Name</field>
+    </columns>
+    <columns>
+        <field>Auditor__c.Auditor_Locations__r.Contacts__r$Auditor_Contact_Status__c</field>
+    </columns>
+    <columns>
+        <field>Auditor__c.Auditor_Locations__r$Name</field>
+    </columns>
+    <columns>
+        <field>Auditor__c.Auditor_Locations__r.Contacts__r$Email</field>
+    </columns>
+    <description>Custom URL report</description>
+    <filter>
+        <criteriaItems>
+            <column>Auditor__c$Id</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value></value>
+        </criteriaItems>
+    </filter>
+    <format>Tabular</format>
+    <name>List all of this Auditor&apos;s Contacts</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Auditor_Company_w_o_Location_w_o_Contact__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>Auditor__c.Auditor_Locations__r.Contacts__r$Name</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>Auditor__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,430 @@
+<apex:page standardController="Policy_Document_On_Certificate__c" extensions="ViewPolicyDocumentCertController" sideBar="false" showHeader="true" docType="html-5.0">
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-button_brand {
+                background-color:dimgray !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+                font-weight:700;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+            .dateFormat {
+                display:none;
+            }
+            .datePicker {
+                max-width:15%;
+            }
+            .clsMultiPicklist select {
+                width:200px !important;
+                height:100px !important;
+            }
+            .clsPIMultiPicklist select {
+                width:200px !important;
+                height:265px !important;
+            }
+            .slds-scope .slds-dueling-list__column_responsive {
+                flex-wrap: nowrap;
+            }
+            li.selected {
+                background-color: #1589EE;
+                color:white;
+            }
+            .slds-listbox__option_plain {
+                cursor:pointer;
+            }
+            .deletedRecord, .deletedRecord td  {
+                font-style:italic !important;
+                color:red !important;
+            }
+        </style>
+        <body>
+            <!--<hr style="margin:0px;border-top: 2px solid black;"/>-->
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Policy Document Details, Root Certificate Associations and Change History</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle">{!PDCertificate.Name}</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form" role="list">
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <span class="slds-form-element__label">Document Type</span>
+                                                        <div class="slds-form-element__icon">
+                                                            <a href="javascript:void(0);" class="helplink">
+                                                                <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                </svg>
+                                                                <span class="slds-assistive-text">Help</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputField value="{!PDCertificate.Document_Type__c}"/>
+                                                        </div>
+                                                        <div class="help slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;top:-40px;left:84px;width:20rem;display:none;">
+                                                            <div class="slds-popover__body slds-text-longform">
+                                                                <p>{!$ObjectType.Policy_Document_On_Certificate__c.fields.Document_Type__c.InlineHelpText}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <span class="slds-form-element__label">Document Link</span>
+                                                        <div class="slds-form-element__icon">
+                                                            <a href="javascript:void(0);" class="helplink">
+                                                                <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                </svg>
+                                                                <span class="slds-assistive-text">Help</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputText value="{!PDCertificate.Document_Link__c}"/>
+                                                        </div>
+                                                        <div class="help slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;top:-115px;left:80px;width:20rem;display:none;">
+                                                            <div class="slds-popover__body slds-text-longform">
+                                                                <p>{!$ObjectType.Policy_Document_On_Certificate__c.fields.Document_Link__c.InlineHelpText}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <span class="slds-form-element__label">Document Last Update Date</span>
+                                                        <div class="slds-form-element__icon">
+                                                            <a href="javascript:void(0);" class="helplink">
+                                                                <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                </svg>
+                                                                <span class="slds-assistive-text">Help</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputField value="{!PDCertificate.Document_Last_Updated_Date__c}"/>
+                                                        </div>
+                                                        <div class="help slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;top:-60px;left:154px;width:20rem;display:none;">
+                                                            <div class="slds-popover__body slds-text-longform">
+                                                                <p>{!$ObjectType.Policy_Document_On_Certificate__c.fields.Document_Last_Updated_Date__c.InlineHelpText}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <span class="slds-form-element__label">Associated Trust Bits</span>
+                                                        <div class="slds-form-element__icon">
+                                                            <a href="javascript:void(0);" class="helplink">
+                                                                <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                </svg>
+                                                                <span class="slds-assistive-text">Help</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputField value="{!PDCertificate.Associated_Trust_Bits__c}"/>
+                                                        </div>
+                                                        <div class="help slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;top:-43px;left:109px;width:20rem;display:none;">
+                                                            <div class="slds-popover__body slds-text-longform">
+                                                                <p>{!$ObjectType.Policy_Document_On_Certificate__c.fields.Associated_Trust_Bits__c.InlineHelpText}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <span class="slds-form-element__label">Comments</span>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputField value="{!PDCertificate.Comments__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <div class="slds-form" role="list">
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <span class="slds-form-element__label">Policy Identifiers</span>
+                                                        <div class="slds-form-element__icon">
+                                                            <a href="javascript:void(0);" class="helplink">
+                                                                <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                </svg>
+                                                                <span class="slds-assistive-text">Help</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputField value="{!PDCertificate.Policy_Identifiers__c}"/>
+                                                        </div>
+                                                        <div class="help slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;top:-43px;left:88px;width:20rem;display:none;">
+                                                            <div class="slds-popover__body slds-text-longform">
+                                                                <p>{!$ObjectType.Policy_Document_On_Certificate__c.fields.Policy_Identifiers__c.InlineHelpText}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <span class="slds-form-element__label">Is Deleted?</span>
+                                                        <div class="slds-form-element__icon">
+                                                            <a href="javascript:void(0);" class="helplink">
+                                                                <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                </svg>
+                                                                <span class="slds-assistive-text">Help</span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputField value="{!PDCertificate.Is_Deleted__c}"/>
+                                                        </div>
+                                                        <div class="help slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;top:-42px;left:59px;width:20rem;display:none;">
+                                                            <div class="slds-popover__body slds-text-longform">
+                                                                <p>{!$ObjectType.Policy_Document_On_Certificate__c.fields.Is_Deleted__c.InlineHelpText}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__row">
+                                                <div class="slds-form__item" role="listitem">
+                                                    <div class="slds-form-element slds-form-element_horizontal">
+                                                        <label class="slds-checkbox_toggle slds-grid">
+                                                            <span class="slds-form-element__label slds-m-bottom_none">Show Deleted Associations</span>
+                                                            <apex:inputCheckbox value="{!isShowDeleted}" id="chkShowDel">
+                                                                <apex:actionsupport event="onchange" rerender="opAssRoots" /> 
+                                                            </apex:inputCheckbox>
+                                                            <span id="{!$Component.chkShowDel}" class="slds-checkbox_faux_container" aria-live="assertive">
+                                                                <span class="slds-checkbox_faux"></span>
+                                                                <span class="slds-checkbox_on"></span>
+                                                                <span class="slds-checkbox_off"></span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!--Associated Root Certificates-->
+                                <apex:outputPanel id="opAssRoots" layout="block" styleClass="slds-section slds-is-open" style="margin-left:10px;margin-right:10px;">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <apex:outputPanel >Associated Root Certificates</apex:outputPanel>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <apex:variable var="anyRecord" value="{!0}"/>
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th width="20%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="Root Certificate Name">Root Certificate Name</div>
+                                                    </th>
+                                                    <th width="10%" scope="col">
+                                                        <div  title="Mozilla Status">Mozilla Status</div>
+                                                    </th>
+                                                    <th width="10%" scope="col">
+                                                        <div  title="Microsoft Status">Microsoft Status</div>
+                                                    </th>
+                                                    <th width="10%" scope="col">
+                                                        <div  title="Valid From (GMT)">Valid From (GMT)</div>
+                                                    </th>
+                                                    <th width="10%" scope="col">
+                                                        <div  title="Valid To (GMT)">Valid To (GMT)</div>
+                                                    </th>
+                                                    <th width="30%" scope="col" style="{!If(!isShowDeleted,'border-right: 1px solid rgb(221, 219, 218);','')}">
+                                                        <div  title="SHA 256 Fingerprint">SHA 256 Fingerprint</div>
+                                                    </th>
+                                                    <th width="10%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);display:{!If(isShowDeleted, '','none')}">
+                                                        <div  title="Is Association Deleted?">Is Association Deleted?</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstAssociationsRecords}" var="rootPA">
+                                                    <tr class="dataRow" style="display:{!if(((isShowDeleted && rootPA.Is_Deleted__c) || !rootPA.Is_Deleted__c), '','none;')}">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputLink value="/{!rootPA.Certificate_Name__c}" style="text-decoration:underline;" target="_blank">{!rootPA.Certificate_Name__r.Name}</apex:outputLink>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!rootPA.Certificate_Name__r.Status__c}"/>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!rootPA.Certificate_Name__r.Microsoft_Status__c}"/>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!rootPA.Certificate_Name__r.Valid_From_GMT__c}"/>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!rootPA.Certificate_Name__r.Valid_To_GMT__c}"/>
+                                                        </td>
+                                                        <td class="datacell" style="{!If(!isShowDeleted,'border-right: 1px solid rgb(221, 219, 218);','')}">
+                                                            <apex:outputField value="{!rootPA.Certificate_Name__r.SHA_256_Fingerprint__c}"/>
+                                                        </td>
+                                                        <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);display:{!If(isShowDeleted, '','none')}">
+                                                            <apex:outputField value="{!rootPA.Is_Deleted__c}"/>
+                                                            <apex:variable value="{!anyRecord + 1}" var="anyRecord" rendered="{!(isShowDeleted && rootPA.Is_Deleted__c) || !rootPA.Is_Deleted__c}"/>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(anyRecord = 0, '','none')}">
+                                                    <td colspan="7" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        <i>No records to display.</i>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                                
+                                <!--Doc History -->
+                                <apex:outputPanel id="opHistories" layout="block" styleClass="slds-section slds-is-open" style="margin-left:10px;margin-right:10px;">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <apex:outputPanel >Policy Document History</apex:outputPanel>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th width="5%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="History Id">History Id</div>
+                                                    </th>
+                                                    <th width="75%" scope="col">
+                                                        <div  title="Notes">Notes</div>
+                                                    </th>
+                                                    <th width="10%" scope="col">
+                                                        <div  title="Last Modified Date">Last Modified Date</div>
+                                                    </th>
+                                                    <th width="10%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="Last Modified By">Last Modified By</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstPDHistories}" var="PDH">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputField value="{!PDH.Name}"/>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!PDH.Notes__c}"/>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!PDH.LastModifiedDate}"/>
+                                                        </td>
+                                                        <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputField value="{!PDH.LastModifiedBy.Name}"/>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(lstPDHistories.size = 0, '','none')}">
+                                                    <td colspan="4" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        <i>No records to display.</i>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </apex:outputPanel>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+            <script>
+                $(document).on('mouseenter','.helplink',function(){
+                    $(this).closest('div.slds-form-element').find('div.help').show();
+                });
+                $(document).on('mouseleave','.helplink',function(){
+                    $(this).closest('div.slds-form-element').find('div.help').hide();
+                });
+            </script>
+        </body>
+    </html>
+</apex:page>

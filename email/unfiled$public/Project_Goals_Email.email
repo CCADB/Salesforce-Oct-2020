@@ -1,0 +1,11 @@
+Updates have been done to the following goal:
+
+Goal: {!Project_Goal__c.Goal__c}
+
+Budgeted Hours: {!Project_Goal__c.Budgeted_Hours__c}
+
+Actual Hours: {!Project_Goal__c.Actual_Hours__c}
+
+Goal Details: {!Project_Goal__c.Goal_Details__c}
+
+Comments: {!Project_Goal__c.00No000000EgZRY}

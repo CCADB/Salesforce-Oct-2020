@@ -1,0 +1,30 @@
+<apex:page controller="RootCasePEMParserBatchController">
+ 
+ <apex:sectionHeader title="PEM Info Batch Job For Root Cases Using TLS Observatory API" />
+ 
+ <apex:form >
+  
+  <br/>
+  
+  <apex:pageBlock id="idProcessPEMInfoBatch" mode="edit">
+    <apex:pageMessages />
+    
+    <div align="center" draggable="false" >  
+      <br/>
+        <apex:outputText value="CAUTION: Click on the button below ONLY when you need to reprocess PEM info for ALL Root Cases (Record Type = CA Root Inclusion Request) and update PEM fields." style="color:red;font-weight:bold"/> <br/>
+        <apex:outputText value="IMPORTANT: Take backup of all data and before running the batch job." style="color:red;font-weight:bold"/> <br/>
+        <apex:outputText value="All validation rules must be deactivated before starting the batch job." style="color:red;font-weight:bold"/> <br/> 
+        <apex:outputText value="Check for 'Error' string in Extraction Results after the process finishes" style="color:red;font-weight:bold"/> <br/><br/> 
+        <apex:commandButton value="Process PEM Info Batch Job" action="{!startBatch}" reRender="jobs,error" /> 
+     <br/>
+     </div>
+    
+    <apex:outputText id="error" value="{!errorText}" style="font-weight: bold; color: red"/>
+    
+    <br/>    
+  </apex:pageBlock>
+  
+    <br/>
+  <c:BatchJobs id="jobs" numberOfJob="10"/>
+ </apex:form>
+</apex:page>

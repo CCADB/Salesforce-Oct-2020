@@ -1,0 +1,9 @@
+** New application for "CCADB Access Request" has been submitted **
+
+The following lead has been assigned to you. 
+ 
+Sponsored By: {!Lead.Sponsored_By__c}
+Company:  {!Lead.Company} 
+Email:  {!Lead.Email}  
+
+Click on the link to access the lead directly:  {!Lead.Link}

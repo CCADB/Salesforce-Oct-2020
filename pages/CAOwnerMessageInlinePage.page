@@ -1,0 +1,19 @@
+<!-- 
+This inline VF page for CA owner page to display text messages
+-->
+
+<apex:page standardController="Account">
+
+    <style>
+        .formStyle {                      
+            color: red; 
+            font-weight: bold; 
+            text-align: center;             
+        }
+    </style>
+    
+    <apex:form styleClass="formStyle">          
+         <apex:outputText value="CAs cannot modify data for the CA Owner record. It is verified and maintained by root store operator."/>
+    </apex:form>
+ 
+</apex:page>

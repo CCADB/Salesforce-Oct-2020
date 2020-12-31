@@ -1,0 +1,129 @@
+<apex:page controller="AllRootAndInterCertsReportCtlrForMSFT" showHeader="false" sideBar="false" cache="true" expires="3600" readOnly="true">>
+ 
+     <apex:pagemessages />
+
+     <apex:sectionHeader title="All Root And Intermediate Certificates"/>
+    
+    <style>
+         tr.dataRow {
+           background-color:white;
+         }
+         tr.dataRow:hover {
+           background-color: #e3f3ff;
+         };
+         td.datacell {
+         border-right-width:1px;
+         };
+         .bPageBlock {
+           padding-left:50px !important;
+         };
+     </style>
+
+  <div class="apexp" style="padding-left:40px; padding-right:50px; width:280%;">
+    <div id="pageBlockBody"  class="bPageBlock brandSecondaryBrd apexDefaultPageBlock secondaryPalette">
+        <div class="pbHeader">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr><td class="pbTitle"><h2 class="mainTitle">As of {!currentDate}</h2></td><td>&nbsp;</td></tr></tbody>
+            </table>
+       </div>
+     <div class="pbBody">
+     <table class="list " border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed;" >
+           <tr class="headerRow">
+              <th class="headerRow" style="width:1.3%;white-space:pre-wrap;"   >Owner</th>             
+              <th class="headerRow" style="width:1.3%;white-space:pre-wrap;"   >Friendly Name for Root/Intermediate Cert Name</th>
+              <th class="headerRow" style="width:0.5%;white-space:pre-wrap;"   >Type</th>
+              <th class="headerRow" style="width:0.5%;white-space:pre-wrap;"   >Microsoft Status (for Root Cert)</th>
+              <th class="headerRow" style="width:0.5%;white-space:pre-wrap;"   >Revocation Status (for Inter Cert)</th>             
+              <th class="headerRow" style="width:1.3%;white-space:pre-wrap;"   >SHA-1 Fingerprint</th>
+              <th class="headerRow" style="width:2.1%;white-space:pre-wrap;"   >SHA-256 Fingerprint</th>            
+              <th class="headerRow" style="width:0.5%;white-space:pre-wrap;"   >Valid From [GMT]</th>
+              <th class="headerRow" style="width:0.5%;white-space:pre-wrap;"   >Valid To [GMT]</th>
+              <th class="headerRow" style="width:1.3%;white-space:pre-wrap;"   >Parent Name</th>
+              <th class="headerRow" style="width:1.3%;white-space:pre-wrap;"   >SHA-1 Fingerprint (for parent)</th>
+              <th class="headerRow" style="width:2.1%;white-space:pre-wrap;"   >SHA-256 Fingerprint (for parent)</th>
+
+           </tr>
+           <apex:repeat value="{!AccountSoLst}"  var="account"> 
+           <tr class="dataRow">
+           
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.CA_Owner__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel >  
+                    <apex:outputField value="{!account.Friendly_Name__c}" rendered="{!account.Type == 'Root'}"/>
+                    <apex:outputField value="{!account.Name}"             rendered="{!account.Type == 'Intermediate Certificate'}"/>                                                      
+                </apex:outputPanel>
+              </td>
+              
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Type}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Microsoft_Status__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Revocation_Status__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>             
+
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.SHA_1_Fingerprint__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+                           
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.SHA_256_Fingerprint__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+ 
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Valid_From_YYYY_MMM_DD__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>                            
+
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Valid_To_YYYY_MMM_DD__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>  
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Parent.Name}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+ 
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Parent.SHA_1_Fingerprint__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+ 
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Parent.SHA_256_Fingerprint__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+                                                                                                         
+
+           </tr>
+           </apex:repeat>
+       </table>
+   </div><div class="pbFooter secondaryPalette"><div class="bg"></div></div></div></div>
+
+ </apex:page>

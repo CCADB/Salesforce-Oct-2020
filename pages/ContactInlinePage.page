@@ -1,0 +1,41 @@
+<!--
+ ******************************************************************************************************
+ Name: ContactInlinePage
+
+ Dependencies: ContactInlinePageController controller class, ContactInlinePage vf page, 
+ ContactInlinePageControllerTest test class
+
+ Description: This class was created to restrict CAs (community users) to only see contacts belonging 
+ to their organization. The program checks for logged in user record and fetches the associated Account
+ and Contact records. The sharing rules or the Contact have been set to private. The vf page has been 
+ added to CA Owner record and the standard related list has been removed.
+ 
+ Instructions: None
+ *******************************************************************************************************
+ Revision History:
+ 
+     09/18/2020 - Created new class
+     
+ ******************************************************************************************************
+ -->
+ 
+ <apex:page standardController="Account" extensions="ContactInlinePageController" sidebar="false" showheader="false" lightningStylesheets="true">
+    <apex:form >
+        <apex:pageBlock id="ContactList"> 
+            <div style="color:#236fbd;margin-bottom:5px;">
+                <apex:outputLabel value="Scroll to see more" rendered="{!NOT(ISNULL(lstContacts)) && lstContacts.size > 4}"></apex:outputLabel>
+            </div>
+            <apex:pageBlockTable value="{!lstContacts}" var="cont" rendered="{!NOT(ISNULL(lstContacts)) && lstContacts.size > 0}">                 
+                <!-- <apex:column headerValue="Contact Name"><apex:outputLink value="/{!cont.id}" target="_blank">{!cont.Name}</apex:outputLink> </apex:column> -->              
+                <apex:column value="{!cont.Name}"/>
+                <apex:column value="{!cont.Email}"/>
+                <apex:column value="{!cont.Type__c}"></apex:column> 
+                <apex:column value="{!cont.Has_Bugzilla_Account__c}" style="text-align:center;"></apex:column>
+                <apex:column value="{!cont.Is_Community_User__c}" style="text-align:center;"></apex:column>
+                <apex:column value="{!cont.Is_Community_User_Active__c}" style="text-align:center;"></apex:column>
+                <apex:column value="{!cont.Last_Login__c}"></apex:column>
+            </apex:pageBlockTable>
+            <apex:outputLabel value="{!strErrorMessage}" rendered="{!(ISNULL(lstContacts)) || lstContacts.size == 0}" styleClass="noRowsHeader"></apex:outputLabel> 
+        </apex:pageblock>
+    </apex:form>  
+</apex:page>

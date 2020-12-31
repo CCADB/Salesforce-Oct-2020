@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CA Comm Response</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CA Comm Responses</value>
+    </caseValues>
+    <fields>
+        <label><!-- CA Comm Id --></label>
+        <name>CA_Comm_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Comm Name --></label>
+        <name>CA_Comm_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Comm URL --></label>
+        <name>CA_Comm_Page__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Owner --></label>
+        <name>CA_Owner__c</name>
+        <relationshipLabel><!-- CA Comm Responses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contact --></label>
+        <name>Contact__c</name>
+        <relationshipLabel><!-- CA Comm Responses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Date Type Response --></label>
+        <name>Date_Type_Response__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question Id --></label>
+        <name>Question_Id__c</name>
+        <relationshipLabel><!-- CA Comm Responses --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Question --></label>
+        <name>Question__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option No. --></label>
+        <name>Response_Option_No__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>10</masterLabel>
+            <translation><!-- 10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>4</masterLabel>
+            <translation><!-- 4 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>5</masterLabel>
+            <translation><!-- 5 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>6</masterLabel>
+            <translation><!-- 6 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>7</masterLabel>
+            <translation><!-- 7 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>8</masterLabel>
+            <translation><!-- 8 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>9</masterLabel>
+            <translation><!-- 9 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Response --></label>
+        <name>Response__c</name>
+    </fields>
+    <layouts>
+        <layout>CA Comm Response Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Question Details --></label>
+            <section>Question Details</section>
+        </sections>
+        <sections>
+            <label><!-- Respondent Info --></label>
+            <section>Respondent Info</section>
+        </sections>
+        <sections>
+            <label><!-- Response Details --></label>
+            <section>Response Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

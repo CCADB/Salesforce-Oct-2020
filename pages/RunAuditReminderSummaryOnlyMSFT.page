@@ -1,0 +1,28 @@
+<apex:page controller="AuditReminderBatchControllerForMSFT">
+ 
+ <apex:sectionHeader title="Run Audit Reminder Summary Only for Microsoft" />
+ 
+ <apex:form >
+  
+  <br/>
+  
+  <apex:pageBlock id="idAuditReminderBatch" mode="edit">
+    <apex:pageMessages />
+  
+    <p/>
+       <apex:outputText value="CAUTION: Click on the button below ONLY when you need to send audit reminder emails summary to Microsoft CA Program Manager. This batch job will not send audit alerts to the CAs." style="color:red;font-weight:bold"/> 
+    <p/>
+            
+    <div align="left" draggable="false" >
+       <apex:commandButton value="Start Audit Reminder Summary Batch Job For Microsoft" action="{!startSummaryBatch}" reRender="jobs,error" /> 
+    </div>
+    
+    <apex:outputText id="error" value="{!errorText}" style="font-weight: bold; color: red"/>
+    
+    <br/>    
+  </apex:pageBlock>
+  
+    <br/>
+  <c:BatchJobs id="jobs" numberOfJob="10"/>
+ </apex:form>
+</apex:page>

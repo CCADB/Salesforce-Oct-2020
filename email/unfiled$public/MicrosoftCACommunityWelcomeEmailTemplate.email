@@ -1,0 +1,17 @@
+Dear Certification Authority, 
+
+Microsoft welcomes you to the Common CA Database! 
+
+You are receiving this email because you are the Primary Point of Contact for {!Receiving_User.CA_Owner_for_Contact__c}. As such, you are responsible for entering and maintaining your CA's data as required for continued inclusion in our program. 
+
+Instructions for using the Common CA Database are available here: 
+https://ccadb.org/cas/
+
+To get started, go to: {!Community_Url} 
+
+Username: {!Receiving_User.Username} 
+
+Please be sure to login within the next 48 hours to activate your account.  Do let me know if you run into any issues. 
+
+Thank you, 
+Microsoft Crypto Ecosystem

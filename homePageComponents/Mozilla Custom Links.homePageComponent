@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <links>Data_Integrity_Audit_Archives_For_Mozilla</links>
+    <links>Data_Integrity_Audits_Same_as_Parent</links>
+    <links>Data_Integrity_certdata_txt</links>
+    <links>Data_Integrity_Cross_Signed</links>
+    <links>Data_Integrity_Modified_Records</links>
+    <links>Data_Integrity_OneCRL_cert_storage</links>
+    <links>Data_Integrity_PEM_problems</links>
+    <links>Disabled_Audit_Reminders</links>
+    <links>Verify_Revoked_Certs</links>
+    <links>Verify_Updated_Audits</links>
+    <links>Vetted_Government_CA_Certs</links>
+    <pageComponentType>links</pageComponentType>
+</HomePageComponent>

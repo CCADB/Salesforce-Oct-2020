@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingOwnerRules>
+        <fullName>Account_and_Contact_Read_Access_To_All_Sharing_Rule</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>Read</caseAccessLevel>
+            <contactAccessLevel>None</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>Account &amp; Contact Read Access To All Sharing Rule</label>
+        <sharedTo>
+            <roleAndSubordinates>CA_Program_Manager</roleAndSubordinates>
+        </sharedTo>
+        <sharedFrom>
+            <roleAndSubordinates>CA_Program_Manager</roleAndSubordinates>
+        </sharedFrom>
+    </sharingOwnerRules>
+    <sharingOwnerRules>
+        <fullName>Symantec_Sisters_Sharing_Rule</fullName>
+        <accessLevel>Edit</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Edit</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>Symantec Sisters Sharing Rule</label>
+        <sharedTo>
+            <group>Symantec_Sisters_Group</group>
+        </sharedTo>
+        <sharedFrom>
+            <group>Symantec_Sisters_Group</group>
+        </sharedFrom>
+    </sharingOwnerRules>
+</SharingRules>

@@ -1,0 +1,137 @@
+<apex:page standardController="Account" extensions="ViewPolicyDocumentsOnRootController" sideBar="false" showHeader="false" docType="html-5.0" standardStylesheets="false">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds-scope .slds-form-element_horizontal .slds-form-element__label {
+                flex-basis: inherit !important;
+            }
+        </style>
+        <body>
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-form" role="list">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal">
+                                    <span class="slds-form-element__label">Document Repository</span>
+                                    <div class="slds-form-element__control" style="padding-top:4px;">
+                                        <apex:outputField value="{!objRootCertificate.Parent.Document_Repository__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal">
+                                    <label class="slds-checkbox_toggle slds-grid" style="justify-content:flex-end">
+                                        <span class="slds-form-element__label slds-m-bottom_none">Show Deleted</span>
+                                        <apex:inputCheckbox value="{!isShowDeleted}" id="chkShowDel">
+                                            <apex:actionsupport event="onchange" rerender="opPD" /> 
+                                        </apex:inputCheckbox>
+                                        <span id="{!$Component.chkShowDel}" class="slds-checkbox_faux_container" aria-live="assertive">
+                                            <span class="slds-checkbox_faux"></span>
+                                            <span class="slds-checkbox_on"></span>
+                                            <span class="slds-checkbox_off"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_horizontal">
+                                    <span class="slds-form-element__label">Document Repository Description</span>
+                                    <div class="slds-form-element__control" style="padding-left:16%;padding-top:4px;">
+                                        <apex:outputField value="{!objRootCertificate.Parent.Document_Repository_Description__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <apex:outputPanel id="opPD" layout="block" style="margin-top:10px;">
+                        <apex:variable var="anyRecord" value="{!0}"/>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);width:5%">
+                                        <div  title="ID">ID</div>
+                                    </th>
+                                    <th scope="col" style="width:7%">
+                                        <div  title="Type">Type</div>
+                                    </th>
+                                    <th scope="col" style="width:20%">
+                                        <div  title="Link">Link</div>
+                                    </th>
+                                    <th scope="col" style="width:13%">
+                                        <div  title="Last Update Date">Last Update Date</div>
+                                    </th>
+                                    <th scope="col" style="width:25%">
+                                        <div  title="Associated Trust Bits">Associated Trust Bits</div>
+                                    </th>
+                                    <th scope="col" style="width:25%;{!If(!isShowDeleted,'border-right: 1px solid rgb(221, 219, 218);','')}">
+                                        <div title="Comments">Comments</div>
+                                    </th>
+                                    <th scope="col" style="width:10%;border-right: 1px solid rgb(221, 219, 218);display:{!If(isShowDeleted, '','none')}">
+                                        <div  title="Is Deleted?">Is Deleted?</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!lstPolicyDocumentsOnCertificates}" var="pd">
+                                    <tr class="dataRow" style="display:{!if(((isShowDeleted && pd.Is_Deleted__c) || !pd.Is_Deleted__c), '','none;')}">
+                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                            <apex:outputLink value="/apex/ViewPolicyDocumentCert?id={!pd.Id}" style="text-decoration:underline;" target="_blank">{!pd.Name}</apex:outputLink>
+                                        </td>
+                                        <td class="datacell">
+                                            {!pd.Document_Type__c}
+                                        </td>
+                                        <td scope="col">
+                                            <apex:outputField value="{!pd.Document_Link__c}"/>
+                                        </td>
+                                        <td scope="col">
+                                            <apex:outputField value="{!pd.Document_Last_Updated_Date__c}"/>
+                                        </td>
+                                        <td scope="col">
+                                            {!pd.Associated_Trust_Bits__c}
+                                        </td>
+                                        <td class="datacell" title="{!pd.Comments__c}" style="{!If(!isShowDeleted,'border-right: 1px solid rgb(221, 219, 218);','')}">
+                                            <apex:outputText value="{!IF(LEN(pd.Comments__c) > 100, LEFT(pd.Comments__c, 97) + '...', pd.Comments__c)}"  />
+                                            <apex:variable value="{!anyRecord + 1}" var="anyRecord" rendered="{!(isShowDeleted && pd.Is_Deleted__c) || !pd.Is_Deleted__c}"/>
+                                        </td>
+                                        <td scope="col" style="border-right: 1px solid rgb(221, 219, 218);display:{!If(isShowDeleted, '','none')}">
+                                            <apex:outputField value="{!pd.Is_Deleted__c}"/>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                                <tr style="display:{!if(anyRecord = 0, '','none')}">
+                                    <td colspan="7" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                        <i>No records to display.</i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </apex:outputPanel>
+                </div>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

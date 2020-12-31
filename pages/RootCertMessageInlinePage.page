@@ -1,0 +1,45 @@
+<!-- 
+This inline VF page for Root Certificate page to display text messages
+//updates
+4th April 18        Rendered Audit messsages when audit archive is failed for Standard/BR/EV SSL and EV Code Signing.
+15th April 19       Added Message if CPA Canada Report url has changed then show message.
+-->
+
+<apex:page standardController="Account" extensions="AccountMessageInlineController">
+
+    <style>
+        .formStyle {                      
+            color: red; 
+            font-weight: bold; 
+            text-align: center;             
+        }
+    </style>
+    
+    <apex:form styleClass="formStyle">          
+         <apex:outputText value="CAs cannot modify data for the Root Certificate records. It is verified and maintained by root store operator."/>
+         <apex:outputPanel rendered="{!(Account.Standard_Audit_Update_Status__c != null && Account.Standard_Audit_Update_Status__c == 'Failed') || Account.Standard_Audit_Update_Message__c != null}">
+             <br/><apex:outputText value="Audit Archiving has failed for Standard Audit with error: {!Account.Standard_Audit_Update_Message__c}"/>
+         </apex:outputPanel>
+         <apex:outputPanel rendered="{!(Account.BR_Audit_Update_Status__c != null && Account.BR_Audit_Update_Status__c == 'Failed') || Account.BR_Audit_Update_Message__c != null}">
+             <br/><apex:outputText value="Audit Archiving has failed for BR Audit with error: {!Account.BR_Audit_Update_Message__c}"/>
+         </apex:outputPanel>
+         <apex:outputPanel rendered="{!(Account.EV_Audit_Update_Status__c != null && Account.EV_Audit_Update_Status__c == 'Failed') || Account.EV_Audit_Update_Message__c != null}">
+             <br/><apex:outputText value="Audit Archiving has failed for EV SSL Audit with error: {!Account.EV_Audit_Update_Message__c}"/>
+         </apex:outputPanel>
+         <apex:outputPanel rendered="{!(Account.EV_Code_Signing_Audit_Update_Status__c != null && Account.EV_Code_Signing_Audit_Update_Status__c == 'Failed') || Account.EV_Code_Signing_Audit_Update_Message__c != null}">
+             <br/><apex:outputText value="Audit Archiving has failed for EV Code Signing Audit with error: {!Account.EV_Code_Signing_Audit_Update_Message__c}"/>
+         </apex:outputPanel>
+         <!-- Message when CPA Canada Report URL Changed-->
+         <apex:outputPanel rendered="{!isStandardAuditReportURLNotFound}"><br/></apex:outputPanel>
+         <apex:outputText value="Standard Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." rendered="{!isStandardAuditReportURLNotFound}"></apex:outputText>
+         <apex:outputPanel rendered="{!isCodeSigningAuditReportURLNotFound}"><br/></apex:outputPanel>
+         <apex:outputText value="Code Signing Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." rendered="{!isCodeSigningAuditReportURLNotFound}"></apex:outputText>
+         <apex:outputPanel rendered="{!isBRAuditReportURLNotFound}"><br/></apex:outputPanel>
+         <apex:outputText value="BR Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." rendered="{!isBRAuditReportURLNotFound}"></apex:outputText>
+         <apex:outputPanel rendered="{!isEVSSLAuditReportURLNotFound}"><br/></apex:outputPanel>
+         <apex:outputText value="EV SSL Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." rendered="{!isEVSSLAuditReportURLNotFound}"></apex:outputText>
+         <apex:outputPanel rendered="{!isEVCodeSigningAuditReportURLNotFound}"><br/></apex:outputPanel>
+         <apex:outputText value="EV Code Signing Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." rendered="{!isEVCodeSigningAuditReportURLNotFound}"></apex:outputText>
+    
+    </apex:form>
+</apex:page>

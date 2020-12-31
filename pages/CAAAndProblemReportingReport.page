@@ -1,0 +1,94 @@
+<!-- THIS VISUALFORCE PAGE IS NOT IN USE. IT HAS BEEN REPLACED BY CAInformationReport -->
+<apex:page controller="CAAAndProblemReportingReportController" showHeader="false" sideBar="false" cache="true" expires="3600" readOnly="true">
+ 
+     <apex:pagemessages />
+
+     <apex:sectionHeader title="Mozilla CAA Domains & Problem Reporting Mechanism"/>
+    
+    <style>
+         tr.dataRow {
+           background-color:white;
+         }
+         tr.dataRow:hover {
+           background-color: #e3f3ff;
+         };
+         td.datacell {
+         border-right-width:1px;
+         };
+         .bPageBlock {
+           padding-left:50px !important;
+         };
+     </style>
+
+<div class="apexp" style="padding-left:40px; padding-right:50px; width:200%;">
+    <div id="pageBlockBody"  class="bPageBlock brandSecondaryBrd apexDefaultPageBlock secondaryPalette">
+        <div class="pbHeader">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tbody><tr><td class="pbTitle"><h2 class="mainTitle">As of {!currentDate}</h2></td><td>&nbsp;</td></tr></tbody>
+            </table>
+       </div>
+     <div class="pbBody">
+     <table class="list " border="0" cellpadding="0" cellspacing="0" style="table-layout:fixed;" >
+           <tr class="headerRow">           
+
+              <th class="headerRow" style="width:1.0%;white-space:pre-wrap;"   >CA Owner Name</th>
+              <th class="headerRow" style="width:0.5%;white-space:pre-wrap;"   >Organizational Type</th>
+              <th class="headerRow" style="width:0.5%;white-space:pre-wrap;"   >Geographic Focus</th>
+              <th class="headerRow" style="width:1.75%;white-space:pre-wrap;"  >Primary Market / Customer Base</th>
+              <th class="headerRow" style="width:0.75%;white-space:pre-wrap;"   >Company Website</th>
+              <th class="headerRow" style="width:0.75%;white-space:pre-wrap;"   >Recognized CAA Domains</th>
+              <th class="headerRow" style="width:1.75%;white-space:pre-wrap;"  >Problem Reporting Mechanism</th>
+              
+           </tr>
+           
+           <apex:repeat value="{!AccountSoLst}"  var="account"> 
+           <tr class="dataRow">
+           
+             <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Name}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Organizational_Type__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Geographic_Focus__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Primary_Market_Customer_Base__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Company_Website__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Recognized_CAA_Domains__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>
+              
+              <td class="datacell" style="border-right-width:1px;word-wrap:break-word;">
+                <apex:outputPanel > 
+                    <apex:outputField value="{!account.Problem_Reporting_Mechanism__c}"> </apex:outputField>
+                </apex:outputPanel>
+              </td>                                                                                                          
+
+           </tr>
+           </apex:repeat>
+       </table>
+   </div><div class="pbFooter secondaryPalette"><div class="bg"></div></div></div></div>
+
+ </apex:page>

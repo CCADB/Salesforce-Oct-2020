@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LeadConvertSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <allowOwnerChange>true</allowOwnerChange>
+    <objectMapping>
+        <inputObject>Lead</inputObject>
+        <mappingFields>
+            <inputField>Alternate_CA_Name_s__c</inputField>
+            <outputField>Alternate_CA_Name_s__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>Geographic_Focus__c</inputField>
+            <outputField>Geographic_Focus__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>Organization_Type__c</inputField>
+            <outputField>Organizational_Type__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>Primary_Market_Customer_Base__c</inputField>
+            <outputField>Primary_Market_Customer_Base__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>Sponsored_By__c</inputField>
+            <outputField>Sponsored_By__c</outputField>
+        </mappingFields>
+        <outputObject>Account</outputObject>
+    </objectMapping>
+    <opportunityCreationOptions>VisibleOptional</opportunityCreationOptions>
+</LeadConvertSettings>

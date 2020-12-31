@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingSettings xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableAccountRoleOptimization>false</enableAccountRoleOptimization>
+    <enableAssetSharing>false</enableAssetSharing>
+    <enableCommunityUserVisibility>false</enableCommunityUserVisibility>
+    <enableExternalSharingModel>true</enableExternalSharingModel>
+    <enableManagerGroups>false</enableManagerGroups>
+    <enableManualUserRecordSharing>false</enableManualUserRecordSharing>
+    <enablePortalUserCaseSharing>true</enablePortalUserCaseSharing>
+    <enablePortalUserVisibility>false</enablePortalUserVisibility>
+    <enableRemoveTMGroupMembership>false</enableRemoveTMGroupMembership>
+    <enableSecureGuestAccess>false</enableSecureGuestAccess>
+    <enableStandardReportVisibility>true</enableStandardReportVisibility>
+</SharingSettings>

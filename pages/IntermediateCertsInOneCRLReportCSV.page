@@ -1,0 +1,5 @@
+<apex:page controller="IntermediateCertsInOneCRLController" cache="true" expires="3600" showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/csv#IntermediateCertsInOneCRL.csv;charset=UTF-8" readOnly="true">"CA Owner","Parent Certificate Name","Certificate Name","Certificate Serial Number","Revocation Status","RFC 5280 Revocation Reason Code","Date of Revocation","SHA-256 Fingerprint","Valid To [GMT]","CRL URL(s)","Alternate CRL","OneCRL Bug Number","Comments"
+<apex:repeat value="{!lstWrapperAccountSO}" var="wrapacc">
+"{!wrapacc.objaccountSO.CA_Owner__c}","{!wrapacc.objaccountSO.Parent.Name}","{!wrapacc.objaccountSO.Name}","{!wrapacc.objaccountSO.Certificate_Serial_Number__c}","{!wrapacc.objaccountSO.Revocation_Status__c}","{!wrapacc.objaccountSO.RFC_5280_Revocation_Reason_Code__c}","{!wrapacc.DRdate}","{!wrapacc.objaccountSO.SHA_256_Fingerprint__c}","{!wrapacc.VTGMTdate}","{!wrapacc.objaccountSO.CRL_URL_s__c}","{!wrapacc.objaccountSO.Alternate_CRL__c}","{!wrapacc.objaccountSO.OneCRL_Bug_Number__c}","{!wrapacc.objaccountSO.Comments__c}"
+</apex:repeat>
+</apex:page>

@@ -1,0 +1,807 @@
+<apex:page standardController="Root_Case__c" showHeader="false" readOnly="true" sidebar="false" 
+            cache="false" tabStyle="Case" standardStylesheets="true">
+    
+     <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+            .slds-section__title {
+                color: black !important;
+                font-size:15px !important;
+                font-weight:bold !important;
+            }
+            .slds-form-element__label {
+                font-size:14px !important;
+                font-weight:bold !important;
+            }
+            @media print {
+                #btnPrint {
+                    display:none;
+                }
+            }
+        </style>
+        <body>
+            <div class="slds scope" style="padding-left: 10px;padding-right: 10px;">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="slds-page-header" style="margin-top:10px;">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                    <div class="slds-media slds-no-space slds-grow">
+                                        <div class="slds-media__figure">
+                                            <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                            </svg> -->
+                                            <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                        </div>
+                                        <div class="slds-media__body" style="margin-top: 8px;">
+                                            <p class="slds-text-title--caps slds-line-height--reset">Mozilla</p>
+                                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="">CA Program</h1>
+                                        </div>              
+                                    </div>
+                                </div>
+                                <div class="slds-page-header__col-actions">
+                                    <ul class="slds-button-group-list">
+                                        <li>
+                                            <button class="slds-button slds-button_neutral" id="btnPrint" onclick="javascript:window.print();return false;" >Print this page</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <!--Body-->
+                        <div id="mainbody" style="margin-top:15px;">
+                            <!--Root Case Information-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" >
+                                    <span class="slds-truncate slds-p-horizontal_small" title="Root Case Information">Root Case Information</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-form" role="list">
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Root Certificate Name
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Root_Certificate_Name__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Root Case No     
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Name}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Request Status 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Request_Status__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Case Number 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Case_No__r.CaseNumber}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Certificate Data-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" >
+                                    <span class="slds-truncate slds-p-horizontal_small" title="Certificate Data">Certificate Data</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-form" role="list">
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Subject
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Subject__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Issuer     
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Issuer__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Valid From 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.Valid_From_YYYY_MMM_DD__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Valid To 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.Valid_To_YYYY_MMM_DD__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Certificate Serial Number 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Certificate_Serial_Number__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        SHA-1 Fingerprint 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.SHA_1_Fingerprint__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        SHA-256 Fingerprint 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.SHA_256_Fingerprint__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Signature Hash Algorithm 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Signature_Hash_Algorithm__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Public Key Algorithm 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Public_Key_Algorithm__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        SPKI SHA256 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.SPKI_SHA256__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Subject + SPKI SHA256
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Subject_SPKI_SHA256__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Audits that apply to this Root Certificate-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" >
+                                    <span class="slds-truncate slds-p-horizontal_small" title="Audits that apply to this Root Certificate">Audits that apply to this Root Certificate</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-form" role="list">
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Standard Audit
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Apply_Standard_Audit__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Applicable Audits Verified?
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Apply_Audit_Verified__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        BR Audit
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Apply_BR_Audit__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        EV SSL Audit 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Apply_EV_Audit__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Application Information-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" >
+                                    <span class="slds-truncate slds-p-horizontal_small" title="Application Information">Application Information</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-form" role="list">
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Explanation
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Explanation__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Application Information Verified?
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Application_Information_Verified__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Role
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Role__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Root Certificate Download URL 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.Root_Certificate_Download_URL__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <!--Mozilla Fields-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" >
+                                    <span class="slds-truncate slds-p-horizontal_small" title="Mozilla Fields">Mozilla Fields</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-form" role="list">
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Mozilla Trust Bits
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Trust_Bits__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Mozilla Fields Verified?
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Mozilla_Fields_Verified__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        SSL Validation Type
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.SSL_Validation_Type__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Mozilla EV Policy OID(s) 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.EV_Policy_OID_s__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Mozilla Applied Constraints 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Mozilla_Applied_Constraints__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--CA Hierarchy Information-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" >
+                                    <span class="slds-truncate slds-p-horizontal_small" title="CA Hierarchy Information">CA Hierarchy Information</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-form" role="list">
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Cross-Signed by another Root Cert?
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Cross_Signed_by_another_Root_Cert__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        PKI Hierarchy Verified?
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.PKI_Hierarchy_Verified__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Has Externally Operated SubCAs?
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Has_Externally_Operated_SubCAs__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        CP/CPS allows Ext Operated SubCAs? 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.CP_CPS_allows_Ext_Operated_SubCAs__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Has External Registration Authorities? 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Has_External_Registration_Authorities__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        CP/CPS allows External RAs? 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.CP_CPS_allows_External_RAs__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Description of PKI Hierarchy
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Description_of_PKI_Hierarchy__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Constraints on External SubCAs and RAs 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Constraints_on_External_SubCAs_RAs__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Test Websites or Example Cert-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" >
+                                    <span class="slds-truncate slds-p-horizontal_small" title="Test Websites or Example Cert">Test Websites or Example Cert</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-form" role="list">
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Test Website - Valid
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.Test_Website_Valid__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Test Websites Verified?
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Test_Website_Verified__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Test Website - Expired
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.Test_Website_Expired__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Test Website - Revoked 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.Test_Website_Revoked__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Test Notes 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.Test_Notes__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Test Results (When Requesting the SSL/TLS Trust Bit)-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" >
+                                    <span class="slds-truncate slds-p-horizontal_small" title="Test Results (When Requesting the SSL/TLS Trust Bit)">Test Results (When Requesting the SSL/TLS Trust Bit)</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-form" role="list">
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Revocation Tested
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.Revocation_Tested__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Test Results Verified?
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputField value="{!Root_Case__c.Test_Results_Verified__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        CA/Browser Forum Lint Test
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.CA_Browser_Forum_Lint_Test__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        Test Website Lint Test 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.Test_Website_Lint_Test__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__row">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                    <span class="slds-form-element__label">
+                                                        EV Tested 
+                                                    </span>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-form-element__static">
+                                                            <apex:outputText value="{!Root_Case__c.EV_Tested__c}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </html>
+</apex:page>

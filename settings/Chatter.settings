@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ChatterSettings xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <allowChatterGroupArchiving>true</allowChatterGroupArchiving>
+    <allowRecordsInChatterGroup>true</allowRecordsInChatterGroup>
+    <allowSharingInChatterGroup xsi:nil="true"/>
+    <enableCaseFeedRelativeTimestamps>true</enableCaseFeedRelativeTimestamps>
+    <enableChatter>true</enableChatter>
+    <enableChatterEmoticons>false</enableChatterEmoticons>
+    <enableFeedEdit>true</enableFeedEdit>
+    <enableFeedPinning>true</enableFeedPinning>
+    <enableFeedsDraftPosts>false</enableFeedsDraftPosts>
+    <enableFeedsRichText>true</enableFeedsRichText>
+    <enableInviteCsnUsers>true</enableInviteCsnUsers>
+    <enableOutOfOfficeEnabledPref>false</enableOutOfOfficeEnabledPref>
+    <enableRichLinkPreviewsInFeed>true</enableRichLinkPreviewsInFeed>
+    <enableTodayRecsInFeed>true</enableTodayRecsInFeed>
+    <unlistedGroupsEnabled>false</unlistedGroupsEnabled>
+</ChatterSettings>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CPACanada File</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CPACanada Files</value>
+    </caseValues>
+    <fields>
+        <label><!-- Record Updated? --></label>
+        <name>Record_Updated__c</name>
+    </fields>
+    <fields>
+        <help><!-- Report Id --></help>
+        <label><!-- Report Id --></label>
+        <name>Report_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Report URL --></help>
+        <label><!-- Report URL --></label>
+        <name>Report_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- Seal URL --></help>
+        <label><!-- Seal URL --></label>
+        <name>Seal_URL__c</name>
+    </fields>
+    <layouts>
+        <layout>CPACanada File Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Enter Seal Id and Report Id [URLs will get auto populated] --></label>
+            <section>Enter Seal Id and Report Id [URLs will get auto populated]</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- URL must begin with &apos;https&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~ -_ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>CheckforReportURL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- URL must begin with &apos;https&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~ -_ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>CheckforSealURL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Report ID does not match the number in the Report URL --></errorMessage>
+        <name>MatchReportId</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Seal ID does not match the number in the Seal URL --></errorMessage>
+        <name>MatchSealId</name>
+    </validationRules>
+</CustomObjectTranslation>

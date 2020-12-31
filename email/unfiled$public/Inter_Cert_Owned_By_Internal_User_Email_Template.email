@@ -1,0 +1,5 @@
+A new intermediate cert was created by an internal user {!Account.OwnerFullName}. A system administrator needs to transfer the ownership of the certificate (record id:
+ {!Account.Case_Safe_ID__c}) to it's associated community user.
+
+List of all records can be seen by running the report "Inter Certs Owned By Internal Users"
+https://ccadb.my.salesforce.com/00O1J000005hkfI

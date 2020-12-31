@@ -1,0 +1,5 @@
+<apex:page controller="ProjectTimesheetController" cache="true" expires="3600" showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/csv#ProjectTimesheet.csv;charset=UTF-8" readOnly="true">"Activity Date","Activities","Hours"
+<apex:repeat value="{!lstActivities}" var="activity">
+"{!activity.ActivityDate}","{!activity.Activity}","{!activity.Hours}"
+</apex:repeat>
+</apex:page>

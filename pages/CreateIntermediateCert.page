@@ -1,0 +1,34 @@
+<!-- 
+
+*** THIS PROGRAM HAS BEEN OBSOLETED on 2/19/2020 *** 
+*** Another program CreateCertUsingPEM is being used which is a one-step process ***
+
+When user clicks on "New Intermediate Cert" button this VF page performs check and display messgaes.
+- New intermediate cert cannot be created for parent with name '<Fill in Cert Name>'or blank PEM info
+- Display Parent Name and SHA-256 and get confirmation for creating inter cert for this parent
+
+-->
+<apex:page standardController="Account" extensions="CreateIntermediateCertController"> 
+    <apex:sectionHeader title="New Intermediate Certificate" subtitle="{!Account.Name} (Parent)"/>
+    <apex:form id="frm">
+        <apex:pageMessages />
+        <apex:pageBlock title="User Confirmation" rendered="{!!showBackButton}">
+            <apex:outputPanel rendered="{!(Account.Name == '<Fill in Cert Name>' || Account.X_509_Certificate_PEM__c == null)}">
+                <apex:outputText value="{!if(Account.Name == '<Fill in Cert Name>', 'Parent certificate name should not be <Fill in Cert Name>. Please update certificate name and then add new intermediate cert.','Parent certificate is missing PEM Info. Please provide valid PEM Info and then add new Intermediate cert.')}"/>
+                <br/><br/><apex:commandButton value="Go Back" action="{!cancel}" reRender="frm" />
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!(Account.Name != '<Fill in Cert Name>' && Account.X_509_Certificate_PEM__c != null)}">
+                <apex:outputText value="You are about to create a record for an intermediate certificate signed by the following certificate"/><br/><br/>
+                Parent Name: <b><apex:outputText value="{!Account.Name}"/></b><br/>
+                SHA-256 Fingerprint: <b><apex:outputText value="{!Account.SHA_256_Fingerprint__c}"/></b><br/><br/>
+                <apex:outputText value="Click Continue to create the record, or click Go Back to return."/> <br/><br/>
+                <apex:commandButton value="Continue"  action="{!createIntermediateCert}" reRender="frm"/> &nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:commandButton value="Go Back" action="{!cancel}" reRender="frm" />
+            </apex:outputPanel>
+        </apex:pageBlock>
+        <div style="padding-left:20px;">
+            <br/>
+            <apex:commandButton action="{!cancel}" value="Go Back" rendered="{!showBackButton}" />
+        </div>
+    </apex:form>
+</apex:page>

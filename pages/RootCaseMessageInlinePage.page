@@ -1,0 +1,21 @@
+<apex:page standardController="Root_Case__c" extensions="AuditRootCaseMessageInlineController">
+    <style>
+        .formStyle {                      
+            color: red; 
+            font-weight: bold; 
+            text-align: center;             
+        }
+    </style>
+    
+    <apex:form styleClass="formStyle">          
+         <apex:outputPanel rendered="{!isAuditGapMessage}">
+             <br/><apex:outputText value="{!strAuditGapMessage}"/>
+         </apex:outputPanel>
+         <apex:outputPanel rendered="{!isAllAuditEmpty}">
+             <br/><apex:outputText value="Indicate which of the audit statements apply to this root certificate."/>
+         </apex:outputPanel>
+         <apex:outputPanel rendered="{!isIfOneOrMoreWebsites || isIfNoWebsites}">
+             <br/><apex:outputText value="Three test websites (valid, revoked, expired) are required per section 2.2 of the BRs."/>
+         </apex:outputPanel>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Migrate Cert</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Migrate Certs</value>
+    </caseValues>
+    <fields>
+        <label><!-- Auditor Qualifications --></label>
+        <name>Auditor_Qualifications__c</name>
+    </fields>
+    <fields>
+        <label><!-- Auditor Website --></label>
+        <name>Auditor_Website__c</name>
+    </fields>
+    <fields>
+        <label><!-- Auditor --></label>
+        <name>Auditor__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audits Same as Parent --></label>
+        <name>Audits_Same_as_Parent__c</name>
+    </fields>
+    <fields>
+        <label><!-- BR Audit Statement Date --></label>
+        <name>BR_Audit_Statement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- BR Audit Type --></label>
+        <name>BR_Audit_Type__c</name>
+        <picklistValues>
+            <masterLabel>ETSI TS 102 042</masterLabel>
+            <translation><!-- ETSI TS 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WebTrust</masterLabel>
+            <translation><!-- WebTrust --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- BR Audit --></label>
+        <name>BR_Audit__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Document Repository --></label>
+        <name>CA_Document_Repository__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Owner --></label>
+        <name>CA_Owner__c</name>
+    </fields>
+    <fields>
+        <label><!-- CP/CPS Same as Parent --></label>
+        <name>CP_CPS_Same_as_Parent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Policy (CP) --></label>
+        <name>Certificate_Policy_CP__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Processed --></label>
+        <name>Certificate_Processed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certification Practice Statement (CPS) --></label>
+        <name>Certification_Practice_Statement_CPS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Revocation --></label>
+        <name>Date_of_Revocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV Audit Statement Date --></label>
+        <name>EV_Audit_Statement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV Audit Type --></label>
+        <name>EV_Audit_Type__c</name>
+        <picklistValues>
+            <masterLabel>ETSI TS 102 042</masterLabel>
+            <translation><!-- ETSI TS 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WebTrust</masterLabel>
+            <translation><!-- WebTrust --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- EV Audit --></label>
+        <name>EV_Audit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extraction Results --></label>
+        <name>Extraction_Results__c</name>
+    </fields>
+    <fields>
+        <label><!-- Management Assertions By --></label>
+        <name>Management_Assertions_By__c</name>
+    </fields>
+    <fields>
+        <help><!-- When the cert is processed succesfully MigrateCertsBatch program updates this field --></help>
+        <label><!-- Migrated Cert --></label>
+        <name>Migrated_Cert__c</name>
+        <relationshipLabel><!-- Migrate Certs --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Migrated cert is assigned this owner id by MigrateCertsBatch program --></help>
+        <label><!-- Migrated Certs OwnerId --></label>
+        <name>Migrated_Certs_OwnerId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent CA Owner/Certificate --></label>
+        <name>Parent_CA_Owner_Certificate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Certificate&apos;s SHA-1 Fingerprint --></label>
+        <name>Parent_Certificate_s_SHA_1_Fingerprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Certificate&apos;s SHA-256 Fingerprint --></label>
+        <name>Parent_Certificate_s_SHA_256_Fingerprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- Policy Documentation --></label>
+        <name>Policy_Documentation__c</name>
+    </fields>
+    <fields>
+        <help><!-- MigrateCertsBatch program updates this field --></help>
+        <label><!-- Processing Message/Error --></label>
+        <name>Processing_Message_Error__c</name>
+    </fields>
+    <fields>
+        <help><!-- MigrateCertsBatch program updates this field --></help>
+        <label><!-- Processing Status --></label>
+        <name>Processing_Status__c</name>
+        <picklistValues>
+            <masterLabel>Migration Failure</masterLabel>
+            <translation><!-- Migration Failure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Migration Successful</masterLabel>
+            <translation><!-- Migration Successful --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Migration Warning</masterLabel>
+            <translation><!-- Migration Warning --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Processed</masterLabel>
+            <translation><!-- Not Processed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- RFC 5280 Revocation Reason Code --></label>
+        <name>RFC_5280_Revocation_Reason_Code__c</name>
+        <picklistValues>
+            <masterLabel>(0) unspecified</masterLabel>
+            <translation><!-- (0) unspecified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(1) keyCompromise</masterLabel>
+            <translation><!-- (1) keyCompromise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(10) aACompromise</masterLabel>
+            <translation><!-- (10) aACompromise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(2) cACompromise</masterLabel>
+            <translation><!-- (2) cACompromise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(3) affiliationChanged</masterLabel>
+            <translation><!-- (3) affiliationChanged --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(4) superseded</masterLabel>
+            <translation><!-- (4) superseded --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(5) cessationOfOperation</masterLabel>
+            <translation><!-- (5) cessationOfOperation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(6) certificateHold</masterLabel>
+            <translation><!-- (6) certificateHold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(8) removeFromCRL</masterLabel>
+            <translation><!-- (8) removeFromCRL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(9) privilegeWithdrawn</masterLabel>
+            <translation><!-- (9) privilegeWithdrawn --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Revocation Status --></label>
+        <name>Revocation_Status__c</name>
+        <picklistValues>
+            <masterLabel>Added to OneCRL</masterLabel>
+            <translation><!-- Added to OneCRL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Revoked</masterLabel>
+            <translation><!-- Not Revoked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revoked</masterLabel>
+            <translation><!-- Revoked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verified</masterLabel>
+            <translation><!-- Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit Statement Date --></label>
+        <name>Standard_Audit_Statement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit Type --></label>
+        <name>Standard_Audit_Type__c</name>
+        <picklistValues>
+            <masterLabel>ETSI TS 101 456</masterLabel>
+            <translation><!-- ETSI TS 101 456 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETSI TS 102 042</masterLabel>
+            <translation><!-- ETSI TS 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WebTrust</masterLabel>
+            <translation><!-- WebTrust --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit --></label>
+        <name>Standard_Audit__c</name>
+    </fields>
+    <fields>
+        <label><!-- X.509 Certificate (PEM) --></label>
+        <name>X_509_Certificate_PEM__c</name>
+    </fields>
+    <layouts>
+        <layout>Migrate Certs Layout</layout>
+        <sections>
+            <label><!-- Audit Information (check *Same As Parent* OR enter audit data) --></label>
+            <section>Audit Information (check *Same As Parent* OR enter audit data)</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Extraction Results from CerChecker Utility --></label>
+            <section>Extraction Results from CerChecker Utility</section>
+        </sections>
+        <sections>
+            <label><!-- PEM Information --></label>
+            <section>PEM Information</section>
+        </sections>
+        <sections>
+            <label><!-- Policies and Practices Information (check *Same As Parent* OR enter URLs) --></label>
+            <section>Policies and Practices Information (check *Same As Parent* OR enter URLs)</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Revocation Information --></label>
+            <section>Revocation Information</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

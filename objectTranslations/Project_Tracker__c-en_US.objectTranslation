@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Project Tracker</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Project Tracker</value>
+    </caseValues>
+    <fields>
+        <help><!-- Sum of Actual Hours for all goals --></help>
+        <label><!-- Actual Hours --></label>
+        <name>Actual_Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- Sum of Budgeted Hours for all goals related to this project
+* Should not exceed Max Hours * --></help>
+        <label><!-- Budgeted Hours --></label>
+        <name>Budgeted_Hours__c</name>
+    </fields>
+    <fields>
+        <label><!-- Current --></label>
+        <name>Current__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Max Hours in SOW --></help>
+        <label><!-- Max Hours --></label>
+        <name>Max_Hours__c</name>
+    </fields>
+    <fields>
+        <help><!-- Red if Budgeted &gt; Max
+Red, if Actual &gt;= Budgeted
+Yellow, if Actual &lt;= 10% of Budgeted
+Green, if Actual &gt; 10% of Budgeted --></help>
+        <label><!-- Project Alert --></label>
+        <name>Project_Alert__c</name>
+    </fields>
+    <fields>
+        <label><!-- SOW # &amp; PO # --></label>
+        <name>SOW_and_PO__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>Start_Date__c</name>
+    </fields>
+    <layouts>
+        <layout>Project Goals Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Project Ddetails --></label>
+            <section>Project Ddetails</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- Project_Activities_Not_Yet_Started --></label>
+        <name>Project_Activities_Not_Yet_Started</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Project_Activities_Timesheet --></label>
+        <name>Project_Activities_Timesheet</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Project_Goals_Activities --></label>
+        <name>Project_Goals_Activities</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Project_Goals_And_Goal_Details --></label>
+        <name>Project_Goals_And_Goal_Details</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Project_Goals_Budget_vs_Actual_Hrs --></label>
+        <name>Project_Goals_Budget_vs_Actual_Hrs</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- SOW_Listing --></label>
+        <name>SOW_Listing</name>
+    </webLinks>
+</CustomObjectTranslation>

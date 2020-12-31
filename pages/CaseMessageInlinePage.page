@@ -1,0 +1,81 @@
+<!-- 
+This inline page displays reminder messages for CAs to fill in the missing information
+-->
+
+<apex:page standardController="Case" extensions="CaseMessageInlinePageController">
+
+    <style>
+        .formStyle {                      
+            color: red; 
+            font-weight: bold; 
+            text-align: center;             
+        }
+    </style>
+    
+    <apex:form styleClass="formStyle">   
+        
+         <apex:outputText value="Fill in Auditor Information" rendered="{!ISBLANK(Case.Auditor_New__c)}"/><apex:outputPanel rendered="{!ISBLANK(Case.Auditor_New__c)}"><br/></apex:outputPanel>
+         <!-- <apex:outputText value="Fill in links to Audit Statements" rendered="{!ISBLANK(Case.Standard_Audit_Statement_Link__c)}"/> <apex:outputPanel rendered="{!ISBLANK(Case.Standard_Audit_Statement_Link__c)}"><br/></apex:outputPanel> -->
+         <apex:outputText value="Fill in links to Audit Statements" rendered="{!ISBLANK(Case.Standard_Audit_Statement_Link__c) && ISBLANK(Case.Code_Signing_Audit_Statement_Link__c) && ISBLANK(Case.BR_Audit_Statement_Link__c) && ISBLANK(Case.EV_Audit_Statement_Link__c) && ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)}"/> 
+         <apex:outputPanel rendered="{!ISBLANK(Case.Standard_Audit_Statement_Link__c) && ISBLANK(Case.Code_Signing_Audit_Statement_Link__c) && ISBLANK(Case.BR_Audit_Statement_Link__c) && ISBLANK(Case.EV_Audit_Statement_Link__c) && ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)}"><br/></apex:outputPanel>
+         
+         <apex:outputText value="Fill in Standard Audit Period Start and End dates. In a period‐of‐time audit, the period between the first day (start) and the last day of operations (end) covered by the auditors in their engagement. (This is not the same as the period of time when the auditors are on‐site at the CA.)" rendered="{!NOT(ISBLANK(Case.Standard_Audit_Statement_Link__c)) && (ISBLANK(Case.Standard_Audit_Period_Start_Date__c) || ISBLANK(Case.Standard_Audit_Period_End_Date__c))}"/> <apex:outputPanel rendered="{!NOT(ISBLANK(Case.Standard_Audit_Statement_Link__c)) && (ISBLANK(Case.Standard_Audit_Period_Start_Date__c) || ISBLANK(Case.Standard_Audit_Period_End_Date__c))}"><br/></apex:outputPanel>
+         <apex:outputText value="Fill in BR Audit Period Start and End dates. In a period‐of‐time audit, the period between the first day (start) and the last day of operations (end) covered by the auditors in their engagement. (This is not the same as the period of time when the auditors are on‐site at the CA.)" rendered="{!NOT(ISBLANK(Case.BR_Audit_Statement_Link__c)) && (ISBLANK(Case.BR_Audit_Period_Start_Date__c) || ISBLANK(Case.BR_Audit_Period_End_Date__c))}"/> <apex:outputPanel rendered="{!NOT(ISBLANK(Case.BR_Audit_Statement_Link__c)) && (ISBLANK(Case.BR_Audit_Period_Start_Date__c) || ISBLANK(Case.BR_Audit_Period_End_Date__c))}"><br/></apex:outputPanel>
+         <apex:outputText value="Fill in EV SSL Audit Period Start and End dates. In a period‐of‐time audit, the period between the first day (start) and the last day of operations (end) covered by the auditors in their engagement. (This is not the same as the period of time when the auditors are on‐site at the CA.)" rendered="{!NOT(ISBLANK(Case.EV_Audit_Statement_Link__c)) && (ISBLANK(Case.EV_Audit_Period_Start_Date__c) || ISBLANK(Case.EV_Audit_Period_End_Date__c))}"/> <apex:outputPanel rendered="{!NOT(ISBLANK(Case.EV_Audit_Statement_Link__c)) && (ISBLANK(Case.EV_Audit_Period_Start_Date__c) || ISBLANK(Case.EV_Audit_Period_End_Date__c))}"><br/></apex:outputPanel>
+         <apex:outputText value="Fill in EV Code Signing Audit Period Start and End dates. In a period‐of‐time audit, the period between the first day (start) and the last day of operations (end) covered by the auditors in their engagement. (This is not the same as the period of time when the auditors are on‐site at the CA.)" rendered="{!NOT(ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)) && (ISBLANK(Case.EV_Code_Signing_Audit_Period_Start_Date__c) || ISBLANK(Case.EV_Code_Signing_Audit_Period_End_Date__c))}"/> <apex:outputPanel rendered="{!NOT(ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)) && (ISBLANK(Case.EV_Code_Signing_Audit_Period_Start_Date__c) || ISBLANK(Case.EV_Code_Signing_Audit_Period_End_Date__c))}"><br/></apex:outputPanel>
+         
+         <!--Message for CA Document Repositary-->
+         <!--<apex:outputPanel rendered="{!AND (OR(NOT(ISBLANK(Case.Certificate_Policy_Link__c)), NOT(ISBLANK(Case.Certification_Practice_Statement_Link__c))), ISBLANK(Case.CA_Document_Repository__c))}"><br/></apex:outputPanel>
+         <apex:outputText value="'CA Document Repository' must be filled in." rendered="{!AND (OR(NOT(ISBLANK(Case.Certificate_Policy_Link__c)), NOT(ISBLANK(Case.Certification_Practice_Statement_Link__c))), ISBLANK(Case.CA_Document_Repository__c))}"></apex:outputText>-->
+         
+         <!--Message for CPCPSLastUpdatedDate-->
+         <!--<apex:outputPanel rendered="{!AND (OR(NOT(ISBLANK(Case.Certificate_Policy_Link__c)), NOT(ISBLANK(Case.Certification_Practice_Statement_Link__c))), ISBLANK(Case.CP_CPS_Last_Updated_Date__c))}"><br/></apex:outputPanel>
+         <apex:outputText value="'CP/CPS Last Updated Date' must be filled in." rendered="{!AND (OR(NOT(ISBLANK(Case.Certificate_Policy_Link__c)), NOT(ISBLANK(Case.Certification_Practice_Statement_Link__c))), ISBLANK(Case.CP_CPS_Last_Updated_Date__c))}"></apex:outputText>-->
+         
+         <!--<apex:outputText value="Fill in CP/CPS Information" rendered="{!ISBLANK(Case.Certificate_Policy_Link__c) && ISBLANK(Case.Certification_Practice_Statement_Link__c)}"/>  <apex:outputPanel rendered="{!ISBLANK(Case.Certificate_Policy_Link__c) && ISBLANK(Case.Certification_Practice_Statement_Link__c)}"><br/></apex:outputPanel>-->
+         
+         <!--Message for Auditor Verification Date-->
+         <apex:outputPanel rendered="{!ISNULL(Case.Date_Qualifications_Verified__c)}"></apex:outputPanel><apex:outputText style="display:block;" value="Auditor Verification Date is blank" rendered="{!ISNULL(Case.Date_Qualifications_Verified__c)}"/>
+         <apex:outputPanel rendered="{!Case.Date_Qualifications_Verified__c != null && ADDMONTHS(TODAY(),-12) > Case.Date_Qualifications_Verified__c}"></apex:outputPanel><apex:outputText style="display:block;" value="Auditor Verification Date is is older than a year" rendered="{!Case.Date_Qualifications_Verified__c != null && ADDMONTHS(TODAY(),-12) > Case.Date_Qualifications_Verified__c}"/>
+         
+         <!--Message for CPA Canada-->
+         <apex:outputPanel rendered="{!NOT(ISBLANK(Case.Standard_Audit_Statement_Link__c)) && CONTAINS(Case.Standard_Audit_Statement_Link__c, 'https://www.cpacanada.ca/webtrustseal?sealid')}"><br/></apex:outputPanel>
+         <apex:outputText value="System cannot map the Seal URL to Report URL for Standard Audit Statement (Link)" rendered="{!NOT(ISBLANK(Case.Standard_Audit_Statement_Link__c)) && CONTAINS(Case.Standard_Audit_Statement_Link__c, 'https://www.cpacanada.ca/webtrustseal?sealid')}"></apex:outputText>
+         <apex:outputPanel rendered="{!NOT(ISBLANK(Case.BR_Audit_Statement_Link__c)) && CONTAINS(Case.BR_Audit_Statement_Link__c, 'https://www.cpacanada.ca/webtrustseal?sealid')}"><br/></apex:outputPanel>
+         <apex:outputText value="System cannot map the Seal URL to Report URL for BR Audit Statement (Link)" rendered="{!NOT(ISBLANK(Case.BR_Audit_Statement_Link__c)) && CONTAINS(Case.BR_Audit_Statement_Link__c, 'https://www.cpacanada.ca/webtrustseal?sealid')}"></apex:outputText>
+         <apex:outputPanel rendered="{!NOT(ISBLANK(Case.Code_Signing_Audit_Statement_Link__c)) && CONTAINS(Case.Code_Signing_Audit_Statement_Link__c, 'https://www.cpacanada.ca/webtrustseal?sealid')}"><br/></apex:outputPanel>
+         <apex:outputText value="System cannot map the Seal URL to Report URL for Code Signing Audit Statement (Link)" rendered="{!NOT(ISBLANK(Case.Code_Signing_Audit_Statement_Link__c)) && CONTAINS(Case.Code_Signing_Audit_Statement_Link__c, 'https://www.cpacanada.ca/webtrustseal?sealid')}"></apex:outputText>
+         <apex:outputPanel rendered="{!NOT(ISBLANK(Case.EV_Audit_Statement_Link__c)) && CONTAINS(Case.EV_Audit_Statement_Link__c, 'https://www.cpacanada.ca/webtrustseal?sealid')}"><br/></apex:outputPanel>
+         <apex:outputText value="System cannot map the Seal URL to Report URL for EV SSL Audit Statement (Link)" rendered="{!NOT(ISBLANK(Case.EV_Audit_Statement_Link__c)) && CONTAINS(Case.EV_Audit_Statement_Link__c, 'https://www.cpacanada.ca/webtrustseal?sealid')}"></apex:outputText>
+         <apex:outputPanel rendered="{!NOT(ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)) && CONTAINS(Case.EV_Code_Signing_Audit_Statement_Link__c, 'https://www.cpacanada.ca/webtrustseal?sealid')}"><br/></apex:outputPanel>
+         <apex:outputText value="System cannot map the Seal URL to Report URL for EV Code Signing Audit Statement (Link)" rendered="{!NOT(ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)) && CONTAINS(Case.EV_Code_Signing_Audit_Statement_Link__c, 'https://www.cpacanada.ca/webtrustseal?sealid')}"></apex:outputText>
+         
+         <apex:outputText value="Indicate which root certificates were in scope of this audit by clicking on the 'Add/Update Root Cases' and 'Edit Test Websites' buttons" rendered="{!Case.Count_of_Root_Case_s__c == 0}"/><apex:outputPanel rendered="{!Case.Count_of_Root_Case_s__c == 0}"><br/></apex:outputPanel>
+         
+         <!--Message for id any Audit has Cert Webtrust Seal URL-->
+         <apex:outputPanel rendered="{!NOT(ISBLANK(Case.Standard_Audit_Statement_Link__c)) && CONTAINS(Case.Standard_Audit_Statement_Link__c, 'https://cert.webtrust.org/ViewSeal?id')}"><br/></apex:outputPanel>
+         <apex:outputText value="System cannot map the Seal URL to Report URL for Standard Audit Statement (Link)" rendered="{!NOT(ISBLANK(Case.Standard_Audit_Statement_Link__c)) && CONTAINS(Case.Standard_Audit_Statement_Link__c, 'https://cert.webtrust.org/ViewSeal?id')}"></apex:outputText>
+         <apex:outputPanel rendered="{!NOT(ISBLANK(Case.BR_Audit_Statement_Link__c)) && CONTAINS(Case.BR_Audit_Statement_Link__c, 'https://cert.webtrust.org/ViewSeal?id')}"><br/></apex:outputPanel>
+         <apex:outputText value="System cannot map the Seal URL to Report URL for BR Audit Statement (Link)" rendered="{!NOT(ISBLANK(Case.BR_Audit_Statement_Link__c)) && CONTAINS(Case.BR_Audit_Statement_Link__c, 'https://cert.webtrust.org/ViewSeal?id')}"></apex:outputText>
+         <apex:outputPanel rendered="{!NOT(ISBLANK(Case.Code_Signing_Audit_Statement_Link__c)) && CONTAINS(Case.Code_Signing_Audit_Statement_Link__c, 'https://cert.webtrust.org/ViewSeal?id')}"><br/></apex:outputPanel>
+         <apex:outputText value="System cannot map the Seal URL to Report URL for Code Signing Audit Statement (Link)" rendered="{!NOT(ISBLANK(Case.Code_Signing_Audit_Statement_Link__c)) && CONTAINS(Case.Code_Signing_Audit_Statement_Link__c, 'https://cert.webtrust.org/ViewSeal?id')}"></apex:outputText>
+         <apex:outputPanel rendered="{!NOT(ISBLANK(Case.EV_Audit_Statement_Link__c)) && CONTAINS(Case.EV_Audit_Statement_Link__c, 'https://cert.webtrust.org/ViewSeal?id')}"><br/></apex:outputPanel>
+         <apex:outputText value="System cannot map the Seal URL to Report URL for EV SSL Audit Statement (Link)" rendered="{!NOT(ISBLANK(Case.EV_Audit_Statement_Link__c)) && CONTAINS(Case.EV_Audit_Statement_Link__c, 'https://cert.webtrust.org/ViewSeal?id')}"></apex:outputText>
+         <apex:outputPanel rendered="{!NOT(ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)) && CONTAINS(Case.EV_Code_Signing_Audit_Statement_Link__c, 'https://cert.webtrust.org/ViewSeal?id')}"><br/></apex:outputPanel>
+         <apex:outputText value="System cannot map the Seal URL to Report URL for EV Code Signing Audit Statement (Link)" rendered="{!NOT(ISBLANK(Case.EV_Code_Signing_Audit_Statement_Link__c)) && CONTAINS(Case.EV_Code_Signing_Audit_Statement_Link__c, 'https://cert.webtrust.org/ViewSeal?id')}"></apex:outputText>
+         
+         
+         <!-- Message when CPA Canada Report URL Missing/Changed-->
+         <apex:outputPanel rendered="{!isStandardAuditReportURLNotFound}"><br/></apex:outputPanel>
+         <apex:outputText value="Standard Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." rendered="{!isStandardAuditReportURLNotFound}"></apex:outputText>
+         <apex:outputPanel rendered="{!isCodeSigningAuditReportURLNotFound}"><br/></apex:outputPanel>
+         <apex:outputText value="Code Signing Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." rendered="{!isCodeSigningAuditReportURLNotFound}"></apex:outputText>
+         <apex:outputPanel rendered="{!isBRAuditReportURLNotFound}"><br/></apex:outputPanel>
+         <apex:outputText value="BR Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." rendered="{!isBRAuditReportURLNotFound}"></apex:outputText>
+         <apex:outputPanel rendered="{!isEVSSLAuditReportURLNotFound}"><br/></apex:outputPanel>
+         <apex:outputText value="EV SSL Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." rendered="{!isEVSSLAuditReportURLNotFound}"></apex:outputText>
+         <apex:outputPanel rendered="{!isEVCodeSigningAuditReportURLNotFound}"><br/></apex:outputPanel>
+         <apex:outputText value="EV Code Signing Audit Report URL does not match Seal ID in CPA Canada object. Re-enter the Seal ID URL, which will re-map to the new report URL." rendered="{!isEVCodeSigningAuditReportURLNotFound}"></apex:outputText>
+    </apex:form>                
+    
+</apex:page>

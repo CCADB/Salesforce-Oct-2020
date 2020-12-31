@@ -1,0 +1,1534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Root Case</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Root Cases</value>
+    </caseValues>
+    <fields>
+        <label><!-- Mozilla All Fields Verified? --></label>
+        <name>All_Fields_Verified__c</name>
+    </fields>
+    <fields>
+        <label><!-- Application Information Verified? --></label>
+        <name>Application_Information_Verified__c</name>
+        <picklistValues>
+            <masterLabel>Data Verified</masterLabel>
+            <translation><!-- Data Verified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Verified</masterLabel>
+            <translation><!-- Not Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Applicable Audits Verified? --></label>
+        <name>Apply_Audit_Verified__c</name>
+        <picklistValues>
+            <masterLabel>Data Verified</masterLabel>
+            <translation><!-- Data Verified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Verified</masterLabel>
+            <translation><!-- Not Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- BR Audit --></label>
+        <name>Apply_BR_Audit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Signing Audit --></label>
+        <name>Apply_Code_Signing_Audit__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV SSL Audit --></label>
+        <name>Apply_EV_Audit__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV Code Signing Audit --></label>
+        <name>Apply_EV_Code_Signing_Audit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit --></label>
+        <name>Apply_Standard_Audit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Gap --></label>
+        <name>Audit_Gap__c</name>
+    </fields>
+    <fields>
+        <help><!-- Results returned by Audit Letter Validation webservice --></help>
+        <label><!-- ALV Results --></label>
+        <name>Auto_Review_Results__c</name>
+    </fields>
+    <fields>
+        <help><!-- Status returned by Audit Letter Validation webservice --></help>
+        <label><!-- ALV Status --></label>
+        <name>Auto_Review_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- BR Audit Date Gap --></label>
+        <name>BR_Audit_Date_Gap__c</name>
+    </fields>
+    <fields>
+        <help><!-- Browse to https://crt.sh/ and enter the SHA-1 Fingerprint for the root certificate. Then click on the &apos;Search&apos; button. Then click on the &apos;Run cablint&apos; link. All errors must be resolved/fixed. --></help>
+        <label><!-- CA/Browser Forum Lint Test --></label>
+        <name>CA_Browser_Forum_Lint_Test__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Owner Name --></label>
+        <name>CA_Owner_Name_Existing__c</name>
+        <relationshipLabel><!-- Root Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- CP/CPS allows Externally Operated SubCAs? --></help>
+        <label><!-- CP/CPS allows Ext Operated SubCAs? --></label>
+        <name>CP_CPS_allows_Ext_Operated_SubCAs__c</name>
+    </fields>
+    <fields>
+        <help><!-- CP/CPS allows External Registration Authorities? --></help>
+        <label><!-- CP/CPS allows External RAs? --></label>
+        <name>CP_CPS_allows_External_RAs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case+CAOwner+RootCert --></label>
+        <name>Case_CAOwner_RootCert__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case No --></label>
+        <name>Case_No__c</name>
+        <relationshipLabel><!-- Root Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Case Subject --></label>
+        <name>Case_Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Issuer Common Name --></label>
+        <name>Certificate_Issuer_Common_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Serial Number --></label>
+        <name>Certificate_Serial_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Subject Common Name --></label>
+        <name>Certificate_Subject_Common_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Signing Audit Date Gap --></label>
+        <name>Code_Signing_Audit_Date_Gap__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments by Mozilla on Root Case --></label>
+        <name>Comments_by_Mozilla_on_Root_Case__c</name>
+    </fields>
+    <fields>
+        <help><!-- Constraints on External SubCAs &amp; RAs --></help>
+        <label><!-- Constraints on External SubCAs &amp; RAs --></label>
+        <name>Constraints_on_External_SubCAs_RAs__c</name>
+    </fields>
+    <fields>
+        <help><!-- Currently Cross-Signed by another Root Cert? --></help>
+        <label><!-- Cross-Signed by another Root Cert? --></label>
+        <name>Cross_Signed_by_another_Root_Cert__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cross Signing (Verified?) --></label>
+        <name>Cross_Signing_Verified__c</name>
+        <picklistValues>
+            <masterLabel>Error</masterLabel>
+            <translation><!-- Error --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Need Clarification From CA</masterLabel>
+            <translation><!-- Need Clarification From CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Need Response From CA</masterLabel>
+            <translation><!-- Need Response From CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Verified</masterLabel>
+            <translation><!-- Not Verified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verified</masterLabel>
+            <translation><!-- Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Date/Time Closed --></label>
+        <name>Date_Time_Closed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date/Time Opened --></label>
+        <name>Date_Time_Opened__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL or Description of Hierarchy. Provide details if any box checked --></help>
+        <label><!-- Description of PKI Hierarchy --></label>
+        <name>Description_of_PKI_Hierarchy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distrust for S/MIME After Date --></label>
+        <name>Distrust_for_S_MIME_After_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distrust for TLS After Date --></label>
+        <name>Distrust_for_TLS_After_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- EKU - Client Authentication --></label>
+        <name>EKU_Client_Authentication__c</name>
+    </fields>
+    <fields>
+        <label><!-- EKU - Document Signing --></label>
+        <name>EKU_Document_Signing__c</name>
+    </fields>
+    <fields>
+        <label><!-- EKU - OCSP Signing --></label>
+        <name>EKU_OCSP_Signing__c</name>
+    </fields>
+    <fields>
+        <label><!-- EKU - Other --></label>
+        <name>EKU_Other__c</name>
+    </fields>
+    <fields>
+        <label><!-- EKU - Secured Email --></label>
+        <name>EKU_Secured_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- EKU - Server Authentication --></label>
+        <name>EKU_Server_Authentication__c</name>
+    </fields>
+    <fields>
+        <label><!-- EKU - Time Stamping --></label>
+        <name>EKU_Time_Stamping__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV Code Signing Audit Date Gap --></label>
+        <name>EV_Code_Signing_Audit_Date_Gap__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mozilla EV Policy OID(s) --></label>
+        <name>EV_Policy_OID_s__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV SSL Audit Date Gap --></label>
+        <name>EV_SSL_Audit_Date_Gap__c</name>
+    </fields>
+    <fields>
+        <help><!-- If you are requesting to enable EV treatment, then you must provide successful output from the EV-Readiness Checking Tool. See https://wiki.mozilla.org/PSM:EV_Testing_Easy_Version --></help>
+        <label><!-- EV Tested --></label>
+        <name>EV_Tested__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable EV for Code Signing --></label>
+        <name>Enable_EV_for_Code_Signing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Enable EV for Server Authentication --></label>
+        <name>Enable_EV_for_Server_Authentication__c</name>
+    </fields>
+    <fields>
+        <help><!-- Explain why this root needs to be included in the selected root store --></help>
+        <label><!-- Explanation --></label>
+        <name>Explanation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extended Key Usage --></label>
+        <name>Extended_Key_Usage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extraction Results --></label>
+        <name>Extraction_Results__c</name>
+    </fields>
+    <fields>
+        <label><!-- Firefox Release When First Included --></label>
+        <name>Firefox_Release_When_First_Included__c</name>
+    </fields>
+    <fields>
+        <help><!-- Currently has External Registration Authorities? --></help>
+        <label><!-- Has External Registration Authorities? --></label>
+        <name>Has_External_Registration_Authorities__c</name>
+    </fields>
+    <fields>
+        <help><!-- Currently has Externally Operated SubCAs? --></help>
+        <label><!-- Has Externally Operated SubCAs? --></label>
+        <name>Has_Externally_Operated_SubCAs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Included Certificate Name --></label>
+        <name>Included_Certificate_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Instructions --></label>
+        <name>Instructions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is New? --></label>
+        <name>Is_New__c</name>
+    </fields>
+    <fields>
+        <help><!-- Certificate Issuer Common Name + Certificate Issuer Organizational Unit + Certificate Issuer Organization + Certificate Issuer Country --></help>
+        <label><!-- Issuer --></label>
+        <name>Issuer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Justification - Client Authentication --></label>
+        <name>Justification_Client_Authentication__c</name>
+    </fields>
+    <fields>
+        <label><!-- Justification - Document Signing --></label>
+        <name>Justification_Document_Signing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Justification - EV for Code Signing --></label>
+        <name>Justification_EV_for_Code_Signing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Justification - EV for SSL --></label>
+        <name>Justification_EV_for_SSL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Justification - OCSP Signing --></label>
+        <name>Justification_OCSP_Signing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Justification - Other --></label>
+        <name>Justification_Other__c</name>
+    </fields>
+    <fields>
+        <label><!-- Justification - Secured Email --></label>
+        <name>Justification_Secured_Email__c</name>
+    </fields>
+    <fields>
+        <label><!-- Justification - Server Authentication --></label>
+        <name>Justification_Server_Authentication__c</name>
+    </fields>
+    <fields>
+        <label><!-- Justification - Time Stamping --></label>
+        <name>Justification_Time_Stamping__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key Usage --></label>
+        <name>Key_Usage__c</name>
+    </fields>
+    <fields>
+        <help><!-- Updated by Sync process --></help>
+        <label><!-- Last Sync Date/Time --></label>
+        <name>Last_Sync_Date_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Lint Test Description --></label>
+        <name>Lint_Test_Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- Lint testing run on the TLS certificate for the Valid Test Website, and its certificate chain --></help>
+        <label><!-- Lint Test Results --></label>
+        <name>Lint_Test_Results__c</name>
+    </fields>
+    <fields>
+        <help><!-- Details are in the Test Websites Validation Results section at the bottom of this page --></help>
+        <label><!-- Lint Test - Status --></label>
+        <name>Lint_Test_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft EV Enabled --></label>
+        <name>Microsoft_EV_Enabled__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft EV Policy OID(s) --></label>
+        <name>Microsoft_EV_Policy_OID_s__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Request Status --></label>
+        <name>Microsoft_Request_Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Denied</masterLabel>
+            <translation><!-- Denied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Process</masterLabel>
+            <translation><!-- In Process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Status --></label>
+        <name>Microsoft_Status__c</name>
+        <picklistValues>
+            <masterLabel>Change Requested</masterLabel>
+            <translation><!-- Change Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Disabled</masterLabel>
+            <translation><!-- Disabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included</masterLabel>
+            <translation><!-- Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Included</masterLabel>
+            <translation><!-- Not Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NotBefore</masterLabel>
+            <translation><!-- NotBefore --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Trust Bits --></label>
+        <name>Microsoft_Trust_Bits__c</name>
+        <picklistValues>
+            <masterLabel>Client Authentication</masterLabel>
+            <translation><!-- Client Authentication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Code Signing</masterLabel>
+            <translation><!-- Code Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Document Signing</masterLabel>
+            <translation><!-- Document Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Encrypting File System</masterLabel>
+            <translation><!-- Encrypting File System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security End System</masterLabel>
+            <translation><!-- IP Security End System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security IKE Intermediate</masterLabel>
+            <translation><!-- IP Security IKE Intermediate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security Tunnel Termination</masterLabel>
+            <translation><!-- IP Security Tunnel Termination --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security User</masterLabel>
+            <translation><!-- IP Security User --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OCSP Signing</masterLabel>
+            <translation><!-- OCSP Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Private Key Archival</masterLabel>
+            <translation><!-- Private Key Archival --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Secure Email</masterLabel>
+            <translation><!-- Secure Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Server Authentication</masterLabel>
+            <translation><!-- Server Authentication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Time Stamping</masterLabel>
+            <translation><!-- Time Stamping --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Applied Constraints --></label>
+        <name>Mozilla_Applied_Constraints__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Fields Verified? --></label>
+        <name>Mozilla_Fields_Verified__c</name>
+        <picklistValues>
+            <masterLabel>Data Verified</masterLabel>
+            <translation><!-- Data Verified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Verified</masterLabel>
+            <translation><!-- Not Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Removal Bug No. or Date --></label>
+        <name>Mozilla_Removal_Bug_No_or_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Status --></label>
+        <name>Mozilla_Status__c</name>
+        <picklistValues>
+            <masterLabel>Change Requested</masterLabel>
+            <translation><!-- Change Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included</masterLabel>
+            <translation><!-- Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Yet Included</masterLabel>
+            <translation><!-- Not Yet Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Obsolete</masterLabel>
+            <translation><!-- Obsolete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verified</masterLabel>
+            <translation><!-- Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- NSS Release When First Included --></label>
+        <name>NSS_Release_When_First_Included__c</name>
+    </fields>
+    <fields>
+        <help><!-- Organizational Unit --></help>
+        <label><!-- OU From Issuer Field --></label>
+        <name>OU_From_Issuer_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- OU From Subject Field --></label>
+        <name>OU_From_Subject_Field__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Organization Name and CN in the Issuer must have sufficient information about the CA Organization. --></help>
+        <label><!-- O From Issuer Field --></label>
+        <name>O_From_Issuer_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- O From Subject Field --></label>
+        <name>O_From_Subject_Field__c</name>
+    </fields>
+    <fields>
+        <label><!-- PKI Hierarchy Verified? --></label>
+        <name>PKI_Hierarchy_Verified__c</name>
+        <picklistValues>
+            <masterLabel>Data Verified</masterLabel>
+            <translation><!-- Data Verified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Verified</masterLabel>
+            <translation><!-- Not Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Public Key Algorithm --></label>
+        <name>Public_Key_Algorithm__c</name>
+        <picklistValues>
+            <masterLabel>EC secp256r</masterLabel>
+            <translation><!-- EC secp256r --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EC secp256r1</masterLabel>
+            <translation><!-- EC secp256r1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EC secp384r1</masterLabel>
+            <translation><!-- EC secp384r1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EC secp512r1</masterLabel>
+            <translation><!-- EC secp512r1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 1024 bits</masterLabel>
+            <translation><!-- RSA 1024 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 2045 bits</masterLabel>
+            <translation><!-- RSA 2045 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 2046 bits</masterLabel>
+            <translation><!-- RSA 2046 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 2047 bits</masterLabel>
+            <translation><!-- RSA 2047 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 2048 bits</masterLabel>
+            <translation><!-- RSA 2048 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 3072 bits</masterLabel>
+            <translation><!-- RSA 3072 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 4096 bits</masterLabel>
+            <translation><!-- RSA 4096 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>unknown</masterLabel>
+            <translation><!-- unknown --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Request Status --></label>
+        <name>Request_Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved, Pending Inclusion</masterLabel>
+            <translation><!-- Approved, Pending Inclusion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Approved, Pending Inclusion and EV</masterLabel>
+            <translation><!-- Approved, Pending Inclusion and EV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CA Action Items from Discussion</masterLabel>
+            <translation><!-- CA Action Items from Discussion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Closed - CA Unresponsive</masterLabel>
+            <translation><!-- Closed - CA Unresponsive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Complete</masterLabel>
+            <translation><!-- Complete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Data Verified</masterLabel>
+            <translation><!-- Data Verified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Denied</masterLabel>
+            <translation><!-- Denied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Discussion on Hold</masterLabel>
+            <translation><!-- Discussion on Hold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Detailed CP/CPS Review</masterLabel>
+            <translation><!-- In Detailed CP/CPS Review --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Public Discussion</masterLabel>
+            <translation><!-- In Public Discussion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included, Pending EV</masterLabel>
+            <translation><!-- Included, Pending EV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Information Verification In Process</masterLabel>
+            <translation><!-- Information Verification In Process --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Initial Request Received</masterLabel>
+            <translation><!-- Initial Request Received --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>On Hold</masterLabel>
+            <translation><!-- On Hold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending Approval</masterLabel>
+            <translation><!-- Pending Approval --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Request Withdrawn by CA</masterLabel>
+            <translation><!-- Request Withdrawn by CA --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Browse to http://certificate.revocationcheck.com/ and enter the Test Website URL. Make sure there are no errors listed in the output. --></help>
+        <label><!-- Revocation Tested --></label>
+        <name>Revocation_Tested__c</name>
+    </fields>
+    <fields>
+        <help><!-- If requesting inclusion of multiple roots, explain unique function of this root. --></help>
+        <label><!-- Role --></label>
+        <name>Role__c</name>
+    </fields>
+    <fields>
+        <label><!-- Root Case External Id --></label>
+        <name>Root_Case_External_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- 18 digit record ID for Root Case --></help>
+        <label><!-- Root Case Safe ID --></label>
+        <name>Root_Case_Safe_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Root Certificate Download URL --></label>
+        <name>Root_Certificate_Download_URL__c</name>
+    </fields>
+    <fields>
+        <help><!-- The Root Certificate that this Root Case applies to. --></help>
+        <label><!-- Certificate Name --></label>
+        <name>Root_Certificate_Name_Existing__c</name>
+        <relationshipLabel><!-- Root Cases (Included Certificate) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Root Certificate Name --></label>
+        <name>Root_Certificate_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Root Stores Applying To --></label>
+        <name>Root_Stores_Applying_To__c</name>
+        <picklistValues>
+            <masterLabel>Apple</masterLabel>
+            <translation><!-- Apple --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cisco</masterLabel>
+            <translation><!-- Cisco --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Google</masterLabel>
+            <translation><!-- Google --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Microsoft</masterLabel>
+            <translation><!-- Microsoft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mozilla</masterLabel>
+            <translation><!-- Mozilla --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- SHA-1 Fingerprint --></label>
+        <name>SHA_1_Fingerprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- SHA-1 --></label>
+        <name>SHA_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- SHA-256 Fingerprint --></label>
+        <name>SHA_256_Fingerprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- SHA-256 --></label>
+        <name>SHA_256__c</name>
+    </fields>
+    <fields>
+        <help><!-- Identifies similar logical certificates in different CA Hierarchies. SHA256(der(spki)) --></help>
+        <label><!-- SPKI SHA256 --></label>
+        <name>SPKI_SHA256__c</name>
+    </fields>
+    <fields>
+        <label><!-- SSL Validation Type --></label>
+        <name>SSL_Validation_Type__c</name>
+        <picklistValues>
+            <masterLabel>DV</masterLabel>
+            <translation><!-- DV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EV</masterLabel>
+            <translation><!-- EV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OV</masterLabel>
+            <translation><!-- OV --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Signature Hash Algorithm --></label>
+        <name>Signature_Hash_Algorithm__c</name>
+        <picklistValues>
+            <masterLabel>MD2WithRSA</masterLabel>
+            <translation><!-- MD2WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MD5WithRSA</masterLabel>
+            <translation><!-- MD5WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHA1WithRSA</masterLabel>
+            <translation><!-- SHA1WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHA256WithRSA</masterLabel>
+            <translation><!-- SHA256WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHA384WithRSA</masterLabel>
+            <translation><!-- SHA384WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHA512WithRSA</masterLabel>
+            <translation><!-- SHA512WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ecdsaWithSHA256</masterLabel>
+            <translation><!-- ecdsaWithSHA256 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ecdsaWithSHA384</masterLabel>
+            <translation><!-- ecdsaWithSHA384 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ecdsaWithSHA512</masterLabel>
+            <translation><!-- ecdsaWithSHA512 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>unknown</masterLabel>
+            <translation><!-- unknown --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit Date Gap --></label>
+        <name>Standard_Audit_Date_Gap__c</name>
+    </fields>
+    <fields>
+        <label><!-- Request Status --></label>
+        <name>Status_Summary__c</name>
+    </fields>
+    <fields>
+        <help><!-- Identifies same logical certificates in different CA Hierarchies. SHA256(der(subject)+der(spki)) --></help>
+        <label><!-- Subject + SPKI SHA256 --></label>
+        <name>Subject_SPKI_SHA256__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <label><!-- Technically Constrained --></label>
+        <name>Technically_Constrained__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Description --></label>
+        <name>Test_Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Notes --></label>
+        <name>Test_Notes__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Results Verified? --></label>
+        <name>Test_Results_Verified__c</name>
+        <picklistValues>
+            <masterLabel>Data Verified</masterLabel>
+            <translation><!-- Data Verified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Verified</masterLabel>
+            <translation><!-- Not Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Test Website Expired - Results --></label>
+        <name>Test_Website_Expired_Results__c</name>
+    </fields>
+    <fields>
+        <help><!-- Details are in the Test Websites Validation Results section at the bottom of this page --></help>
+        <label><!-- Test Website Expired - Status --></label>
+        <name>Test_Website_Expired_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- REQUIRED by BRs: URL to website with an expired TLS/SSL cert that chains up to the Root Certificate --></help>
+        <label><!-- Test Website - Expired --></label>
+        <name>Test_Website_Expired__c</name>
+    </fields>
+    <fields>
+        <help><!-- Browse to https://cert-checker.allizom.org/ and enter the test website and click on the &apos;Browse&apos; button to provide the PEM file for the root certificate. Then click on &apos;run certlint&apos;. All errors must be resolved/fixed. --></help>
+        <label><!-- Test Website Lint Test --></label>
+        <name>Test_Website_Lint_Test__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Website Revoked - Results --></label>
+        <name>Test_Website_Revoked_Results__c</name>
+    </fields>
+    <fields>
+        <help><!-- Details are in the Test Websites Validation Results section at the bottom of this page --></help>
+        <label><!-- Test Website Revoked - Status --></label>
+        <name>Test_Website_Revoked_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- REQUIRED by BRs: URL to website with a revoked TLS/SSL cert that chains up to the Root Certificate --></help>
+        <label><!-- Test Website - Revoked --></label>
+        <name>Test_Website_Revoked__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Website Valid - Results --></label>
+        <name>Test_Website_Valid_Results__c</name>
+    </fields>
+    <fields>
+        <help><!-- Details are in the Test Websites Validation Results section at the bottom of this page --></help>
+        <label><!-- Test Website Valid - Status --></label>
+        <name>Test_Website_Valid_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- REQUIRED by BRs: URL to website with a valid TLS/SSL cert that chains up to the Root Certificate --></help>
+        <label><!-- Test Website - Valid --></label>
+        <name>Test_Website_Valid__c</name>
+    </fields>
+    <fields>
+        <label><!-- Test Websites Verified? --></label>
+        <name>Test_Website_Verified__c</name>
+        <picklistValues>
+            <masterLabel>Data Verified</masterLabel>
+            <translation><!-- Data Verified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Verified</masterLabel>
+            <translation><!-- Not Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Select the trust bits you are requesting to be enabled for this root. --></help>
+        <label><!-- Mozilla Trust Bits --></label>
+        <name>Trust_Bits__c</name>
+        <picklistValues>
+            <masterLabel>All Trust Bits Turned Off</masterLabel>
+            <translation><!-- All Trust Bits Turned Off --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Websites</masterLabel>
+            <translation><!-- Websites --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Valid From [GMT] --></label>
+        <name>Valid_From_YYYY_MMM_DD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Valid From --></label>
+        <name>Valid_From__c</name>
+    </fields>
+    <fields>
+        <label><!-- Valid To [GMT] --></label>
+        <name>Valid_To_YYYY_MMM_DD__c</name>
+    </fields>
+    <fields>
+        <label><!-- Valid To --></label>
+        <name>Valid_To__c</name>
+    </fields>
+    <fields>
+        <label><!-- X.509 Certificate (PEM) --></label>
+        <name>X_509_Certificate_PEM__c</name>
+    </fields>
+    <layouts>
+        <layout>CA Audit Update Request Layout for CA</layout>
+        <sections>
+            <label><!-- Audit Letter Validation [ALV] Results --></label>
+            <section>Audit Letter Validation [ALV] Results</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner and Root Certificate Information --></label>
+            <section>CA Owner and Root Certificate Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fingerprints --></label>
+            <section>Fingerprints</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments - By Root Store Managers --></label>
+            <section>Public Comments - By Root Store Managers</section>
+        </sections>
+        <sections>
+            <label><!-- Root Case Information --></label>
+            <section>Root Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Root Store Status [Read Only] --></label>
+            <section>Root Store Status [Read Only]</section>
+        </sections>
+        <sections>
+            <label><!-- Select all that apply to the Included Certificate --></label>
+            <section>Select all that apply to the Included Certificate</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites (for TLS enabled root certs) --></label>
+            <section>Test Websites (for TLS enabled root certs)</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites Validation Results --></label>
+            <section>Test Websites Validation Results</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CA Audit Update Request Layout for CA Read Only</layout>
+        <sections>
+            <label><!-- Audit Letter Validation [ALV] Results --></label>
+            <section>Audit Letter Validation [ALV] Results</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner and Root Certificate Information --></label>
+            <section>CA Owner and Root Certificate Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fingerprints --></label>
+            <section>Fingerprints</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments - By Root Store Managers --></label>
+            <section>Public Comments - By Root Store Managers</section>
+        </sections>
+        <sections>
+            <label><!-- Root Case Information --></label>
+            <section>Root Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Root Store Status [Read Only] --></label>
+            <section>Root Store Status [Read Only]</section>
+        </sections>
+        <sections>
+            <label><!-- Select all that apply to the Included Certificate --></label>
+            <section>Select all that apply to the Included Certificate</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites (for TLS enabled root certs) --></label>
+            <section>Test Websites (for TLS enabled root certs)</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites Validation Results --></label>
+            <section>Test Websites Validation Results</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CA Audit Update Request Layout for Jixi</layout>
+        <sections>
+            <label><!-- Audit Letter Validation [ALV] Results --></label>
+            <section>Audit Letter Validation [ALV] Results</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner and Root Certificate Information --></label>
+            <section>CA Owner and Root Certificate Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fingerprints --></label>
+            <section>Fingerprints</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments - By Root Store Managers --></label>
+            <section>Internal Comments - By Root Store Managers</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments - By Root Store Managers --></label>
+            <section>Public Comments - By Root Store Managers</section>
+        </sections>
+        <sections>
+            <label><!-- Root Case Information --></label>
+            <section>Root Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Root Store Status [Read Only] --></label>
+            <section>Root Store Status [Read Only]</section>
+        </sections>
+        <sections>
+            <label><!-- Select all that apply to the Included Certificate --></label>
+            <section>Select all that apply to the Included Certificate</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites (for TLS enabled root certs) --></label>
+            <section>Test Websites (for TLS enabled root certs)</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites Validation Results --></label>
+            <section>Test Websites Validation Results</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CA Audit Update Request Layout for Root Store Mgr</layout>
+        <sections>
+            <label><!-- Audit Letter Validation [ALV] Results --></label>
+            <section>Audit Letter Validation [ALV] Results</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner and Root Certificate Information --></label>
+            <section>CA Owner and Root Certificate Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fingerprints --></label>
+            <section>Fingerprints</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments - By Root Store Managers --></label>
+            <section>Internal Comments - By Root Store Managers</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments - By Root Store Managers --></label>
+            <section>Public Comments - By Root Store Managers</section>
+        </sections>
+        <sections>
+            <label><!-- Root Case Information --></label>
+            <section>Root Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Root Store Status [Read Only] --></label>
+            <section>Root Store Status [Read Only]</section>
+        </sections>
+        <sections>
+            <label><!-- Select all that apply to the Included Certificate --></label>
+            <section>Select all that apply to the Included Certificate</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites (for TLS enabled root certs) --></label>
+            <section>Test Websites (for TLS enabled root certs)</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites Validation Results --></label>
+            <section>Test Websites Validation Results</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CA Root Inclusion Request Layout for CA</layout>
+        <sections>
+            <label><!-- Application Information --></label>
+            <section>Application Information</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Letter Validation [ALV] Results --></label>
+            <section>Audit Letter Validation [ALV] Results</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner &amp; Root Certificate --></label>
+            <section>CA Owner &amp; Root Certificate</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft - Key Usage &amp; Justification --></label>
+            <section>Microsoft - Key Usage &amp; Justification</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields - Request Status &amp; ALV --></label>
+            <section>Microsoft Fields - Request Status &amp; ALV</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+        <sections>
+            <label><!-- PEM Information --></label>
+            <section>PEM Information</section>
+        </sections>
+        <sections>
+            <label><!-- PKI Hierarchy --></label>
+            <section>PKI Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments - By Root Store Managers --></label>
+            <section>Public Comments - By Root Store Managers</section>
+        </sections>
+        <sections>
+            <label><!-- Root Case Information --></label>
+            <section>Root Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Select all that apply to this Certificate --></label>
+            <section>Select all that apply to this Certificate</section>
+        </sections>
+        <sections>
+            <label><!-- Status of Root Case --></label>
+            <section>Status of Root Case</section>
+        </sections>
+        <sections>
+            <label><!-- Test Results (When EKU has  id-kp-serverAuth) --></label>
+            <section>Test Results (When EKU has  id-kp-serverAuth)</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites --></label>
+            <section>Test Websites</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites Validation Results --></label>
+            <section>Test Websites Validation Results</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CA Root Inclusion Request Layout for CA Read Only</layout>
+        <sections>
+            <label><!-- Application Information --></label>
+            <section>Application Information</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Letter Validation [ALV] Results --></label>
+            <section>Audit Letter Validation [ALV] Results</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner &amp; Root Certificate --></label>
+            <section>CA Owner &amp; Root Certificate</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft - Key Usage &amp; Justification --></label>
+            <section>Microsoft - Key Usage &amp; Justification</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields - Request Status &amp; ALV --></label>
+            <section>Microsoft Fields - Request Status &amp; ALV</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+        <sections>
+            <label><!-- PEM Information --></label>
+            <section>PEM Information</section>
+        </sections>
+        <sections>
+            <label><!-- PKI Hierarchy --></label>
+            <section>PKI Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments - By Root Store Managers --></label>
+            <section>Public Comments - By Root Store Managers</section>
+        </sections>
+        <sections>
+            <label><!-- Root Case Information --></label>
+            <section>Root Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Select all that apply to this Certificate --></label>
+            <section>Select all that apply to this Certificate</section>
+        </sections>
+        <sections>
+            <label><!-- Status of Root Case --></label>
+            <section>Status of Root Case</section>
+        </sections>
+        <sections>
+            <label><!-- Test Results (When EKU has  id-kp-serverAuth) --></label>
+            <section>Test Results (When EKU has  id-kp-serverAuth)</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites --></label>
+            <section>Test Websites</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites Validation Results --></label>
+            <section>Test Websites Validation Results</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CA Root Inclusion Request Layout for Root Store Mgr</layout>
+        <sections>
+            <label><!-- Application Information --></label>
+            <section>Application Information</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Letter Validation [ALV] Results --></label>
+            <section>Audit Letter Validation [ALV] Results</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner &amp; Root Certificate --></label>
+            <section>CA Owner &amp; Root Certificate</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments - By Root Store Managers --></label>
+            <section>Internal Comments - By Root Store Managers</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft - Key Usage &amp; Justification --></label>
+            <section>Microsoft - Key Usage &amp; Justification</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields --></label>
+            <section>Microsoft Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Notes --></label>
+            <section>Notes</section>
+        </sections>
+        <sections>
+            <label><!-- PEM Information --></label>
+            <section>PEM Information</section>
+        </sections>
+        <sections>
+            <label><!-- PKI Hierarchy --></label>
+            <section>PKI Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments - By Root Store Managers --></label>
+            <section>Public Comments - By Root Store Managers</section>
+        </sections>
+        <sections>
+            <label><!-- Root Case Information --></label>
+            <section>Root Case Information</section>
+        </sections>
+        <sections>
+            <label><!-- Select all that apply to this Certificate --></label>
+            <section>Select all that apply to this Certificate</section>
+        </sections>
+        <sections>
+            <label><!-- Status of Root Case --></label>
+            <section>Status of Root Case</section>
+        </sections>
+        <sections>
+            <label><!-- Test Results (When EKU has  id-kp-serverAuth) --></label>
+            <section>Test Results (When EKU has  id-kp-serverAuth)</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites --></label>
+            <section>Test Websites</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites Validation Results --></label>
+            <section>Test Websites Validation Results</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <description><!-- Submission of the CA audit update request --></description>
+        <label><!-- CA Audit Update Request --></label>
+        <name>CA_Audit_Update_Request</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- CA Owner/Root Inclusion Request --></label>
+        <name>CA_Owner_Root_Inclusion_Request</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Creation of the CA Root inclusion request --></description>
+        <label><!-- CA Root Inclusion Request --></label>
+        <name>CA_Root_Inclusion_Request</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- INDICATE WHICH AUDITS APPLY TO THIS CERTIFICATE --></errorMessage>
+        <name>CheckApplyAuditInfoAppliedToRootCerts</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide justification for Client Authentication --></errorMessage>
+        <name>CheckJustificationForClientAuth</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide justification for Document Signing --></errorMessage>
+        <name>CheckJustificationForDocumentSigning</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide justification for OCSP Signing --></errorMessage>
+        <name>CheckJustificationForOCSPSigning</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide justification for Other --></errorMessage>
+        <name>CheckJustificationForOther</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide justification for Secured Email --></errorMessage>
+        <name>CheckJustificationForSecuredEmail</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide justification for Server Authentication --></errorMessage>
+        <name>CheckJustificationForServerAuth</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide justification for Time Stamping --></errorMessage>
+        <name>CheckJustificationForTimeStamping</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide valid test website link, URL must begin with &apos;https&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~- _ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_Test_Website_Expired_URL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide valid test website link, URL must begin with &apos;https&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~- _ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_Test_Website_Revoked_URL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide valid test website link, URL must begin with &apos;https&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~- _ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_Test_Website_Valid_URL</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Add_Root_Case_For_CA_Audit_Update_Request --></label>
+        <name>Add_Root_Case_For_CA_Audit_Update_Request</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Add_Root_Case_For_CA_Root_Inclusion_Rquest --></label>
+        <name>Add_Root_Case_For_CA_Root_Inclusion_Rquest</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Add_Update_PEM_Info --></label>
+        <name>Add_Update_PEM_Info</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Add_Update_Root_Cases_For_Audit_Cases --></label>
+        <name>Add_Update_Root_Cases_For_Audit_Cases</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Add_Update_Root_Cases_For_Root_Inclusion --></label>
+        <name>Add_Update_Root_Cases_For_Root_Inclusion</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- CloneRootCase --></label>
+        <name>CloneRootCase</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Fetch_Root_Cert_Data --></label>
+        <name>Fetch_Root_Cert_Data</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Get_URLs --></label>
+        <name>Get_URLs</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- List_All_Auditors --></label>
+        <name>List_All_Auditors</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Print_View --></label>
+        <name>Print_View</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Test_Websites_Validation --></label>
+        <name>Test_Websites_Validation</name>
+    </webLinks>
+</CustomObjectTranslation>

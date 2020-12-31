@@ -1,0 +1,106 @@
+<apex:page extensions="EditTestWebsitesAuditRootCaseController" standardController="Case" id="pg" sidebar="false">
+    <apex:sectionHeader title="Case" subtitle="{!Case.CaseNumber}"/>
+    <apex:form id="frm">
+        <style>
+            h2.mainTitle {
+                white-space: nowrap;
+            }
+        </style>
+                      
+        <apex:pageBlock title="Cannot proceed to update Root Case" rendered="{!isCaseCompleted}">
+            <apex:outputText value="Case is completed. You cannot make changes."/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton value="Back to Case" action="{!cancel}"/>
+        </apex:pageBlock>
+        
+        <apex:pageMessages id="pgErrorMessage1" ></apex:pageMessages>
+        
+        <apex:pageBlock title="Edit test websites for root certiticates as needed" rendered="{!!isCaseCompleted}">
+        
+            <!--<apex:pageBlock>-->
+                <apex:pageBlockSection >
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >CA Owner Name</apex:outputLabel>
+                        <apex:outputLink value="/{!Case.AccountId}" target="_blank">{!Case.Account.Name}</apex:outputLink> 
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >Record Type</apex:outputLabel>
+                        <apex:outputLabel >CA Audit Update Request</apex:outputLabel>
+                    </apex:pageBlockSectionItem>                       
+                            
+                    <apex:outputField label="Standard Audit" value="{!Case.Standard_Audit_Statement_Link__c}" /> 
+                    <apex:outputText label=" " />                             
+                    <apex:outputField label="BR Audit" value="{!Case.BR_Audit_Statement_Link__c}" />  
+                    <apex:outputText label=" " />                           
+                    <apex:outputField label="EV SSL Audit" value="{!Case.EV_Audit_Statement_Link__c}" /> 
+                    <apex:outputText label=" " />                           
+                    <apex:outputField label="EV Code Signing Audit" value="{!Case.EV_Code_Signing_Audit_Statement_Link__c}" />                
+                
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Select Root Certificates" columns="1">
+                    <apex:pageBlockTable value="{!lstAllRootCases}" var="rootcase">
+                        <!--<apex:column headerValue="Action" >
+                            <apex:inputCheckbox value="{!rootcases.isSelected}" disabled="{!rootcases.isDisabled}"/>
+                        </apex:column>-->
+                        
+                        <apex:column headerValue="Root Certificate Name" value="{!rootcase.Root_Certificate_Name_Existing__r.Name}" />
+                                              
+                        <apex:column headerValue="Audits Selected for Root" >
+                            <apex:outputLabel >Standard:</apex:outputLabel>
+                            <apex:outputField value="{!rootcase.Apply_Standard_Audit__c}" /> <br/>
+                            <apex:outputLabel >BR:</apex:outputLabel>
+                            <apex:outputField value="{!rootcase.Apply_BR_Audit__c}" /> <br/>
+                            <apex:outputLabel >EV SSL:</apex:outputLabel>
+                            <apex:outputField value="{!rootcase.Apply_EV_Audit__c}" /> <br/>
+                            <apex:outputLabel >EV Code Signing:</apex:outputLabel>
+                            <apex:outputField value="{!rootcase.Apply_EV_Code_Signing_Audit__c}" /> 
+                        </apex:column>
+                        
+                        <apex:column headerValue="Trust Bits" >
+                            <apex:outputLabel >Mozilla:</apex:outputLabel>
+                            <apex:outputField value="{!rootcase.Trust_Bits__c}" /> <br/>
+                            <apex:outputLabel >Microsoft:</apex:outputLabel>
+                            <apex:outputField value="{!rootcase.Microsoft_Trust_Bits__c}" /> <br/>                           
+                        </apex:column>
+                        
+                        
+                        <apex:column headerValue="Test Website - Valid" >
+                            <apex:inputField value="{!rootcase.Test_Website_Valid__c}" rendered="{!rootcase.Test_Website_Verified__c != 'Data Verified'}"/>
+                            <apex:outputField value="{!rootcase.Test_Website_Valid__c}" rendered="{!rootcase.Test_Website_Verified__c == 'Data Verified'}"/>
+                        </apex:column>
+                        
+                        <apex:column headerValue="Test Website - Revoked">
+                            <apex:inputField value="{!rootcase.Test_Website_Revoked__c}" rendered="{!rootcase.Test_Website_Verified__c != 'Data Verified'}"/>
+                            <apex:outputField value="{!rootcase.Test_Website_Revoked__c}" rendered="{!rootcase.Test_Website_Verified__c == 'Data Verified'}"/>
+                        </apex:column>
+                        
+                        <apex:column headerValue="Test Website - Expired">
+                            <apex:inputField value="{!rootcase.Test_Website_Expired__c}" rendered="{!rootcase.Test_Website_Verified__c != 'Data Verified'}"/>
+                            <apex:outputField value="{!rootcase.Test_Website_Expired__c}" rendered="{!rootcase.Test_Website_Verified__c == 'Data Verified'}"/>
+                        </apex:column>
+                                               
+                        <!-- <apex:column headerValue="Mozilla Status" >
+                            <apex:outputField value="{!rootcase.Mozilla_Status__c}" />
+                        </apex:column>
+                        <apex:column headerValue="Microsoft Status" >
+                            <apex:outputField value="{!rootcase.Microsoft_Status__c}" />
+                        </apex:column> -->
+                        
+                        <apex:column headerValue="SHA 256 Fingerprint" >
+                            <apex:outputField value="{!rootcase.SHA_256_Fingerprint__c}" />
+                        </apex:column>
+                        
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Apply Changes" reRender="frm" action="{!UpdateRootCases}"/>
+                    <apex:commandButton value="Back to Case" action="{!cancel}"/>                   
+                </apex:pageBlockButtons>                      
+                
+            <!--</apex:pageBlock>-->
+        </apex:pageBlock>
+               
+        <apex:pageMessages id="pgErrorMessage"></apex:pageMessages> 
+        
+    </apex:form>
+</apex:page>

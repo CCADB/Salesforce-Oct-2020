@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Activity_Count__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Count of all activities related to this goal</inlineHelpText>
+        <label>Activity Count</label>
+        <summaryForeignKey>Project_Activity__c.Project_Goal__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Actual_Hours__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum of all activities related to this goal</inlineHelpText>
+        <label>Actual Hours</label>
+        <summarizedField>Project_Activity__c.Hours__c</summarizedField>
+        <summaryForeignKey>Project_Activity__c.Project_Goal__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Budgeted_Hours__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>As planned in SOW</inlineHelpText>
+        <label>Budgeted Hours</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goal_Alert__c</fullName>
+        <externalId>false</externalId>
+        <formula>/* If Actual Hours exceed Budgeted Hours */
+IF (Actual_Hours__c &gt; Budgeted_Hours__c, IMAGE (&quot;/resource/Flag_Red&quot;, &quot;Flag Red&quot;) + &quot; Exceeding &quot; + TEXT (Actual_Hours__c - Budgeted_Hours__c) + &quot; hrs&quot;, 
+/* If Actual Hours same as Budgeted Hours */
+IF (Actual_Hours__c = Budgeted_Hours__c, IMAGE (&quot;/resource/Flag_Green&quot;, &quot;Flag Green&quot;)+ &quot; Remaining 0 hr&quot;,
+/* If Actual Hours are within 10% of Budgeted Hours */
+IF ((Budgeted_Hours__c - Actual_Hours__c) &lt;= (Budgeted_Hours__c/10), IMAGE (&quot;/resource/Flag_Yellow&quot;, &quot;Flag Yellow&quot;) + &quot; Remaining &quot; + TEXT (Budgeted_Hours__c - Actual_Hours__c) + &quot; hrs&quot;, 
+/* Else Actual Hours are more than 10% of Budgeted Hours */
+IMAGE (&quot;/resource/Flag_Green&quot;, &quot;Flag Green&quot;) + &quot; Remaining &quot; + TEXT (Budgeted_Hours__c - Actual_Hours__c) + &quot; hrs&quot;
+))
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Red, if Actual &gt;= Budgeted
+Yellow, if Actual &lt;= 10% of Budgeted
+Green, if Actual &gt; 10% of Budgeted</inlineHelpText>
+        <label>Goal Alert</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goal_Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Goal Details</label>
+        <length>30000</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>20</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Goal_Plus_Alert__c</fullName>
+        <externalId>false</externalId>
+        <formula>Goal__c + &quot; &quot; + Goal_Alert__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Goal + Alert</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goal__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>As planned in SOW</inlineHelpText>
+        <label>Goal</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Priority__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Give a number to identify the relative importance of this goal</inlineHelpText>
+        <label>Priority</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Project_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Project Name</label>
+        <referenceTo>Project_Tracker__c</referenceTo>
+        <relationshipLabel>Project Goals</relationshipLabel>
+        <relationshipName>Project_Goals</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Yet Started</fullName>
+                    <default>true</default>
+                    <label>Not Yet Started</label>
+                </value>
+                <value>
+                    <fullName>Work In Progress</fullName>
+                    <default>false</default>
+                    <label>Work In Progress</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>Incomplete</fullName>
+                    <default>false</default>
+                    <label>Incomplete</label>
+                </value>
+                <value>
+                    <fullName>Postponed</fullName>
+                    <default>false</default>
+                    <label>Postponed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Project Goal</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Goal__c</columns>
+        <columns>Project_Name__c</columns>
+        <columns>Priority__c</columns>
+        <columns>Goal_Alert__c</columns>
+        <columns>Budgeted_Hours__c</columns>
+        <columns>Actual_Hours__c</columns>
+        <columns>Activity_Count__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>{0000}</displayFormat>
+        <label>No.</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Project Goals</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Goal__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Project_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Priority__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Goal_Alert__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Budgeted_Hours__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Actual_Hours__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Activity_Count__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Goal__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Project_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Priority__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Goal_Alert__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Budgeted_Hours__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Actual_Hours__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Activity_Count__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Send_Email</fullName>
+        <availability>online</availability>
+        <description>Send project goal details via email</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Send Email</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/_ui/core/email/author/EmailAuthor?
+p3_lkid={!Project_Goal__c.Id}&amp;
+p24=kwilson@mozilla.com,poonam@apicalapps.com&amp;
+p5=&amp;
+template_id=00Xo00000016EYV&amp;
+retURL={!Project_Goal__c.Id}</url>
+    </webLinks>
+</CustomObject>

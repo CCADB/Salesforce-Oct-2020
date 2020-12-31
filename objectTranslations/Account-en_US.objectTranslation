@@ -1,0 +1,3522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CA Owner/Certificate</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CA Owners/Certificates</value>
+    </caseValues>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Access</value>
+        </caseValues>
+        <name>account_access</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Access Level</value>
+        </caseValues>
+        <name>account_access_level</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Contact Role</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Contact Roles</value>
+        </caseValues>
+        <name>account_contact_role</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Creator</value>
+        </caseValues>
+        <name>account_creator</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Currency</value>
+        </caseValues>
+        <name>account_currency</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Description</value>
+        </caseValues>
+        <name>account_description</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Detail Page</value>
+        </caseValues>
+        <name>account_detail_page</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Division</value>
+        </caseValues>
+        <name>account_division</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Edit</value>
+        </caseValues>
+        <name>account_edit</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Fax</value>
+        </caseValues>
+        <name>account_fax</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Field</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Fields</value>
+        </caseValues>
+        <name>account_field</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate General</value>
+        </caseValues>
+        <name>account_general</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Hierarchy</value>
+        </caseValues>
+        <name>account_hierarchy</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate History</value>
+        </caseValues>
+        <name>account_history</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate History Archive</value>
+        </caseValues>
+        <name>account_history_archive</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate History Report</value>
+        </caseValues>
+        <name>account_history_report</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate ID</value>
+        </caseValues>
+        <name>account_id</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Information</value>
+        </caseValues>
+        <name>account_information</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Name</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Names</value>
+        </caseValues>
+        <name>account_name</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Number</value>
+        </caseValues>
+        <name>account_number</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Owner</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Owners</value>
+        </caseValues>
+        <name>account_owner</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Owner Alias</value>
+        </caseValues>
+        <name>account_owner_alias</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Owner Report</value>
+        </caseValues>
+        <name>account_owner_report</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Owner Role</value>
+        </caseValues>
+        <name>account_owner_role</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Ownership</value>
+        </caseValues>
+        <name>account_ownership</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Phone</value>
+        </caseValues>
+        <name>account_phone</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Rating</value>
+        </caseValues>
+        <name>account_rating</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Record</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Records</value>
+        </caseValues>
+        <name>account_record</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Record Type</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Record Types</value>
+        </caseValues>
+        <name>account_record_type</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Report</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Reports</value>
+        </caseValues>
+        <name>account_report</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Sharing</value>
+        </caseValues>
+        <name>account_sharing</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Site</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Sites</value>
+        </caseValues>
+        <name>account_site</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Source</value>
+        </caseValues>
+        <name>account_source</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Stage ID</value>
+        </caseValues>
+        <name>account_stage_id</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Team</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Teams</value>
+        </caseValues>
+        <name>account_team</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Team Member</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Team Members</value>
+        </caseValues>
+        <name>account_team_member</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Team Member ID</value>
+        </caseValues>
+        <name>account_team_member_id</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Team Report</value>
+        </caseValues>
+        <name>account_team_report</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Territory</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Territories</value>
+        </caseValues>
+        <name>account_territory</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Tool</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Tools</value>
+        </caseValues>
+        <name>account_tool</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate Type</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Types</value>
+        </caseValues>
+        <name>account_type</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>CA Owner/Certificate View</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>CA Owner/Certificate Views</value>
+        </caseValues>
+        <name>account_view</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Address</value>
+        </caseValues>
+        <name>billing_address_account</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>City</value>
+        </caseValues>
+        <name>billing_city_account</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Country</value>
+        </caseValues>
+        <name>billing_country_account</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Country Code</value>
+        </caseValues>
+        <name>billing_country_code_account</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>State/Province</value>
+        </caseValues>
+        <name>billing_state_account</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>State/Province Code</value>
+        </caseValues>
+        <name>billing_state_code_account</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Street</value>
+        </caseValues>
+        <name>billing_street_account</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Zip/Postal Code</value>
+        </caseValues>
+        <name>billing_zip_account</name>
+        <startsWith>Consonant</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Parent CA Owner/Certificate</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>Parent CA Owner/Certificates</value>
+        </caseValues>
+        <name>parent_account</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Parent CA Owner/Certificate Division</value>
+        </caseValues>
+        <name>parent_account_division</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Parent CA Owner/Certificate ID</value>
+        </caseValues>
+        <name>parent_account_id</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Parent CA Owner/Certificate Site</value>
+        </caseValues>
+        <name>parent_account_site</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Person CA Owner/Certificate Record</value>
+        </caseValues>
+        <caseValues>
+            <plural>true</plural>
+            <value>Person CA Owner/Certificate Records</value>
+        </caseValues>
+        <name>person_account_record</name>
+        <startsWith>Vowel</startsWith>
+    </fields>
+    <fields>
+        <label><!-- ALV Results --></label>
+        <name>ALV_Results__c</name>
+    </fields>
+    <fields>
+        <label><!-- ALV Status --></label>
+        <name>ALV_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- Used only by JavaScript in AccountMessageInlinePage. --></help>
+        <label><!-- Parent Account --></label>
+        <name>AccountParentName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Account External Id --></label>
+        <name>Account_External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Alerts --></label>
+        <name>Alerts__c</name>
+    </fields>
+    <fields>
+        <help><!-- Names must be separated by semicolon &apos;;&apos; --></help>
+        <label><!-- Alternate CA Name(s) --></label>
+        <name>Alternate_CA_Name_s__c</name>
+    </fields>
+    <fields>
+        <help><!-- Only fill this in if this certificate does not contain a CRL URL. --></help>
+        <label><!-- Alternate CRL --></label>
+        <name>Alternate_CRL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Apple Status --></label>
+        <name>Apple_Status__c</name>
+        <picklistValues>
+            <masterLabel>Blocked</masterLabel>
+            <translation><!-- Blocked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included</masterLabel>
+            <translation><!-- Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Included</masterLabel>
+            <translation><!-- Not Included --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Approval Bug --></label>
+        <name>Approval_Bug__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit/CP/CPS Alert --></label>
+        <name>Audit_CP_CPS_Alert__c</name>
+    </fields>
+    <fields>
+        <help><!-- For Intermediate Certs, show error messages for missing audit documents and missing/expired dates --></help>
+        <label><!-- Audit Date Alert For Intermediate Cert --></label>
+        <name>Audit_Date_Alert_For_Intermediate_Cert__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Date Alert --></label>
+        <name>Audit_Date_Alert__c</name>
+    </fields>
+    <fields>
+        <help><!-- Set field to false &apos;Mozilla Verified Audit Date&apos; is not the same as the &apos;Standard Audit Statement Date&apos; --></help>
+        <label><!-- Audit Date Same? --></label>
+        <name>Audit_Date_Same__c</name>
+    </fields>
+    <fields>
+        <label><!-- Audit Remainder Days --></label>
+        <name>Audit_Remainder_Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- Country where the Auditor who issued the standard audit statement is based out of. See &apos;List All Auditors&apos; below for choices. Send email to support@ccadb.org if your auditor is not listed. --></help>
+        <label><!-- Auditor Location --></label>
+        <name>Auditor_Location_New__c</name>
+        <relationshipLabel><!-- Accounts --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Name of Auditor who issued the standard audit statement. See &apos;List All Auditors&apos; below for choices. Send email to support@ccadb.org if your auditor is not listed. --></help>
+        <label><!-- Auditor --></label>
+        <name>Auditor_New__c</name>
+        <relationshipLabel><!-- Accounts --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- URL to website attesting to the qualifications of this Auditor to issue the Standard Audit Statement --></help>
+        <label><!-- Auditor Qualifications --></label>
+        <name>Auditor_Qualifications_New__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL to website attesting to the qualifications of this Auditor to issue the Standard Audit Statement --></help>
+        <label><!-- Auditor Qualifications --></label>
+        <name>Auditor_Qualifications__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL to information about this Auditor --></help>
+        <label><!-- Auditor Website --></label>
+        <name>Auditor_Website_New__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL to information about this Auditor --></help>
+        <label><!-- Auditor Website --></label>
+        <name>Auditor_Website__c</name>
+    </fields>
+    <fields>
+        <help><!-- Name of Auditor who issued the Standard Audit Statement --></help>
+        <label><!-- Auditor --></label>
+        <name>Auditor__c</name>
+    </fields>
+    <fields>
+        <help><!-- Click this box if the current or next audit of the parent cert includes this cert. If you click this box do NOT enter data into the other fields in this section. --></help>
+        <label><!-- Audits Same as Parent --></label>
+        <name>Audits_Same_as_Parent__c</name>
+    </fields>
+    <fields>
+        <label><!-- BR Audit ALV Comments --></label>
+        <name>BR_Audit_ALV_Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- FAIL means that this certificate&apos;s SHA-256 thumbprint was NOT found in the audit statement. --></help>
+        <label><!-- BR Audit ALV Found Cert --></label>
+        <name>BR_Audit_ALV_Found_Cert__c</name>
+    </fields>
+    <fields>
+        <label><!-- BR Audit ALV Results --></label>
+        <name>BR_Audit_ALV_Results__c</name>
+    </fields>
+    <fields>
+        <label><!-- BR Audit ALV Status --></label>
+        <name>BR_Audit_ALV_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- End date of the period of time of CA operations examined by the auditor. Audit Periods must not exceed one year in duration and must be contiguous. --></help>
+        <label><!-- BR Audit Period End Date --></label>
+        <name>BR_Audit_Period_End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Start date of the period of time of CA operations examined by the auditor. --></help>
+        <label><!-- BR Audit Period Start Date --></label>
+        <name>BR_Audit_Period_Start_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Store Seal ID to map the Report ID in CPACanada Files object --></help>
+        <label><!-- BR Audit Seal ID --></label>
+        <name>BR_Audit_Seal_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date BR Audit Statement Issued --></help>
+        <label><!-- BR Audit Statement Date --></label>
+        <name>BR_Audit_Statement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- BR Audit Statement (Internal Link) --></label>
+        <name>BR_Audit_Statement_Internal_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- BR Audit Type --></label>
+        <name>BR_Audit_Type__c</name>
+        <picklistValues>
+            <masterLabel>ETSI EN 319 411</masterLabel>
+            <translation><!-- ETSI EN 319 411 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETSI TS 102 042</masterLabel>
+            <translation><!-- ETSI TS 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI 102 042</masterLabel>
+            <translation><!-- Equivalent ETSI 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI EN 319 411</masterLabel>
+            <translation><!-- Equivalent ETSI EN 319 411 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent WebTrust</masterLabel>
+            <translation><!-- Equivalent WebTrust --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WebTrust</masterLabel>
+            <translation><!-- WebTrust --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- BR Audit Update Message --></label>
+        <name>BR_Audit_Update_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- BR Audit Update Status --></label>
+        <name>BR_Audit_Update_Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Processed</masterLabel>
+            <translation><!-- Not Processed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Successful</masterLabel>
+            <translation><!-- Successful --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If able to issue SSL/TLS certs, then URL to Baseline Requirements audit statement. Documents may be attached to Bugzilla Bugs as described here https://www.ccadb.org/cas/fields#uploading-documents. --></help>
+        <label><!-- BR Audit --></label>
+        <name>BR_Audit__c</name>
+    </fields>
+    <fields>
+        <help><!-- Issues or qualifications noted in audit statement --></help>
+        <label><!-- BR Audit Deviation --></label>
+        <name>BR_Deviation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bug for Distrust for S/MIME After --></label>
+        <name>Bug_for_Distrust_for_S_MIME_After__c</name>
+    </fields>
+    <fields>
+        <label><!-- Bug for Distrust for TLS After --></label>
+        <name>Bug_for_Distrust_for_TLS_After__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Comments --></label>
+        <name>CA_Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL to where policy documentation specific to this cert may be found --></help>
+        <label><!-- CA Document Repository --></label>
+        <name>CA_Document_Repository__c</name>
+    </fields>
+    <fields>
+        <help><!-- CA Email Alias 1 and 2 are used to reach more than one person in your organization tol receive notifications in case the primary contact is out of the office or leaves the organization. --></help>
+        <label><!-- CA Email Alias 1 --></label>
+        <name>CA_Email_Alias_1__c</name>
+    </fields>
+    <fields>
+        <help><!-- CA Email Alias 1 and 2 are used to reach more than one person in your organization tol receive notifications in case the primary contact is out of the office or leaves the organization. --></help>
+        <label><!-- CA Email Alias 2 --></label>
+        <name>CA_Email_Alias_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Owner/Certificate No --></label>
+        <name>CA_Owner_Certificate_No__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field stores the CA Owner ID - top level in hierarchy. It is updated by workflow - field update. --></help>
+        <label><!-- CA Owner ID --></label>
+        <name>CA_Owner_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- This formula field derives root status from parent of &apos;Root Cert Id&apos; field. &apos;Root Cert Id&apos; is populated for all intermediate certs by PublicAllIntermediateCerts batch program. --></help>
+        <label><!-- CA Owner - Microsoft Status --></label>
+        <name>CA_Owner_Microsoft_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- This formula field derives root status from parent of &apos;Root Cert Id&apos; field. &apos;Root Cert Id&apos; is populated for all intermediate certs by PublicAllIntermediateCerts batch program. --></help>
+        <label><!-- CA Owner - Mozilla Status --></label>
+        <name>CA_Owner_Mozilla_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Owner Name --></label>
+        <name>CA_Owner_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Owner &amp; Status --></label>
+        <name>CA_Owner_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field shows the CA Owner - top level in hierarchy. --></help>
+        <label><!-- CA Owner --></label>
+        <name>CA_Owner__c</name>
+    </fields>
+    <fields>
+        <label><!-- CA Owner for Running User --></label>
+        <name>CA_Owner_for_Running_User__c</name>
+    </fields>
+    <fields>
+        <help><!-- For Intermediate Certs, show error messages for missing policy documents and missing/expired dates --></help>
+        <label><!-- CP/CPS Date Alert For Intermediate Cert --></label>
+        <name>CP_CPS_Date_Alert_For_Intermediate_Cert__c</name>
+    </fields>
+    <fields>
+        <label><!-- CP/CPS Last Updated Date --></label>
+        <name>CP_CPS_Last_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Click this box if this cert does not have separate policy documentation from the parent cert. If you click this box do NOT enter data into the other fields in this section. --></help>
+        <label><!-- CP/CPS Same as Parent --></label>
+        <name>CP_CPS_Same_as_Parent__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL(s) at which the CRL(s) may be obtained - -  for end-entity certs and for intermediate CAs. --></help>
+        <label><!-- CRL URL(s) --></label>
+        <name>CRL_URL_s__c</name>
+    </fields>
+    <fields>
+        <label><!-- Case Safe ID --></label>
+        <name>Case_Safe_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Issuer Common Name --></label>
+        <name>Certificate_Issuer_Common_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Issuer Organization --></label>
+        <name>Certificate_Issuer_Organization__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Issuer Organizational Unit --></label>
+        <name>Certificate_Issuer_Organizational_Unit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Name --></label>
+        <name>Certificate_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field shows first 255 characters of long type Certificate Policy (CP) --></help>
+        <label><!-- Certificate Policy (CP) --></label>
+        <name>Certificate_Policy_CP_255_char__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL to Certificate Policy documentation specific to this cert. Documents may be attached to Bugzilla Bugs as described here https://www.ccadb.org/cas/fields#uploading-documents. --></help>
+        <label><!-- Certificate Policy (CP) --></label>
+        <name>Certificate_Policy_CP__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Serial Number --></label>
+        <name>Certificate_Serial_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- &apos;CA Owner/Certificate Name&apos; must be same as &apos;Certificate Subject Common Name&apos; --></help>
+        <label><!-- Certificate Subject Common Name --></label>
+        <name>Certificate_Subject_Common_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Subject Organization Unit --></label>
+        <name>Certificate_Subject_Organization_Unit__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Subject Organization --></label>
+        <name>Certificate_Subject_Organization__c</name>
+    </fields>
+    <fields>
+        <label><!-- Certificate Version --></label>
+        <name>Certificate_Version__c</name>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This field shows first 255 characters of long type Certificate Practice(CPS) --></help>
+        <label><!-- Certification Practice Statement (CPS) --></label>
+        <name>Certification_Practice_Stat_CPS_255_char__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL to CPS specific to this cert. Documents may be attached to Bugzilla Bugs as described here https://www.ccadb.org/cas/fields#uploading-documents. --></help>
+        <label><!-- Certification Practice Statement (CPS) --></label>
+        <name>Certification_Practice_Statement_CPS__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cisco Country of Origin --></label>
+        <name>Cisco_Country_of_Origin__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cisco Date of First Inclusion --></label>
+        <name>Cisco_Date_of_First_Inclusion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cisco Do NOT Send Audit Reminder --></label>
+        <name>Cisco_Do_NOT_Send_Audit_Reminder__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cisco Friendly Name --></label>
+        <name>Cisco_Friendly_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cisco Root Certificate Download URL --></label>
+        <name>Cisco_Root_Certificate_Download_URL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cisco Signature Hash --></label>
+        <name>Cisco_Signature_Hash__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cisco Status --></label>
+        <name>Cisco_Status__c</name>
+        <picklistValues>
+            <masterLabel>Change Requested</masterLabel>
+            <translation><!-- Change Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included</masterLabel>
+            <translation><!-- Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Yet Included</masterLabel>
+            <translation><!-- Not Yet Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Obsolete</masterLabel>
+            <translation><!-- Obsolete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verified</masterLabel>
+            <translation><!-- Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Cisco Trust Bits --></label>
+        <name>Cisco_Trust_Bits__c</name>
+        <picklistValues>
+            <masterLabel>TBD .</masterLabel>
+            <translation><!-- TBD . --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TBD ..</masterLabel>
+            <translation><!-- TBD .. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TBD ...</masterLabel>
+            <translation><!-- TBD ... --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Cisco Trust Stores --></label>
+        <name>Cisco_Trust_Stores__c</name>
+        <picklistValues>
+            <masterLabel>Bundle</masterLabel>
+            <translation><!-- Bundle --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Core</masterLabel>
+            <translation><!-- Core --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Cisco Verified Audit Date --></label>
+        <name>Cisco_Verified_Audit_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Signing Audit ALV Comments --></label>
+        <name>Code_Signing_Audit_ALV_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Signing Audit ALV Results --></label>
+        <name>Code_Signing_Audit_ALV_Results__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Signing Audit ALV Status --></label>
+        <name>Code_Signing_Audit_ALV_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- End date of the period of time of CA operations examined by the auditor. Audit Periods must not exceed one year in duration and must be contiguous. --></help>
+        <label><!-- Code Signing Audit Period End Date --></label>
+        <name>Code_Signing_Audit_Period_End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Start date of the period of time of CA operations examined by the auditor. --></help>
+        <label><!-- Code Signing Audit Period Start Date --></label>
+        <name>Code_Signing_Audit_Period_Start_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Store Seal ID to map the Report ID in CPACanada Files object --></help>
+        <label><!-- Code Signing Audit Seal ID --></label>
+        <name>Code_Signing_Audit_Seal_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date Code Signing Audit Statement Issued --></help>
+        <label><!-- Code Signing Audit Statement Date --></label>
+        <name>Code_Signing_Audit_Statement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Signing Audit Type --></label>
+        <name>Code_Signing_Audit_Type__c</name>
+        <picklistValues>
+            <masterLabel>ETSI EN 319 411</masterLabel>
+            <translation><!-- ETSI EN 319 411 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETSI TS 102 042</masterLabel>
+            <translation><!-- ETSI TS 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI 102 042</masterLabel>
+            <translation><!-- Equivalent ETSI 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI EN 319 411</masterLabel>
+            <translation><!-- Equivalent ETSI EN 319 411 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent WebTrust</masterLabel>
+            <translation><!-- Equivalent WebTrust --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WebTrust</masterLabel>
+            <translation><!-- WebTrust --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Code Signing Audit Update Message --></label>
+        <name>Code_Signing_Audit_Update_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Signing Audit Update Status --></label>
+        <name>Code_Signing_Audit_Update_Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Processed</masterLabel>
+            <translation><!-- Not Processed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Successful</masterLabel>
+            <translation><!-- Successful --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Code Signing Audit --></label>
+        <name>Code_Signing_Audit__c</name>
+    </fields>
+    <fields>
+        <help><!-- Issues or qualifications noted in audit statement --></help>
+        <label><!-- Code Signing Audit Deviation --></label>
+        <name>Code_Signing_Deviation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Code Signing Statement (Internal Link) --></label>
+        <name>Code_Signing_Statement_Internal_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments by Mozilla on Intermediate --></label>
+        <name>Comments_by_Mozilla_on_Intermediate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments by Mozilla on Owner --></label>
+        <name>Comments_by_Mozilla_on_Owner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Comments by Mozilla on Root --></label>
+        <name>Comments_by_Mozilla_on_Root__c</name>
+    </fields>
+    <fields>
+        <label><!-- Company Website --></label>
+        <name>Company_Website_From_Owner_Record__c</name>
+    </fields>
+    <fields>
+        <help><!-- Website URL --></help>
+        <label><!-- Company Website --></label>
+        <name>Company_Website__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count --></label>
+        <name>Count__c</name>
+    </fields>
+    <fields>
+        <help><!-- Updated by system each time when ALV processing is completed. --></help>
+        <label><!-- Date ALV Processed --></label>
+        <name>Date_ALV_Processed__c</name>
+    </fields>
+    <fields>
+        <help><!-- The date that a root store operator last verified the qualifications of this auditor in this location. --></help>
+        <label><!-- Date Qualifications Verified --></label>
+        <name>Date_Qualifications_Verified__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Revocation [GMT] --></label>
+        <name>Date_of_Revocation_GMT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Date of Revocation --></label>
+        <name>Date_of_Revocation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Derived Trust Bits --></label>
+        <name>Derived_Trust_Bits__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display PEM Info Warning Message --></label>
+        <name>Display_PEM_Info_Warning_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Warning or Message --></label>
+        <name>Display_Warning_or_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Webservice Failed Message --></label>
+        <name>Display_Webservice_Failed_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Display Webservice Not Available --></label>
+        <name>Display_Webservice_Not_Available__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distrust for S/MIME After Date --></label>
+        <name>Distrust_for_SMIME_After_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Distrust for TLS After Date --></label>
+        <name>Distrust_for_TLS_After_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- If checked, Audit Reminder for Mozilla process will ignore this Root Cert. Only to be used by CA Program Manager. --></help>
+        <label><!-- Do NOT Send Audit Reminder --></label>
+        <name>Do_NOT_Send_Audit_Reminder__c</name>
+    </fields>
+    <fields>
+        <help><!-- Optional explanation about the CA&apos;s policy documentation --></help>
+        <label><!-- Document Repository Description --></label>
+        <name>Document_Repository_Description__c</name>
+    </fields>
+    <fields>
+        <help><!-- URL to where the CA&apos;s policy documentation may be found. More than one URL may be provided as a semicolon - separated list. --></help>
+        <label><!-- Document Repository --></label>
+        <name>Document_Repository__c</name>
+    </fields>
+    <fields>
+        <help><!-- End date of the period of time of CA operations examined by the auditor. Audit Periods must not exceed one year in duration and must be contiguous. --></help>
+        <label><!-- EV SSL Audit Period End Date --></label>
+        <name>EV_Audit_Period_End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Start date of the period of time of CA operations examined by the auditor. --></help>
+        <label><!-- EV SSL Audit Period Start Date --></label>
+        <name>EV_Audit_Period_Start_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date EV SSL Audit Statement Issued --></help>
+        <label><!-- EV SSL Audit Statement Date --></label>
+        <name>EV_Audit_Statement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV SSL Audit Statement (Internal Link) --></label>
+        <name>EV_Audit_Statement_Internal_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV SSL Audit Type --></label>
+        <name>EV_Audit_Type__c</name>
+        <picklistValues>
+            <masterLabel>ETSI EN 319 411</masterLabel>
+            <translation><!-- ETSI EN 319 411 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETSI TS 102 042</masterLabel>
+            <translation><!-- ETSI TS 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI 102 042</masterLabel>
+            <translation><!-- Equivalent ETSI 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI EN 319 411</masterLabel>
+            <translation><!-- Equivalent ETSI EN 319 411 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent WebTrust</masterLabel>
+            <translation><!-- Equivalent WebTrust --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WebTrust</masterLabel>
+            <translation><!-- WebTrust --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- EV SSL Audit Update Message --></label>
+        <name>EV_Audit_Update_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV SSL Audit Update Status --></label>
+        <name>EV_Audit_Update_Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Processed</masterLabel>
+            <translation><!-- Not Processed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Successful</masterLabel>
+            <translation><!-- Successful --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If able to issue EV certs, then URL to EV audit statement. Documents may be attached to Bugzilla Bugs as described here https://www.ccadb.org/cas/fields#uploading-documents. --></help>
+        <label><!-- EV SSL Audit --></label>
+        <name>EV_Audit__c</name>
+    </fields>
+    <fields>
+        <help><!-- End date of the period of time of CA operations examined by the auditor. Audit Periods must not exceed one year in duration and must be contiguous. --></help>
+        <label><!-- EV Code Signing Audit Period End Date --></label>
+        <name>EV_Code_Signing_Audit_Period_End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Start date of the period of time of CA operations examined by the auditor. --></help>
+        <label><!-- EV Code Signing Audit Period Start Date --></label>
+        <name>EV_Code_Signing_Audit_Period_Start_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date EV Code Signing Audit Statement Issued --></help>
+        <label><!-- EV Code Signing Audit Statement Date --></label>
+        <name>EV_Code_Signing_Audit_Statement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV Code Signing Audit Stmt (Int Link) --></label>
+        <name>EV_Code_Signing_Audit_Stmt_Int_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV Code Signing Audit Type --></label>
+        <name>EV_Code_Signing_Audit_Type__c</name>
+        <picklistValues>
+            <masterLabel>ETSI EN 319 411</masterLabel>
+            <translation><!-- ETSI EN 319 411 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETSI TS 102 042</masterLabel>
+            <translation><!-- ETSI TS 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI 102 042</masterLabel>
+            <translation><!-- Equivalent ETSI 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI EN 319 411</masterLabel>
+            <translation><!-- Equivalent ETSI EN 319 411 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent WebTrust</masterLabel>
+            <translation><!-- Equivalent WebTrust --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WebTrust</masterLabel>
+            <translation><!-- WebTrust --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- EV Code Signing Audit Update Message --></label>
+        <name>EV_Code_Signing_Audit_Update_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV Code Signing Audit Update Status --></label>
+        <name>EV_Code_Signing_Audit_Update_Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Processed</masterLabel>
+            <translation><!-- Not Processed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Successful</masterLabel>
+            <translation><!-- Successful --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- EV Code Signing Audit --></label>
+        <name>EV_Code_Signing_Audit__c</name>
+    </fields>
+    <fields>
+        <help><!-- Issues or qualifications noted in audit statement --></help>
+        <label><!-- EV Code Signing Audit Deviation --></label>
+        <name>EV_Code_Signing_Deviation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mozilla EV Policy OID(s) --></label>
+        <name>EV_Policy_OID_s__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV SSL Audit ALV Comments --></label>
+        <name>EV_SSL_Audit_ALV_Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV SSL Audit ALV Results --></label>
+        <name>EV_SSL_Audit_ALV_Results__c</name>
+    </fields>
+    <fields>
+        <label><!-- EV SSL Audit ALV Status --></label>
+        <name>EV_SSL_Audit_ALV_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- Store Seal ID to map the Report ID in CPACanada Files object --></help>
+        <label><!-- EV SSL Audit Seal ID --></label>
+        <name>EV_SSL_Audit_Seal_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Issues or qualifications noted in audit statement --></help>
+        <label><!-- EV SSL Audit Deviation --></label>
+        <name>EV_SSL_Deviation__c</name>
+    </fields>
+    <fields>
+        <help><!-- EV OIDs extracted from ExtendedValidation.cpp --></help>
+        <label><!-- ExtendedValidation.cpp OIDs --></label>
+        <name>ExtendedValidation_cpp_OIDs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extended Key Usage --></label>
+        <name>Extended_Key_Usage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Extraction Results --></label>
+        <name>Extraction_Results__c</name>
+    </fields>
+    <fields>
+        <label><!-- Firefox Release When First Included --></label>
+        <name>Firefox_Release_When_First_Included__c</name>
+    </fields>
+    <fields>
+        <label><!-- Firefox Release When Removed --></label>
+        <name>Firefox_Release_When_Removed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Friendly Name --></label>
+        <name>Friendly_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field shows first 255 characters of long type Geographic Focus --></help>
+        <label><!-- Geographic Focus --></label>
+        <name>Geographic_Focus_255_char__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geographic Focus --></label>
+        <name>Geographic_Focus__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geographic Focus --></label>
+        <name>Geographic_Focus_of_Owner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Has Non-constrained Doppelganger? --></label>
+        <name>Has_Non_constrained_Doppelganger__c</name>
+    </fields>
+    <fields>
+        <label><!-- Instructions --></label>
+        <name>Instructions__c</name>
+    </fields>
+    <fields>
+        <help><!-- True - Record is owned is an internal user
+False - Record is owned by community user --></help>
+        <label><!-- Inter Cert Owned By Internal User? --></label>
+        <name>Inter_Cert_Owned_By_Internal_User__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Parent Revoked? --></label>
+        <name>Is_Parent_Revoked__c</name>
+    </fields>
+    <fields>
+        <label><!-- Issuer + Serial Number --></label>
+        <name>Issuer_Serial_Number__c</name>
+    </fields>
+    <fields>
+        <help><!-- Certificate Issuer Common Name + Certificate Issuer Organizational Unit + Certificate Issuer Organization + Certificate Issuer Country --></help>
+        <label><!-- Issuer --></label>
+        <name>Issuer__c</name>
+    </fields>
+    <fields>
+        <help><!-- To be deleted --></help>
+        <label><!-- Issuer (with nulls) --></label>
+        <name>Issuer_with_nulls__c</name>
+    </fields>
+    <fields>
+        <label><!-- Key Usage --></label>
+        <name>Key_Usage__c</name>
+    </fields>
+    <fields>
+        <help><!-- Updated by Sync process --></help>
+        <label><!-- Last Sync Case No --></label>
+        <name>Last_Sync_Case_No__c</name>
+    </fields>
+    <fields>
+        <help><!-- Updated by Sync process --></help>
+        <label><!-- Last Sync Date/Time --></label>
+        <name>Last_Sync_Date_Time__c</name>
+    </fields>
+    <fields>
+        <help><!-- This formula field is used to generate hyperlinks to PublicIntermediateCerts &amp; PublicIntermediateCertsCSVFormat reports for each CA Owner which are passed as url parameters.  These links are added to Mozilla website. --></help>
+        <label><!-- LinksToPublicInterCertsForEachCAOwner --></label>
+        <name>LinksToPublicInterCertsForEachCAOwner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Match Running User&apos;s Owner --></label>
+        <name>Match_Running_User_s_Owner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Match on  Cert Name and SubjectCN --></label>
+        <name>Match_on_Cert_Name_and_SubjectCN__c</name>
+    </fields>
+    <fields>
+        <label><!-- Match on Parent and IssuerCN --></label>
+        <name>Match_on_Parent_and_IssuerCN__c</name>
+    </fields>
+    <fields>
+        <help><!-- Betn365And446Days --></help>
+        <label><!-- MicrosoftAuditAlertEmailTxtBetn365And446 --></label>
+        <name>MicrosoftAuditAlertEmailTxtBetn365And446__c</name>
+    </fields>
+    <fields>
+        <label><!-- MicrosoftAuditAlertEmailTxtOver446Days --></label>
+        <name>MicrosoftAuditAlertEmailTxtOver446Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- ** NEW VERSION + 90 days logic **  TDB -&gt; This field determines if the audits are due. It is used to generate Microsoft Audit Report. --></help>
+        <label><!-- Microsoft Audit Alert Betn365And446Days --></label>
+        <name>Microsoft_Audit_Alert_Betn365And446Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- Only used in report &quot;Microsoft Audit Alert Over 446 Days&quot; --></help>
+        <label><!-- Microsoft Audit Alert - Count Alerts --></label>
+        <name>Microsoft_Audit_Alert_Count_Alerts__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field forms text message for audits email. Also used in Microsoft Audit Report. --></help>
+        <label><!-- Microsoft Audit Alert Email Text --></label>
+        <name>Microsoft_Audit_Alert_Email_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Audit Alert &lt;90 or &gt;90 --></label>
+        <name>Microsoft_Audit_Alert_Less90orGreater90__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Audit Alert Over 446 Days --></label>
+        <name>Microsoft_Audit_Alert_Over_446_Days__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field determines if the audits are due. It is used to generate Microsoft Audit Report. --></help>
+        <label><!-- Microsoft Audit Alert --></label>
+        <name>Microsoft_Audit_Alert__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is CA Owner Status on Intermediate Cert, updated via batch program --></help>
+        <label><!-- Microsoft CA Owner Status --></label>
+        <name>Microsoft_CA_Owner_Status__c</name>
+        <picklistValues>
+            <masterLabel>Change Requested</masterLabel>
+            <translation><!-- Change Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Disabled</masterLabel>
+            <translation><!-- Disabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included</masterLabel>
+            <translation><!-- Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Included</masterLabel>
+            <translation><!-- Not Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NotBefore</masterLabel>
+            <translation><!-- NotBefore --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Contract Type --></label>
+        <name>Microsoft_Contract_Type__c</name>
+        <picklistValues>
+            <masterLabel>Commercial</masterLabel>
+            <translation><!-- Commercial --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Government</masterLabel>
+            <translation><!-- Government --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Legacy</masterLabel>
+            <translation><!-- Legacy --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Country of Origin --></label>
+        <name>Microsoft_Country_of_Origin__c</name>
+    </fields>
+    <fields>
+        <help><!-- If checked, Audit Reminder for Microsoft process will ignore this Root Cert. Only to be used by CA Program Manager. --></help>
+        <label><!-- Microsoft Do NOT Send Audit Reminder --></label>
+        <name>Microsoft_Do_NOT_Send_Audit_Reminder__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft EKU --></label>
+        <name>Microsoft_EKU__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft EV Code Signing Partners --></label>
+        <name>Microsoft_EV_Code_Signing_Partners__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft EV Enabled --></label>
+        <name>Microsoft_EV_Enabled__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft EV Policy OID(s) --></label>
+        <name>Microsoft_EV_Policy_OID_s__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is Root Status on Intermediate Cert, updated via batch program --></help>
+        <label><!-- Microsoft Root Status --></label>
+        <name>Microsoft_Root_Status__c</name>
+        <picklistValues>
+            <masterLabel>Change Requested</masterLabel>
+            <translation><!-- Change Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Disabled</masterLabel>
+            <translation><!-- Disabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included</masterLabel>
+            <translation><!-- Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Included</masterLabel>
+            <translation><!-- Not Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NotBefore</masterLabel>
+            <translation><!-- NotBefore --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Status (In Text) --></label>
+        <name>Microsoft_Status_In_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Status --></label>
+        <name>Microsoft_Status__c</name>
+        <picklistValues>
+            <masterLabel>Change Requested</masterLabel>
+            <translation><!-- Change Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Disabled</masterLabel>
+            <translation><!-- Disabled --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inactive</masterLabel>
+            <translation><!-- Inactive --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included</masterLabel>
+            <translation><!-- Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Included</masterLabel>
+            <translation><!-- Not Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NotBefore</masterLabel>
+            <translation><!-- NotBefore --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pending</masterLabel>
+            <translation><!-- Pending --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Top level domain --></help>
+        <label><!-- Microsoft TLD Restriction --></label>
+        <name>Microsoft_TLD_Restriction__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Trust Bits EV Code Signing --></label>
+        <name>Microsoft_Trust_Bits_EV_Code_Signing__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Trust Bits EV SSL --></label>
+        <name>Microsoft_Trust_Bits_EV_SSL__c</name>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Trust Bits --></label>
+        <name>Microsoft_Trust_Bits__c</name>
+        <picklistValues>
+            <masterLabel>Client Authentication</masterLabel>
+            <translation><!-- Client Authentication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Code Signing</masterLabel>
+            <translation><!-- Code Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Document Signing</masterLabel>
+            <translation><!-- Document Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Encrypting File System</masterLabel>
+            <translation><!-- Encrypting File System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security End System</masterLabel>
+            <translation><!-- IP Security End System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security IKE Intermediate</masterLabel>
+            <translation><!-- IP Security IKE Intermediate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security Tunnel Termination</masterLabel>
+            <translation><!-- IP Security Tunnel Termination --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security User</masterLabel>
+            <translation><!-- IP Security User --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OCSP Signing</masterLabel>
+            <translation><!-- OCSP Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Private Key Archival</masterLabel>
+            <translation><!-- Private Key Archival --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Secure Email</masterLabel>
+            <translation><!-- Secure Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Server Authentication</masterLabel>
+            <translation><!-- Server Authentication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Time Stamping</masterLabel>
+            <translation><!-- Time Stamping --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Microsoft Verified Audit Date --></label>
+        <name>Microsoft_Verified_Audit_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Applied Constraints --></label>
+        <name>Mozilla_Applied_Constraints__c</name>
+    </fields>
+    <fields>
+        <help><!-- Root &apos;Soon to expire &apos; - Over 31 to 93 days past due 
+Root &apos;Overdue Audit Statements&apos; - Over 93 to 150 days past due 
+Root &apos;Root is in danger of being removed&apos; - Over 150 days past due
+Inter Cert &apos;Outdated Audit Statements for Intermediate&apos; - Overdue --></help>
+        <label><!-- Mozilla Audit Alert --></label>
+        <name>Mozilla_Audit_Alert_Flag__c</name>
+    </fields>
+    <fields>
+        <help><!-- Updated by audit reminder batch programs --></help>
+        <label><!-- Mozilla Audit Alert --></label>
+        <name>Mozilla_Audit_Alert__c</name>
+    </fields>
+    <fields>
+        <help><!-- This is CA Owner Status on Intermediate Cert, updated via batch program --></help>
+        <label><!-- Mozilla CA Owner Status --></label>
+        <name>Mozilla_CA_Owner_Status__c</name>
+        <picklistValues>
+            <masterLabel>Change Requested</masterLabel>
+            <translation><!-- Change Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included</masterLabel>
+            <translation><!-- Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Yet Included</masterLabel>
+            <translation><!-- Not Yet Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Obsolete</masterLabel>
+            <translation><!-- Obsolete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provided by CA</masterLabel>
+            <translation><!-- Provided by CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verified</masterLabel>
+            <translation><!-- Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- This is Root Status on Intermediate Cert, updated via batch program --></help>
+        <label><!-- Mozilla Root Status --></label>
+        <name>Mozilla_Root_Status__c</name>
+        <picklistValues>
+            <masterLabel>Change Requested</masterLabel>
+            <translation><!-- Change Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included</masterLabel>
+            <translation><!-- Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Yet Included</masterLabel>
+            <translation><!-- Not Yet Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Obsolete</masterLabel>
+            <translation><!-- Obsolete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provided by CA</masterLabel>
+            <translation><!-- Provided by CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verified</masterLabel>
+            <translation><!-- Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Status for Parent --></label>
+        <name>Mozilla_Status_for_Parent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Verified Audit Date --></label>
+        <name>Mozilla_Verified_Audit_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- NSS Release When First Included --></label>
+        <name>NSS_Release_When_First_Included__c</name>
+    </fields>
+    <fields>
+        <label><!-- NSS Release When Removed --></label>
+        <name>NSS_Release_When_Removed__c</name>
+    </fields>
+    <fields>
+        <label><!-- OneCRL Bug Number --></label>
+        <name>OneCRL_Bug_Number__c</name>
+    </fields>
+    <fields>
+        <label><!-- OneCRL Status --></label>
+        <name>OneCRL_Status__c</name>
+        <picklistValues>
+            <masterLabel>Added to OneCRL</masterLabel>
+            <translation><!-- Added to OneCRL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cert Expired</masterLabel>
+            <translation><!-- Cert Expired --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Applicable</masterLabel>
+            <translation><!-- Not Applicable --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ready to Add</masterLabel>
+            <translation><!-- Ready to Add --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Org Name --></label>
+        <name>Org_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicate the type of organization operating this CA. --></help>
+        <label><!-- Organizational Type --></label>
+        <name>Organizational_Type__c</name>
+        <picklistValues>
+            <masterLabel>Government Agency</masterLabel>
+            <translation><!-- Government Agency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Non-Profit Organization</masterLabel>
+            <translation><!-- Non-Profit Organization --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Private Corporation</masterLabel>
+            <translation><!-- Private Corporation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Public Corporation</masterLabel>
+            <translation><!-- Public Corporation --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Owner Profile --></label>
+        <name>Owner_Profile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Record Type --></label>
+        <name>Parent_Record_Type__c</name>
+    </fields>
+    <fields>
+        <help><!-- Further documentation or information relevant to this cert --></help>
+        <label><!-- Policy Documentation --></label>
+        <name>Policy_Documentation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Policy Identifiers --></label>
+        <name>Policy_Identifiers__c</name>
+    </fields>
+    <fields>
+        <help><!-- Indicates what types of customers does the CA serve?
+Are there particular vertical market segments in which it operates?
+Does the CA focus its activities on a particular country or other geographic region? --></help>
+        <label><!-- Primary Market / Customer Base --></label>
+        <name>Primary_Market_Customer_Base__c</name>
+    </fields>
+    <fields>
+        <help><!-- Email address or URL for reporting suspected Private Key Compromise, Certificate misuse, or other types of fraud, compromise, misuse, inappropriate conduct, or any other matter related to Certificates. --></help>
+        <label><!-- Problem Reporting Mechanism --></label>
+        <name>Problem_Reporting_Mechanism__c</name>
+    </fields>
+    <fields>
+        <label><!-- ProcessPEMInfoBatch Message --></label>
+        <name>ProcessPEMInfoBatch_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Public Key Algorithm --></label>
+        <name>Public_Key_Algorithm__c</name>
+        <picklistValues>
+            <masterLabel>EC secp256r</masterLabel>
+            <translation><!-- EC secp256r --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EC secp256r1</masterLabel>
+            <translation><!-- EC secp256r1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EC secp384r1</masterLabel>
+            <translation><!-- EC secp384r1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EC secp512r1</masterLabel>
+            <translation><!-- EC secp512r1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 1024 bits</masterLabel>
+            <translation><!-- RSA 1024 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 2045 bits</masterLabel>
+            <translation><!-- RSA 2045 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 2046 bits</masterLabel>
+            <translation><!-- RSA 2046 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 2047 bits</masterLabel>
+            <translation><!-- RSA 2047 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 2048 bits</masterLabel>
+            <translation><!-- RSA 2048 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 3072 bits</masterLabel>
+            <translation><!-- RSA 3072 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RSA 4096 bits</masterLabel>
+            <translation><!-- RSA 4096 bits --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>unknown</masterLabel>
+            <translation><!-- unknown --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Provide the reason for the certificate revocation. Value 7 is not being used. --></help>
+        <label><!-- RFC 5280 Revocation Reason Code --></label>
+        <name>RFC_5280_Revocation_Reason_Code__c</name>
+        <picklistValues>
+            <masterLabel>(0) unspecified</masterLabel>
+            <translation><!-- (0) unspecified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(1) keyCompromise</masterLabel>
+            <translation><!-- (1) keyCompromise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(10) aACompromise</masterLabel>
+            <translation><!-- (10) aACompromise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(2) cACompromise</masterLabel>
+            <translation><!-- (2) cACompromise --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(3) affiliationChanged</masterLabel>
+            <translation><!-- (3) affiliationChanged --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(4) superseded</masterLabel>
+            <translation><!-- (4) superseded --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(5) cessationOfOperation</masterLabel>
+            <translation><!-- (5) cessationOfOperation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(6) certificateHold</masterLabel>
+            <translation><!-- (6) certificateHold --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(8) removeFromCRL</masterLabel>
+            <translation><!-- (8) removeFromCRL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>(9) privilegeWithdrawn</masterLabel>
+            <translation><!-- (9) privilegeWithdrawn --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Certification Authority Authorization (CAA) domain names recognized in a CAA record&apos;s issue and issue wild property tags. Comma-separated list. --></help>
+        <label><!-- Recognized CAA Domains --></label>
+        <name>Recognized_CAA_Domains__c</name>
+    </fields>
+    <fields>
+        <label><!-- Record Type Name --></label>
+        <name>Record_Type_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Removal Bug No. or Date --></label>
+        <name>Removal_Bug_No_or_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Revocation Status --></label>
+        <name>Revocation_Status__c</name>
+        <picklistValues>
+            <masterLabel>Not Revoked</masterLabel>
+            <translation><!-- Not Revoked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Parent Cert Revoked</masterLabel>
+            <translation><!-- Parent Cert Revoked --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Revoked</masterLabel>
+            <translation><!-- Revoked --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Output from Verify Revocation check --></help>
+        <label><!-- Revocation Verification --></label>
+        <name>Revocation_Verification__c</name>
+    </fields>
+    <fields>
+        <label><!-- RootCertSafeID --></label>
+        <name>RootCertSafeID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Check &apos;Valid To&apos; date and set alert flags
+- Red flag if it has already expired.
+- Purple flag if it expires within one year.
+- Yellow flag if it expires within two years. --></help>
+        <label><!-- Root Cert Expiration Alert --></label>
+        <name>Root_Cert_Expiration_Alert__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field is populated by PublicAllIntermediateCerts batch program for all intermediate cert records. --></help>
+        <label><!-- Root Cert Id --></label>
+        <name>Root_Cert_Id__c</name>
+        <relationshipLabel><!-- Accounts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Root Certificate Name --></label>
+        <name>Root_Certificate_Name__c</name>
+    </fields>
+    <fields>
+        <help><!-- This formula field derives root status from &apos;Root Cert Id&apos; field. &apos;Root Cert Id&apos; is populated for all intermediate certs by PublicAllIntermediateCerts batch program. --></help>
+        <label><!-- Root Status --></label>
+        <name>Root_Status__c</name>
+    </fields>
+    <fields>
+        <label><!-- SHA-1 Fingerprint --></label>
+        <name>SHA_1_Fingerprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- SHA-1 (Hash String) --></label>
+        <name>SHA_1_Hash_String__c</name>
+    </fields>
+    <fields>
+        <label><!-- SHA-1 --></label>
+        <name>SHA_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- SHA-256 Fingerprint --></label>
+        <name>SHA_256_Fingerprint__c</name>
+    </fields>
+    <fields>
+        <label><!-- SHA-256 (Hash String) --></label>
+        <name>SHA_256_Hash_String__c</name>
+    </fields>
+    <fields>
+        <label><!-- SHA-256 --></label>
+        <name>SHA_256__c</name>
+    </fields>
+    <fields>
+        <help><!-- Identifies similar logical certificates in different CA Hierarchies. SHA256(der(spki)) --></help>
+        <label><!-- SPKI SHA256 --></label>
+        <name>SPKI_SHA256__c</name>
+    </fields>
+    <fields>
+        <label><!-- Signature Hash Algorithm --></label>
+        <name>Signature_Hash_Algorithm__c</name>
+        <picklistValues>
+            <masterLabel>MD2WithRSA</masterLabel>
+            <translation><!-- MD2WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MD5WithRSA</masterLabel>
+            <translation><!-- MD5WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHA1WithRSA</masterLabel>
+            <translation><!-- SHA1WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHA256WithRSA</masterLabel>
+            <translation><!-- SHA256WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHA384WithRSA</masterLabel>
+            <translation><!-- SHA384WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SHA512WithRSA</masterLabel>
+            <translation><!-- SHA512WithRSA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unknown</masterLabel>
+            <translation><!-- Unknown --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ecdsaWithSHA256</masterLabel>
+            <translation><!-- ecdsaWithSHA256 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ecdsaWithSHA384</masterLabel>
+            <translation><!-- ecdsaWithSHA384 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ecdsaWithSHA512</masterLabel>
+            <translation><!-- ecdsaWithSHA512 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Signature Hash --></label>
+        <name>Signature_Hash__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sponsored By --></label>
+        <name>Sponsored_By__c</name>
+        <picklistValues>
+            <masterLabel>Microsoft</masterLabel>
+            <translation><!-- Microsoft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mozilla</masterLabel>
+            <translation><!-- Mozilla --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit ALV Comments --></label>
+        <name>Standard_Audit_ALV_Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- FAIL means that this certificate&apos;s SHA-256 thumbprint was NOT found in the audit statement. --></help>
+        <label><!-- Standard Audit ALV Found Cert --></label>
+        <name>Standard_Audit_ALV_Found_Cert__c</name>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit ALV Results --></label>
+        <name>Standard_Audit_ALV_Results__c</name>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit ALV Status --></label>
+        <name>Standard_Audit_ALV_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- End date of the period of time of CA operations examined by the auditor. Audit Periods must not exceed one year in duration and must be contiguous. --></help>
+        <label><!-- Standard Audit Period End Date --></label>
+        <name>Standard_Audit_Period_End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Start date of the period of time of CA operations examined by the auditor. --></help>
+        <label><!-- Standard Audit Period Start Date --></label>
+        <name>Standard_Audit_Period_Start_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- Store Seal ID to map the Report ID in CPACanada Files object --></help>
+        <label><!-- Standard Audit Seal ID --></label>
+        <name>Standard_Audit_Seal_ID__c</name>
+    </fields>
+    <fields>
+        <help><!-- Date Audit Statement Issued --></help>
+        <label><!-- Standard Audit Statement Date --></label>
+        <name>Standard_Audit_Statement_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit Statement Dt --></label>
+        <name>Standard_Audit_Statement_Dt__c</name>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit Statement (Internal Link) --></label>
+        <name>Standard_Audit_Statement_Internal_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit Type --></label>
+        <name>Standard_Audit_Type__c</name>
+        <picklistValues>
+            <masterLabel>ETSI EN 319 411</masterLabel>
+            <translation><!-- ETSI EN 319 411 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETSI TS 101 456</masterLabel>
+            <translation><!-- ETSI TS 101 456 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ETSI TS 102 042</masterLabel>
+            <translation><!-- ETSI TS 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI 101 456</masterLabel>
+            <translation><!-- Equivalent ETSI 101 456 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI 102 042</masterLabel>
+            <translation><!-- Equivalent ETSI 102 042 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent ETSI EN 319 411</masterLabel>
+            <translation><!-- Equivalent ETSI EN 319 411 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equivalent WebTrust</masterLabel>
+            <translation><!-- Equivalent WebTrust --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WebTrust</masterLabel>
+            <translation><!-- WebTrust --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit Update Message --></label>
+        <name>Standard_Audit_Update_Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Standard Audit Update Status --></label>
+        <name>Standard_Audit_Update_Status__c</name>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Processed</masterLabel>
+            <translation><!-- Not Processed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Successful</masterLabel>
+            <translation><!-- Successful --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- URL to public attestation of conformance to the stated certificate verification requirements by a competent independent party. Documents may be attached to Bugzilla Bugs as described here https://www.ccadb.org/cas/fields#uploading-documents. --></help>
+        <label><!-- Standard Audit --></label>
+        <name>Standard_Audit__c</name>
+    </fields>
+    <fields>
+        <help><!-- Issues or qualifications noted in audit statement --></help>
+        <label><!-- Standard Audit Deviation --></label>
+        <name>Standard_Deviation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Status (In Text) --></label>
+        <name>Status_In_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>Status_Summary__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Status --></label>
+        <name>Status__c</name>
+        <picklistValues>
+            <masterLabel>Change Requested</masterLabel>
+            <translation><!-- Change Requested --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Included</masterLabel>
+            <translation><!-- Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Yet Included</masterLabel>
+            <translation><!-- Not Yet Included --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Obsolete</masterLabel>
+            <translation><!-- Obsolete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Provided by CA</masterLabel>
+            <translation><!-- Provided by CA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Removed</masterLabel>
+            <translation><!-- Removed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verified</masterLabel>
+            <translation><!-- Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Identifies same logical certificates in different CA Hierarchies. SHA256(der(subject)+der(spki)) --></help>
+        <label><!-- Subject + SPKI SHA256 --></label>
+        <name>Subject_SPKI_SHA256__c</name>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <help><!-- To be deleted --></help>
+        <label><!-- Subject (with nulls) --></label>
+        <name>Subject_with_nulls__c</name>
+    </fields>
+    <fields>
+        <help><!-- Enter Subordinate CA’s name as it appears in the provided audit statements. Leave blank if BOTH control of the private key AND domain/IP/email validation activities are performed by the organization listed in the audit statement of the parent certificate. --></help>
+        <label><!-- Subordinate CA Owner --></label>
+        <name>Subordinate_CA_Owner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Technically Constrained --></label>
+        <name>Technically_Constrained__c</name>
+    </fields>
+    <fields>
+        <help><!-- REQUIRED by BRs: URL to website with an expired TLS/SSL cert that chains up to the Root Certificate --></help>
+        <label><!-- Test Website - Expired --></label>
+        <name>Test_Website_Expired__c</name>
+    </fields>
+    <fields>
+        <help><!-- REQUIRED by BRs: URL to website with a revoked TLS/SSL cert that chains up to the Root Certificate --></help>
+        <label><!-- Test Website - Revoked --></label>
+        <name>Test_Website_Revoked__c</name>
+    </fields>
+    <fields>
+        <help><!-- REQUIRED by BRs: URL to website with a valid TLS/SSL cert that chains up to the Root Certificate --></help>
+        <label><!-- Test Website - Valid --></label>
+        <name>Test_Website_Valid__c</name>
+    </fields>
+    <fields>
+        <label><!-- Trust Bits Alert --></label>
+        <name>Trust_Bits_Alert__c</name>
+    </fields>
+    <fields>
+        <label><!-- Mozilla Trust Bits --></label>
+        <name>Trust_Bits__c</name>
+        <picklistValues>
+            <masterLabel>All Trust Bits Turned Off</masterLabel>
+            <translation><!-- All Trust Bits Turned Off --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Code</masterLabel>
+            <translation><!-- Code --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Websites</masterLabel>
+            <translation><!-- Websites --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Unconstrained SubCA Discussion --></label>
+        <name>Unconstrained_SubCA_Discussion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unconstrained SubCA Status --></label>
+        <name>Unconstrained_SubCA_Status__c</name>
+        <picklistValues>
+            <masterLabel>Approved</masterLabel>
+            <translation><!-- Approved --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Denied</masterLabel>
+            <translation><!-- Denied --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Discussion</masterLabel>
+            <translation><!-- In Discussion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Previously Approved</masterLabel>
+            <translation><!-- Previously Approved --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- The date from which the root CA certificate is valid. --></help>
+        <label><!-- Valid From (GMT) --></label>
+        <name>Valid_From_GMT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Valid From [GMT] --></label>
+        <name>Valid_From_YYYY_MMM_DD__c</name>
+    </fields>
+    <fields>
+        <help><!-- The date until which the root CA certificate is valid. --></help>
+        <label><!-- Valid To (GMT) --></label>
+        <name>Valid_To_GMT__c</name>
+    </fields>
+    <fields>
+        <label><!-- Valid To [GMT] --></label>
+        <name>Valid_To_YYYY_MMM_DD__c</name>
+    </fields>
+    <fields>
+        <help><!-- Government root certificate that has been vetted, but not included in Mozilla’s Root Store. --></help>
+        <label><!-- Vetted Government CA --></label>
+        <name>Vetted_Government_CA__c</name>
+    </fields>
+    <fields>
+        <label><!-- X.509 Certificate (PEM) --></label>
+        <name>X_509_Certificate_PEM__c</name>
+    </fields>
+    <layouts>
+        <layout>Auditors Layout (Not being used)</layout>
+        <sections>
+            <label><!-- Auditor Record for Auditor Contacts --></label>
+            <section>Auditor Record for Auditor Contacts</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CA Owner Layout for Community</layout>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- CA Comments --></label>
+            <section>CA Comments</section>
+        </sections>
+        <sections>
+            <label><!-- CA Organization Information --></label>
+            <section>CA Organization Information</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner Status by Root Store --></label>
+            <section>CA Owner Status by Root Store</section>
+        </sections>
+        <sections>
+            <label><!-- Cisco Fields --></label>
+            <section>Cisco Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <section>Contacts</section>
+        </sections>
+        <sections>
+            <label><!-- Important --></label>
+            <section>Important</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields --></label>
+            <section>Microsoft Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Other CA Information --></label>
+            <section>Other CA Information</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CA Owner Layout for Read only</layout>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- CA Comments --></label>
+            <section>CA Comments</section>
+        </sections>
+        <sections>
+            <label><!-- CA Organization Information --></label>
+            <section>CA Organization Information</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner Status by Root Store --></label>
+            <section>CA Owner Status by Root Store</section>
+        </sections>
+        <sections>
+            <label><!-- Cisco Fields --></label>
+            <section>Cisco Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Important --></label>
+            <section>Important</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields --></label>
+            <section>Microsoft Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Other CA Information --></label>
+            <section>Other CA Information</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CA Owner Layout for Root Store Mgr</layout>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Apple Fields --></label>
+            <section>Apple Fields</section>
+        </sections>
+        <sections>
+            <label><!-- CA Comments --></label>
+            <section>CA Comments</section>
+        </sections>
+        <sections>
+            <label><!-- CA Organization Information --></label>
+            <section>CA Organization Information</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner Status by Root Store --></label>
+            <section>CA Owner Status by Root Store</section>
+        </sections>
+        <sections>
+            <label><!-- Cisco Fields --></label>
+            <section>Cisco Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Important --></label>
+            <section>Important</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields --></label>
+            <section>Microsoft Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Other CA Information --></label>
+            <section>Other CA Information</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Intermediate Cert Layout for Community</layout>
+        <sections>
+            <label><!-- * PEM Information [Use Add/Update button to change PEM info] --></label>
+            <section>* PEM Information [Use Add/Update button to change PEM info]</section>
+        </sections>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Information (check *Same As Parent* OR enter audit data) --></label>
+            <section>Audit Information (check *Same As Parent* OR enter audit data)</section>
+        </sections>
+        <sections>
+            <label><!-- Auditor Information --></label>
+            <section>Auditor Information</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner/Certificate Information --></label>
+            <section>CA Owner/Certificate Information</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Other CA Information [Leave empty if same as CA Owner] --></label>
+            <section>Other CA Information [Leave empty if same as CA Owner]</section>
+        </sections>
+        <sections>
+            <label><!-- Policies and Practices Information  (check *Same As Parent* OR enter URLs) --></label>
+            <section>Policies and Practices Information  (check *Same As Parent* OR enter URLs)</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Revocation Information --></label>
+            <section>Revocation Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Intermediate Cert Layout for Community Read Only</layout>
+        <sections>
+            <label><!-- * PEM Information [Use Add/Update button to change PEM info] --></label>
+            <section>* PEM Information [Use Add/Update button to change PEM info]</section>
+        </sections>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Information (check *Same As Parent* OR enter audit data) --></label>
+            <section>Audit Information (check *Same As Parent* OR enter audit data)</section>
+        </sections>
+        <sections>
+            <label><!-- Auditor Information --></label>
+            <section>Auditor Information</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner/Certificate Information --></label>
+            <section>CA Owner/Certificate Information</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Other CA Information [Leave empty if same as CA Owner] --></label>
+            <section>Other CA Information [Leave empty if same as CA Owner]</section>
+        </sections>
+        <sections>
+            <label><!-- Policies and Practices Information  (check *Same As Parent* OR enter URLs) --></label>
+            <section>Policies and Practices Information  (check *Same As Parent* OR enter URLs)</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Revocation Information --></label>
+            <section>Revocation Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Intermediate Cert Layout for Mozilla Root Store Mgr</layout>
+        <sections>
+            <label><!-- * PEM Information [Use Add/Update button to change PEM info] --></label>
+            <section>* PEM Information [Use Add/Update button to change PEM info]</section>
+        </sections>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Information (check *Same As Parent* OR enter audit data) --></label>
+            <section>Audit Information (check *Same As Parent* OR enter audit data)</section>
+        </sections>
+        <sections>
+            <label><!-- Auditor Information --></label>
+            <section>Auditor Information</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner/Certificate Information --></label>
+            <section>CA Owner/Certificate Information</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Other CA Information [Leave empty if same as CA Owner] --></label>
+            <section>Other CA Information [Leave empty if same as CA Owner]</section>
+        </sections>
+        <sections>
+            <label><!-- Policies and Practices Information  (check *Same As Parent* OR enter URLs) --></label>
+            <section>Policies and Practices Information  (check *Same As Parent* OR enter URLs)</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Revocation Information --></label>
+            <section>Revocation Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Intermediate Cert Layout for Read only</layout>
+        <sections>
+            <label><!-- * PEM Information [Use Add/Update button to change PEM info] --></label>
+            <section>* PEM Information [Use Add/Update button to change PEM info]</section>
+        </sections>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Information (check *Same As Parent* OR enter audit data) --></label>
+            <section>Audit Information (check *Same As Parent* OR enter audit data)</section>
+        </sections>
+        <sections>
+            <label><!-- Auditor Information --></label>
+            <section>Auditor Information</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner/Certificate Information --></label>
+            <section>CA Owner/Certificate Information</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Other CA Information [Leave empty if same as CA Owner] --></label>
+            <section>Other CA Information [Leave empty if same as CA Owner]</section>
+        </sections>
+        <sections>
+            <label><!-- Policies and Practices Information (check *Same As Parent* OR enter URLs) --></label>
+            <section>Policies and Practices Information (check *Same As Parent* OR enter URLs)</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Revocation Information --></label>
+            <section>Revocation Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Intermediate Cert Layout for Root Store Mgr</layout>
+        <sections>
+            <label><!-- * PEM Information [Use Add/Update button to change PEM info] --></label>
+            <section>* PEM Information [Use Add/Update button to change PEM info]</section>
+        </sections>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Information (check *Same As Parent* OR enter audit data) --></label>
+            <section>Audit Information (check *Same As Parent* OR enter audit data)</section>
+        </sections>
+        <sections>
+            <label><!-- Auditor Information --></label>
+            <section>Auditor Information</section>
+        </sections>
+        <sections>
+            <label><!-- CA Owner/Certificate Information --></label>
+            <section>CA Owner/Certificate Information</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Messages --></label>
+            <section>Messages</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Other CA Information [Leave empty if same as CA Owner] --></label>
+            <section>Other CA Information [Leave empty if same as CA Owner]</section>
+        </sections>
+        <sections>
+            <label><!-- Policies and Practices Information  (check *Same As Parent* OR enter URLs) --></label>
+            <section>Policies and Practices Information  (check *Same As Parent* OR enter URLs)</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Revocation Information --></label>
+            <section>Revocation Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Root Cert Layout for Community</layout>
+        <sections>
+            <label><!-- * PEM Information [Use Add/Update button to change PEM info] --></label>
+            <section>* PEM Information [Use Add/Update button to change PEM info]</section>
+        </sections>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Apple Fields --></label>
+            <section>Apple Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Information --></label>
+            <section>Audit Information</section>
+        </sections>
+        <sections>
+            <label><!-- Auditor Information --></label>
+            <section>Auditor Information</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Cisco Fields --></label>
+            <section>Cisco Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Important --></label>
+            <section>Important</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields --></label>
+            <section>Microsoft Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Policies and Practices Information --></label>
+            <section>Policies and Practices Information</section>
+        </sections>
+        <sections>
+            <label><!-- Policy Documents --></label>
+            <section>Policy Documents</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Root Certificate Status by Root Store --></label>
+            <section>Root Certificate Status by Root Store</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites (for TLS enabled root certs) --></label>
+            <section>Test Websites (for TLS enabled root certs)</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Root Cert Layout for Community Read Only</layout>
+        <sections>
+            <label><!-- * PEM Information [Use Add/Update button to change PEM info] --></label>
+            <section>* PEM Information [Use Add/Update button to change PEM info]</section>
+        </sections>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Apple Fields --></label>
+            <section>Apple Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Information --></label>
+            <section>Audit Information</section>
+        </sections>
+        <sections>
+            <label><!-- Auditor Information --></label>
+            <section>Auditor Information</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Cisco Fields --></label>
+            <section>Cisco Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Important --></label>
+            <section>Important</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields --></label>
+            <section>Microsoft Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Policies and Practices Information --></label>
+            <section>Policies and Practices Information</section>
+        </sections>
+        <sections>
+            <label><!-- Policy Documents --></label>
+            <section>Policy Documents</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Root Certificate Status by Root Store --></label>
+            <section>Root Certificate Status by Root Store</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites (for TLS enabled root certs) --></label>
+            <section>Test Websites (for TLS enabled root certs)</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Root Cert Layout for Read only</layout>
+        <sections>
+            <label><!-- * PEM Information [Use Add/Update button to change PEM info] --></label>
+            <section>* PEM Information [Use Add/Update button to change PEM info]</section>
+        </sections>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Apple Fields --></label>
+            <section>Apple Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Information --></label>
+            <section>Audit Information</section>
+        </sections>
+        <sections>
+            <label><!-- Auditor Information --></label>
+            <section>Auditor Information</section>
+        </sections>
+        <sections>
+            <label><!-- Cisco Fields --></label>
+            <section>Cisco Fields</section>
+        </sections>
+        <sections>
+            <label><!-- DEPRECATED: Policies and Practices Information --></label>
+            <section>DEPRECATED: Policies and Practices Information</section>
+        </sections>
+        <sections>
+            <label><!-- Hide Section - Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Hide Section - Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Important --></label>
+            <section>Important</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields --></label>
+            <section>Microsoft Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Policy Documents --></label>
+            <section>Policy Documents</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Root Certificate Status by Root Store --></label>
+            <section>Root Certificate Status by Root Store</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites (for TLS enabled root certs) --></label>
+            <section>Test Websites (for TLS enabled root certs)</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Root Cert Layout for Root Store Mgr</layout>
+        <sections>
+            <label><!-- * PEM Information [Use Add/Update button to change PEM info] --></label>
+            <section>* PEM Information [Use Add/Update button to change PEM info]</section>
+        </sections>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Apple Fields --></label>
+            <section>Apple Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Information --></label>
+            <section>Audit Information</section>
+        </sections>
+        <sections>
+            <label><!-- Auditor Information --></label>
+            <section>Auditor Information</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Cisco Fields --></label>
+            <section>Cisco Fields</section>
+        </sections>
+        <sections>
+            <label><!-- DEPRECATED: Policies and Practices Information --></label>
+            <section>DEPRECATED: Policies and Practices Information</section>
+        </sections>
+        <sections>
+            <label><!-- Important --></label>
+            <section>Important</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields --></label>
+            <section>Microsoft Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Policy Documents --></label>
+            <section>Policy Documents</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Root Certificate Status by Root Store --></label>
+            <section>Root Certificate Status by Root Store</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites (for TLS enabled root certs) --></label>
+            <section>Test Websites (for TLS enabled root certs)</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Root Cert Layout for System Admin</layout>
+        <sections>
+            <label><!-- * PEM Information [Use Add/Update button to change PEM info] --></label>
+            <section>* PEM Information [Use Add/Update button to change PEM info]</section>
+        </sections>
+        <sections>
+            <label><!-- Account Hierarchy --></label>
+            <section>Account Hierarchy</section>
+        </sections>
+        <sections>
+            <label><!-- Apple Fields --></label>
+            <section>Apple Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Audit Information --></label>
+            <section>Audit Information</section>
+        </sections>
+        <sections>
+            <label><!-- Auditor Information --></label>
+            <section>Auditor Information</section>
+        </sections>
+        <sections>
+            <label><!-- Certificate Data [Fields NOT editable; extracted from PEM] --></label>
+            <section>Certificate Data [Fields NOT editable; extracted from PEM]</section>
+        </sections>
+        <sections>
+            <label><!-- Cisco Fields --></label>
+            <section>Cisco Fields</section>
+        </sections>
+        <sections>
+            <label><!-- DEPRECATED: Policies and Practices Information --></label>
+            <section>DEPRECATED: Policies and Practices Information</section>
+        </sections>
+        <sections>
+            <label><!-- Important --></label>
+            <section>Important</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions --></label>
+            <section>Instructions</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments --></label>
+            <section>Internal Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Microsoft Fields --></label>
+            <section>Microsoft Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Mozilla Fields --></label>
+            <section>Mozilla Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Policy Documents --></label>
+            <section>Policy Documents</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments --></label>
+            <section>Public Comments</section>
+        </sections>
+        <sections>
+            <label><!-- Root Certificate Status by Root Store --></label>
+            <section>Root Certificate Status by Root Store</section>
+        </sections>
+        <sections>
+            <label><!-- Test Websites (for TLS enabled root certs) --></label>
+            <section>Test Websites (for TLS enabled root certs)</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <description><!-- Creation of the Auditors --></description>
+        <label><!-- Auditors --></label>
+        <name>Auditors</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Creation of CA Qwner --></description>
+        <label><!-- CA Owner --></label>
+        <name>CA_Owner</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Creation of the Intermediate Certificate --></description>
+        <label><!-- Intermediate Certificate --></label>
+        <name>Intermediate_Certificate</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Creation of the Root Certificate --></description>
+        <label><!-- Root Certificate --></label>
+        <name>Root_Certificate</name>
+    </recordTypes>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <errorMessage><!-- BR Audit Period End Date should be greater than or equal to BR Audit Period Start Date --></errorMessage>
+        <name>CheckBRAudPeriodEndDtLessThanEndDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- BR Audit Period End Date cannot be later than the BR Audit Statement Date --></errorMessage>
+        <name>CheckBRAudPeriodEndDtNotLaterThanStDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Provide the URL to the BR Audit PDF file, not the Seal. e.g. https://www.cpacanada.ca/GenericHandlers/AptifyAttachmentHandler.ashx?AttachmentID=... --></errorMessage>
+        <name>CheckBRAuditWebTrustSealIsNotPDF</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Code Signing Audit Period End Date should be greater than or equal to Code Signing Audit Period Start Date --></errorMessage>
+        <name>CheckCodeSAudPeriodEndDtLessThanEndDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Code Signing Audit Period End Date cannot be later than the Code Signing Audit Statement Date --></errorMessage>
+        <name>CheckCodeSAudPeriodEndDtNotLaterThanStDt</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Provide the URL to the Code Signing Audit PDF file, not the Seal. e.g. https://www.cpacanada.ca/GenericHandlers/AptifyAttachmentHandler.ashx?AttachmentID=... --></errorMessage>
+        <name>CheckCodeSignAuditWebTrustSealIsNotPDF</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV Code Signing Audit Period End Date cannot be later than the EV Code Signing Audit Statement Date --></errorMessage>
+        <name>CheckEVCAudPeriodEndDtNotLaterThanStDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV Code Signing Audit Period End Date should be greater than or equal to EV Code Signing Audit Period Start Date --></errorMessage>
+        <name>CheckEVCodeAudPeriodEndDtLessThanEndDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Provide the URL to the EV Code Signing Audit PDF file, not the Seal. e.g. https://www.cpacanada.ca/GenericHandlers/AptifyAttachmentHandler.ashx?AttachmentID=... --></errorMessage>
+        <name>CheckEVCodeSignAuditWebTrustSealIsNotPDF</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV SSL Audit Period End Date cannot be later than the EV SSL Audit Statement Date --></errorMessage>
+        <name>CheckEVSAudPeriodEndDtNotLaterThanStDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV Audit Period End Date should be greater than or equal to EV Audit Period Start Date --></errorMessage>
+        <name>CheckEVSSLAudPeriodEndDtLessThanEndDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Provide the URL to the EV SSL Audit PDF file, not the Seal. e.g. https://www.cpacanada.ca/GenericHandlers/AptifyAttachmentHandler.ashx?AttachmentID=... --></errorMessage>
+        <name>CheckEVSSLAuditWebTrustSealIsNotPDF</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- BR Audit Period End Date must be filled in when BR Audit is provided --></errorMessage>
+        <name>CheckIfBRAuditPeriodEndDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- BR Audit Period Start Date must be filled in when BR Audit is provided --></errorMessage>
+        <name>CheckIfBRAuditPeriodStartDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- BR Audit Statement Date must be filled in when BR Audit is provided --></errorMessage>
+        <name>CheckIfBRAuditStDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- BR Audit Type must be filled in when BR Audit is provided --></errorMessage>
+        <name>CheckIfBRAuditTypeBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Code Signing Audit Period Start Date must be filled in when Code Signing Audit is provided --></errorMessage>
+        <name>CheckIfCodeSignAuditPeriodStartDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Code Signing Audit Period End Date must be filled in when Code Signing Audit is provided --></errorMessage>
+        <name>CheckIfCodeSigninAuditPeriodEndDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Code Signing  Audit Statement Date must be filled in when Code Signing  Audit is provided --></errorMessage>
+        <name>CheckIfCodeSigningAuditStDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Code Signing Audit Type must be filled in when Code Signing Audit is provided --></errorMessage>
+        <name>CheckIfCodeSigningAuditTypeBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV Code Signing Audit Period End Date must be filled in when EV Code Signing Audit is provided --></errorMessage>
+        <name>CheckIfEVCodeSignAuditPeriodEndDtBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV Code Signing Audit Period Start Date must be filled in when EV Code Signing Audit is provided --></errorMessage>
+        <name>CheckIfEVCodeSignAuditPeriodStartDtBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV Code Signing Audit Statement Date must be filled in when EV Code Signing Audit is provided --></errorMessage>
+        <name>CheckIfEVCodeSigningAuditStDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV Code Signing Audit Type must be filled in when EV Code Signing Audit is provided --></errorMessage>
+        <name>CheckIfEVCodeSigningAuditTypeBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV SSL Audit Period End Date must be filled in when EV SSL Audit is provided --></errorMessage>
+        <name>CheckIfEVSSLAuditPeriodEndDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV SSL Audit Period Start Date must be filled in when EV SSL Audit is provided --></errorMessage>
+        <name>CheckIfEVSSLAuditPeriodStartDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV SSL Audit Statement Date must be filled in when EV SSL Audit is provided --></errorMessage>
+        <name>CheckIfEVSSLAuditStDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- EV SSL Audit Type must be filled in when EV SSL Audit is provided --></errorMessage>
+        <name>CheckIfEVSSLAuditTypeBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Standard Audit Period End Date must be filled in when Standard Audit is provided --></errorMessage>
+        <name>CheckIfStandardAuditPeriodEndDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Standard Audit Period Start Date must be filled in when Standard Audit is provided --></errorMessage>
+        <name>CheckIfStandardAuditPeriodStartDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Standard Audit Statement Date must be filled in when Standard Audit is provided --></errorMessage>
+        <name>CheckIfStandardAuditStDateBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Standard Audit Type must be filled in when Standard Audit is provided --></errorMessage>
+        <name>CheckIfStandardAuditTypeBlank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- &quot;OneCRL Bug Number&quot; must be filled in whenever &quot;Added to OneCRL&quot; is set.	Error Location	OneCRL Bug Number --></errorMessage>
+        <name>CheckOneCRLBugNumberWhenAddedtoOneCRL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Provide the URL to the Standard Audit PDF file, not the Seal. e.g. https://www.cpacanada.ca/GenericHandlers/AptifyAttachmentHandler.ashx?AttachmentID=... --></errorMessage>
+        <name>CheckStandardAuditWebTrustSealIsNotPDF</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Standard Audit Period End Date should be greater than or equal to Standard Audit Period Start Date --></errorMessage>
+        <name>CheckStdAudPeriodEndDtLessThanEndDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Standard Audit Period End Date cannot be later than the Standard Audit Statement Date --></errorMessage>
+        <name>CheckStdAudPeriodEndDtNotLaterThanStDate</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Cannot select another option with &quot;All SSL Trust Bit Turned Off&quot; --></errorMessage>
+        <name>Check_All_SSL_Trust_Bit_Turned_Off</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- &apos;Audits Same as Parent&apos; is checked. Please uncheck this field or clear rest of the Audit Info fields to save the record. --></errorMessage>
+        <name>Check_Audits_Same_as_Parent</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- &apos;CP/CPS Same as Parent&apos; is checked. Please uncheck this field or clear rest of the Policies and Practices Information fields to save the record. --></errorMessage>
+        <name>Check_CP_CPS_Same_as_Parent</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please fill in the date when this intermediate certificate was revoked --></errorMessage>
+        <name>Check_Date_of_Revocation_not_blank</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- &apos;Verified&apos; status cannot be chosen by a CA --></errorMessage>
+        <name>Check_Status_cannot_be_Verified_by_CA</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- DO NOT USE Please enter SHA-1 Fingerprint as a string of 40 characters or string of 59 characters with &apos;:&apos; between every two characters --></errorMessage>
+        <name>Check_for_SHA_1_Format</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- DO NOT USE Please enter SHA-256 Fingerprint as a string of 64 characters or string of 95 characters with &apos;:&apos; between every two characters --></errorMessage>
+        <name>Check_for_SHA_256_Format</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- &apos;Firefox Release When Removed&apos; must be filled in when the root certificate status is &apos;Removed&apos; --></errorMessage>
+        <name>Fill_Firefox_Release_when_Root_Removed</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- &apos;NSS Release When Removed&apos; must be filled in when the root certificate status is &apos;Removed&apos; --></errorMessage>
+        <name>Fill_NSS_Release_when_Root_Cert_Removed</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- URL must begin with &apos;http&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~ -_ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_BR_Audit_URL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- URL must begin with &apos;http&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~ -_ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_Code_Signing_Audit_URL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- URL must begin with &apos;http&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~ -_ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_EV_Code_Signing_Audit_URL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- URL must begin with &apos;http&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~ -_ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_EV_SSL_Audit_URL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- URL must begin with &apos;http&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~- _ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_Standard_Audit_URL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide valid test website link, URL must begin with &apos;https&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~- _ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_Test_Website_Expired_URL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide valid test website link, URL must begin with &apos;https&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~- _ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_Test_Website_Revoked_URL</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please provide valid test website link, URL must begin with &apos;https&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~- _ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_Test_Website_Valid_URL</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Add_Update_PEM_Info --></label>
+        <name>Add_Update_PEM_Info</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Add_Update_PEM_Info_For_Intermediate_Cert --></label>
+        <name>Add_Update_PEM_Info_For_Intermediate_Cert</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Add_Update_PEM_Info_For_Root_Cert --></label>
+        <name>Add_Update_PEM_Info_For_Root_Cert</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- AltavistaNews --></label>
+        <name>AltavistaNews</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Audit_Letter_Validation_ALV --></label>
+        <name>Audit_Letter_Validation_ALV</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Auditors --></label>
+        <name>Auditors</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Certs_Signed_by_this_Cert --></label>
+        <name>Certs_Signed_by_this_Cert</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Certs_With_Same_Parent --></label>
+        <name>Certs_With_Same_Parent</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Certs_with_this_Subject_SPKI --></label>
+        <name>Certs_with_this_Subject_SPKI</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- CloneIntermediateCert --></label>
+        <name>CloneIntermediateCert</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- CloneRootCert --></label>
+        <name>CloneRootCert</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Copy_Parent_Audit_CP_CPS_Data --></label>
+        <name>Copy_Parent_Audit_CP_CPS_Data</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Delete_Certificate --></label>
+        <name>Delete_Certificate</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Get_URLs --></label>
+        <name>Get_URLs</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleMaps --></label>
+        <name>GoogleMaps</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleNews --></label>
+        <name>GoogleNews</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleSearch --></label>
+        <name>GoogleSearch</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- HooversProfile --></label>
+        <name>HooversProfile</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- List_this_CA_Owner_Root_Certs --></label>
+        <name>List_this_CA_Owner_Root_Certs</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- List_this_CA_Owner_Root_Certs_on_Owner_Page --></label>
+        <name>List_this_CA_Owner_Root_Certs_on_Owner_Page</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mass_Update_Audit_CP_CPS_Info --></label>
+        <name>Mass_Update_Audit_CP_CPS_Info</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Mass_Update_Audit_Info --></label>
+        <name>Mass_Update_Audit_Info</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- NewIntermediateCert --></label>
+        <name>NewIntermediateCert</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- NewRootCertForThisOwner --></label>
+        <name>NewRootCertForThisOwner</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Intermediate_Cert --></label>
+        <name>New_Intermediate_Cert</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Root_Cert_For_This_Owner --></label>
+        <name>New_Root_Cert_For_This_Owner</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Run_ALV_on_Hierarchy --></label>
+        <name>Run_ALV_on_Hierarchy</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Verify_Revocation --></label>
+        <name>Verify_Revocation</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- YahooMaps --></label>
+        <name>YahooMaps</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>43.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Report lists Recognized CAA Domains info for all ca owner, root certs and intermediate cert records</description>
+    <label>CAAIdentifiersReport</label>
+</ApexPage>

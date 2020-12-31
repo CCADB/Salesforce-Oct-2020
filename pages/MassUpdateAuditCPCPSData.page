@@ -1,0 +1,612 @@
+<!--
+User Interface for 'Mass update Audit/CP/CPS' process  is separated into four sections  
+'Standard Audit & Auditor Fields', 'BR Audit Fields', 'EV Audit Fields' and 'Verified Audit Date'.
+
+Users with 'Standard User - Mozilla' profile, will only see Mozilla fields in 'Verified Audit
+Date' section.
+
+Users with 'Standard User - Microsoft' profile, will only see Microsoft fields in 'Verified Audit
+Date' section.
+
+Users with other profiles will not 'Verified Audit Date' section at all.
+-->
+
+<apex:page standardController="Account" extensions="MassUpdateAuditCPCPSDataController" showHeader="true" sidebar="true" cache="false" tabStyle="Account" action="{!checkPortalUserValidation}">       
+ 
+<apex:form id="theForm">
+
+    <apex:sectionHeader title="" subtitle="{!IF(sourceAccountSo.RecordType.Name == 'Root Certificate','Mass update Audit Data','Mass update Audit/CP/CPS Data')} for siblings of {!sourceAccountSo.Name}" rendered="{!isValidPortalUser}"/>
+    <apex:pageMessages rendered="{!hasError}"/>
+
+    <apex:pageBlock title="In each section, Click on 'Yes' button to copy the Source fields (left column) to the Target fields (right column). Certificate {!recordIndex + 1} of {!totaltargetAccountCount}" rendered="{!AND(!showMessage, isValidPortalUser)}" id="confirmPanel">  
+      
+          <apex:commandButton value="Next Target Cert" id="NextButton" style="width:100px;" reRender="theForm, StdAuditBlock, BRAuditBlock, EVSSLAuditBloack, PolicyBlock, VerifiedBlock, ReferenceBlock" action="{!NextAccount}" onclick="window.scrollTo(0,0);" oncomplete="window.scrollTo(0,0);" status="saveStatus"/>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;              
+          <apex:commandButton value="Exit" id="exitButton" status="saveStatus" action="{!redirectTosourceAccount}"/>
+              &nbsp;&nbsp;&nbsp; 
+        
+    </apex:pageBlock>
+        
+  
+     <!-- Display error 'title' from controller and 'Return' to source record -->
+      
+    <apex:outputPanel id="updateCancelled" rendered="{!AND(isValidPortalUser, showMessage)}" > 
+         <apex:pageBlock title="Message ..." >
+         <apex:pageMessage severity="error" strength="3" summary="{!title}"/>
+            <!-- <apex:outputText value="Please click on the 'Return' button to return to source Account."/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+            <apex:commandButton action="{!redirectTosourceAccount}" value="Return" id="redirectToRootCaseButton" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton action="{!GetAllCertificates}" rendered="{!isMoreRecordFound}" value="Proceed Anyways" style="width:110px;" id="ProceedToAnyways" reRender="theForm"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         </apex:pageBlock>
+     </apex:outputPanel> 
+     
+     
+       <!-- Display Source and Target Certificate Name and Fingerprint -->
+     
+       <apex:pageBlock title="Source and Target Information"  id="CertificateBlock" rendered="{!!hasError}"> 
+     
+        <apex:pageBlockSection columns="2">         
+
+           <apex:outputText label="Source Account Name" value="{!sourceAccountSo.Name}"  style="color:red;font-weight:bold" />
+           <apex:outputText label="Target Account Name" value="{!targetAccountSo.Name}"  style="color:red;font-weight:bold" />
+           
+           <apex:outputText label="SHA-1 Fingerprint" value="{!sourceAccountSo.SHA_1_Fingerprint__c}"  style="color:red;font-weight:bold" />
+           <apex:outputText label="SHA-1 Fingerprint" value="{!targetAccountSo.SHA_1_Fingerprint__c}"  style="color:red;font-weight:bold" />
+
+           <apex:outputText label="SHA-256 Fingerprint" value="{!sourceAccountSo.SHA_256__c}"  style="color:red;font-weight:bold" />
+           <apex:outputText label="SHA-256 Fingerprint" value="{!targetAccountSo.SHA_256__c}"  style="color:red;font-weight:bold" />       
+        
+        </apex:pageBlockSection>  
+      </apex:pageBlock> 
+      
+    <!-- User prompt to update Auditor New Fields -->
+        
+      <apex:pageBlock title="Auditor Fields"  id="AuditorNewBlock" rendered="{!!hasError}">        
+ 
+      <apex:outputPanel id="AuditorNewFieldsQuestion" rendered="{!showAuditorNewFieldsConfirmation && !sourceAccountSo.Audits_Same_as_Parent__c && !targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Do you want to copy the Auditor fields from Source (left column) to Target (right column)?" /> </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:commandButton action="{!syncAuditorNewFieldsOnTargetAccount}" value="Yes" id="saveAuditorNewFieldsButton" reRender="theForm, AuditorNewBlock" onclick="this.value = 'Saving..'" oncomplete="this.value = ' Save '" status="saveAuditorNewFieldsStatus"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:actionStatus id="saveAuditorNewFieldsStatus">
+            <apex:facet name="start">
+                <apex:image value="/img/loading24.gif" height="16" width="16" />
+            </apex:facet> 
+         </apex:actionStatus>
+      </apex:outputPanel> 
+      
+       <apex:outputPanel id="AuditorNewFieldsPrompt" rendered="{!sourceAccountSo.Audits_Same_as_Parent__c || targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Mass Update will not allow changes to Target when 'Audits Same as Parent' is true." /> </b> 
+      </apex:outputPanel>  
+      
+      <!-- Replace user prompt with field update message --> 
+
+      <apex:outputPanel id="AuditorNewFieldsConfirmation" rendered="{!!showAuditorNewFieldsConfirmation}"> <br/><b>     
+          <apex:outputText value="Auditor fields updated successfully" /> </b>
+      </apex:outputPanel>  <br/><br/><br/>
+      
+       <!-- Display Auditor New Fields -->
+        
+       <apex:pageBlockSection columns="2"> 
+                   
+           <apex:outputText label="Auditor" value="{!sourceAccountSo.Auditor_New__r.Name}" style="{!IF (sourceAccountSo.Auditor_New__c != targetAccountSo.Auditor_New__c,'color:blue','')}"/>
+           <apex:outputText label="Auditor" value="{!targetAccountSo.Auditor_New__r.Name}" style="{!IF (sourceAccountSo.Auditor_New__c != targetAccountSo.Auditor_New__c,'color:blue','')}"/>
+                   
+           <apex:outputText label="Auditor Location" value="{!sourceAccountSo.Auditor_Location_New__r.Name}" style="{!IF (sourceAccountSo.Auditor_Location_New__c != targetAccountSo.Auditor_Location_New__c,'color:blue','')}"/>
+           <apex:outputText label="Auditor Location" value="{!targetAccountSo.Auditor_Location_New__r.Name}" style="{!IF (sourceAccountSo.Auditor_Location_New__c != targetAccountSo.Auditor_Location_New__c,'color:blue','')}"/>
+                         
+        </apex:pageBlockSection>  
+        </apex:pageBlock>               
+                
+     
+      <!-- User prompt to update Standard Audit Fields -->
+      
+      <apex:pageBlock title="Standard Audit Fields"  id="StdAuditBlock" rendered="{!!hasError}">  
+               
+      <apex:outputPanel id="StdAuditFieldsQuestion" rendered="{!showStdAuditFieldsConfirmation && !sourceAccountSo.Audits_Same_as_Parent__c && !targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Do you want to copy the Standard Audit fields from Source (left column) to Target (right column)?" /> </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:commandButton action="{!syncStdAuditFieldsOnTargetAccount}" value="Yes" id="saveStdAuditFieldsButton" reRender="theForm, StdAuditBlock" onclick="this.value = 'Saving..'" oncomplete="this.value = 'Saving..'" status="saveStdAuditFieldsStatus"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:actionStatus id="saveStdAuditFieldsStatus">
+            <apex:facet name="start">
+                <apex:image value="/img/loading24.gif" height="16" width="16" />
+            </apex:facet> 
+         </apex:actionStatus>
+      </apex:outputPanel>
+      
+      <apex:outputPanel id="StdAuditFieldsPrompt" rendered="{!sourceAccountSo.Audits_Same_as_Parent__c || targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Mass Update will not allow changes to Target when 'Audits Same as Parent' is true." /> </b> 
+      </apex:outputPanel>
+           
+ 
+      <!-- Replace user prompt with field update message -->
+
+      <apex:outputPanel id="StdAuditFieldsConfirmation" rendered="{!!showStdAuditFieldsConfirmation}"> <br/><b>     
+          <apex:outputText value="Standard Audit fields updated successfully" /> </b>
+      </apex:outputPanel>  <br/><br/><br/>
+      
+      <!-- Display Auditor & Standard Audit Fields -->
+ 
+        <apex:pageBlockSection columns="2">   
+        
+           <!-- old auditor field - deprecated
+           <apex:outputText label="Auditor" value="{!sourceAccountSo.Auditor__c}" style="{!IF (sourceAccountSo.Auditor__c != targetAccountSo.Auditor__c,'color:blue','')}"/>
+           <apex:outputText label="Auditor" value="{!targetAccountSo.Auditor__c}" style="{!IF (sourceAccountSo.Auditor__c != targetAccountSo.Auditor__c,'color:blue','')}"/>
+             
+           <apex:outputText label="Auditor Website" value="{!sourceAccountSo.Auditor_Website__c}" style="{!IF (sourceAccountSo.Auditor_Website__c != targetAccountSo.Auditor_Website__c,'color:blue','')}"/>
+           <apex:outputText label="Auditor Website" value="{!targetAccountSo.Auditor_Website__c}" style="{!IF (sourceAccountSo.Auditor_Website__c != targetAccountSo.Auditor_Website__c,'color:blue','')}"/>
+
+           <apex:outputText label="Auditor Qualifications" value="{!sourceAccountSo.Auditor_Qualifications__c}" style="{!IF (sourceAccountSo.Auditor_Qualifications__c != targetAccountSo.Auditor_Qualifications__c,'color:blue','')}"/>
+           <apex:outputText label="Auditor Qualifications" value="{!targetAccountSo.Auditor_Qualifications__c}" style="{!IF (sourceAccountSo.Auditor_Qualifications__c != targetAccountSo.Auditor_Qualifications__c,'color:blue','')}"/>            
+           -->
+           
+           <!--<apex:outputText label="Management Assertions By" value="{!sourceAccountSo.Management_Assertions_By__c}" style="{!IF (sourceAccountSo.Management_Assertions_By__c != targetAccountSo.Management_Assertions_By__c,'color:blue','')}"/>
+           <apex:outputText label="Management Assertions By" value="{!targetAccountSo.Management_Assertions_By__c}" style="{!IF (sourceAccountSo.Management_Assertions_By__c != targetAccountSo.Management_Assertions_By__c,'color:blue','')}"/>   -->              
+
+           <apex:outputText label="Audits Same as Parent" value="{!sourceAccountSo.Audits_Same_as_Parent__c}" style="{!IF (sourceAccountSo.Audits_Same_as_Parent__c != targetAccountSo.Audits_Same_as_Parent__c,'color:blue','')}" rendered="{!isIntermediateCert}"/>
+           <apex:outputText label="Audits Same as Parent" value="{!targetAccountSo.Audits_Same_as_Parent__c}" style="{!IF (sourceAccountSo.Audits_Same_as_Parent__c != targetAccountSo.Audits_Same_as_Parent__c,'color:blue','')}" rendered="{!isIntermediateCert}"/>
+               
+           <apex:outputText label="Standard Audit" value="{!sourceAccountSo.Standard_Audit__c}" style="{!IF (sourceAccountSo.Standard_Audit__c != targetAccountSo.Standard_Audit__c,'color:blue','')}"/>
+           <apex:outputText label="Standard Audit" value="{!targetAccountSo.Standard_Audit__c}" style="{!IF (sourceAccountSo.Standard_Audit__c != targetAccountSo.Standard_Audit__c,'color:blue','')}"/>            
+                        
+           <apex:outputText label="Standard Audit Type" value="{!sourceAccountSo.Standard_Audit_Type__c}" style="{!IF (sourceAccountSo.Standard_Audit_Type__c != targetAccountSo.Standard_Audit_Type__c,'color:blue','')}"/>
+           <apex:outputText label="Standard Audit Type" value="{!targetAccountSo.Standard_Audit_Type__c}" style="{!IF (sourceAccountSo.Standard_Audit_Type__c != targetAccountSo.Standard_Audit_Type__c,'color:blue','')}"/>
+ 
+           <apex:outputText label="Standard Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Standard_Audit_Statement_Date__c != targetAccountSo.Standard_Audit_Statement_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.Standard_Audit_Statement_Date__c}" /> 
+           </apex:outputText>              
+           <apex:outputText label="Standard Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Standard_Audit_Statement_Date__c != targetAccountSo.Standard_Audit_Statement_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.Standard_Audit_Statement_Date__c}" /> 
+           </apex:outputText>  
+
+           <apex:outputText label="Standard Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Standard_Audit_Period_Start_Date__c != targetAccountSo.Standard_Audit_Period_Start_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.Standard_Audit_Period_Start_Date__c}" /> 
+           </apex:outputText>             
+           <apex:outputText label="Standard Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Standard_Audit_Period_Start_Date__c != targetAccountSo.Standard_Audit_Period_Start_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.Standard_Audit_Period_Start_Date__c}" /> 
+           </apex:outputText> 
+
+           <apex:outputText label="Standard Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Standard_Audit_Period_End_Date__c != targetAccountSo.Standard_Audit_Period_End_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.Standard_Audit_Period_End_Date__c}" /> 
+           </apex:outputText>             
+           <apex:outputText label="Standard Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Standard_Audit_Period_End_Date__c != targetAccountSo.Standard_Audit_Period_End_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.Standard_Audit_Period_End_Date__c}" /> 
+           </apex:outputText> 
+
+        </apex:pageBlockSection>  
+      </apex:pageBlock>
+      
+      <!-- User prompt to update Code Signing Audit Fields -->
+        
+      <apex:pageBlock title="Code Signing Audit Fields"  id="CodeSigningAuditBlock" rendered="{!!hasError}">        
+ 
+      <apex:outputPanel id="CodeSigningAuditFieldsQuestion" rendered="{!showCodeSigningAuditFieldsConfirmation && !sourceAccountSo.Audits_Same_as_Parent__c && !targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Do you want to copy the Code Signing Audit fields from Source (left column) to Target (right column)?" /> </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:commandButton action="{!syncCodeSigningAuditFieldsOnTargetAccount}" value="Yes" id="saveCodeSigningAuditFieldsButton" reRender="theForm, CodeSigningAuditBlock" onclick="this.value = 'Saving..'" oncomplete="this.value = ' Save '" status="saveCodeSigningAuditFieldsStatus"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:actionStatus id="saveCodeSigningAuditFieldsStatus">
+            <apex:facet name="start">
+                <apex:image value="/img/loading24.gif" height="16" width="16" />
+            </apex:facet> 
+         </apex:actionStatus>
+      </apex:outputPanel> 
+      
+       <apex:outputPanel id="CodeSigningAuditFieldsPrompt" rendered="{!sourceAccountSo.Audits_Same_as_Parent__c || targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Mass Update will not allow changes to Target when 'Audits Same as Parent' is true." /> </b> 
+      </apex:outputPanel>  
+      
+      <!-- Replace user prompt with field update message --> 
+
+      <apex:outputPanel id="CodeSigningAuditFieldsConfirmation" rendered="{!!showCodeSigningAuditFieldsConfirmation}"> <br/><b>     
+          <apex:outputText value="Code Signing Audit fields updated successfully" /> </b>
+      </apex:outputPanel>  <br/><br/><br/>
+      
+       <!-- Display BR Audit Fields -->
+        
+       <apex:pageBlockSection columns="2"> 
+        
+           <apex:outputText label="Code Signing Audit" value="{!sourceAccountSo.Code_Signing_Audit__c}" style="{!IF (sourceAccountSo.Code_Signing_Audit__c != targetAccountSo.Code_Signing_Audit__c,'color:blue','')}"/>
+           <apex:outputText label="Code Signing Audit" value="{!targetAccountSo.Code_Signing_Audit__c}" style="{!IF (sourceAccountSo.Code_Signing_Audit__c != targetAccountSo.Code_Signing_Audit__c,'color:blue','')}"/>
+             
+           <apex:outputText label="Code Signing Audit Type" value="{!sourceAccountSo.Code_Signing_Audit_Type__c}" style="{!IF (sourceAccountSo.Code_Signing_Audit_Type__c != targetAccountSo.Code_Signing_Audit_Type__c,'color:blue','')}"/>
+           <apex:outputText label="Code Signing Audit Type" value="{!targetAccountSo.Code_Signing_Audit_Type__c}" style="{!IF (sourceAccountSo.Code_Signing_Audit_Type__c != targetAccountSo.Code_Signing_Audit_Type__c,'color:blue','')}"/>
+
+           <apex:outputText label="Code Signing Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Code_Signing_Audit_Statement_Date__c != targetAccountSo.Code_Signing_Audit_Statement_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.Code_Signing_Audit_Statement_Date__c}" /> 
+           </apex:outputText> 
+
+           <apex:outputText label="Code Signing Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Code_Signing_Audit_Statement_Date__c != targetAccountSo.Code_Signing_Audit_Statement_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.Code_Signing_Audit_Statement_Date__c}" /> 
+           </apex:outputText>             
+           
+           <apex:outputText label="Code Signing Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Code_Signing_Audit_Period_Start_Date__c != targetAccountSo.Code_Signing_Audit_Period_Start_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.Code_Signing_Audit_Period_Start_Date__c}" /> 
+           </apex:outputText>             
+           <apex:outputText label="Code Signing Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Code_Signing_Audit_Period_Start_Date__c != targetAccountSo.Code_Signing_Audit_Period_Start_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.Code_Signing_Audit_Period_Start_Date__c}" /> 
+           </apex:outputText> 
+
+           <apex:outputText label="Code Signing Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Code_Signing_Audit_Period_End_Date__c != targetAccountSo.Code_Signing_Audit_Period_End_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.Code_Signing_Audit_Period_End_Date__c}" /> 
+           </apex:outputText>             
+           <apex:outputText label="Code Signing Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Code_Signing_Audit_Period_End_Date__c != targetAccountSo.Code_Signing_Audit_Period_End_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.Code_Signing_Audit_Period_End_Date__c}" /> 
+           </apex:outputText>            
+                
+        </apex:pageBlockSection>  
+        </apex:pageBlock> 
+        
+      <!-- User prompt to update BR Audit Fields -->
+        
+      <apex:pageBlock title="BR Audit Fields"  id="BRAuditBlock" rendered="{!!hasError}">        
+ 
+      <apex:outputPanel id="BRAuditFieldsQuestion" rendered="{!showBRAuditFieldsConfirmation && !sourceAccountSo.Audits_Same_as_Parent__c && !targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Do you want to copy the BR Audit fields from Source (left column) to Target (right column)?" /> </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:commandButton action="{!syncBRAuditFieldsOnTargetAccount}" value="Yes" id="saveBRAuditFieldsButton" reRender="theForm, BRAuditBlock" onclick="this.value = 'Saving..'" oncomplete="this.value = ' Save '" status="saveBRAuditFieldsStatus"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:actionStatus id="saveBRAuditFieldsStatus">
+            <apex:facet name="start">
+                <apex:image value="/img/loading24.gif" height="16" width="16" />
+            </apex:facet> 
+         </apex:actionStatus>
+      </apex:outputPanel> 
+      
+       <apex:outputPanel id="BRAuditFieldsPrompt" rendered="{!sourceAccountSo.Audits_Same_as_Parent__c || targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Mass Update will not allow changes to Target when 'Audits Same as Parent' is true." /> </b> 
+      </apex:outputPanel>  
+      
+      <!-- Replace user prompt with field update message --> 
+
+      <apex:outputPanel id="BRAuditFieldsConfirmation" rendered="{!!showBRAuditFieldsConfirmation}"> <br/><b>     
+          <apex:outputText value="BR Audit fields updated successfully" /> </b>
+      </apex:outputPanel>  <br/><br/><br/>
+      
+       <!-- Display BR Audit Fields -->
+        
+       <apex:pageBlockSection columns="2"> 
+        
+           <apex:outputText label="BR Audit" value="{!sourceAccountSo.BR_Audit__c}" style="{!IF (sourceAccountSo.BR_Audit__c != targetAccountSo.BR_Audit__c,'color:blue','')}"/>
+           <apex:outputText label="BR Audit" value="{!targetAccountSo.BR_Audit__c}" style="{!IF (sourceAccountSo.BR_Audit__c != targetAccountSo.BR_Audit__c,'color:blue','')}"/>
+             
+           <apex:outputText label="BR Audit Type" value="{!sourceAccountSo.BR_Audit_Type__c}" style="{!IF (sourceAccountSo.BR_Audit_Type__c != targetAccountSo.BR_Audit_Type__c,'color:blue','')}"/>
+           <apex:outputText label="BR Audit Type" value="{!targetAccountSo.BR_Audit_Type__c}" style="{!IF (sourceAccountSo.BR_Audit_Type__c != targetAccountSo.BR_Audit_Type__c,'color:blue','')}"/>
+
+           <apex:outputText label="BR Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.BR_Audit_Statement_Date__c != targetAccountSo.BR_Audit_Statement_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.BR_Audit_Statement_Date__c}" /> 
+           </apex:outputText> 
+
+           <apex:outputText label="BR Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.BR_Audit_Statement_Date__c != targetAccountSo.BR_Audit_Statement_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.BR_Audit_Statement_Date__c}" /> 
+           </apex:outputText>             
+           
+           <apex:outputText label="BR Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.BR_Audit_Period_Start_Date__c != targetAccountSo.BR_Audit_Period_Start_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.BR_Audit_Period_Start_Date__c}" /> 
+           </apex:outputText>             
+           <apex:outputText label="BR Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.BR_Audit_Period_Start_Date__c != targetAccountSo.BR_Audit_Period_Start_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.BR_Audit_Period_Start_Date__c}" /> 
+           </apex:outputText> 
+
+           <apex:outputText label="BR Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.BR_Audit_Period_End_Date__c != targetAccountSo.BR_Audit_Period_End_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.BR_Audit_Period_End_Date__c}" /> 
+           </apex:outputText>             
+           <apex:outputText label="BR Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.BR_Audit_Period_End_Date__c != targetAccountSo.BR_Audit_Period_End_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.BR_Audit_Period_End_Date__c}" /> 
+           </apex:outputText>            
+                
+        </apex:pageBlockSection>  
+        </apex:pageBlock>          
+        
+        
+      <!-- User prompt to update EV SSL Audit Fields -->
+        
+      <apex:pageBlock title="EV SSL Audit Fields"  id="EVSSLAuditBlock" rendered="{!!hasError}">        
+
+      <apex:outputPanel id="EVSSLAuditFieldsQuestion" rendered="{!showEVSSLAuditFieldsConfirmation && !sourceAccountSo.Audits_Same_as_Parent__c && !targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Do you want to copy the EV SSL Audit fields from Source (left column) to Target (right column)?" /> </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:commandButton action="{!syncEVSSLAuditFieldsOnTargetAccount}" value="Yes" id="saveEVSSLAuditFieldsButton" reRender="theForm, EVSSLAuditBlock" onclick="this.value = 'Saving..'" oncomplete="this.value = ' Save '" status="saveEVSSLAuditFieldsStatus"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:actionStatus id="saveEVSSLAuditFieldsStatus">
+            <apex:facet name="start">
+                <apex:image value="/img/loading24.gif" height="16" width="16" />
+            </apex:facet> 
+         </apex:actionStatus>
+      </apex:outputPanel>  
+      
+      <apex:outputPanel id="EVSSLAuditFieldsPrompt" rendered="{!sourceAccountSo.Audits_Same_as_Parent__c || targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Mass Update will not allow changes to Target when 'Audits Same as Parent' is true." /> </b> 
+      </apex:outputPanel>  
+      
+      <!-- Replace user prompt with field update message --> 
+
+      <apex:outputPanel id="EVSSLAuditFieldsConfirmation" rendered="{!!showEVSSLAuditFieldsConfirmation}"> <br/><b>     
+          <apex:outputText value="EV SSL Audit fields updated successfully" /> </b>
+      </apex:outputPanel>   <br/><br/><br/>
+       
+      <!-- Display EV SSL Audit Fields -->
+        
+      <apex:pageBlockSection columns="2"> 
+        
+           <apex:outputText label="EV SSL Audit" value="{!sourceAccountSo.EV_Audit__c}" style="{!IF (sourceAccountSo.EV_Audit__c != targetAccountSo.EV_Audit__c,'color:blue','')}"/>
+           <apex:outputText label="EV SSL Audit" value="{!targetAccountSo.EV_Audit__c}" style="{!IF (sourceAccountSo.EV_Audit__c != targetAccountSo.EV_Audit__c,'color:blue','')}"/>
+             
+           <apex:outputText label="EV SSL Audit Type" value="{!sourceAccountSo.EV_Audit_Type__c}" style="{!IF (sourceAccountSo.EV_Audit_Type__c != targetAccountSo.EV_Audit_Type__c,'color:blue','')}"/>
+           <apex:outputText label="EV SSL Audit Type" value="{!targetAccountSo.EV_Audit_Type__c}" style="{!IF (sourceAccountSo.EV_Audit_Type__c != targetAccountSo.EV_Audit_Type__c,'color:blue','')}"/>
+
+           <apex:outputText label="EV SSL Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Audit_Statement_Date__c != targetAccountSo.EV_Audit_Statement_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.EV_Audit_Statement_Date__c}" /> 
+           </apex:outputText> 
+
+           <apex:outputText label="EV SSL Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Audit_Statement_Date__c != targetAccountSo.EV_Audit_Statement_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.EV_Audit_Statement_Date__c}" /> 
+           </apex:outputText>
+
+           <apex:outputText label="EV SSL Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Audit_Period_Start_Date__c != targetAccountSo.EV_Audit_Period_Start_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.EV_Audit_Period_Start_Date__c}" /> 
+           </apex:outputText>             
+           <apex:outputText label="EV SSL Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Audit_Period_Start_Date__c != targetAccountSo.EV_Audit_Period_Start_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.EV_Audit_Period_Start_Date__c}" /> 
+           </apex:outputText> 
+
+           <apex:outputText label="EV SSL Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Audit_Period_End_Date__c != targetAccountSo.EV_Audit_Period_End_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.EV_Audit_Period_End_Date__c}" /> 
+           </apex:outputText>             
+           <apex:outputText label="EV SSL Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Audit_Period_End_Date__c != targetAccountSo.EV_Audit_Period_End_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.EV_Audit_Period_End_Date__c}" /> 
+           </apex:outputText>      
+        
+        </apex:pageBlockSection>  
+        </apex:pageBlock>          
+
+
+      <!-- User prompt to update EV Code Signing Audit Fields -->
+        
+      <apex:pageBlock title="EV Code Signing Audit Fields"  id="EVCodeSigningAuditBlock" rendered="{!!hasError}">        
+
+      <apex:outputPanel id="EVCodeSigningAuditFieldsQuestion" rendered="{!showEVCodeSigningAuditFieldsConfirmation && !sourceAccountSo.Audits_Same_as_Parent__c && !targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Do you want to copy the EV Code Signing Audit fields from Source (left column) to Target (right column)?" /> </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:commandButton action="{!syncEVCodeSigningAuditFieldsOnTargetAccount}" value="Yes" id="saveEVCodeSigningAuditFieldsButton" reRender="theForm, EVCodeSigningAuditBlock" onclick="this.value = 'Saving..'" oncomplete="this.value = ' Save '" status="saveEVCodeSigningAuditFieldsStatus"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <apex:actionStatus id="saveEVCodeSigningAuditFieldsStatus">
+            <apex:facet name="start">
+                <apex:image value="/img/loading24.gif" height="16" width="16" />
+            </apex:facet> 
+         </apex:actionStatus>
+      </apex:outputPanel>  
+      
+      <apex:outputPanel id="EVCodeSigningAuditFieldsPrompt" rendered="{!sourceAccountSo.Audits_Same_as_Parent__c || targetAccountSo.Audits_Same_as_Parent__c}">  <br/><b>      
+         <apex:outputText value="Mass Update will not allow changes to Target when 'Audits Same as Parent' is true." /> </b> 
+      </apex:outputPanel>  
+      
+      <!-- Replace user prompt with field update message --> 
+
+      <apex:outputPanel id="EVCodeSigningAuditFieldsConfirmation" rendered="{!!showEVCodeSigningAuditFieldsConfirmation}"> <br/><b>     
+          <apex:outputText value="EV Code Signing Audit fields updated successfully" /> </b>
+      </apex:outputPanel>   <br/><br/><br/>
+       
+      <!-- Display EV Code Signing Audit Fields -->
+        
+      <apex:pageBlockSection columns="2"> 
+        
+           <apex:outputText label="EV Code Signing Audit" value="{!sourceAccountSo.EV_Code_Signing_Audit__c}" style="{!IF (sourceAccountSo.EV_Code_Signing_Audit__c != targetAccountSo.EV_Code_Signing_Audit__c,'color:blue','')}"/>
+           <apex:outputText label="EV Code Signing Audit" value="{!targetAccountSo.EV_Code_Signing_Audit__c}" style="{!IF (sourceAccountSo.EV_Code_Signing_Audit__c != targetAccountSo.EV_Code_Signing_Audit__c,'color:blue','')}"/>
+             
+           <apex:outputText label="EV Code Signing Audit Type" value="{!sourceAccountSo.EV_Code_Signing_Audit_Type__c}" style="{!IF (sourceAccountSo.EV_Code_Signing_Audit_Type__c != targetAccountSo.EV_Code_Signing_Audit_Type__c,'color:blue','')}"/>
+           <apex:outputText label="EV Code Signing Audit Type" value="{!targetAccountSo.EV_Code_Signing_Audit_Type__c}" style="{!IF (sourceAccountSo.EV_Code_Signing_Audit_Type__c != targetAccountSo.EV_Code_Signing_Audit_Type__c,'color:blue','')}"/>
+
+           <apex:outputText label="EV Code Signing Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Code_Signing_Audit_Statement_Date__c != targetAccountSo.EV_Code_Signing_Audit_Statement_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.EV_Code_Signing_Audit_Statement_Date__c}" /> 
+           </apex:outputText> 
+
+           <apex:outputText label="EV Code Signing Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Code_Signing_Audit_Statement_Date__c != targetAccountSo.EV_Code_Signing_Audit_Statement_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.EV_Code_Signing_Audit_Statement_Date__c}" /> 
+           </apex:outputText>
+
+           <apex:outputText label="EV Code Signing Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Code_Signing_Audit_Period_Start_Date__c != targetAccountSo.EV_Code_Signing_Audit_Period_Start_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.EV_Code_Signing_Audit_Period_Start_Date__c}" /> 
+           </apex:outputText>             
+           <apex:outputText label="EV Code Signing Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Code_Signing_Audit_Period_Start_Date__c != targetAccountSo.EV_Code_Signing_Audit_Period_Start_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.EV_Code_Signing_Audit_Period_Start_Date__c}" /> 
+           </apex:outputText> 
+
+           <apex:outputText label="EV Code Signing Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Code_Signing_Audit_Period_End_Date__c != targetAccountSo.EV_Code_Signing_Audit_Period_End_Date__c,'color:blue','')}">
+                  <apex:param value="{!sourceAccountSo.EV_Code_Signing_Audit_Period_End_Date__c}" /> 
+           </apex:outputText>             
+           <apex:outputText label="EV Code Signing Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.EV_Code_Signing_Audit_Period_End_Date__c != targetAccountSo.EV_Code_Signing_Audit_Period_End_Date__c,'color:blue','')}">
+                  <apex:param value="{!targetAccountSo.EV_Code_Signing_Audit_Period_End_Date__c}" /> 
+           </apex:outputText>      
+        
+        </apex:pageBlockSection>  
+        </apex:pageBlock>          
+        
+    
+        <!-- User prompt to update Poliocy Fields -->
+        <!--Commented CP/CPS section for Root Certificates on 11th May 2020-->
+        <apex:pageBlock title="Policies and Practices Fields"  id="PolicyBlock" rendered="{!!hasError && sourceAccountSo.RecordType.Name == 'Intermediate Certificate'}">
+            <apex:outputPanel id="PolicyFieldsQuestion" rendered="{!showPolicyFieldsConfirmation && !sourceAccountSo.CP_CPS_Same_as_Parent__c && !targetAccountSo.CP_CPS_Same_as_Parent__c}" > <br/><b> 
+               <apex:outputText value="Do you want to copy the Policy fields from Source (left column) to Target (right column)?" /> </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <apex:commandButton action="{!syncPolicyFieldsOnTargetAccount}" value="Yes" id="savePolicyFieldsButton" reRender="theForm, PolicyBlock" onclick="this.value = 'Saving..'" oncomplete="this.value = ' Save '" status="savePolicyFieldsStatus"/>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               <apex:actionStatus id="savePolicyFieldsStatus">
+                    <apex:facet name="start">
+                        <apex:image value="/img/loading24.gif" height="16" width="16" />
+                    </apex:facet> 
+               </apex:actionStatus>
+            </apex:outputPanel>  
+            <apex:outputPanel id="PolicyFieldsPrompt" rendered="{!sourceAccountSo.CP_CPS_Same_as_Parent__c || targetAccountSo.CP_CPS_Same_as_Parent__c}" > <br/><b> 
+               <apex:outputText value="Mass Update will not allow changes to Target when 'CP/CPS Same as Parent' is true." /> </b>     
+            </apex:outputPanel>  
+            <apex:outputPanel id="PolicyFieldsConfirmation" rendered="{!!showPolicyFieldsConfirmation}"> <br/><b>  
+                <apex:outputText value="Policies and Practices Fields updated successfully" /> </b>
+            </apex:outputPanel>   <br/><br/><br/>
+            <apex:pageBlockSection columns="2">  
+            
+               <apex:outputText label="CP/CPS Same as Parent" value="{!sourceAccountSo.CP_CPS_Same_as_Parent__c}" style="{!IF (sourceAccountSo.CP_CPS_Same_as_Parent__c != targetAccountSo.CP_CPS_Same_as_Parent__c,'color:blue','')}" rendered="{!isIntermediateCert}"/>
+               <apex:outputText label="CP/CPS Same as Parent" value="{!targetAccountSo.CP_CPS_Same_as_Parent__c}" style="{!IF (sourceAccountSo.CP_CPS_Same_as_Parent__c != targetAccountSo.CP_CPS_Same_as_Parent__c,'color:blue','')}" rendered="{!isIntermediateCert}"/>
+           
+               <apex:outputText label="Policy Documentation" value="{!sourceAccountSo.Policy_Documentation__c}" style="{!IF (sourceAccountSo.Policy_Documentation__c != targetAccountSo.Policy_Documentation__c,'color:blue','')}"/>
+               <apex:outputText label="Policy Documentation" value="{!targetAccountSo.Policy_Documentation__c}" style="{!IF (sourceAccountSo.Policy_Documentation__c != targetAccountSo.Policy_Documentation__c,'color:blue','')}"/>
+    
+               <apex:outputText label="CA Document Repository" value="{!sourceAccountSo.CA_Document_Repository__c}" style="{!IF (sourceAccountSo.CA_Document_Repository__c != targetAccountSo.CA_Document_Repository__c,'color:blue','')}"/>
+               <apex:outputText label="CA Document Repository" value="{!targetAccountSo.CA_Document_Repository__c}" style="{!IF (sourceAccountSo.CA_Document_Repository__c != targetAccountSo.CA_Document_Repository__c,'color:blue','')}"/>
+            
+               <apex:outputText label="Certificate Policy (CP)" value="{!sourceAccountSo.Certificate_Policy_CP__c}" style="{!IF (sourceAccountSo.Certificate_Policy_CP__c != targetAccountSo.Certificate_Policy_CP__c,'color:blue','')}"/>
+               <apex:outputText label="Certificate Policy (CP)" value="{!targetAccountSo.Certificate_Policy_CP__c}" style="{!IF (sourceAccountSo.Certificate_Policy_CP__c != targetAccountSo.Certificate_Policy_CP__c,'color:blue','')}"/>
+      
+               <apex:outputText label="Certification Practice Statement (CPS)" value="{!sourceAccountSo.Certification_Practice_Statement_CPS__c}" style="{!IF (sourceAccountSo.Certification_Practice_Statement_CPS__c != targetAccountSo.Certification_Practice_Statement_CPS__c,'color:blue','')}"/>
+               <apex:outputText label="Certification Practice Statement (CPS)" value="{!targetAccountSo.Certification_Practice_Statement_CPS__c}" style="{!IF (sourceAccountSo.Certification_Practice_Statement_CPS__c != targetAccountSo.Certification_Practice_Statement_CPS__c,'color:blue','')}"/>
+    
+               <apex:outputText label="CP/CPS Last Updated Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.CP_CPS_Last_Updated_Date__c != targetAccountSo.CP_CPS_Last_Updated_Date__c,'color:blue','')}">
+                      <apex:param value="{!sourceAccountSo.CP_CPS_Last_Updated_Date__c }" /> 
+               </apex:outputText>             
+               <apex:outputText label="CP/CPS Last Updated Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.CP_CPS_Last_Updated_Date__c != targetAccountSo.CP_CPS_Last_Updated_Date__c,'color:blue','')}">
+                      <apex:param value="{!targetAccountSo.CP_CPS_Last_Updated_Date__c }" /> 
+               </apex:outputText> 
+            </apex:pageBlockSection> 
+        </apex:pageBlock>
+        
+        <!-- User prompt to update Mozilla Verified Fields -->
+         
+        <apex:outputPanel rendered="{! OR(isMozillaProfile,isMicrosoftProfile)}">
+        <apex:pageBlock title="Verified Audit Date Fields"  id="VerifiedBlock" rendered="{!!hasError}">
+        
+           <apex:outputPanel id="MozillaFieldsQuestion" rendered="{!showMozillaFieldsConfirmation}" > 
+             <apex:outputPanel rendered="{!isMozillaProfile}">     <br/> <b>                            
+                <apex:outputText value="Do you want to copy the Mozilla Verified Audit Date field from Source (left column) to Target (right column)?" />  </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:commandButton action="{!syncMozillaFieldsOnTargetAccount}" value="Yes" id="saveMozillaFieldsButton" reRender="theForm,  VerifiedBlock" onclick="this.value = 'Saving..'" oncomplete="this.value = ' Save '" status="saveMozillaFieldsStatus"/>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:actionStatus id="saveMozillaFieldsStatus">
+                <apex:facet name="start">
+                    <apex:image value="/img/loading24.gif" height="16" width="16" />
+                </apex:facet> 
+                </apex:actionStatus>   <br/><br/>
+             </apex:outputPanel> 
+           </apex:outputPanel>  
+    
+         <!-- Replace user prompt with field update message --> 
+  
+         <apex:outputPanel id="MozillaFieldsConfirmation" rendered="{!!showMozillaFieldsConfirmation}" > <br/><b>  
+           <apex:outputText value="Mozilla Verified Audit Date field updated successfully" /> </b><br/><br/>
+         </apex:outputPanel>  
+         
+           <!-- User prompt to update Microsoft Verified Fields -->          
+       
+           <apex:outputPanel id="MicrosoftFieldsQuestion" rendered="{!showMicrosoftFieldsConfirmation}" > 
+             <apex:outputPanel rendered="{!isMicrosoftProfile}"> 
+             <b> <apex:outputText value="Do you want to copy the Microsoft Verified Audit Date field from Source (left column) to Target (right column)?" /> </b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             <apex:commandButton action="{!syncMicrosoftFieldsOnTargetAccount}" value="Yes" id="saveMicrosoftFieldsButton" reRender="theForm,  VerifiedBlock" onclick="this.value = 'Saving..'" oncomplete="this.value = ' Save '" status="saveMicrosoftFieldsStatus"/>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             <apex:actionStatus id="saveMicrosoftFieldsStatus">
+             <apex:facet name="start">
+                <apex:image value="/img/loading24.gif" height="16" width="16" />
+             </apex:facet> 
+            </apex:actionStatus> <br/><br/><br/><br/>  
+           </apex:outputPanel>            
+          </apex:outputPanel> 
+        
+         <!-- Replace user prompt with field update message -->  
+  
+         <apex:outputPanel id="MicrosoftFieldsConfirmation" rendered="{!!showMicrosoftFieldsConfirmation}" > 
+         <br/><b> <apex:outputText value="Microsoft Verified Audit Date field updated successfully" /> </b> <br/><br/><br/><br/>  
+         </apex:outputPanel>           
+        
+         <!-- show Mozilla Verified Audit Date field --> 
+                     
+         <apex:pageBlockSection columns="2">          
+           
+           <apex:outputText rendered="{!isMozillaProfile}" label="Mozilla Verified Audit Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Mozilla_Verified_Audit_Date__c != targetAccountSo.Mozilla_Verified_Audit_Date__c,'color:blue','')}">
+               <apex:param value="{!sourceAccountSo.Mozilla_Verified_Audit_Date__c}" /> 
+           </apex:outputText>                     
+            <apex:outputText rendered="{!isMozillaProfile}" label="Mozilla Verified Audit Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Mozilla_Verified_Audit_Date__c != targetAccountSo.Mozilla_Verified_Audit_Date__c,'color:blue','')}">
+                <apex:param value="{!targetAccountSo.Mozilla_Verified_Audit_Date__c}" /> 
+           </apex:outputText>           
+                               
+         <!-- show Microsoft Verified Audit Date field --> 
+        
+           <apex:outputText rendered="{!isMicrosoftProfile}" label="Microsoft Verified Audit Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Microsoft_Verified_Audit_Date__c != targetAccountSo.Microsoft_Verified_Audit_Date__c,'color:blue','')}">
+                <apex:param value="{!sourceAccountSo.Microsoft_Verified_Audit_Date__c}" /> 
+           </apex:outputText>                      
+           <apex:outputText rendered="{!isMicrosoftProfile}" label="Microsoft Verified Audit Date" value="{0,date,MM/dd/yyyy}" style="{!IF (sourceAccountSo.Microsoft_Verified_Audit_Date__c != targetAccountSo.Microsoft_Verified_Audit_Date__c,'color:blue','')}">
+                <apex:param value="{!targetAccountSo.Microsoft_Verified_Audit_Date__c}" /> 
+           </apex:outputText>
+      
+       </apex:pageBlockSection> 
+        
+     </apex:pageBlock>
+        </apex:outputPanel>
+            
+        <apex:outputPanel rendered="{!AND(hasError, !isValidPortalUser)}">  &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;
+             <apex:commandButton value="Go Back" action="{!redirectToAccount}" id="goBack" rendered="{!AND(hasError, !isValidPortalUser)}" style="width:55px"/>    
+        </apex:outputPanel>
+        
+        <!-- show Mozilla or Microsoft reference fields --> 
+        
+        <apex:outputPanel rendered="{!isRootCert}">         
+        <apex:pageBlock title="Mozilla Reference Fields"  id="MozillaRootCertReferenceBlock" rendered="{!!hasError}">
+         <apex:pageBlockSection columns="2"> 
+         
+           <apex:outputText label="Mozilla Trust Bits" value="{!sourceAccountSo.Trust_Bits__c}" style="{!IF (sourceAccountSo.Trust_Bits__c != targetAccountSo.Trust_Bits__c,'color:blue','')}"/>              
+           <apex:outputText label="Mozilla Trust Bits" value="{!targetAccountSo.Trust_Bits__c}" style="{!IF (sourceAccountSo.Trust_Bits__c != targetAccountSo.Trust_Bits__c,'color:blue','')}"/>
+           
+           <apex:outputText label="Mozilla EV Policy OID(s)" value="{!sourceAccountSo.EV_Policy_OID_s__c}" style="{!IF (sourceAccountSo.EV_Policy_OID_s__c != targetAccountSo.EV_Policy_OID_s__c,'color:blue','')}"/>            
+           <apex:outputText label="Mozilla EV Policy OID(s)" value="{!targetAccountSo.EV_Policy_OID_s__c}" style="{!IF (sourceAccountSo.EV_Policy_OID_s__c != targetAccountSo.EV_Policy_OID_s__c,'color:blue','')}"/>  
+               
+           <apex:outputText label="Mozilla Removal Bug No. or Date" value="{!sourceAccountSo.Removal_Bug_No_or_Date__c}" style="{!IF (sourceAccountSo.Removal_Bug_No_or_Date__c != targetAccountSo.Removal_Bug_No_or_Date__c,'color:blue','')}"/>             
+           <apex:outputText label="Mozilla Removal Bug No. or Date" value="{!sourceAccountSo.Removal_Bug_No_or_Date__c}" style="{!IF (targetAccountSo.Removal_Bug_No_or_Date__c != targetAccountSo.Removal_Bug_No_or_Date__c,'color:blue','')}"/>
+           
+           <apex:outputText label="Do NOT Send Audit Reminder" value="{!sourceAccountSo.Do_NOT_Send_Audit_Reminder__c}" style="{!IF (sourceAccountSo.Do_NOT_Send_Audit_Reminder__c != targetAccountSo.Do_NOT_Send_Audit_Reminder__c,'color:blue','')}"/>              
+           <apex:outputText label="Do NOT Send Audit Reminder" value="{!targetAccountSo.Do_NOT_Send_Audit_Reminder__c}" style="{!IF (sourceAccountSo.Do_NOT_Send_Audit_Reminder__c != targetAccountSo.Do_NOT_Send_Audit_Reminder__c,'color:blue','')}"/>              
+           
+           <apex:outputText label="Mozilla Status" value="{!sourceAccountSo.Status__c}" style="{!IF (sourceAccountSo.Status__c != targetAccountSo.Status__c,'color:blue','')}"/>             
+           <apex:outputText label="Mozilla Status" value="{!targetAccountSo.Status__c}" style="{!IF (sourceAccountSo.Status__c != targetAccountSo.Status__c,'color:blue','')}"/>                   
+ 
+         </apex:pageBlockSection>
+         </apex:pageBlock>
+        </apex:outputPanel> 
+        
+        <apex:outputPanel rendered="{!isRootCert}">         
+         <apex:pageBlock title="Microsoft Reference Fields"  id="MicrosoftRootCertReferenceBlock" rendered="{!!hasError}">
+          <apex:pageBlockSection columns="2"> 
+          
+           <apex:outputText label="Friendly Name" value="{!sourceAccountSo.Friendly_Name__c}" style="{!IF (sourceAccountSo.Friendly_Name__c != targetAccountSo.Friendly_Name__c,'color:blue','')}"/>              
+           <apex:outputText label="Friendly Name" value="{!targetAccountSo.Friendly_Name__c}" style="{!IF (sourceAccountSo.Friendly_Name__c != targetAccountSo.Friendly_Name__c,'color:blue','')}"/>              
+           
+           <apex:outputText label="Microsoft Trust Bits" value="{!sourceAccountSo.Microsoft_Trust_Bits__c}" style="{!IF (sourceAccountSo.Microsoft_Trust_Bits__c != targetAccountSo.Microsoft_Trust_Bits__c,'color:blue','')}"/>              
+           <apex:outputText label="Microsoft Trust Bits" value="{!targetAccountSo.Microsoft_Trust_Bits__c}" style="{!IF (sourceAccountSo.Microsoft_Trust_Bits__c != targetAccountSo.Microsoft_Trust_Bits__c,'color:blue','')}"/>              
+
+           <apex:outputText label="Microsoft EV Enabled" value="{!sourceAccountSo.Microsoft_EV_Enabled__c}" style="{!IF (sourceAccountSo.Microsoft_EV_Enabled__c != targetAccountSo.Microsoft_EV_Enabled__c,'color:blue','')}"/>              
+           <apex:outputText label="Microsoft EV Enabled" value="{!targetAccountSo.Microsoft_EV_Enabled__c}" style="{!IF (sourceAccountSo.Microsoft_EV_Enabled__c != targetAccountSo.Microsoft_EV_Enabled__c,'color:blue','')}"/>              
+                         
+           <apex:outputText label="Microsoft Do NOT Send Audit Reminder" value="{!sourceAccountSo.Microsoft_Do_NOT_Send_Audit_Reminder__c}" style="{!IF (sourceAccountSo.Microsoft_Do_NOT_Send_Audit_Reminder__c != targetAccountSo.Microsoft_Do_NOT_Send_Audit_Reminder__c,'color:blue','')}"/>              
+           <apex:outputText label="Microsoft Do NOT Send Audit Reminder" value="{!targetAccountSo.Microsoft_Do_NOT_Send_Audit_Reminder__c}" style="{!IF (sourceAccountSo.Microsoft_Do_NOT_Send_Audit_Reminder__c != targetAccountSo.Microsoft_Do_NOT_Send_Audit_Reminder__c,'color:blue','')}"/>              
+           
+           <apex:outputText label="Microsoft Status" value="{!sourceAccountSo.Microsoft_Status__c}" style="{!IF (sourceAccountSo.Microsoft_Status__c != targetAccountSo.Microsoft_Status__c,'color:blue','')}"/>             
+           <apex:outputText label="Microsoft Status" value="{!targetAccountSo.Microsoft_Status__c}" style="{!IF (sourceAccountSo.Microsoft_Status__c != targetAccountSo.Microsoft_Status__c,'color:blue','')}"/>                 
+         
+          </apex:pageBlockSection>
+         </apex:pageBlock>
+        </apex:outputPanel> 
+       
+        <apex:outputPanel rendered="{!isIntermediateCert}">         
+         <apex:pageBlock title="Intermediate Cert Reference Fields"  id="IntermediateCertReferenceBlock" rendered="{!!hasError}">
+          <apex:pageBlockSection columns="2">  
+          
+           <apex:outputText label="Revocation Status" value="{!sourceAccountSo.Revocation_Status__c}" style="{!IF (sourceAccountSo.Revocation_Status__c != targetAccountSo.Revocation_Status__c,'color:blue','')}"/>             
+           <apex:outputText label="Revocation Status" value="{!targetAccountSo.Revocation_Status__c}" style="{!IF (sourceAccountSo.Revocation_Status__c != targetAccountSo.Revocation_Status__c,'color:blue','')}"/>                 
+
+           <apex:outputText label="Date of Revocation" value="{!sourceAccountSo.Date_of_Revocation__c}" style="{!IF (sourceAccountSo.Date_of_Revocation__c != targetAccountSo.Date_of_Revocation__c,'color:blue','')}"/>             
+           <apex:outputText label="Date of Revocation" value="{!targetAccountSo.Date_of_Revocation__c}" style="{!IF (sourceAccountSo.Date_of_Revocation__c != targetAccountSo.Date_of_Revocation__c,'color:blue','')}"/>                 
+                
+           <apex:outputText label="Revocation Reason Code" value="{!sourceAccountSo.RFC_5280_Revocation_Reason_Code__c}" style="{!IF (sourceAccountSo.RFC_5280_Revocation_Reason_Code__c != targetAccountSo.RFC_5280_Revocation_Reason_Code__c,'color:blue','')}"/>             
+           <apex:outputText label="Revocation Reason Code" value="{!targetAccountSo.RFC_5280_Revocation_Reason_Code__c}" style="{!IF (sourceAccountSo.RFC_5280_Revocation_Reason_Code__c != targetAccountSo.RFC_5280_Revocation_Reason_Code__c,'color:blue','')}"/>                 
+            
+          </apex:pageBlockSection>
+         </apex:pageBlock>
+        </apex:outputPanel>           
+        
+        <apex:pageBlock title="In each section, Click on 'Yes' button to copy the Source fields (left column) to the Target fields (right column). Certificate {!recordIndex + 1} of {!totaltargetAccountCount}" rendered="{!AND(!showMessage, isValidPortalUser)}" id="confirmPanel2">   
+          
+             <apex:commandButton value="Next Target Cert" id="nextButton" style="width:100px;" reRender="theForm, StdAuditBlock, BRAuditBlock, EVSSLAuditBLock, PolicyBlock, VerifiedBlock, ReferenceBlock" action="{!nextAccount}" onclick="window.scrollTo(0,0);" oncomplete="window.scrollTo(0,0);" status="saveStatus"/>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             
+             <apex:commandButton value="Exit" id="exitButton" status="saveStatus" action="{!redirectTosourceAccount}"/>
+                   &nbsp;&nbsp;&nbsp;           
+         
+        </apex:pageBlock>  
+          
+     </apex:form>  
+     
+     <style>
+        .pageDescription, .pageType { white-space: nowrap;}    
+        .pbTitle { white-space: nowrap; }   
+        .btn { width:50px; } 
+     </style>      
+
+</apex:page>

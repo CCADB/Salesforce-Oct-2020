@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CP/CPS Document</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CP/CPS Documents</value>
+    </caseValues>
+    <fields>
+        <label><!-- Associated Trust Bits --></label>
+        <name>Associated_Trust_Bits__c</name>
+        <picklistValues>
+            <masterLabel>Client Authentication</masterLabel>
+            <translation><!-- Client Authentication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Code Signing</masterLabel>
+            <translation><!-- Code Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Document Signing</masterLabel>
+            <translation><!-- Document Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Encrypting File System</masterLabel>
+            <translation><!-- Encrypting File System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security End System</masterLabel>
+            <translation><!-- IP Security End System --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security IKE Intermediate</masterLabel>
+            <translation><!-- IP Security IKE Intermediate --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security Tunnel Termination</masterLabel>
+            <translation><!-- IP Security Tunnel Termination --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IP Security User</masterLabel>
+            <translation><!-- IP Security User --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>OCSP Signing</masterLabel>
+            <translation><!-- OCSP Signing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Private Key Archiva</masterLabel>
+            <translation><!-- Private Key Archiva --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Secure Email</masterLabel>
+            <translation><!-- Secure Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Server Authentication</masterLabel>
+            <translation><!-- Server Authentication --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Time Stamping</masterLabel>
+            <translation><!-- Time Stamping --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Case --></label>
+        <name>Case__c</name>
+        <relationshipLabel><!-- CP/CPS Documents --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Associated Root Certificates --></label>
+        <name>Count_of_Associated_Root_Certificates__c</name>
+    </fields>
+    <fields>
+        <label><!-- Document Last Updated Date --></label>
+        <name>Document_Last_Updated_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Document Link --></label>
+        <name>Document_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Document Type --></label>
+        <name>Document_Type__c</name>
+        <picklistValues>
+            <masterLabel>CP</masterLabel>
+            <translation><!-- CP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CP/CPS</masterLabel>
+            <translation><!-- CP/CPS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CPS</masterLabel>
+            <translation><!-- CPS --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Policy Identifiers --></label>
+        <name>Policy_Identifiers__c</name>
+        <picklistValues>
+            <masterLabel>None</masterLabel>
+            <translation><!-- None --></translation>
+        </picklistValues>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

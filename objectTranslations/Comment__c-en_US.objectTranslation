@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Comment</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Comments</value>
+    </caseValues>
+    <fields>
+        <label><!-- Auditor Contact --></label>
+        <name>Auditor_Contact__c</name>
+        <relationshipLabel><!-- Internal Comments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Auditor Location --></label>
+        <name>Auditor_Location__c</name>
+        <relationshipLabel><!-- Internal Comments --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Auditor --></label>
+        <name>Auditor__c</name>
+        <relationshipLabel><!-- Internal Comments --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Internal comment added by root store members --></help>
+        <label><!-- Comment --></label>
+        <name>Comment__c</name>
+    </fields>
+    <layouts>
+        <layout>Comment on Auditor Contact Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments on Auditor Contact --></label>
+            <section>Internal Comments on Auditor Contact</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Comment on Auditor Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments on Auditor --></label>
+            <section>Internal Comments on Auditor</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Comment on Auditor Location Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Internal Comments on Auditor Location --></label>
+            <section>Internal Comments on Auditor Location</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <description><!-- Add internal comment for Auditor --></description>
+        <label><!-- Comment on Auditor --></label>
+        <name>Comment_on_Auditor</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Add internal comment for Auditor Contact --></description>
+        <label><!-- Comment on Auditor Contact --></label>
+        <name>Comment_on_Auditor_Contact</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Add internal comment for Auditor Location --></description>
+        <label><!-- Comment on Auditor Location --></label>
+        <name>Comment_on_Auditor_Location</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label><!-- New_Comment_on_Auditor --></label>
+        <name>New_Comment_on_Auditor</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Comment_on_Auditor_Contact --></label>
+        <name>New_Comment_on_Auditor_Contact</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Comment_on_Auditor_Location --></label>
+        <name>New_Comment_on_Auditor_Location</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,319 @@
+<apex:page standardController="Case" showHeader="false" readOnly="true" sidebar="false" cache="false" tabStyle="Case" standardStylesheets="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+            .slds-section__title {
+                color: black !important;
+                font-size:15px !important;
+                font-weight:bold !important;
+            }
+            .slds-form-element__label {
+                font-size:14px !important;
+                font-weight:bold !important;
+            }
+            @media print {
+                #btnPrint {
+                    display:none;
+                }
+            }
+        </style>
+        <body>
+            <div class="slds scope" style="padding-left: 10px;padding-right: 10px;">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="slds-page-header" style="margin-top:10px;">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                    <div class="slds-media slds-no-space slds-grow">
+                                        <div class="slds-media__figure">
+                                            <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                            </svg> -->
+                                            <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                        </div>
+                                        <div class="slds-media__body" style="margin-top: 8px;">
+                                            <p class="slds-text-title--caps slds-line-height--reset">Mozilla</p>
+                                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="">CA Program - NSS/PSM Bug Request</h1>
+                                        </div>              
+                                    </div>
+                                </div>
+                                <div class="slds-page-header__col-actions">
+                                    <ul class="slds-button-group-list">
+                                        <li>
+                                            <button class="slds-button slds-button_neutral" id="btnPrint" onclick="javascript:window.print();return false;" >Print this page</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <!--Body-->
+                        <div id="mainbody" style="margin-top:15px;">
+                            <apex:outputPanel style="height: 4rem;" rendered="{!(AND (Case.Request_Status__c != 'Approved, Pending Inclusion', Case.Request_Status__c != 'Approved, Pending Inclusion and EV'))}" layout="block">
+                                <div class="slds-notify_container slds-is-relative">
+                                    <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
+                                        <div class="slds-notify__content">
+                                            <h2 class="slds-text-heading_small ">Inclusion request not yet approved!! Do not create bug request.</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                            <!-- Get the count of records for related list -->
+                            <apex:variable value="{!0}" var="TotalRec"/> 
+                            <apex:repeat value="{!Case.Root_Cases__r}"  var="root">                           
+                                <apex:variable var="TotalRec" value="{!TotalRec + 1}"/> 
+                            </apex:repeat>
+                            
+                            <!-- Display all child records from related list -->
+                            <!--NSS-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" >
+                                    <span class="slds-truncate slds-p-horizontal_small">Request to include Root Certificate(s) owned by {!Case.Account.Name} in NSS</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-form-element__control" style="font-size:15px;margin-bottom:10px;">
+                                        This bug requests inclusion in the NSS root store of the following root certificates owned by {!Case.Account.Name}.
+                                    </div>
+                                    <apex:variable value="{!1}" var="Counter"/>
+                                    <apex:repeat value="{!Case.Root_Cases__r}" var="r"> 
+                                        <div class="slds-section slds-is-open" style="margin-left:20px;">
+                                            <h3 class="slds-section__title slds-theme_shade" >
+                                                <span class="slds-truncate slds-p-horizontal_small">Root Certificate {!Counter} of {!TotalRec}</span>
+                                            </h3>
+                                            <div aria-hidden="false" class="slds-section__content">
+                                                <div class="slds-form" role="list">
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    Friendly Name
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.Root_Certificate_Name__c}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    Cert Location    
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.Root_Certificate_Download_URL__c}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    SHA-1 Fingerprint    
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.SHA_1_Fingerprint__c}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    SHA-256 Fingerprint    
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.SHA_256_Fingerprint__c}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    Trust Flags    
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.Trust_Bits__c}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    Test URL    
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.Test_Website_Valid__c}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <apex:variable var="Counter" value="{!Counter + 1}"/> 
+                                    </apex:repeat>
+                                    <div class="slds-form-element__control" style="font-size:15px;margin-top:20px;">
+                                        <apex:outputText value="This CA has been assessed in accordance with the Mozilla project guidelines, and the certificates approved for inclusion in bug {!SUBSTITUTE(Case.Link_to_Bugzilla_Bug__c,'https://bugzilla.mozilla.org/show_bug.cgi?id=', '#')} "/><br /><br />
+                                        <apex:outputText value="The next steps are as follows:"/><br />
+                                        <apex:outputText value="1) A representative of the CA must confirm that all the data in this bug is correct, and that the correct certificates have been attached."/><br />
+                                        <apex:outputText value="2) A Mozilla representative creates a patch with the new certificates, and provides a special test version of Firefox."/><br />
+                                        <apex:outputText value="3) A representative of the CA uses the test version of Firefox to confirm (by adding a comment in this bug) that the certificates have been correctly imported and that websites work correctly."/><br />
+                                        <apex:outputText value="4) The Mozilla representative requests that another Mozilla representative review the patch."/><br />
+                                        <apex:outputText value="5) The Mozilla representative adds (commits) the patch to NSS, then closes this bug as RESOLVED FIXED."/><br />
+                                        <apex:outputText value="6) At some time after that, various Mozilla products will move to using a version of NSS which contains the certificates. This process is mostly under the control of the release drivers for those products."/><br />
+                                    </div>
+                                </div>
+                            </div>
+                            <!--PSM-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" >
+                                    <span class="slds-truncate slds-p-horizontal_small">Request to Enable EV Treatment for Root Certificate(s) owned by {!Case.Account.Name} to PSM</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <div class="slds-form-element__control" style="font-size:15px;margin-bottom:10px;">
+                                        <apex:outputText value="Per bug {!SUBSTITUTE(Case.Link_to_Bugzilla_Bug__c,'https://bugzilla.mozilla.org/show_bug.cgi?id=', '#')} the request from {!Case.Account.Name} has been "/>
+                                        <apex:outputText value="approved to enable the following root certificates for EV use. Please make the corresponding changes to PSM."/>
+                                    </div>
+                                    <apex:variable value="{!1}" var="Counter"/>
+                                    <apex:repeat value="{!Case.Root_Cases__r}" var="r"> 
+                                        <div class="slds-section slds-is-open" style="margin-left:20px;">
+                                            <h3 class="slds-section__title slds-theme_shade" >
+                                                <span class="slds-truncate slds-p-horizontal_small">Root Certificate {!Counter} of {!TotalRec}</span>
+                                            </h3>
+                                            <div aria-hidden="false" class="slds-section__content">
+                                                <div class="slds-form" role="list">
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    Friendly Name
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.Root_Certificate_Name__c}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    SHA-1 Fingerprint    
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.SHA_1_Fingerprint__c}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    SHA-256 Fingerprint    
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.SHA_256_Fingerprint__c}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    EV Policy OID(s)    
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.EV_Policy_OID_s__c  }"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form__row">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_edit slds-form-element_readonly slds-form-element_stacked slds-hint-parent">
+                                                                <span class="slds-form-element__label">
+                                                                    Test URL    
+                                                                </span>
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-form-element__static">
+                                                                        <apex:outputField value="{!r.Test_Website_Valid__c}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <apex:variable var="Counter" value="{!Counter + 1}"/> 
+                                    </apex:repeat>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </html>
+</apex:page>

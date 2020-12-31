@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Auditor Location</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Auditor Locations</value>
+    </caseValues>
+    <fields>
+        <label><!-- Auditor Location External Id --></label>
+        <name>Auditor_Location_External_Id__c</name>
+    </fields>
+    <fields>
+        <help><!-- Auditor Location Status picklist is converted to text by workflow --></help>
+        <label><!-- Auditor Location Status (In Text) --></label>
+        <name>Auditor_Location_Status_In_Text__c</name>
+    </fields>
+    <fields>
+        <help><!-- Auditor status as evaluated by Root Store Managers --></help>
+        <label><!-- Auditor Location Status --></label>
+        <name>Auditor_Location_Status__c</name>
+        <picklistValues>
+            <masterLabel>Confidence - High</masterLabel>
+            <translation><!-- Confidence - High --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Confidence - Low</masterLabel>
+            <translation><!-- Confidence - Low --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Confidence - Medium</masterLabel>
+            <translation><!-- Confidence - Medium --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unknown</masterLabel>
+            <translation><!-- Unknown --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- URL to third-party website attesting to the qualifications of this Auditor to issue WebTrust, ETSI EN 319 411, or ETSI TS 102 042 audit statements. --></help>
+        <label><!-- Auditor Qualifications --></label>
+        <name>Auditor_Qualifications__c</name>
+    </fields>
+    <fields>
+        <label><!-- Auditor --></label>
+        <name>Auditor__c</name>
+        <relationshipLabel><!-- Auditor Locations --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Public comments --></help>
+        <label><!-- Comments --></label>
+        <name>Comments__c</name>
+    </fields>
+    <fields>
+        <help><!-- The date that a root store operator last verified the qualifications of this auditor in this location. --></help>
+        <label><!-- Date Qualifications Verified --></label>
+        <name>Date_Qualifications_Verified__c</name>
+    </fields>
+    <layouts>
+        <layout>Auditor Location Layout</layout>
+        <sections>
+            <label><!-- Auditor Qualifications --></label>
+            <section>Auditor Qualifications</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Public Comments on Auditor Location --></label>
+            <section>Public Comments on Auditor Location</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Auditor Qualifications URL must begin with &apos;http&apos; and can only contain letters, numbers and following characters: + &amp; @ # / % ? = ~ -_ | ! : , . ; [ ] ( ) --></errorMessage>
+        <name>Validate_Auditor_Qualifications</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- List_Root_Certs_Audited_by_this_Auditor_s_Location --></label>
+        <name>List_Root_Certs_Audited_by_this_Auditor_s_Location</name>
+    </webLinks>
+</CustomObjectTranslation>

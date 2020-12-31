@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Auditor__c$Auditor_Status__c</field>
+    </columns>
+    <columns>
+        <field>Auditor__c$Auditor_Website__c</field>
+    </columns>
+    <columns>
+        <field>Auditor__c.Auditor_Locations__r$Name</field>
+    </columns>
+    <columns>
+        <field>Auditor__c.Auditor_Locations__r$Auditor_Location_Status__c</field>
+    </columns>
+    <columns>
+        <field>Auditor__c.Auditor_Locations__r$Auditor_Qualifications__c</field>
+    </columns>
+    <columns>
+        <field>Auditor__c.Auditor_Locations__r$Date_Qualifications_Verified__c</field>
+    </columns>
+    <description>Auditors &amp; Locations</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Auditor__c$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>List All Auditors &amp; Locations</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Auditor_Company_w_o_Location_w_o_Contact__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Auditor__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

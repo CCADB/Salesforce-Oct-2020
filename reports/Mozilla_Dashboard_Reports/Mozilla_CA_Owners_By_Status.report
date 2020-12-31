@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <buckets>
+        <bucketType>number</bucketType>
+        <developerName>BucketField_55632028</developerName>
+        <masterLabel>Audit Remainder Days</masterLabel>
+        <nullTreatment>z</nullTreatment>
+        <sourceColumnName>Account.Audit_Remainder_Days__c</sourceColumnName>
+        <useOther>false</useOther>
+        <values>
+            <sourceValues>
+                <to>395</to>
+            </sourceValues>
+            <value>Audit Date Current</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>395</from>
+                <to>485</to>
+            </sourceValues>
+            <value>Soon to Expire</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>485</from>
+                <to>605</to>
+            </sourceValues>
+            <value>Courtesy Reminder</value>
+        </values>
+        <values>
+            <sourceValues>
+                <from>605</from>
+            </sourceValues>
+            <value>Danger of being Revoked</value>
+        </values>
+    </buckets>
+    <columns>
+        <field>ACCOUNT.NAME</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>RECORDTYPE</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Account.CA_Owner</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Account.Status__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Change Requested,Included,Provided by CA,Verified,Removed,Obsolete</value>
+        </criteriaItems>
+    </filter>
+    <format>Matrix</format>
+    <groupingsAcross>
+        <dateGranularity>Day</dateGranularity>
+        <field>TYPE</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsAcross>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Account.Status__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Mozilla CA Owners By Status</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>AccountList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

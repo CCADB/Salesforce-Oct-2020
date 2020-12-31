@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Mass Email</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Mass Emails</value>
+    </caseValues>
+    <fields>
+        <label><!-- Batch Run on --></label>
+        <name>Batch_Run_on__c</name>
+    </fields>
+    <fields>
+        <label><!-- Batch Status --></label>
+        <name>Batch_Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Failed</masterLabel>
+            <translation><!-- Failed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In Progress</masterLabel>
+            <translation><!-- In Progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Not Yet Started</masterLabel>
+            <translation><!-- Not Yet Started --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- CC To --></label>
+        <name>CC_To__c</name>
+        <picklistValues>
+            <masterLabel>All POCs</masterLabel>
+            <translation><!-- All POCs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>All Primary POCs</masterLabel>
+            <translation><!-- All Primary POCs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CA Email Alias 1</masterLabel>
+            <translation><!-- CA Email Alias 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CA Email Alias 2</masterLabel>
+            <translation><!-- CA Email Alias 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Error Message --></label>
+        <name>Error_Message__c</name>
+    </fields>
+    <fields>
+        <help><!-- A workflow updates this field from a picklist &apos;From&apos;. --></help>
+        <label><!-- From (In Text) --></label>
+        <name>From_In_Text__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field holds the &quot;Display Name&quot; from the Organization-Wide Email Addresses defined in your org. --></help>
+        <label><!-- From --></label>
+        <name>From__c</name>
+        <picklistValues>
+            <masterLabel>Apple CA Program Manager</masterLabel>
+            <translation><!-- Apple CA Program Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CCADB Support</masterLabel>
+            <translation><!-- CCADB Support --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cisco CA Program Manager</masterLabel>
+            <translation><!-- Cisco CA Program Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Current User</masterLabel>
+            <translation><!-- Current User --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Google CA Program Manager</masterLabel>
+            <translation><!-- Google CA Program Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Microsoft CA Program Manager</masterLabel>
+            <translation><!-- Microsoft CA Program Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mozilla CA Program Manager</masterLabel>
+            <translation><!-- Mozilla CA Program Manager --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Message --></label>
+        <name>Message__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Emails Failed --></label>
+        <name>No_of_Emails_Failed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Number of Emails Sent --></label>
+        <name>No_of_Emails_Sent__c</name>
+    </fields>
+    <fields>
+        <help><!-- A workflow updates this field from a picklist &apos;Reply To&apos;. --></help>
+        <label><!-- Reply To (In Text) --></label>
+        <name>Reply_To_In_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reply To --></label>
+        <name>Reply_To__c</name>
+        <picklistValues>
+            <masterLabel>Current User</masterLabel>
+            <translation><!-- Current User --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reply-To Apple CA Program Manager</masterLabel>
+            <translation><!-- Reply-To Apple CA Program Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reply-To Cisco CA Program Manager</masterLabel>
+            <translation><!-- Reply-To Cisco CA Program Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reply-To Google CA Program Manager</masterLabel>
+            <translation><!-- Reply-To Google CA Program Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reply-To Microsoft CA Program Manager</masterLabel>
+            <translation><!-- Reply-To Microsoft CA Program Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reply-To Mozilla CA Program Manager</masterLabel>
+            <translation><!-- Reply-To Mozilla CA Program Manager --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- SOQL Filter Conditions --></label>
+        <name>SOQL_Filter_Conditions__c</name>
+    </fields>
+    <fields>
+        <label><!-- Send To --></label>
+        <name>Send_To__c</name>
+        <picklistValues>
+            <masterLabel>All POCs</masterLabel>
+            <translation><!-- All POCs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>All Primary POCs</masterLabel>
+            <translation><!-- All Primary POCs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CA Email Alias 1</masterLabel>
+            <translation><!-- CA Email Alias 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CA Email Alias 2</masterLabel>
+            <translation><!-- CA Email Alias 2 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subject --></label>
+        <name>Subject__c</name>
+    </fields>
+    <fields>
+        <help><!-- Match profile of current/logged in user with &apos;From&apos; user and &apos;Reply To&apos; user (Used by Mass Email Batch pgm) --></help>
+        <label><!-- DELETE User Eligible to Send Mass Email? --></label>
+        <name>User_Eligible_to_Send_Mass_Email__c</name>
+    </fields>
+    <layouts>
+        <layout>Mass Email Layout</layout>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Batch Process Detail --></label>
+            <section>Batch Process Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Enter the filter condition OR use &apos;Add/Update Filter Conditions&apos; button --></label>
+            <section>Enter the filter condition OR use &apos;Add/Update Filter Conditions&apos; button</section>
+        </sections>
+        <sections>
+            <label><!-- Instructions to send mass emails to Company Aliases, Primary POCs and POCs --></label>
+            <section>Instructions to send mass emails to Company Aliases, Primary POCs and POCs</section>
+        </sections>
+        <sections>
+            <label><!-- Subject &amp; Email Text --></label>
+            <section>Subject &amp; Email Text</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Please select &apos;From&apos; address which represent your company or select &apos;CCADB Support&apos; &apos;Current User&apos; from the list --></errorMessage>
+        <name>Check_for_From_User</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Please select &apos;Reply To&apos; address which represent your company or select &apos;Current User&apos; from the list --></errorMessage>
+        <name>Check_for_Reply_To_User</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Mass Email Batch is Complete. You cannot edit and reuse the record. --></errorMessage>
+        <name>Completed_Mass_Email</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Add_Update_Filter_Conditions --></label>
+        <name>Add_Update_Filter_Conditions</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Help --></label>
+        <name>Help</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Preview_Email --></label>
+        <name>Preview_Email</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Mass_Email --></label>
+        <name>Send_Mass_Email</name>
+    </webLinks>
+</CustomObjectTranslation>

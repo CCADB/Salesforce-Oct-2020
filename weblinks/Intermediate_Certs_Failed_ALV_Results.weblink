@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPageWebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <availability>online</availability>
+    <description>Intermediate Certs - Failed ALV Results</description>
+    <displayType>link</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Intermediate Certs - Failed ALV Results</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>/apex/ICFailedALVResultsReport</url>
+</CustomPageWebLink>

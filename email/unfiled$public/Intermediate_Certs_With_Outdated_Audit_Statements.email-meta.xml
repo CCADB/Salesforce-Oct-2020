@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Intermediate Certs With Outdated Audit Statements</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Intermediate Certs With Outdated Audit Statements</name>
+    <style>none</style>
+    <subject>Outdated Audit Statements for Intermediate Certificates</subject>
+    <textOnly>Dear Certification Authority,
+
+Your CA has &lt;#&gt; intermediate certificate records in the Common CA Database (CCADB) that have outdated audit statements. Please login to the CCADB to provide audit and policy information as described here:
+
+ccadb.org/cas/intermediates
+
+A report of the intermediate certificates that need to be updated may be found by logging into the CCADB, clicking on the &apos;Reports&apos; tab and the &apos;CA Community Reports&apos; folder. The report is called &quot;My Outdated Audit Statements for ICs&quot;
+
+{!IntermediateCertificateList}
+(#10#)
+
+This is an automated email that will be sent regularly until the audit statements have been updated in your CA&apos;s intermediate certificate records in the CCADB.
+
+Regards,
+
+{!User.FirstName} {!User.LastName}
+{!User.CompanyName}
+{!User.Title}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

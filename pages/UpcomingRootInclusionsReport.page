@@ -1,0 +1,281 @@
+<apex:page controller="UpcomingRootInclusionsReportController" sidebar="false" docType="html-5.0" cache="true" expires="3600" readOnly="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+        </style>
+        <body>
+            <apex:form id="frm">
+                <div class="slds" style="width:5000px;">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header" style="margin-top:10px;">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Mozilla</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="Upcoming Root Inclusions List">Upcoming Root Inclusions List</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-truncate slds-p-horizontal_small" title="Records Displayed">As of {!currentDate} ({!rootCaseSoLst.size} records displayed)</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <div  title="Owner">Owner</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Certificate Issuer Organization">Certificate Issuer Organization</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Certificate Issuer Organizational Unit">Certificate Issuer Organizational Unit</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Common Name or Certificate Name">Common Name or Certificate Name</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Request Status">Request Status</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="Root Certificate Download URL">Root Certificate Download URL</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div  title="SHA-256 Fingerprint">SHA-256 Fingerprint</div>
+                                                    </th>
+                                                    <th  scope="col" >
+                                                        <div  title="Valid From [GMT]">Valid From [GMT]</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Valid To [GMT]">Valid To [GMT]</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Public Key Algorithm">Public Key Algorithm</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Signature Hash Algorithm">Signature Hash Algorithm</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Trust Bits">Trust Bits</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="EV Policy OID(s)">EV Policy OID(s)</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Approval Bug">Approval Bug</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="URL to Test Website">URL to Test Website</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Mozilla Applied Constraints">Mozilla Applied Constraints</div>
+                                                    </th>             
+                                                    <th  scope="col">
+                                                        <div  title="Company Website">Company Website</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Geographic Focus">Geographic Focus</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="CA Document Repository">CA Document Repository</div>
+                                                    </th>         
+                                                    <th  scope="col">
+                                                        <div  title="Certificate Policy (CP)">Certificate Policy (CP)</div>
+                                                    </th>
+                                                    
+                                                    <th  scope="col">
+                                                        <div  title="Certification Practice Statement (CPS)">Certification Practice Statement (CPS)</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Standard Audit">Standard Audit</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="BR Audit">BR Audit</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="EV Audit">EV Audit</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Auditor">Auditor</div>
+                                                    </th>
+                                                    <th  scope="col">
+                                                        <div  title="Standard Audit Type">Standard Audit Type</div>
+                                                    </th>
+                                                    <th  scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div title="Standard Audit Statement Dt">Standard Audit Statement Dt</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!rootCaseSoLst}" var="rootCase" rendered="{!rootCaseSoLst != null && rootCaseSoLst.size > 0}">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.Account.name,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.Account.name}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.O_From_Issuer_Field__c,4) != 'NEED',true,false)}" value="{!rootCase.O_From_Issuer_Field__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.OU_From_Issuer_Field__c,4) != 'NEED',true,false)}" value="{!rootCase.OU_From_Issuer_Field__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Root_Certificate_Name__c,4) != 'NEED',true,false)}" value="{!rootCase.Root_Certificate_Name__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Request_Status__c,4) != 'NEED',true,false)}" value="{!rootCase.Request_Status__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Root_Certificate_Download_URL__c,4) != 'NEED',true,false)}" value="{!rootCase.Root_Certificate_Download_URL__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.SHA_256_Fingerprint__c,4) != 'NEED',true,false)}" value="{!rootCase.SHA_256_Fingerprint__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Valid_From_YYYY_MMM_DD__c,4) != 'NEED',true,false)}" value="{!rootCase.Valid_From_YYYY_MMM_DD__c}"> </apex:outputField>
+                                                        </td>                            
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Valid_To_YYYY_MMM_DD__c,4) != 'NEED',true,false)}" value="{!rootCase.Valid_To_YYYY_MMM_DD__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Public_Key_Algorithm__c,4) != 'NEED',true,false)}" value="{!rootCase.Public_Key_Algorithm__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Signature_Hash_Algorithm__c,4) != 'NEED',true,false)}" value="{!rootCase.Signature_Hash_Algorithm__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Trust_Bits__c,4) != 'NEED',true,false)}" value="{!rootCase.Trust_Bits__c}"> </apex:outputField>
+                                                        </td>                     
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.EV_Policy_OID_s__c,4) != 'NEED',true,false)}" value="{!rootCase.EV_Policy_OID_s__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.Link_to_Bugzilla_Bug__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.Link_to_Bugzilla_Bug__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Test_Website_Valid__c,4) != 'NEED',true,false)}" value="{!rootCase.Test_Website_Valid__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Mozilla_Applied_Constraints__c,4) != 'NEED',true,false)}" value="{!rootCase.Mozilla_Applied_Constraints__c}"> </apex:outputField>
+                                                        </td>  
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.Company_Website__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.Company_Website__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.Geographic_Focus__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.Geographic_Focus__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.CA_Document_Repository__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.CA_Document_Repository__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.Certificate_Policy_Link__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.Certificate_Policy_Link__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.Certification_Practice_Statement_Link__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.Certification_Practice_Statement_Link__c}"> </apex:outputField>
+                                                        </td>
+                                                        
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.Standard_Audit_Statement_Link__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.Standard_Audit_Statement_Link__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.BR_Audit_Statement_Link__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.BR_Audit_Statement_Link__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.EV_Audit_Statement_Link__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.EV_Audit_Statement_Link__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.Auditor_New__r.Name,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.Auditor_New__r.Name}"> </apex:outputField>
+                                                        </td>
+                                                        
+                                                        
+                                                        <td class="datacell">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.Standard_Audit_Type__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.Standard_Audit_Type__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputField rendered="{!IF(left(rootCase.Case_No__r.Standard_Audit_Statement_Dt__c,4) != 'NEED',true,false)}" value="{!rootCase.Case_No__r.Standard_Audit_Statement_Dt__c}"> </apex:outputField>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(rootCaseSoLst == null || rootCaseSoLst.size == 0,'','none')}">
+                                                    <td colspan="27" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,11 @@
+<apex:page standardController="Root_Case__c">
+<apex:form id="frm" style="margin-top:10px;">
+<apex:commandButton value="Print View" onclick="openPrintView();" reRender="frm"/>&nbsp;&nbsp;
+<script>
+    function openPrintView(){
+        window.open('/apex/Print_View_For_Root_Case?id={!Root_Case__c.Id}');
+        return false;
+    }
+</script>
+</apex:form>
+</apex:page>

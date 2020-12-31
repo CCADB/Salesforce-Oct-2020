@@ -1,0 +1,20 @@
+Dear Certification Authority, <br><br>
+
+This is a courtesy reminder from Mozilla that audit statements or CP/CPS documents are missing for the following intermediate certificate records in the Common CA Database (CCADB):<br><br>
+
+{!IntermediateCertificateList} 
+<br><br>
+
+For each of the certificates listed above, please update their record in the CCADB to provide audit and policy information as described here: <br><br>
+
+https://ccadb.org/cas/  <br><br>
+
+For new intermediate certificates that will be listed in their parent or root certificate's next audit statements and CP/CPS, please check the 'Audits Same as Parent' and 'CP/CPS Same as Parent' boxes in their records in the CCADB. Mozilla's Root Store Policy says: "If the CA has a currently valid audit report at the time of creation of the certificate, then the new certificate MUST appear on the CA's next periodic audit reports. <br><br>
+
+This is an automated email that will be sent regularly until the audit statements and policy documents have been correctly disclosed in the CCADB. <br><br>
+ 
+Regards,  <br><br>
+
+{!User.FirstName} {!User.LastName} <br>
+{!User.CompanyName} <br>
+{!User.Title} <br>

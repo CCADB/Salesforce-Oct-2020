@@ -1,0 +1,21 @@
+<apex:page controller="UpdateLastLoginController">
+    <apex:sectionHeader title="Update Last Login From User To Contact" />
+    <apex:form id="frm">
+        <br/>
+        <apex:pageBlock >            
+            <p>
+               <apex:outputText value="CAUTION: Click on the button below to update Last Login field for all community users from User record to Contact record." style="color:red;font-weight:bold"/> <br/><br/>    
+            </p>
+            <div align="left" draggable="false" >
+               <apex:commandButton value="Update Contacts" action="{!UpdateContacts}" reRender="frm" /> 
+            </div>
+            <p>
+                <apex:outputText value="To check the Last Login results, please run the following report:"/> <br/> 
+                <apex:outputText value="Community Users Last Login Info"/>
+            </p> 
+        </apex:pageBlock>
+        <apex:pageBlock >   
+            <apex:pageMessages />
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

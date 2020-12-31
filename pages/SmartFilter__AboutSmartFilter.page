@@ -1,0 +1,100 @@
+<apex:page >
+  
+
+ <div class="sfdc_richtext" id="spc_00N9000000BnGQx_div"><div style="font-style: normal; font-weight: normal; white-space: normal; color: rgb(0, 0, 0); font-family: Times; font-size: medium; text-align: justify; background-color: rgb(255, 255, 255);">
+    <p style="">
+        &nbsp;In visualforce page, Sometimes there is a requirement of generating dynamic query based on user input. Many of the time object&nbsp;and fields are fixed.But what if the fields are not fixed.for eg. Initial requirement was showing all the accounts in selected city and suddenly requirement changes like want to show accounts which located in selected city as well as their owner should be xyz.</p>
+</div>
+<div style="font-style: normal; font-weight: normal; white-space: normal; color: rgb(0, 0, 0); font-family: Times; font-size: medium; text-align: justify; background-color: rgb(255, 255, 255);">
+    <p style="">
+        &nbsp; &nbsp; I think its a common problem in many of the use cases.Salesforce created filters which are smart enough to fulfill the dynamic requirements. for eg. mass delete and reporting,.</p>
+</div>
+<div style="font-style: normal; font-weight: normal; white-space: normal; color: rgb(0, 0, 0); font-family: Times; font-size: medium; text-align: justify; background-color: rgb(255, 255, 255);">
+    <p style="">
+        &nbsp; &nbsp;I have created the Smart filter with the same User Interface available in Mass Delete salesforce functionality.Which will returns the SOQL predicates in string.</p>
+</div>
+<div style="font-style: normal; font-weight: normal; white-space: normal; color: rgb(0, 0, 0); font-family: Times; font-size: medium; text-align: justify; background-color: rgb(255, 255, 255);">
+    <p style="">
+        &nbsp;</p>
+</div>
+<div style="font-style: normal; font-weight: normal; white-space: normal; color: rgb(0, 0, 0); font-family: Times; font-size: medium; text-align: justify; background-color: rgb(255, 255, 255);">
+    <p style="">
+        <font face="Verdana, sans-serif"><font size="5"><b>How to Use Smart Filter in Visualforce Page:&nbsp;</b></font></font></p>
+</div>
+<div style="font-style: normal; font-weight: normal; white-space: normal; color: rgb(0, 0, 0); font-family: Times; font-size: medium; text-align: justify; background-color: rgb(255, 255, 255);">
+    <p style="">
+        <b style="font-family: Verdana, sans-serif;">&nbsp; &nbsp;&nbsp;</b><font face="Times, Times New Roman, serif">Smart Filter is a Visualforce component, which will be available in a package named "Smart Filter" on AppExchange.Its very easy to use in Visualforce pages.</font></p>
+</div>
+<div style="font-style: normal; font-weight: normal; white-space: normal; color: rgb(0, 0, 0); font-family: Times; font-size: medium; text-align: justify; background-color: rgb(255, 255, 255);">
+    <p style="">
+        &nbsp;</p>
+</div>
+<div style="font-style: normal; font-weight: normal; white-space: normal; color: rgb(0, 0, 0); font-family: Times; font-size: medium; text-align: justify; background-color: rgb(255, 255, 255);">
+    <p style="">
+        &nbsp;</p>
+    <p style="text-align: center;">
+        <font face="Times, Times New Roman, serif"><a href="http://3.bp.blogspot.com/-uN2MBR38Mto/VBq07W_50SI/AAAAAAAAAKI/PcLk2BRdQWw/s1600/Screen%2BShot%2B2014-09-18%2Bat%2B4.02.48%2BPM.png" style="color: rgb(17, 85, 204); margin-left: 1em;" target="_blank"><img src="https://ci4.googleusercontent.com/proxy/6o0VjfXsJjda_bea9yv2ZocdXdWeZ-YPQB2Y78nfsAmG64i9sH7nDAW1iNguHUicxiRzRZ-O-ttu3etrMFCG-CrmEzeDx9PxsNT7g0OUm9L5oByfkcz9aa3Xcn-9fW-Ce903fU3N1fLxMc9pOdx9v_GEEpR6lrhkEWWqOD485uXQMX6x0CdUWbWFAJmmuy_vU-05eLjTnQXDzADAD2ra7poFjIwLEnidIvtykGb6GGTpcXvjXAPhaSlIechLhKXra0Hp7JdX0AhotGBy0XHCqRe_V_2r9opyIpNFqs9o9tGZXLVAeeTvMM0NceXrpQxgGaj8Ya8i_5FCepe_LwonzkQqWJZq-JWYX33pnmSzjuNIDW1JKQ6rWThiuyUwvX6Qvne-0LkEenxuPq-07t272g=s0-d-e1-ft#https://images-blogger-opensocial.googleusercontent.com/gadgets/proxy?url=http%3A%2F%2F3.bp.blogspot.com%2F-uN2MBR38Mto%2FVBq07W_50SI%2FAAAAAAAAAKI%2FPcLk2BRdQWw%2Fs1600%2FScreen%252BShot%252B2014-09-18%252Bat%252B4.02.48%252BPM.png&amp;container=blogger&amp;gadget=a&amp;rewriteMime=image%2F*" border="0" height="165" width="400"></img></a></font></p>
+    <hr style=""/>
+    <p style="">
+        &nbsp;</p>
+    <p style="text-align: left;">
+        &nbsp; &nbsp;<b>&nbsp;I.&nbsp; Inclue component in Visualforce Page:</b></p>
+    <p style="text-align: left;">
+        <b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b>Following code illustrate, how to include smart filter in custom visualforce page</p>
+        <apex:image url="{!$Resource.SmartFilter__SmartFilterAbout}" width="75%" height="20%"/>
+        
+        <pre style="white-space: pre-wrap;">    
+          This component takes 3 parameters</pre>
+    <pre style="white-space: pre-wrap;">          1. pageCont(Required): The current pages controller, In which we added this component.</pre>
+    <pre style="white-space: pre-wrap;">          2. object(Required):   The objects API name for which we are running this smart filter.</pre>
+    <pre style="white-space: pre-wrap;">          3. omittedFields(Optional): The list of string contains API names of fields, which we don't want to show in smart filter.</pre>
+    <pre style="white-space: pre-wrap;">          (Note: The fields on which user does not have a read permission those fields will not get displayed in smart filter)]</pre>
+    <pre style="white-space: pre-wrap;"> </pre>
+    <p style="text-align: left;">
+        <b>&nbsp; &nbsp;II. Access Predicates in Page Controller:</b></p>
+    <p style="text-align: left;">
+        <b>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b>Since we need to call a fetchQuery() method from component thats why we need to &nbsp;extend a controller class from&nbsp;<font style="text-align: justify;">SmartFilter.PageControllerBase and need to instantiate&nbsp;</font> <font style="text-align: justify;">Smart</font>&nbsp;<font style="text-align: justify;">Filter component by implementing following logic</font></p>
+    <pre style="white-space: pre-wrap;">[#codered </pre>
+    <pre style="white-space: pre-wrap;">global&nbsp;with&nbsp;sharing&nbsp;class&nbsp;SmartFilterExampleController&nbsp;extends&nbsp;SmartFilter.PageControllerBase&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;List&lt;Account&gt;&nbsp;objectList{get;set;}
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;SmartFilterExampleController(){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objectList&nbsp;=&nbsp;new&nbsp;List&lt;Account&gt;();
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;SmartFilter.SmartFiltersComponentController&nbsp;myComponentController&nbsp;{set;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//System.debug('Calling&nbsp;SmartFiltersComponentController&nbsp;.....&nbsp;');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//get&nbsp;the&nbsp;map,&nbsp;then&nbsp;the&nbsp;component&nbsp;controller&nbsp;using&nbsp;the&nbsp;appropriate&nbsp;key
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(getComponentControllerMap()!=null){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SmartFilter.SmartFiltersComponentController&nbsp;mcc;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mcc&nbsp;=&nbsp;(SmartFilter.SmartFiltersComponentController&nbsp;)getComponentControllerMap().get('Account');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(mcc!=&nbsp;null)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;mcc;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//ystem.debug('Calling&nbsp;SmartFiltersComponentController&nbsp;.....&nbsp;');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//just&nbsp;in&nbsp;case&nbsp;something&nbsp;goes&nbsp;wrong&nbsp;return&nbsp;something...this&nbsp;can&nbsp;be&nbsp;handled&nbsp;better
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;SmartFilter.SmartFiltersComponentController();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;fetchAccounts()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;predicates&nbsp;=&nbsp;myComponentController.fetchQuery();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.debug('Fetch&nbsp;Test&nbsp;Query&nbsp;Result.............'+predicates);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(predicates!=null&nbsp;&amp;&amp;&nbsp;predicates!=&nbsp;''){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;system.debug('inside&nbsp;if&nbsp;condition...........');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objectList&nbsp;=&nbsp;Database.query('select&nbsp;Id,name&nbsp;from&nbsp;account&nbsp;where&nbsp;'+predicates);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}else{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;system.debug('inside&nbsp;else&nbsp;condition...........');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objectList&nbsp;=&nbsp;[select&nbsp;Id,name&nbsp;from&nbsp;account&nbsp;limit&nbsp;100];&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+}]
+
+</pre>
+</div>
+</div>
+</apex:page>

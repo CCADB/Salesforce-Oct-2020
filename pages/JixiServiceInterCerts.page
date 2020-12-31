@@ -1,0 +1,381 @@
+<!--
+*******************************************************************************************************
+ Name: JixiServiceInterCerts
+
+ Dependencies:  JixiServiceInterCertsController controller class, 
+ JixiServiceInterCertsControllerTest test class, JixiServiceInterCerts vf page
+
+ Description: Audit Letter Validation for Intermediate Certs or Jixi service allows root store managers 
+ and CAs to validate audit docuemnts. It is invoked from a button "Audit Letter Validation" from 
+ Intermediate Cert record. A self signed certificate is required to authenticate and establish the connection. 
+ 
+    1. Prepare request using Intermediate Cert Id and "CCADB_JIXI_ServiceRequest"
+    2. Do a callout to External Jixi Server
+    3. Get a Response
+    4. If error display messages on Screen
+    5. Provide necessary actions to User
+    6. Provide Loading Dialog and processing bar on the screen
+ 
+ If the "Audit Same As Parent" is checked, ALV processing will not be allowed to run. Only one intermediate
+ cert data is send in the https request to process.
+ 
+ Instructions: The  ALV webservice was initially created for Case/RootCase records and the JSON definition
+ has not been modify for intermediate certs. That is why the this prorgam is referencing Case/RootCase  
+ attributes. 
+ *******************************************************************************************************
+ Revision History:
+ 
+      5/2/2019 - Created new
+ ******************************************************************************************************/
+ --> 
+ <apex:page standardController="Account" extensions="JixiServiceInterCertsController" sidebar="true" action="{!UpdateDeriveTrustBits}">
+    
+    <apex:form id="theForm">
+
+        <apex:stylesheet value="{!URLFOR($Resource.Yahoo_UILibrary, '/yui/build/assets/skins/sam/skin.css')}" />
+
+        <apex:includescript value="{!URLFOR($Resource.Yahoo_UILibrary, '/yui/build/yahoo-dom-event/yahoo-dom-event.js')}" />
+        <apex:includescript value="{!URLFOR($Resource.Yahoo_UILibrary, '/yui/build/container/container-min.js')}" />
+        <apex:includescript value="{!URLFOR($Resource.Yahoo_UILibrary, '/yui/build/dragdrop/dragdrop-min.js')}" />
+        <apex:includescript value="{!URLFOR($Resource.Yahoo_UILibrary, '/yui/build/animation/animation-min.js')}" />
+
+        <script type="text/javascript">
+
+        YAHOO.namespace("JixiService");
+
+        YAHOO.JixiService.buildWaitPanel = function() {
+            document.body.className = document.body.className + " yui-skin-sam";
+            YAHOO.JixiService.waitPanel = new YAHOO.widget.Panel(
+                "waitPanel",  // The id of our dialog container
+                {
+                        width           :   "500px",
+                        visible         :   false,   // Should be invisible when rendered
+                        draggable       :   false,   // Make the dialog draggable
+                        close           :   false,   // Don't include a close title button
+                        modal           :   true,    // Make it modal
+                        fixedCenter     :   true,    // Keep centered if window is scrolled
+                        zindex          :   40,      // Make sure it's on top of everything
+                        constraintoviewport: true,   // This line adds the appear/disapper fade effect
+                        effect          : {effect:YAHOO.widget.ContainerEffect.FADE,duration:0.25}
+
+                }
+            );
+
+
+            YAHOO.JixiService.waitPanel.setHeader("Running ALV Service - Please Wait..");
+
+            YAHOO.JixiService.waitPanel.setBody('<center><img class="waitingImage" src="/img/loading32.gif" /></center>');
+            YAHOO.JixiService.waitPanel.render(document.body);
+
+        }
+
+        YAHOO.JixiService.onDOMReady = function() {
+
+            YAHOO.JixiService.buildWaitPanel();
+        }
+
+        YAHOO.util.Event.onDOMReady(YAHOO.JixiService.onDOMReady);
+
+            window.onload = function(){
+                var errorFlag = "{!hasErrors}";
+                console.log('errorFlag: '+errorFlag);
+                if(errorFlag == 'false'){
+                    console.log(errorFlag);
+                    var hiddenVal = document.getElementById('{!$Component.hiddenVal}');
+                    console.log('hiddenVal: '+hiddenVal.value);
+                    YAHOO.JixiService.waitPanel.setBody('<center><img class="waitingImage" src="/img/loading32.gif" /></center><br/>'+hiddenVal.value);
+                    YAHOO.JixiService.waitPanel.show();
+                    startJixiService();
+                }
+            }
+
+            function doCalloutJS(){
+                var hiddenVal = document.getElementById('{!$Component.hiddenVal}');
+                console.log('hiddenVal: '+hiddenVal.value);
+                YAHOO.JixiService.waitPanel.setBody('<center><img class="waitingImage" src="/img/loading32.gif" /></center><br/>'+hiddenVal.value);
+                YAHOO.JixiService.waitPanel.show();
+                doCallout();
+            }
+
+            function postCallActionsJS(){
+                var hiddenVal = document.getElementById('{!$Component.hiddenVal}');
+                console.log('hiddenVal: '+hiddenVal.value);
+                YAHOO.JixiService.waitPanel.setBody('<center><img class="waitingImage" src="/img/loading32.gif" /></center><br/>'+hiddenVal.value);
+                YAHOO.JixiService.waitPanel.show();
+                postCallActions();
+            }
+
+            function hideWaitPanel(){
+                console.log('-- panel ends'+document.getElementById('waitPanel_mask'));
+
+                YAHOO.JixiService.waitPanel.hide();
+                document.getElementById('waitPanel_mask').style.display = 'none';
+            }
+        </script>
+
+        <!-- This will put page block Button to center -->
+        <style type="text/css">
+            .pbButtonb {
+                padding-left: 15% !important;
+             }
+
+             .pbButtonTop{
+                 text-align: right;
+             }
+        </style>
+
+       <!--<apex:pageBlock title="Processing Error ...." rendered="{!Account.Audits_Same_as_Parent__c}">
+           <apex:outputText value="Cannot proceed with 'Audit Letter Validation' process. This button currently only applies to records for which “Audits Same as Parent” is not checked."/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <apex:commandButton value="Go Back" id="redirectToCaseButton"  action="{!cancel}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       </apex:pageBlock>-->
+       
+       <apex:pageBlock title="Processing Error ...." rendered="{!Account.Revocation_Status__c != 'Not Revoked'}">
+           <apex:outputText value="Certificate is revoked."/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <apex:commandButton value="Go Back" id="redirectToCaseButton"  action="{!cancel}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       </apex:pageBlock>
+       
+       <apex:pageBlock title="Processing Error ...." rendered="{!Account.Revocation_Status__c == 'Not Revoked' && !Account.Audits_Same_as_Parent__c && Account.Subordinate_CA_Owner__c == null && !IsNewCertificate}">
+           <apex:outputText value="Cannot proceed with 'Audit Letter Validation' process. 'Subordinate CA Owner' must be filled."/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <apex:commandButton value="Go Back" id="redirectToCaseButton"  action="{!cancel}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       </apex:pageBlock>
+       
+       <apex:pageBlock title="Processing Error ...." rendered="{!Account.Revocation_Status__c == 'Not Revoked' && (Account.Audits_Same_as_Parent__c || Account.Subordinate_CA_Owner__c != null) && accountSO.Derived_Trust_Bits__c == null && !IsNewCertificate }">
+           <apex:outputText value="Cannot proceed with 'Audit Letter Validation' process. Derived Trust Bits is blank."/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <apex:commandButton value="Go Back" id="redirectToCaseButton"  action="{!cancel}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       </apex:pageBlock>
+        
+       <apex:pageBlock title="Processing Error ...." rendered="{!Account.Revocation_Status__c == 'Not Revoked' && (Account.Audits_Same_as_Parent__c || Account.Subordinate_CA_Owner__c != null) && accountSO.Derived_Trust_Bits__c != null && IsNewCertificate}">
+           <apex:outputText value="This certificate is newer than the audit statements. Please provide updated audits before running ALV on this certificate."/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <apex:commandButton value="Go Back" id="redirectToCaseButton"  action="{!cancel}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       </apex:pageBlock>
+       
+       <apex:pageBlock title="Processing Error ...." rendered="{!Account.Revocation_Status__c == 'Not Revoked' && (Account.Audits_Same_as_Parent__c || Account.Subordinate_CA_Owner__c != null) && accountSO.Derived_Trust_Bits__c != null && !IsNewCertificate && Account.Valid_To_GMT__c < TODAY()}">
+           <apex:outputText value="Valid To is less than today."/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           <apex:commandButton value="Go Back" id="redirectToCaseButton"  action="{!cancel}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+       </apex:pageBlock>
+ 
+       <apex:pageBlock id="theBlock" title="Audit Letter Validation Results" rendered="{!Account.Revocation_Status__c == 'Not Revoked' && (Account.Audits_Same_as_Parent__c || Account.Subordinate_CA_Owner__c != null) && accountSO.Derived_Trust_Bits__c != null && !IsNewCertificate && Account.Valid_To_GMT__c > TODAY()}">
+
+            <apex:pageMessages ></apex:pageMessages>
+
+                <apex:pageBlockButtons id="pbButtonTop">
+                    <apex:commandLink style="color: black;text-decoration:none;padding:4px;" action="{!downloadLog}" target="_blank" styleClass="btn" type="button">Print Report</apex:commandLink>
+                    <apex:commandButton value="Go Back" action="{!cancel}" />
+                </apex:pageBlockButtons>
+
+            <apex:pageBlockSection columns="1" title="Summary" id="theErrorSection1" collapsible="true">
+                
+                <br/>
+                <apex:outputText value="1) Audit Statement URLs"></apex:outputText><br/>
+                <!--render when Audit same as Parent is not checked-->
+                <apex:outputField value="{!Account.Standard_Audit__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <!--<apex:outputField value="{!Account.Code_Signing_Audit__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>-->
+                <apex:outputField value="{!Account.BR_Audit__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <!--<apex:outputField value="{!Account.EV_Audit__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>-->
+                <!--render when audit same as parent is checked-->
+                <apex:outputField value="{!parentaccountSO.Standard_Audit__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <!--<apex:outputField value="{!parentaccountSO.Code_Signing_Audit__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>-->
+                <apex:outputField value="{!parentaccountSO.BR_Audit__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <!--<apex:outputField value="{!parentaccountSO.EV_Audit__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>-->
+                <!--<apex:outputField value="{!Account.EV_Code_Signing_Audit_Statement_Link__c}"/>-->
+                <br/>
+
+                <!--<apex:outputText value="2) Root Certificates"></apex:outputText><br/>
+                <apex:repeat value="{!lstRootCases}" var="rootCase" >
+                    <apex:outputField label="Root Case No. " value="{!rootAccount.Name}"/>
+                    <apex:outputField label="Root Certificate " value="{!rootAccount.Included_Certificate_Name__c}"/>
+                    <apex:outputField value="{!rootAccount.Apply_Standard_Audit__c}"/>
+                    <apex:outputField value="{!rootAccount.Apply_Code_Signing_Audit__c}"/>
+                    <apex:outputField value="{!rootAccount.Apply_BR_Audit__c}"/>
+                    <apex:outputField value="{!rootAccount.Apply_EV_Audit__c}"/>
+                    <apex:outputField value="{!rootAccount.Apply_EV_Code_Signing_Audit__c}"/>
+                    <apex:outputField value="{!rootAccount.SHA_256_Fingerprint__c}"/> <br/>
+                </apex:repeat>
+                <br/>-->
+
+                <apex:outputText value="2) Errors in Audit Statements"></apex:outputText>
+                
+                <apex:pageBlockTable value="{!lstErrorLog}" var="errorLog">
+                    <apex:column headerValue="Error(s)" value="{!errorLog.ErrorLog}"></apex:column>
+                    <apex:column headerValue="Recommended Actions" value="{!errorLog.RecommendedAction}"></apex:column>
+                </apex:pageBlockTable>
+                
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection columns="1" title="Initialize request details" id="thePrepareRequestSection" collapsible="true">
+            <apex:outputText style="color: blue;" value="Using Intermediate certificates fields and derived information ..."></apex:outputText>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >CA Owner/Certificate No</apex:outputLabel>
+                    <apex:outputLink value="/{!Account.id}" target="_blank">{!Account.CA_Owner_Certificate_No__c}</apex:outputLink>
+                </apex:pageBlockSectionItem>
+
+                <apex:outputField value="{!Account.Name}"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Subordinate CA Owner"></apex:outputLabel>
+                    <apex:outputText value="{!CAOwnerName}"></apex:outputText>
+                </apex:pageBlockSectionItem>
+                <!--<apex:outputField value="{!Account.Subordinate_CA_Owner__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.CA_Owner__c}" label="Subordinate CA Owner" rendered="{!Account.Audits_Same_as_Parent__c}"/>-->
+                <apex:outputField value="{!Account.Auditor_New__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.Auditor_New__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.Auditor_New__r.Alternate_Auditor_Name_s__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.Auditor_New__r.Alternate_Auditor_Name_s__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                
+                <!--render when Audit same as Parent is not checked-->
+                <apex:outputField value="{!Account.Standard_Audit__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.Standard_Audit_Type__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.Standard_Audit_Statement_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.Standard_Audit_Period_Start_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.Standard_Audit_Period_End_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <!--render when audit same as parent is checked-->
+                <apex:outputField value="{!parentaccountSO.Standard_Audit__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.Standard_Audit_Type__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.Standard_Audit_Statement_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.Standard_Audit_Period_Start_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.Standard_Audit_Period_End_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                
+                <!--render when Audit same as Parent is not checked-->
+                <!--<apex:outputField value="{!Account.Code_Signing_Audit__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.Code_Signing_Audit_Type__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.Code_Signing_Audit_Statement_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.Code_Signing_Audit_Period_Start_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.Code_Signing_Audit_Period_End_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>-->
+                <!--render when audit same as parent is checked-->
+                <!--<apex:outputField value="{!parentaccountSO.Code_Signing_Audit__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.Code_Signing_Audit_Type__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.Code_Signing_Audit_Statement_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.Code_Signing_Audit_Period_Start_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.Code_Signing_Audit_Period_End_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>-->
+                
+                <!--render when Audit same as Parent is not checked-->
+                <apex:outputField value="{!Account.BR_Audit__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.BR_Audit_Type__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.BR_Audit_Statement_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.BR_Audit_Period_Start_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.BR_Audit_Period_End_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <!--render when audit same as parent is checked-->
+                <apex:outputField value="{!parentaccountSO.BR_Audit__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.BR_Audit_Type__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.BR_Audit_Statement_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.BR_Audit_Period_Start_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.BR_Audit_Period_End_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                
+                <!--render when Audit same as Parent is not checked-->
+                <!--<apex:outputField value="{!Account.EV_Audit__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.EV_Audit_Type__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.EV_Audit_Statement_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.EV_Audit_Period_Start_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!Account.EV_Audit_Period_End_Date__c}" rendered="{!!Account.Audits_Same_as_Parent__c}"/>-->
+                <!--render when audit same as parent is checked-->
+                <!--<apex:outputField value="{!parentaccountSO.EV_Audit__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.EV_Audit_Type__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.EV_Audit_Statement_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.EV_Audit_Period_Start_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>
+                <apex:outputField value="{!parentaccountSO.EV_Audit_Period_End_Date__c}" rendered="{!Account.Audits_Same_as_Parent__c}"/>-->
+
+                <!--<apex:outputField value="{!Account.EV_Code_Signing_Audit_Statement_Link__c}"/>
+                <apex:outputField value="{!Account.EV_Code_Signing_Audit_Type__c}"/>
+                <apex:outputField value="{!Account.EV_Code_Signing_Audit_Statement_Date__c}"/>
+                <apex:outputField value="{!Account.EV_Code_Signing_Audit_Period_Start_Date__c}"/>
+                <apex:outputField value="{!Account.EV_Code_Signing_Audit_Period_End_Date__c}"/>
+
+                <apex:repeat value="{!lstRootCases}" var="rootCase" >
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel >Root Case No</apex:outputLabel>
+                            <apex:outputLink value="/{!rootAccount.Id}" target="_blank">{!rootAccount.Name}</apex:outputLink>
+                        </apex:pageBlockSectionItem>-->
+                <apex:outputField value="{!Account.SHA_1_Fingerprint__c}"/>
+                <apex:outputField value="{!Account.SHA_256_Fingerprint__c}"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Trust Bits"></apex:outputLabel>
+                    <apex:outputText value="{!TrustBits}"></apex:outputText>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Microsoft EV Enabled"></apex:outputLabel>
+                    <apex:outputText value="false"></apex:outputText>
+                </apex:pageBlockSectionItem>
+                <!--</apex:repeat>-->
+
+                <apex:actionFunction name="startJixiService" action="{!prepareRequest}" oncomplete="doCalloutJS();" reRender="hiddenPanel" />
+
+            </apex:pageBlockSection>
+
+            <script>
+                twistSection(document.getElementById('{!$Component.theBlock.thePrepareRequestSection}').getElementsByTagName('img')[0])
+            </script>
+
+            <apex:pageBlockSection columns="1" title="HTTPS request details" id="theRequestSection" collapsible="true">
+
+                <apex:outputText value=""></apex:outputText>
+                <apex:outputText style="color: blue;" value="JSON request to Audit Letter Validation service..."></apex:outputText>
+                <apex:outputText >{!request}</apex:outputText>
+                <apex:actionFunction name="doCallout" action="{!doCallout}" oncomplete="postCallActionsJS();" reRender="hiddenPanel" />
+                
+            </apex:pageBlockSection>
+
+            <script>
+                twistSection(document.getElementById('{!$Component.theBlock.theRequestSection}').getElementsByTagName('img')[0])
+            </script>
+
+            <apex:pageBlockSection columns="1" title="HTTPS response details" id="theResponseSection" collapsible="true">
+
+                <apex:actionFunction name="postCallActions" action="{!postCallActions}" reRender="theForm, theBlock, theSection" oncomplete="hideWaitPanel();"/>
+                <apex:outputText style="color: blue;" value="JSON response from Audit Letter Validation service ..."></apex:outputText>
+                <apex:outputText >{!response}</apex:outputText>
+
+            </apex:pageBlockSection>
+
+            <script>
+                twistSection(document.getElementById('{!$Component.theBlock.theResponseSection}').getElementsByTagName('img')[0])
+            </script>
+
+            <apex:pageBlockSection columns="1" title="Parse response and update details" id="theParseUpdateSection" collapsible="true">
+
+                 <apex:outputText value=""></apex:outputText>
+                 <apex:outputText style="color: blue;" value="Updated Intermediate Cert fields from JSON response..."></apex:outputText>
+
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel >CA Owner/Certificate No</apex:outputLabel>
+                    <apex:outputLink value="/{!Account.id}" target="_blank">{!Account.CA_Owner_Certificate_No__c}</apex:outputLink>
+                 </apex:pageBlockSectionItem>
+
+                 <apex:outputField value="{!AccountSO.Standard_Audit_ALV_Status__c}"/>
+                 <apex:outputField value="{!AccountSO.Standard_Audit_ALV_Results__c}"/>
+                 <!--<apex:outputField value="{!AccountSO.Code_Signing_Audit_ALV_Status__c}"/>
+                 <apex:outputField value="{!AccountSO.Code_Signing_Audit_ALV_Results__c}"/>-->
+                 <apex:outputField value="{!AccountSO.BR_Audit_ALV_Status__c}"/>
+                 <apex:outputField value="{!AccountSO.BR_Audit_ALV_Results__c}"/>
+                 <!--<apex:outputField value="{!AccountSO.EV_SSL_Audit_ALV_Status__c}"/>
+                 <apex:outputField value="{!AccountSO.EV_SSL_Audit_ALV_Results__c}"/>-->
+                 <!--<apex:outputField value="{!AccountSO.EV_Code_Signing_Audit_AutoReviewStatus__c}"/>
+                 <apex:outputField value="{!AccountSO.EV_Code_Signing_Audit_AutoReviewResults__c}"/>-->
+
+                 <!--<apex:repeat value="{!lstRootCases}" var="rootCase" >
+                       <apex:pageBlockSectionItem >
+                            <apex:outputLabel >Root Case No</apex:outputLabel>
+                            <apex:outputLink value="/{!rootAccount.Id}" target="_blank">{!rootAccount.Name}</apex:outputLink>
+                        </apex:pageBlockSectionItem>
+
+                       <apex:outputField value="{!rootAccount.Root_Certificate_Name_Existing__c}"/>
+                       <apex:outputField value="{!rootAccount.Auto_Review_Status__c}"/>
+                       <apex:outputField value="{!rootAccount.Auto_Review_Results__c}"/>
+                 </apex:repeat>-->
+
+            </apex:pageBlockSection>
+
+           <script>
+                twistSection(document.getElementById('{!$Component.theBlock.theParseUpdateSection}').getElementsByTagName('img')[0])
+           </script>
+
+            <apex:pageBlockSection columns="1" title="Done">
+            </apex:pageBlockSection>
+ 
+        </apex:pageBlock>
+
+        <apex:outputPanel layout="block" id="hiddenPanel">
+            <apex:inputHidden value="{!statusText}" id="hiddenVal"/>
+        </apex:outputPanel>
+
+    </apex:form>
+</apex:page>

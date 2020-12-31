@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Migrate_Certs__c.Parent_CA_Owner_Certificate__c</field>
+    </columns>
+    <columns>
+        <field>Migrate_Certs__c.Parent_Certificate_s_SHA_256_Fingerprint__c</field>
+    </columns>
+    <columns>
+        <field>Migrate_Certs__c.Processing_Message_Error__c</field>
+    </columns>
+    <columns>
+        <field>Migrate_Certs__c.Migrated_Cert__c</field>
+    </columns>
+    <columns>
+        <field>Migrate_Certs__c.X_509_Certificate_PEM__c</field>
+    </columns>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Migrate_Certs__c.Processing_Status__c</field>
+        <sortOrder>Desc</sortOrder>
+    </groupingsDown>
+    <name>Migrate Certs Report</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntity$Migrate_Certs__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>CUST_NAME</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

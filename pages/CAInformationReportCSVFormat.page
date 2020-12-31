@@ -1,0 +1,5 @@
+<apex:page controller="CAInformationReportController" cache="true" expires="3600" showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/csv#CAInformationReport.csv;charset=UTF-8" readOnly="true">"CA Owner Name","Organizational Type","Geographic Focus","Primary Market / Customer Base","Company Website","Recognized CAA Domains","Problem Reporting Mechanism"
+<apex:repeat value="{!AccountSoLst}" var="account">
+"{!account.Name}","{!account.Organizational_Type__c}","{!account.Geographic_Focus__c}","{!account.Primary_Market_Customer_Base__c}","{!account.Company_Website__c}","{!account.Recognized_CAA_Domains__c}","{!account.Problem_Reporting_Mechanism__c}"
+</apex:repeat>
+</apex:page>

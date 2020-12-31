@@ -1,0 +1,18 @@
+Dear Microsoft Root Certificate Program partner, <br><br>
+
+You are receiving this email because you are a member of the Microsoft Trusted Root Certificate Program, and, according to our records, we do not have evidence of an audit on file for one or more of your roots and you are out of compliance with the Microsoft Trusted Root Program. <br><br>
+
+According to Section 3(b) of the Agreement you signed with Microsoft, you are required to provide proof of an audit every 12 months. You have a 90-day grace period after the 12 months are complete to provide this audit letter. The report below lists each root that we are missing audit information for. <br><br>
+
+•	If you see “BR Audit” NULL, this means that, according to our records, your root is enabled for TLS, but you have not provided us evidence of an SSL Baseline audit. <br><br>
+
+•	If you see “EV Audit” NULL and Microsoft EV Enable: TRUE, this means that your root is enabled for EV, but you have not provided us with evidence of an EV audit. <br><br>
+
+Please review the root(s) listed below and provide Microsoft the requested audit information within the next 14 days, via the Common CA Database (CCADB). The steps are described here: http://ccadb.org/cas/updates. If you are unable to provide the audits within the next 14 days, please send an email to msroot@microsoft.com explaining why. <br><br>
+
+{!RootCertificateList} <br><br>
+
+If you have questions, please email msroot@microsoft.com. If we do not receive any communications from you within the next 14 days, we will begin our root deprecation process until the audits are provided.  <br><br>
+
+Thank you, <br>
+Microsoft Crypto Ecosystem. <br>

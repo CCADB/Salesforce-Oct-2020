@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CCADB Settings</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CCADB Settings</value>
+    </caseValues>
+    <fields>
+        <help><!-- When this is checked, This User will be set as Owner when Root Cert by CA&apos;s.
+Use this user id to default the root cert record owner when the root certs are created by CAs. Currently being done ob Root Inclusion Cases - AddUpdateRootCases button --></help>
+        <label><!-- Default Root Cert Owner --></label>
+        <name>Default_Root_Cert_Owner__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

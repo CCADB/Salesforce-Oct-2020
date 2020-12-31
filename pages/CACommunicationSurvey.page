@@ -1,0 +1,159 @@
+<apex:page id="thePage" controller="CACommunicationSurveyController" cache="false"  action="{!getUserContact}" docType="html-5.0">
+<apex:stylesheet value="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"  />
+<apex:includeScript value="https://code.jquery.com/jquery-1.9.1.js" />
+<apex:includeScript value="https://code.jquery.com/ui/1.10.3/jquery-ui.js" />
+
+    <style type="text/css">
+        #survey_container{ 
+            padding: 20px 30px 20px 30px;       
+            margin: 0 auto; 
+            width: 1000px; 
+            box-shadow: 0 0 34px #CCCCCC;
+            -moz-box-shadow: 0 0 34px #CCCCCC;
+            -webkit-box-shadow: 0 0 34px #CCCCCC;
+        }
+        
+        .requiredText{
+            color:red;
+        }
+        
+        td.pbTitle {
+            width: 60% !important;
+        }
+   
+    </style>
+
+    
+    <script type="text/javascript">
+function setFocusOnLoad() {}        
+        function takeSurvey(surveyId){
+            
+            var surveyObj = "{!$Component.theFrm.theBlock.SelectedSurveyId}";
+            document.getElementById(surveyObj).value = surveyId;
+            console.log('AXAY: '+surveyId);
+        }
+        
+      
+         // added the below lines of code to attach the datepicker to the date fields
+         // to change the year range, you simply need to add an additional attribute
+         // yearRange: "1950:2050"
+         //  
+             j$ = jQuery.noConflict();
+        
+            function initDate() {
+                    j$( "input[name*='event_start_date']" ).datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    changeYear: true,
+                    numberOfMonths: 1,
+                    dateFormat:"mm/dd/yy",
+                    altField: "#start_date_alternate",
+                    altFormat: "mm/dd/yyyy",
+                    showAnim: "slide"
+                });
+            
+            }
+            
+    </script>
+
+    <apex:form id="theFrm">
+
+      <!--<apex:actionFunction action="{!getQuesionnairies}" name="getQuesionnairies" rerender="theFrm" />-->
+      <div id="survey_container">
+
+        <apex:pageBlock title="CA Communications" id="theBlock" rendered="{!AND(showSurvey, !thankYouRendered)}">
+            
+            <apex:pageBlockTable value="{!lstSurvey}" var="survey" id="theSurveyTable" rendered="{!showSurvey}">
+                
+                <apex:column headerValue="Title">
+                    <apex:commandLink value="{!survey.Name}" onclick="takeSurvey('{!survey.Id}')" rerender="theFrm" action="{!getQuesionnairies}"/>
+                </apex:column>
+                
+                <apex:column headerValue="Message">
+                    <apex:outputText value="{!mapMessages[survey.Id]}" escape="false"/>
+                </apex:column>
+                
+                <apex:column value="{!survey.Expiration_Date__c}" headerValue="Expiration Date" />
+                
+            </apex:pageBlockTable>
+            
+            <apex:inputHidden value="{!selectedSurveyId}" id="SelectedSurveyId" />
+            
+        </apex:pageBlock>
+        <input type="hidden" name="start_date_alternate" id="start_date_alternate" />        
+        <apex:pageBlock title="{!communicationTitle}" id="queTable" rendered="{!AND(!showSurvey, !thankYouRendered)}">
+            
+            <apex:pageMessages />
+         
+            <h1 class="question">
+                <apex:outputPanel >
+                    <apex:outputText value="{!communicationMessage}" escape="false" /><p/>
+                </apex:outputPanel>
+                
+            </h1>
+            
+            <apex:repeat value="{!lstQuestions}" var="qPreview">
+                <div id="{!qPreview.id}" >
+                    <apex:pageBlock >
+                        
+                        <h1 class="question">
+                             
+                             <apex:outputText escape="false" value="{!qPreview.iQuestion}"/>
+                             <!--<apex:outputField value="{!qPreview.queSO.Question__c}" label=""/>-->
+                                <apex:outputPanel rendered="{!qPreview.isRequired}" styleClass="requiredText">
+                                    (Required)
+                                </apex:outputPanel>
+                                <br/><br/>
+                            </h1>
+                        
+                        <div id="radio"> 
+                          <apex:selectRadio layout="pageDirection" rendered="{!qPreview.renderSelectRadio}" value="{!qPreview.selectedOption}" disabled="{!isExternalUser}">
+                            <apex:selectOptions value="{!qPreview.singleOptions}"/>
+                          </apex:selectRadio>
+                        </div>
+                        
+                        <div id="checkbox">           
+                          <apex:selectCheckboxes layout="pageDirection" rendered="{!qPreview.renderSelectCheckboxes}" value="{!qPreview.selectedOptions}" disabled="{!isExternalUser}">
+                            <apex:selectOptions value="{!qPreview.multiOptions}"/>
+                          </apex:selectCheckboxes> 
+                        </div>
+                        
+                        <div id="text"> 
+                           <apex:inputTextArea cols="150" rows="10" rendered="{!qPreview.renderFreeText}" value="{!qPreview.choices}" disabled="{!isExternalUser}"/>  
+                        </div>
+                        
+                        <div id="dateType">
+                        
+                          <!--<apex:input type="date" rendered="{!qPreview.renderDateType}" value="{!qPreview.dateResonse}" disabled="{!isExternalUser}" />
+                          <apex:inputField rendered="{!qPreview.renderDateType}" value="{!qPreview.dateResonse.Date_Type_Response__c}" /> -->
+                          <apex:inputText id="event_start_date"  size="10" rendered="{!qPreview.renderDateType}" value=" {!qPreview.dateStr}" onmouseover="initDate()"/>
+                        </div>
+                        
+                        <div id="row">
+                          <apex:selectRadio rendered="{!qPreview.renderSelectRow}" value="{!qPreview.selectedOption}" disabled="{!isExternalUser}">
+                            <apex:selectOptions value="{!qPreview.rowOptions}"/>
+                          </apex:selectRadio>
+                        </div>  
+                        
+                    </apex:pageBlock>
+                    
+                </div>
+                    
+            </apex:repeat>
+            
+        </apex:pageBlock>
+        
+        <apex:outputPanel rendered="{!AND(!thankYouRendered, selectedSurveyId != null)}">
+            <apex:commandButton value="Submit" action="{!submitResults}" disabled="{!isExternalUser}" style="position:relative; top:50%; left:40%;"/>&nbsp;&nbsp;
+            <apex:commandButton value="Cancel" action="{!doCancel}" style="position:relative; top:50%; left:40%;" />
+            <p/>
+        </apex:outputPanel>
+        
+        <apex:pageBlock title="{!thankYouMessage}" rendered="{!thankYouRendered}">
+            <apex:commandButton value="Go Back" action="{!doCancel}" style="position:relative; top:50%; left:40%;"/>
+        </apex:pageBlock>
+      </div>
+      
+    </apex:form>
+
+</apex:page>

@@ -1,0 +1,63 @@
+<!--
+VF Page        : MigrateCertBatchVF
+Created Date   : 30th April
+Description    : Provide interface for the user to prepare certificates for processing, and process certificates
+-->
+
+<apex:page controller="MigrateCertBatchController">
+
+ <!-- Component used to show loading dialog box -->
+ <c:MigrateCertBatchLoadingDialogBox title="Preparing Certificates for Processing..."/>
+
+ <apex:sectionHeader title="Migrate Certificate Batch Job" />
+ 
+ <apex:form >
+  
+
+  <apex:actionFunction name="enableButtons" reRender="theStep2,theStep3"/>
+  <apex:pageBlock id="idMigrateCertBatch" mode="edit">
+    <apex:pageMessages />
+          
+    <div align="center" draggable="false" >
+    
+       <br/>
+       <apex:outputText value="CAUTION: Click on the buttons below ONLY when you need to Migrate Root/Intermediate Certificates. " style="color:red;font-weight:bold"/> <br/> <br/>
+       <apex:outputText value="Before starting the process, insert the data supplied by CAs into Migrate Certs object. "/><br/>
+       <apex:outputText value="The batch program will read ALL records from the object and process them in three steps."/><br/>
+       <apex:outputText value="Step 1, Choose a process to migrate Root certificates or Intermediate certificates." /> <br/>
+       <apex:outputText value="Step 2, Prepare a list of qualifying certificates for processing/reprocessing certificates." /> <br/>
+       <apex:outputText value="Step 3, Parse PEM info of each item from the list and adds the certificate to it's parent."/> <br/>
+       <apex:outputText value="Rerun the process multiple times to add certs or after making data corrections."/> <br/> 
+       <apex:outputText value="To check the status of all processed records run 'Migrate Certs Report'. "/> <br/> <br/>
+  
+        <!-- Select one process -->
+  
+        <apex:selectRadio value="{!processSelection}" onclick="enableButtons();">
+            <apex:outputText value="Step 1: Select migration process for ..." style="font-weight:bold"/>
+            <apex:selectOptions value="{!items}"/>
+        </apex:selectRadio> <p/>
+ 
+       <!-- Click to prepare certificates for processing -->      
+       <apex:outputText value="Step 2: " style="font-weight:bold" />   
+       <apex:commandButton id="theStep2" value="Prepare Certificates for Processing" action="{!prepareCerts}" 
+       onclick="showLoadingDialog();" oncomplete="hideLoadingDialog();" disabled="{!ISBLANK(processSelection)}"/> <br/> <br/>
+                                    
+       <!-- Click to load certificate information  -->         
+       <apex:outputText value="Step 3: " style="font-weight:bold"/>                                
+       <apex:commandButton id="theStep3" value="Process and Add Certificates" action="{!startBatch}" reRender="jobs,error" 
+       onclick="setLoadingDialogTitle('Loading Certificates...');showLoadingDialog();" disabled="{!ISBLANK(processSelection)}"
+                                    oncomplete="hideLoadingDialog();setLoadingDialogTitle('Preparing Certificates for Processing...')"/> 
+       <br/>
+     </div>
+    
+    <apex:outputText id="error" value="{!errorText}" style="font-weight: bold; color: red"/>
+    
+    <br/>    
+  </apex:pageBlock>
+  
+    <br/>
+    
+  <!-- Component used to show status of job -->
+  <c:BatchJobs id="jobs" numberOfJob="1"/>
+ </apex:form>
+</apex:page>

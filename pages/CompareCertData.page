@@ -1,0 +1,420 @@
+<!--
+*******************************************************************************************************
+ Name: CompareCertData
+
+ Dependencies:  CompareCertData controller class, CompareCertDataTest, CompareCertData vf page
+
+ Description: CompareCertData controller gets input from the certdata parsing tool. The parsing tool 
+ returns only a list of simple objects - not the full parsing results of certdata.txt. certdata.txt file contains 
+ the object definitions for the certs and other information "built into" NSS.
+
+     Webservice from https://certdatadiff-dot-ccadb-231121.appspot.com/certdata returns
+           type SimpleEntry struct {
+           PEM         string `json:"PEM"`
+           Fingerprint string `json:"sha256"`
+           TrustWeb    bool   `json:"trustWeb"`
+           TrustEmail  bool   `json:"trustEmail"`
+           }
+
+ The controller classs generates data for following reports by comparing the CCADB and certdata.txt:
+
+ 1) "Trust Bits Different between CCADB and certdata.txt"
+ This section will be for the entries in certdata.txt that have a corresponding entry in the CCADB 
+ (based on SHA256 Fingerprint OR based on Issuer and Serial #), but the trust bit values are different.
+ Columns:
+ Certificate Name <link>, Mozilla Status, Mozilla Trustbits, certdata trustWeb, certdata trustEmail, 
+ SHA-256 Fingerprint, Serial Number
+
+ 2) "In certdata.txt but not in CCADB"
+ This section will be for the entries in certdata.txt that there is no corresponding record for in the CCADB
+ (based on SHA256 Fingerprint OR based on Issuer and Serial #).
+ Columns:
+ Common Name, certdata trustWeb, certdata trustEmail, SHA-256 Fingerprint, Serial Number
+
+ This section of the report, uses the following logic to find the name:
+
+ If (SHA256 found in CCADB) or (serial Number and issuer name is found in CCADB)
+     then use the certificate name from CCADB 
+ else
+     use the issue CN from the tool output
+
+ 3) "In CCADB but not in certdata.txt"
+ This section will be for the root cert records in the CCADB that have Mozilla status of Included or Change Requested, 
+ but were not found in certdata.txt (based on SHA256 Fingerprint OR based on Issuer and Serial #).
+ Columns:
+ Certificate Name <link>, Mozilla Status, Mozilla Trustbits, SHA-256 Fingerprint, Serial Number
+
+ 4) "Values consistent between CCADB and certdata.txt"
+ This section will be for the entries in certdata.txt that have a corresponding entry in the CCADB 
+ (based on SHA256 Fingerprint OR based on Issuer and Serial #), and the trust bit values are the same.
+ Columns:
+ Certificate Name <link>, Mozilla Status, Mozilla Trustbits, certdata trustWeb, certdata trustEmail, 
+ SHA-256 Fingerprint, Serial Number
+ 
+ Instructions:  
+
+ *******************************************************************************************************
+ Revision History:
+ 
+      1/22/2018 - Created new
+     
+ ******************************************************************************************************
+-->
+<apex:page controller="CompareCertData" sidebar="false" showHeader="false" docType="html-5.0" cache="true" expires="3600" readOnly="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            <!--.slds-scope .slds-section__content table{
+                width: auto;
+                table-layout:fixed;
+            }
+            .slds-scope .slds-section__content table td {
+                white-space:normal !important;
+            }
+            
+            .slds-scope .slds-size_1-of-1{
+                 width: auto; 
+            }
+            -->
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+        </style>
+        <body>
+            <div class="slds">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="slds-page-header" style="margin-top:10px;">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                    <div class="slds-media slds-no-space slds-grow">
+                                        <div class="slds-media__figure">
+                                            <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                            </svg> -->
+                                            <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                        </div>
+                                        <div class="slds-media__body" style="margin-top: 8px;">
+                                            <p class="slds-text-title--caps slds-line-height--reset">Mozilla</p>
+                                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="">Comparison between CCADB and certdata.txt</h1>
+                                        </div>              
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!--Body-->
+                        <div id="mainbody" style="margin-top:25px;">
+                            <!--1-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">Trust Bits Different between CCADB and certdata.txt ({!lstWrapperTrustBits.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="20%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    <div  title="Certificate Name">Certificate Name</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="Mozilla Status">Mozilla Status</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="Mozilla Trust Bits">Mozilla Trust Bits</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="certdata trustEmail">certdata trustEmail</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="certdata trustWeb">certdata trustWeb</div>
+                                                </th>
+                                                <th width="25%" scope="col">
+                                                    <div  title="SHA-256 Fingerprint">SHA-256 Fingerprint</div>
+                                                </th>
+                                                <th width="15%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    <div  title="Serial Number">Serial Number</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!lstWrapperTrustBits}" var="result" rendered="{!lstWrapperTrustBits != null && lstWrapperTrustBits.size > 0}">
+                                                <tr class="dataRow">
+                                                    <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <apex:outputLink value="/{!result.objAccount.Id}" target="_blank">{!result.objAccount.Name}</apex:outputLink>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.objAccount.Status__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.objAccount.Trust_Bits__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.trustEmail}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.trustWeb}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.sha256}
+                                                    </td>
+                                                    <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.serialNumber}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <tr style="display:{!if(lstWrapperTrustBits == null || lstWrapperTrustBits.size == 0,'','none')}">
+                                                <td colspan="7" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    No records to display.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--2-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">In certdata.txt but not in CCADB ({!lstWrapperMResult.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="20%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    <div  title="Issuer Common Name">Issuer Common Name</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="Mozilla Status">Mozilla Status</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="Mozilla Trust Bits">Mozilla Trust Bits</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="certdata trustEmail">certdata trustEmail</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="certdata trustWeb">certdata trustWeb</div>
+                                                </th>
+                                                <th width="25%" scope="col">
+                                                    <div  title="SHA-256 Fingerprint">SHA-256 Fingerprint</div>
+                                                </th>
+                                                <th width="15%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    <div  title="Serial Number">Serial Number</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!lstWrapperMResult}" var="result" rendered="{!lstWrapperMResult != null && lstWrapperMResult.size > 0}">
+                                                <tr class="dataRow">
+                                                    <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <apex:outputLink value="/{!result.objAccount.Id}" target="_blank" rendered="{!result.objAccount.Name != null}">{!result.objAccount.Name}</apex:outputLink>
+                                                        <apex:outputLabel rendered="{!result.objAccount.Name == null}">{!result.CommonName}</apex:outputLabel>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.objAccount.Status__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.objAccount.Trust_Bits__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.trustEmail}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.trustWeb}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.sha256}
+                                                    </td>
+                                                    <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.serialNumber}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <tr style="display:{!if(lstWrapperMResult== null || lstWrapperMResult.size == 0,'','none')}">
+                                                <td colspan="7" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    No records to display.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--3-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">In CCADB but not in certdata.txt ({!lstofRootCertsNotFoundInNSS.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="20%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    <div  title="Certiticate Name">Certiticate Name</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="Mozilla Status">Mozilla Status</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="Mozilla Trust Bits">Mozilla Trust Bits</div>
+                                                </th>
+                                                <th width="40%" scope="col">
+                                                    <div  title="SHA-256 Fingerprint">SHA-256 Fingerprint</div>
+                                                </th>
+                                                <th width="20%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    <div  title="Serial Number">Serial Number</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!lstofRootCertsNotFoundInNSS}" var="result" rendered="{!lstofRootCertsNotFoundInNSS != null && lstofRootCertsNotFoundInNSS.size > 0}">
+                                                <tr class="dataRow">
+                                                    <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <apex:outputLink value="/{!result.Id}" target="_blank">{!result.Name}</apex:outputLink>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.Status__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.Trust_Bits__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.SHA_256_Fingerprint__c}
+                                                    </td>
+                                                    <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.Certificate_Serial_Number__c}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <tr style="display:{!if(lstofRootCertsNotFoundInNSS == null || lstofRootCertsNotFoundInNSS.size == 0,'','none')}">
+                                                <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    No records to display.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--4-->
+                            <div class="slds-section slds-is-open">
+                                <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                    <span class="slds-truncate slds-p-horizontal_small" title="">Values consistent between CCADB and certdata.txt ({!lstWrapperConsitent.size})</span>
+                                </h3>
+                                <div aria-hidden="false" class="slds-section__content">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th width="20%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                    <div  title="Certiticate Name">Certiticate Name</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="Mozilla Status">Mozilla Status</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="Mozilla Trust Bits">Mozilla Trust Bits</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="certdata trustEmail">certdata trustEmail</div>
+                                                </th>
+                                                <th width="10%" scope="col">
+                                                    <div  title="certdata trustWeb">certdata trustWeb</div>
+                                                </th>
+                                                <th width="25%" scope="col">
+                                                    <div  title="SHA-256 Fingerprint">SHA-256 Fingerprint</div>
+                                                </th>
+                                                <th width="15%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                    <div  title="Serial Number">Serial Number</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!lstWrapperConsitent}" var="result" rendered="{!lstWrapperConsitent != null && lstWrapperConsitent.size > 0}">
+                                                <tr class="dataRow">
+                                                    <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                        <apex:outputLink value="/{!result.objAccount.Id}" target="_blank">{!result.objAccount.Name}</apex:outputLink>
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.objAccount.Status__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.objAccount.Trust_Bits__c}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.trustEmail}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.trustWeb}
+                                                    </td>
+                                                    <td class="datacell">
+                                                        {!result.sha256}
+                                                    </td>
+                                                    <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        {!result.serialNumber}
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                            <tr style="display:{!if(lstWrapperConsitent == null || lstWrapperConsitent.size == 0,'','none')}">
+                                                <td colspan="7" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                    No records to display.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CA Comm Question</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CA Comm Questions</value>
+    </caseValues>
+    <fields>
+        <label><!-- CA Comm --></label>
+        <name>CA_Comm__c</name>
+        <relationshipLabel><!-- CA Comm Questions --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 10 --></label>
+        <name>Count_of_Response_Option_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 11 --></label>
+        <name>Count_of_Response_Option_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 12 --></label>
+        <name>Count_of_Response_Option_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 1 --></label>
+        <name>Count_of_Response_Option_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 2 --></label>
+        <name>Count_of_Response_Option_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 3 --></label>
+        <name>Count_of_Response_Option_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 4 --></label>
+        <name>Count_of_Response_Option_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 5 --></label>
+        <name>Count_of_Response_Option_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 6 --></label>
+        <name>Count_of_Response_Option_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 7 --></label>
+        <name>Count_of_Response_Option_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 8 --></label>
+        <name>Count_of_Response_Option_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Response Option 9 --></label>
+        <name>Count_of_Response_Option_9__c</name>
+    </fields>
+    <fields>
+        <label><!-- Count of Responses --></label>
+        <name>Count_of_Responses__c</name>
+    </fields>
+    <fields>
+        <help><!-- Default text can be added here for text box --></help>
+        <label><!-- Default Text --></label>
+        <name>Default_Text__c</name>
+    </fields>
+    <fields>
+        <label><!-- Order No. --></label>
+        <name>Order_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question (255 chars) --></label>
+        <name>Question_255_chars__c</name>
+    </fields>
+    <fields>
+        <label><!-- Question Type --></label>
+        <name>Question_Type__c</name>
+        <picklistValues>
+            <masterLabel>Date Type</masterLabel>
+            <translation><!-- Date Type --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Free Text (Multi line text box)</masterLabel>
+            <translation><!-- Free Text (Multi line text box) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Multi Select (Check boxes)</masterLabel>
+            <translation><!-- Multi Select (Check boxes) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Single Select (Radio buttons)</masterLabel>
+            <translation><!-- Single Select (Radio buttons) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Question --></label>
+        <name>Question__c</name>
+    </fields>
+    <fields>
+        <label><!-- Required --></label>
+        <name>Required__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 10 --></label>
+        <name>Response_Option_10__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 11 --></label>
+        <name>Response_Option_11__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 12 --></label>
+        <name>Response_Option_12__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 1 --></label>
+        <name>Response_Option_1__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 2 --></label>
+        <name>Response_Option_2__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 3 --></label>
+        <name>Response_Option_3__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 4 --></label>
+        <name>Response_Option_4__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 5 --></label>
+        <name>Response_Option_5__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 6 --></label>
+        <name>Response_Option_6__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 7 --></label>
+        <name>Response_Option_7__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 8 --></label>
+        <name>Response_Option_8__c</name>
+    </fields>
+    <fields>
+        <label><!-- Response Option 9 --></label>
+        <name>Response_Option_9__c</name>
+    </fields>
+    <layouts>
+        <layout>CA Comm Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Default text for free text type field --></label>
+            <section>Default text for free text type field</section>
+        </sections>
+        <sections>
+            <label><!-- Question --></label>
+            <section>Question</section>
+        </sections>
+        <sections>
+            <label><!-- Question Details --></label>
+            <section>Question Details</section>
+        </sections>
+        <sections>
+            <label><!-- Response options list for single/multi select type field --></label>
+            <section>Response options list for single/multi select type field</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

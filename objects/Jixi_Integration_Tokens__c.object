@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Jixi Service Integration Token variables</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Client_Certification_Name__c</fullName>
+        <description>Set Client Certification name to be used to authorize at Jixi Service.</description>
+        <externalId>false</externalId>
+        <label>Client Certification Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>HTTP_Method__c</fullName>
+        <description>Http Method to be used in Jixi Integration</description>
+        <externalId>false</externalId>
+        <label>HTTP Method</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Endpoint__c</fullName>
+        <description>Jixi Service End point</description>
+        <externalId>false</externalId>
+        <label>Service Endpoint</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Timeout__c</fullName>
+        <description>Timeout for callout. Max 120,000</description>
+        <externalId>false</externalId>
+        <label>Timeout (Millis)</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Jixi Integration Tokens</label>
+    <visibility>Public</visibility>
+</CustomObject>

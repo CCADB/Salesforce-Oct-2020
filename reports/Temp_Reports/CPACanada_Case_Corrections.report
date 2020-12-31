@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case.Case_Safe_ID__c</field>
+    </columns>
+    <columns>
+        <field>CASE_NUMBER</field>
+    </columns>
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>Case.Standard_Audit_Statement_Link__c</field>
+    </columns>
+    <columns>
+        <field>Case.Code_Signing_Audit_Statement_Link__c</field>
+    </columns>
+    <columns>
+        <field>Case.BR_Audit_Statement_Link__c</field>
+    </columns>
+    <columns>
+        <field>Case.EV_Audit_Statement_Link__c</field>
+    </columns>
+    <columns>
+        <field>Case.EV_Code_Signing_Audit_Statement_Link__c</field>
+    </columns>
+    <description>CPACanada updated the url on 11/22/2019</description>
+    <format>Tabular</format>
+    <name>CPACanada Case Corrections 11/22/2019</name>
+    <params>
+        <name>units</name>
+        <value>d</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CaseList</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>CASE_NUMBER</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>CREATED_DATEONLY</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,33 @@
+<apex:page standardController="Case">
+<apex:form id="frm" style="margin-top:10px;">
+<apex:commandButton value="Print View" onclick="openPrintView();" reRender="frm"/>&nbsp;&nbsp;
+<apex:commandButton value="Print Bug Text" onclick="openPrintBugText();" rendered="{!$User.ContactId == null}" reRender="frm"/>&nbsp;&nbsp;
+<!-- <apex:commandButton value="Deprecate - Print Approval Text" onclick="openPrintApprovalText();" reRender="frm"/>&nbsp;&nbsp; -->
+<apex:commandButton value="Print NEED Fields" onclick="openPrintNeedFields();" reRender="frm"/>&nbsp;&nbsp;
+<apex:commandButton value="Sync MozillaRootInclusionInfo" onclick="openOpenMozillaRootInclusion();" rendered="{!$User.ContactId == null}" reRender="frm"/>
+
+<script>
+    function openPrintView(){
+        window.open('/apex/PrintViewForCase?id={!Case.Id}');
+        return false;
+    }
+    function openPrintBugText(){
+        window.open('/apex/Print_Bug_Text?id={!Case.Id}');
+        return false;
+    }
+    function openPrintApprovalText(){
+        window.open('/apex/Print_Approval_Text?id={!Case.Id}');
+        return false;
+    }
+    function openPrintNeedFields(){
+        window.open('/apex/PrintNeedFields?id={!Case.Id}');
+        return false;
+    }
+    function openOpenMozillaRootInclusion(){
+        window.open('/apex/SyncParentAccountFromInclusionCase?id={!Case.Id}');
+        return false;
+    }
+    
+</script>
+</apex:form>
+</apex:page>

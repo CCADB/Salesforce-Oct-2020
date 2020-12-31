@@ -1,0 +1,166 @@
+<apex:page showheader="false" cache="false" standardStylesheets="false">
+<apex:form >
+
+    <style type="text/css">
+        body {
+            background-color:#f9fafb; 
+        }
+        .tablewrapper {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;    
+        }
+        
+        #login {
+            margin-left: auto;
+            margin-right: auto;    
+            margin-top:7%;
+        }
+        
+        #login_wrapper {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-shadow: 0 2px 7px rgba(0, 0, 0, 0.1);
+            margin-left: auto;
+            margin-right: auto;
+            min-height: 300px;
+            min-width: 300px;
+            overflow: hidden;
+        }
+        
+        /* Outer box */
+        #login {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 400px;
+            padding: 3px;
+        }
+        
+        #left_side {
+            float: none;
+            margin-left: auto;
+            margin-right: auto; 
+            font-family: Arial,Helvetica,sans-serif;
+            font-size: 12px;  
+        }
+        
+        /* Mozilla logo */
+        #logo_wrapper {   
+            margin: 10px auto 10px; 
+            overflow: hidden;
+            text-align: center;
+            width: 400px;
+            padding-top: 25px;
+            padding-bottom: 30px;
+            padding-left: 15px;
+            padding-right: 30px;
+            border-bottom: 1px solid #ccc;
+        }
+        #loginwidget {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .loginbox_container, .loginError {
+            margin-left: auto;
+            margin-right: auto;
+            width: 280px;
+        }
+        
+        #idscale {
+            width: 285px;
+        }
+        
+        .loginbox_container {   
+            margin-bottom: 0;
+            margin-top: 10;
+        }
+        .thumbnail {
+            height: 28px;
+            padding-right: 4px;
+            width: 28px;
+        }
+        
+        img {
+            border: 0 none;
+            vertical-align: middle;
+        }
+       
+        #Login {
+            margin-top: 1px;
+            height:30px;
+            width:280px;
+            font-size:12px;
+        }
+        
+        #theloginform {
+            font-family: Arial,Helvetica,sans-serif;
+            font-size: 12px;
+            font-weight:bold;
+        }
+        #forgot {
+            margin-bottom: 20px;
+            margin-top: 20px;
+            text-align: center;
+            font-family: Arial,Helvetica,sans-serif;
+            font-size: 12px;
+        }
+        #forgot a {
+            color:#000;
+        }
+        #forgot a:hover {
+            color:blue;
+        }
+        
+    </style>
+    <body bgcolor="#f9fafb">
+        <table class="tablewrapper"  cellspacing="0" cellpadding="0" border="0" > 
+            <tbody>
+                <tr valign="middle">
+                    <td>
+                        <div id="login">
+                            <div id="login_wrapper">
+                                <div id="left_side">
+                                    <div id="login_component">
+                                        <div id="logo_wrapper">
+                                            <apex:image width="370" height="132"  id="phHeaderLogoImage" alt="" value="{!$Resource.CommonCADatabaseOnlyLogo}" />
+                                        </div>
+                                        <br/>
+                                        <div id="loginwidget">
+                                            <div id="loginformarea" class="loginbox_container" style="margin-bottom:30px;">
+                                                <div id="theloginform" style="display: inline;">
+                                                    <apex:outputtext value="You are now logged out. Thank you for visiting the Common CA Database."/>
+                                                </div>
+                                            </div>
+                                        </div>  
+                                        <div id="forgot" class="loginbox_container">
+                                            <apex:outputlink value="{!$Site.BaseUrl}/apex/CustomLogin"> Return to Log In</apex:outputlink>
+                                            <!--<apex:outputlink value="https://ccadb.force.com/CustomLogin"> Return to Log In</apex:outputlink>-->
+
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>                           
+                             </div>
+                            <div id="login" style="margin-top:0px;">
+                            <div id="login_wrapper" style="min-height:100px;">
+                                <div id="left_side">
+                                    <div style="text-align:center;padding-top:10px;padding-bottom:15px;color:#adabab;">Partners</div>
+                                    <div style="text-align:center; vertical-align:middle; padding-right:7%; padding-left:7%;">
+                                        <apex:image width="90" height="28" style="float:left;  margin-right:7px;"  alt="Mozilla" value="{!$Resource.MozillaLogo}" />
+                                        <apex:image width="125" height="26" style="margin-right:7px;"  alt="Microsoft" value="{!$Resource.MicrosoftLogo}" />
+                                        <apex:image width="90" height="28" style="float:right;"  alt="Google" value="{!$Resource.GoogleLogo}" />                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                                                            
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</apex:form>
+</apex:page>

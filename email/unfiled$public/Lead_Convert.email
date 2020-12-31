@@ -1,0 +1,8 @@
+<p>Dear {!Contact.Name},</p>
+
+<p>Your CA, {!Lead.Company}, has been added to the Common CA Database (CCADB). You will receive another email soon, when your CCADB CA Community License is issued to you.</p>
+
+<p>Please contact support@ccadb.org if you have any questions.</p>
+
+<p>Thanks, </p>
+<p>{!Account.Sponsored_By__c}</p>

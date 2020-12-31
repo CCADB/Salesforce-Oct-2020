@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Deprecated process; TLS Observatory API replaces x509certchecker utility</description>
+    <label>Process PEM Info In Batch Using x509cert</label>
+    <motif>Custom30: Radar dish</motif>
+    <page>ProcessPEMInfoBatch</page>
+</CustomTab>

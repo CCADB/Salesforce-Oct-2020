@@ -1,0 +1,58 @@
+<apex:page standardController="Account" extensions="MassUpdateAuditCPCPSDataController" 
+showHeader="true" sidebar="true" cache="false" tabStyle="Account" action="{!checkPortalUserValidation}">       
+
+  <apex:sectionHeader title="" subtitle="Instructions for Mass Update of Audit/CP/CPS Data for certs signed by {!sourceAccountSo.Parent.Name}" rendered="{!isValidPortalUser}"/>
+    <apex:pageMessages rendered="{!hasError}"/>
+        
+     <apex:pageBlock title="Detailed Instructions"  id="theBlock" >
+        
+         <apex:pageBlockSection columns="1">         
+
+This <b>Mass Update</b> process will cycle through the certificates signed by the same parent and let you choose whether to update their CP/CPS/Audit data to match the record you were viewing when you clicked on the "Mass Update Audit/CP/CPS Data" button.
+<br/><br/>
+<b>Source:</b> The certificate you were viewing when you clicked on the Mass Update button.
+<br/><br/>
+<b>Target:</b> A certificate that was signed by the same parent as the Source and has different CP/CPS/Audit data. 
+<br/><br/>
+A window will display the Audit and Policy information for both the Source and the Target certificates side-by-side, and the differences will be shown in blue text.
+<br/><br/>
+For each Target certificate, you can select "Yes" in the sections that you want to copy from the Source certificate, then click on "Next Target Cert"  to move onto the next one.
+<br/><br/>
+If you click on the "Exit" button, you can re-start the process later without having to go through all of the Target certificates that you already updated. Each time you click on the Mass Update button, it will only show the sibling certificates with Audit and Policy information that is different from the Source certificate.
+<br/>        
+        </apex:pageBlockSection>   
+
+     </apex:pageBlock>
+     <style>
+     .btn{ width:50px;}
+     </style>
+   
+        <apex:form id="theForm">
+            
+<!--            <apex:outputPanel >
+                &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;
+                <apex:commandButton value="Go Back" action="{!redirectToAccount}" id="goBack" rendered="{!AND(hasError, !isValidPortalUser)}" style="width:55px"/>    
+            </apex:outputPanel> -->
+            
+        <apex:pageBlock title="User Confirmation"  id="confirmPanel">   
+                
+              <apex:outputText value="Do you want to continue with mass update?" />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <apex:commandButton action="{!redirectFromLandingPage}" value="Yes" id="saveButton" />
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             
+              <apex:commandButton value="No" id="exitButton" status="saveStatus" action="{!redirectTosourceAccount}"/>
+              &nbsp;&nbsp;&nbsp;
+              
+        </apex:pageBlock>
+   
+          
+     </apex:form>      
+      
+      <style>
+          .mainTitle{
+              width:200% !important;
+          }
+      </style>                            
+ 
+</apex:page>

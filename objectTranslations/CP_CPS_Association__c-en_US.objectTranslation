@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>CP/CPS Association</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>CP/CPS Associations</value>
+    </caseValues>
+    <fields>
+        <label><!-- Document Id --></label>
+        <name>CP_CPS_Document__c</name>
+        <relationshipLabel><!-- CP/CPS Associations --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Certificate Name --></label>
+        <name>Certificate_Name__c</name>
+        <relationshipLabel><!-- CP/CPS Associations (On Certificate) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Document Link --></label>
+        <name>Document_Link__c</name>
+    </fields>
+    <fields>
+        <label><!-- Document Type --></label>
+        <name>Document_Type__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

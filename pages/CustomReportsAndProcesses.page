@@ -1,0 +1,572 @@
+<apex:page controller="CustomReportsAndProcessesController" sidebar="false" docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+                <!--white-space: nowrap !important;-->
+            }
+            .slds {
+                padding: 10px;
+            }
+            .slds-scope .slds-list_horizontal .slds-item_detail {
+                width:80% !important;
+            }
+            .slds-scope .slds-list_horizontal .slds-item_label {
+                width:20% !important;
+            }
+        </style>
+        <body>
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-6">
+                        </div>
+                        <div class="slds-col slds-size_4-of-6">
+                            <div class="slds-page-header" style="margin-top:10px;">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">Mozilla</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle" title="Documentation">Documentation</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <!--action function-->
+                                <apex:actionFunction action="{!filterDocumentation}" name="actfilterDocumentation" id="actfilterDocumentation" reRender="frm" status="Processing" oncomplete="overridePageMessages();"/>
+                                <apex:actionFunction id="actEditDocument" name="actEditDocument" action="{!EditDocument}" status="Processing" reRender="opEditPopup" oncomplete="overridePageMessages();">
+                                    <apex:param value="" name="index"/>  
+                                </apex:actionFunction>
+                                <apex:actionFunction action="{!CancelDocument}" name="actCancelDocument" id="actCancelDocument" reRender="frm" status="Processing" oncomplete="overridePageMessages();"/>
+                                <apex:actionFunction action="{!SaveDocument}" name="actSaveDocument" id="actSaveDocument" reRender="frm" status="Processing" oncomplete="overridePageMessages();"/>
+                                <apex:pageMessages ></apex:pageMessages>
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-truncate slds-p-horizontal_small" title="Filter">Filter Options</span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <div class="slds-form--compound">
+                                            <div class="slds-form-element__group">
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-form-element slds-size--1-of-4">
+                                                        <label class="slds-form-element__label">Used By</label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList value="{!strUsedBy}" size="1" multiselect="false" styleClass="slds-select" onchange="actfilterDocumentation();">
+                                                                <apex:selectOptions value="{!lstUsedBy}"></apex:selectOptions>
+                                                            </apex:selectList> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element slds-size--1-of-4">
+                                                        <label class="slds-form-element__label">Type</label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputField value="{!objDocumentFilter.Type__c}" styleClass="slds-select" onchange="actfilterDocumentation();"/>  
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element slds-size--1-of-4">
+                                                        <label class="slds-form-element__label">Lightning Enabled</label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputField value="{!objDocumentFilter.Lightning_Enabled__c}" styleClass="slds-select" onchange="actfilterDocumentation();"/>  
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element slds-size--1-of-4">
+                                                        <label class="slds-form-element__label">Deprecated?</label>
+                                                        <div class="slds-form-element__control">
+                                                            <div class="slds-checkbox">
+                                                                <apex:inputField value="{!objDocumentFilter.Deprecated__c}" id="chkDeprecated" onchange="actfilterDocumentation();"/>
+                                                                <label class="slds-checkbox__label" for="{!$Component.chkDeprecated}">
+                                                                    <span class="slds-checkbox_faux"></span>
+                                                                    <span class="slds-form-element__label"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-section slds-is-open">
+                                    <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;">
+                                        <span class="slds-truncate slds-p-horizontal_small" title="Documentation" style="width: 97%;">
+                                            As of {!currentDate} ({!lstDocumentation.size} records displayed)
+                                        </span>
+                                        <span id="spnHelp" style="float:right;">
+                                            <div class="slds-form-element__icon" style="padding-top:0px;vertical-align:middle;">
+                                                <a href="javascript:void(0);" class="helplink">
+                                                    <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                    </svg>
+                                                    <span class="slds-assistive-text">Help</span>
+                                                </a>
+                                            </div>
+                                            <div class="help slds-hide slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;background:grey;">
+                                                <div class="slds-popover__body slds-text-longform">
+                                                    <apex:outputLabel rendered="{!$ObjectType.Custom_Reports_and_Processes__c.fields.URL__c.InlineHelpText != null}">URL(s): {!$ObjectType.Custom_Reports_and_Processes__c.fields.URL__c.InlineHelpText}</apex:outputLabel>
+                                                    <apex:outputLabel rendered="{!$ObjectType.Custom_Reports_and_Processes__c.fields.Description__c.InlineHelpText != null}"><br/>Description: {!$ObjectType.Custom_Reports_and_Processes__c.fields.Description__c.InlineHelpText}</apex:outputLabel>
+                                                    <apex:outputLabel rendered="{!$ObjectType.Custom_Reports_and_Processes__c.fields.Used_By__c.InlineHelpText != null}"><br/>Used By: {!$ObjectType.Custom_Reports_and_Processes__c.fields.Used_By__c.InlineHelpText}</apex:outputLabel>
+                                                    <apex:outputLabel rendered="{!$ObjectType.Custom_Reports_and_Processes__c.fields.Type__c.InlineHelpText != null}"><br/>Type: {!$ObjectType.Custom_Reports_and_Processes__c.fields.Type__c.InlineHelpText}</apex:outputLabel>
+                                                    <apex:outputLabel rendered="{!$ObjectType.Custom_Reports_and_Processes__c.fields.Lightning_Enabled__c.InlineHelpText != null}"><br/>Lightning Enabled: {!$ObjectType.Custom_Reports_and_Processes__c.fields.Lightning_Enabled__c.InlineHelpText}</apex:outputLabel>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </h3>
+                                    <div aria-hidden="false" class="slds-section__content">
+                                        <apex:variable value="{!0}" var="index"/>
+                                        <apex:repeat value="{!lstDocumentation}" var="document" rendered="{!lstDocumentation != null && lstDocumentation.size > 0}">
+                                            <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12" style="width: 100%;margin-top:10px;">
+                                                <article class="slds-tile slds-media">
+                                                    <div class="slds-media__figure">
+                                                        <span class="slds-icon_container" title="description of icon when needed">
+                                                            <svg class="slds-icon slds-icon-standard-record" aria-hidden="true">
+                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#record")}" />
+                                                            </svg>
+                                                        </span>
+                                                    </div>
+                                                    <div class="slds-media__body">
+                                                        <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                                            <h3 class="slds-tile__title" title="{!document.Name__c}">
+                                                                <a href="/{!document.Id}" target="_blank">{!document.Name__c}</a>
+                                                            </h3>
+                                                            <apex:outputPanel rendered="{!isEditAllow}" styleClass="slds-shrink-none">
+                                                                <button class="slds-button slds-icon_container slds-icon-standard-record-update btnEdit" data-index="{!index}" aria-haspopup="true" title="Edit">
+                                                                    <svg class="slds-icon" aria-hidden="true">
+                                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS,"/assets/icons/standard-sprite/svg/symbols.svg#record_update")}" />
+                                                                    </svg>
+                                                                    <span class="slds-assistive-text">Edit</span>
+                                                                </button>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                        <div class="slds-tile__detail">
+                                                            <dl class="slds-list_horizontal slds-wrap">
+                                                                <dt class="slds-item_label slds-text-color_weak" title="URL(s)">
+                                                                    URL(s)
+                                                                    <!--<div class="slds-form-element__icon" style="padding-top:0px;vertical-align:middle;">
+                                                                        <a href="javascript:void(0);" class="helplink">
+                                                                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">Help</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="help slds-hide slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;">
+                                                                        <div class="slds-popover__body slds-text-longform">
+                                                                            <p>{!$ObjectType.Custom_Reports_and_Processes__c.fields.URL__c.InlineHelpText}</p>
+                                                                        </div>
+                                                                    </div>-->:
+                                                                </dt>
+                                                                <dd class="slds-item_detail" title="{!document.URL__c}">
+                                                                    <apex:outputField value="{!document.URL__c}" id="opURL"/>
+                                                                </dd>
+                                                                <dt class="slds-item_label slds-text-color_weak" title="Description">
+                                                                    Description
+                                                                    <!--<div class="slds-form-element__icon" style="padding-top:0px;vertical-align:middle;">
+                                                                        <a href="javascript:void(0);" class="helplink">
+                                                                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">Help</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="help slds-hide slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;">
+                                                                        <div class="slds-popover__body slds-text-longform">
+                                                                            <p>{!$ObjectType.Custom_Reports_and_Processes__c.fields.Description__c.InlineHelpText}</p>
+                                                                        </div>
+                                                                    </div>-->
+                                                                    :
+                                                                </dt>
+                                                                <dd class="slds-item_detail" title="{!document.Description__c}">
+                                                                    <apex:outputField value="{!document.Description__c}"/>
+                                                                </dd>
+                                                                <dt class="slds-item_label slds-text-color_weak" title="Used By">
+                                                                    Used By
+                                                                    <!--<div class="slds-form-element__icon" style="padding-top:0px;vertical-align:middle;">
+                                                                        <a href="javascript:void(0);" class="helplink">
+                                                                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">Help</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="help slds-hide slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;">
+                                                                        <div class="slds-popover__body slds-text-longform">
+                                                                            <p>{!$ObjectType.Custom_Reports_and_Processes__c.fields.Used_By__c.InlineHelpText}</p>
+                                                                        </div>
+                                                                    </div>-->
+                                                                    :
+                                                                </dt>
+                                                                <dd class="slds-item_detail" title="{!document.Used_By__c}">
+                                                                    <apex:outputField value="{!document.Used_By__c}"/>
+                                                                </dd>
+                                                                <dt class="slds-item_label slds-text-color_weak" title="Type">
+                                                                    Type
+                                                                    <!--<div class="slds-form-element__icon" style="padding-top:0px;vertical-align:middle;">
+                                                                        <a href="javascript:void(0);" class="helplink">
+                                                                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">Help</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="help slds-hide slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;">
+                                                                        <div class="slds-popover__body slds-text-longform">
+                                                                            <p>{!$ObjectType.Custom_Reports_and_Processes__c.fields.Type__c.InlineHelpText}</p>
+                                                                        </div>
+                                                                    </div>-->
+                                                                    :
+                                                                </dt>
+                                                                <dd class="slds-item_detail" title="{!document.Type__c}">
+                                                                    <apex:outputField value="{!document.Type__c}"/>
+                                                                </dd>
+                                                                <dt class="slds-item_label slds-text-color_weak" title="Lightning Enabled">
+                                                                    Lightning Enabled
+                                                                    <!--<div class="slds-form-element__icon" style="padding-top:0px;vertical-align:middle;">
+                                                                        <a href="javascript:void(0);" class="helplink">
+                                                                            <svg class="slds-icon slds-icon--x-small slds-icon-text-default" aria-hidden="true">
+                                                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#info")}"></use>
+                                                                            </svg>
+                                                                            <span class="slds-assistive-text">Help</span>
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="help slds-hide slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" aria-live="polite" style="position:absolute;">
+                                                                        <div class="slds-popover__body slds-text-longform">
+                                                                            <p>{!$ObjectType.Custom_Reports_and_Processes__c.fields.Lightning_Enabled__c.InlineHelpText}</p>
+                                                                        </div>
+                                                                    </div>-->
+                                                                    :
+                                                                </dt>
+                                                                <dd class="slds-item_detail" title="{!document.Lightning_Enabled__c}">
+                                                                    <apex:outputField value="{!document.Lightning_Enabled__c}"/>
+                                                                </dd>
+                                                            </dl>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                            <apex:variable value="{!index+1}" var="index"/>
+                                        </apex:repeat>
+                                        <apex:outputPanel rendered="{!lstDocumentation == null || lstDocumentation.size == 0}"> 
+                                            <div class="slds-form-element slds-size--1-of-1">
+                                                <label class="slds-form-element__label" style="font-size:1rem;">No records to display.</label>
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel id="opEditPopup">
+                                            <apex:outputPanel rendered="{!isEditDocument}">
+                                                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading" aria-modal="true" aria-describedby="modal-content" class="slds-modal slds-fade-in-open">
+                                                    <div class="slds-modal__container">
+                                                        <header class="slds-modal__header">
+                                                            <button class ="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse btnClose" title="Close">
+                                                                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS,"/assets/icons/utility-sprite/svg/symbols.svg#close")}" />
+                                                                </svg>
+                                                                <span class="slds-assistive-text">Close</span>
+                                                            </button>
+                                                            <h2 id="modal-heading" class="slds-text-heading_medium slds-hyphenate">Edit Documentation Record</h2>
+                                                        </header>
+                                                        <div class="slds-modal__content slds-p-around_medium" id="modal-content">
+                                                            <div class="slds-form--compound">
+                                                                <div class="slds-form-element__group">
+                                                                    <!--<div class="slds-form-element__row">-->
+                                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                                            <label class="slds-form-element__label">Name</label>
+                                                                            <div class="slds-form-element__control">
+                                                                                <apex:inputField value="{!objEditDocument.Name__c}" styleClass="slds-input"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                                            <label class="slds-form-element__label">URL(s)</label>
+                                                                            <div class="slds-form-element__control">
+                                                                                <apex:inputField value="{!objEditDocument.URL__c}" styleClass="slds-textarea"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                                            <label class="slds-form-element__label">Description</label>
+                                                                            <div class="slds-form-element__control">
+                                                                                <apex:inputField value="{!objEditDocument.Description__c}" styleClass="slds-textarea"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                                            <label class="slds-form-element__label">Used By</label>
+                                                                            <!--<div class="slds-form-element__control">
+                                                                                <apex:inputField value="{!objEditDocument.Used_By__c}" styleClass="slds-select"/>
+                                                                            </div>-->
+                                                                            <apex:outputPanel layout="block" id="divUsedByMultiPicklist" styleClass="clsMultiPicklist">
+                                                                                <div class="slds-picklist--draggable slds-grid" id="divUsedByWrapper" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+                                                                                    <table style="border-spacing:0px !important;border:none;">
+                                                                                        <tr>
+                                                                                            <td style="border:none;padding-left:0px;">
+                                                                                                <apex:outputPanel layout="block" styleClass="slds-form-element__control" id="divUsedByLeft">
+                                                                                                </apex:outputPanel>
+                                                                                            </td>
+                                                                                            <td style="border:none;width:7%">
+                                                                                                <apex:outputPanel layout="block" styleClass="slds-grid slds-grid--vertical" id="divUsedByButtons">
+                                                                                                    <button class="slds-button slds-button--icon-container btnTempClickRightclass" data-pickid="{!$Component.UsedByPicklist}">
+                                                                                                        <svg aria-hidden="true" class="slds-button__icon">
+                                                                                                            <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#right')}"></use>
+                                                                                                        </svg>
+                                                                                                        <span class="slds-assistive-text">Arrow up</span>
+                                                                                                    </button>
+                                                                                                    <button class="slds-button slds-button--icon-container btnTempClickLeftclass" data-pickid="{!$Component.UsedByPicklist}">
+                                                                                                        <svg aria-hidden="true" class="slds-button__icon">
+                                                                                                            <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#left')}"></use>
+                                                                                                        </svg>
+                                                                                                        <span class="slds-assistive-text">Arrow down</span>
+                                                                                                    </button>
+                                                                                                </apex:outputPanel>
+                                                                                            </td>
+                                                                                            <td style="border:none;">
+                                                                                                <apex:outputPanel layout="block" styleClass="slds-form-element__control" id="divUsedByRight">
+                                                                                                </apex:outputPanel>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </div>
+                                                                                <apex:outputPanel layout="block" styleClass="slds-form-element__control" id="divUsedByCWrapper">
+                                                                                    <apex:inputField id="UsedByPicklist"  value="{!objEditDocument.Used_By__c}" styleclass="slds-select"/>
+                                                                                </apex:outputPanel>
+                                                                
+                                                                                <script type="text/javascript">
+                                                                                    var divSelWrapper = document.getElementById("{!$Component.divUsedByCWrapper}");
+                                                                                    var selList = divSelWrapper.getElementsByTagName("select");
+                                                                                    var selId = selList[0].id;
+                                                                
+                                                                                    var selLeft = selList[1];
+                                                                                    var selRight = selList[2];
+                                                                
+                                                                                    // Re-parent select controls for LEX support
+                                                                                    document.getElementById("{!$Component.divUsedByLeft}").appendChild(selLeft);
+                                                                                    document.getElementById("{!$Component.divUsedByRight}").appendChild(selRight);
+                                                                
+                                                                                    // Take away the "optgroup" because the VF render issue
+                                                                                    selLeft.innerHTML = selLeft.getElementsByTagName("optgroup")[0].innerHTML;
+                                                                                    selRight.innerHTML = selRight.getElementsByTagName("optgroup")[0].innerHTML;
+                                                                
+                                                                                    // Remove unused HTML elments
+                                                                                    divSelWrapper.removeChild(divSelWrapper.getElementsByTagName("table")[0]);
+                                                                
+                                                                                </script>
+                                                                            </apex:outputPanel>
+                                                                        </div>
+                                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                                            <label class="slds-form-element__label">Type</label>
+                                                                            <div class="slds-form-element__control">
+                                                                                <apex:inputField value="{!objEditDocument.Type__c}" styleClass="slds-select"/>  
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="slds-form-element slds-size--1-of-1">
+                                                                            <label class="slds-form-element__label">Lightning Enabled</label>
+                                                                            <div class="slds-form-element__control">
+                                                                                <apex:inputField value="{!objEditDocument.Lightning_Enabled__c}" styleClass="slds-select"/>  
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--<div class="slds-form-element slds-size--1-of-4">
+                                                                            <label class="slds-form-element__label">Deprecated?</label>
+                                                                            <div class="slds-form-element__control">
+                                                                                <div class="slds-checkbox">
+                                                                                    <apex:inputField value="{!objEditDocument.Deprecated__c}" id="chkDeprecated" onchange="actfilterDocumentation();"/>
+                                                                                    <label class="slds-checkbox__label" for="{!$Component.chkDeprecated}">
+                                                                                        <span class="slds-checkbox_faux"></span>
+                                                                                        <span class="slds-form-element__label"></span>
+                                                                                    </label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>-->
+                                                                    <!--</div>-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <footer class="slds-modal__footer">
+                                                            <button class="slds-button slds-button_neutral btnClose">Cancel</button>
+                                                            <button class="slds-button slds-button_brand btnSave">Save</button>
+                                                        </footer>
+                                                    </div>
+                                                </section>
+                                                <div class="slds-backdrop slds-backdrop_open"></div>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        <script>
+                                            $(document).on('click','.btnSave',function(){
+                                                actSaveDocument();
+                                                return false;
+                                            });
+                                            $(document).on('mouseenter','.helplink',function(){
+                                                $(this).closest('#spnHelp').find('div.help').removeClass('slds-hide');
+                                                var elementheight = $(this).closest('span').position();
+                                                var spanheight = $(this).closest('#spnHelp').find('div.help').height();
+                                                $(this).closest('#spnHelp').find('div.help').css({"left": elementheight.left-15, "top": elementheight.top-spanheight-10});
+                                            });
+                                            $(document).on('mouseleave','.helplink',function(){
+                                                $(this).closest('#spnHelp').find('div.help').addClass('slds-hide');
+                                            });
+                                            $(document).on('click','.btnClose',function(){
+                                                actCancelDocument();
+                                                return false;
+                                            });
+                                            $(document).on('click','.btnEdit',function(){
+                                                var index = $(this).attr('data-index');
+                                                actEditDocument(index);
+                                                return false;
+                                            });
+                                            $(document).on('click', '.btnTempClickRightclass', function(){
+                                                var tmpid = $(this).attr('data-pickid');
+                                                MultiSelectPicklist.handleMSPSelect(tmpid);
+                                                return false;
+                                            });
+                                            
+                                            $(document).on('click', '.btnTempClickLeftclass', function(){
+                                                var tmpid = $(this).attr('data-pickid');
+                                                MultiSelectPicklist.handleMSPUnSelect(tmpid);
+                                                return false;
+                                            });
+                                            $(document).ready(function(){
+                                                overridePageMessages();
+                                            });
+                                            function overridePageMessages(){    
+                                                var textureEffect = '';
+                                                //Uncomment below line for texture effect on page messages
+                                                textureEffect = 'slds-theme--alert-texture';
+                                                             
+                                                $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);          
+                                                $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);    
+                                                $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+                                                $('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);    
+                                                                 
+                                                $('.errorM3').removeClass('errorM3'); 
+                                                $('.confirmM3').removeClass('confirmM3'); 
+                                                $('.infoM3').removeClass('infoM3');   
+                                                $('.warningM3').removeClass('warningM3');  
+                                            }
+                                        </script>
+                                        <!--<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th scope="col" style="border-left: 1px solid rgb(221, 219, 218);padding-left:0.5rem;">
+                                                        <div  title="Name">Name</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div title="URL">URL</div>
+                                                    </th>
+                                                    <th scope="col">
+                                                        <div title="Description">Description</div>
+                                                    </th>
+                                                    <th  scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                        <div title="Used By">Used By</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <apex:repeat value="{!lstDocumentation}" var="document" rendered="{!lstDocumentation != null && lstDocumentation.size > 0}">
+                                                    <tr class="dataRow">
+                                                        <td class="datacell" style="border-left: 1px solid rgb(221, 219, 218);padding-left:0.5rem;">
+                                                            <apex:outputField value="{!document.Name__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!document.URL__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell">
+                                                            <apex:outputField value="{!document.Description__c}"> </apex:outputField>
+                                                        </td>
+                                                        <td class="datacell" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            <apex:outputField value="{!document.Used_By__c}"> </apex:outputField>
+                                                        </td>
+                                                    </tr>
+                                                </apex:repeat>
+                                                <tr style="display:{!if(lstDocumentation == null || lstDocumentation.size == 0,'','none')}">
+                                                    <td colspan="4" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                        No records to display.
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-6">
+                        </div>
+                    </div>
+                </div>
+                <!------------- Start: Processing Div---------------------------------------->
+                <style>
+                    .msgIcon {
+                        display: none!important
+                    }
+                    .slds-tile__title {
+                        font-size:15px !important;
+                        font-weight:bold !important;
+                    }
+                    .customMessage * {
+                        color: #fff!important
+                    }
+                    .clsMultiPicklist .slds-select {
+                        width:270px !important;
+                        height:100px !important;
+                    }
+                    .customMessage {
+                        margin: 5px 0!important;
+                        opacity: 1!important;
+                        width: 100%;
+                        //font-size: 12px;
+                        border: 0px;
+                        padding-left: 10px;
+                    }
+                    .ProcessingBackground {
+                        background-color: #fff;
+                        opacity: 0.60;
+                        filter: alpha(opacity = 50);
+                        width: 100%;
+                        height: 100%;
+                        position: fixed;
+                        z-index: 9998;
+                        top:0;
+                        left:0;
+                    }
+                    .Processing {
+                        z-index: 9999;
+                        left: 47.5%;
+                        top: 50%;
+                        text-align: center;
+                        position: fixed;
+                    } 
+            
+                </style>
+                <div id="divProcessing" style="display:none;">
+                    <div class="ProcessingBackground"></div>
+                    <div class="slds-spinner slds-spinner_medium slds-spinner_brand"> 
+                        <span class="slds-assistive-text">Loading</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div> 
+                    </div>
+                    <apex:actionStatus id="Processing" onstart="document.getElementById('divProcessing').style.display = '';" onstop="document.getElementById('divProcessing').style.display = 'none';" />                            
+    
+                </div>  
+                <!------------- End: Processing Div---------------------------------------->
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

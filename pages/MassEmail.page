@@ -1,0 +1,728 @@
+<apex:page standardController="Mass_Email__c" extensions="MassEmailController" showHeader="true" sidebar="false" docType="html-5.0"> <!--action="{!massEmailHandler}"-->
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:slds />    
+        <meta http-equiv="x-ua-compatible" content="ie=edge"/>    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <script src="//code.jquery.com/jquery-3.3.1.js"></script>
+        <style>
+            table { 
+                table-layout:fixed; 
+            }
+            table td, table th {
+                word-wrap:break-word !important;
+                white-space:normal !important;
+                vertical-align: middle !important;
+            }
+            .slds-scope .slds-section__content table thead th {
+                color: rgb(81, 79, 77);
+                font-weight: 700;
+                line-height: normal;
+                background-color: rgb(250, 250, 249);
+                font-size:14px;
+            }
+            .slds-scope .slds-table_cell-buffer tr>th:first-child, .slds-scope .slds-table_cell-buffer tr>td:first-child {
+                padding: 0.5rem !important;
+            }
+            .slds {
+                padding: 10px;
+            }
+            <!--this CSS is applied for site-->
+            .slds-scope .slds-page-header {
+                padding: 1rem 1rem;
+                border-bottom: 1px solid rgb(221, 219, 218);
+                border-radius: 0 !important;
+                background: rgb(243, 242, 242);
+                background-clip: border-box !important; 
+                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.10);
+                border: 1px solid rgb(221, 219, 218)
+            }
+            .slds-scope .slds-table thead th {
+                background-color: rgb(250, 250, 249);
+                color: rgb(81, 79, 77);
+                padding: .25rem .5rem;
+                font-weight: 700;
+                line-height: normal;
+            }
+            .slds-scope .slds-page-header__title {
+                font-size: 1.125rem;
+                font-weight: 700;
+                line-height: 1.25;
+                display: block;
+            }
+            .slds-scope .slds-section__title {
+                border-radius: 0 !important;
+                font-weight:700;
+            }
+            .slds-scope .slds-theme_shade, .slds-scope .slds-theme--shade {
+                background-color: rgb(243, 242, 242);
+            }
+            .dateFormat {
+                display:none;
+            }
+            .datePicker {
+                max-width:15%;
+            }
+            .clsMultiPicklist select {
+                width:200px !important;
+                height:100px !important;
+            }
+            .clsPIMultiPicklist select {
+                width:200px !important;
+                height:265px !important;
+            }
+            .slds-scope .slds-dueling-list__column_responsive {
+                flex-wrap: nowrap;
+            }
+            li.selected {
+                background-color: #1589EE;
+                color:white;
+            }
+            .slds-listbox__option_plain {
+                cursor:pointer;
+            }
+            .msgIcon {
+                display: none!important
+            }
+            .messageCell {
+                width:100%;
+            }
+            .customMessage * {
+                color: #fff!important
+            }
+            .customMessage {
+                margin: 5px 0!important;
+                opacity: 1!important;
+                width: 100%;
+                //font-size: 12px;
+                border: 0px;
+                padding-left: 10px;
+            }
+        </style>
+        <body>
+            <!--<hr style="margin:0px;border-top: 2px solid black;"/>-->
+            <apex:form id="frm">
+                <div class="slds">
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <div class="slds-page-header">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-has-flexi-truncate" style="padding-left:0px;">
+                                        <div class="slds-media slds-no-space slds-grow">
+                                            <div class="slds-media__figure">
+                                                <!-- <svg class="slds-icon slds-icon-standard-report" aria-hidden="true">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/standard-sprite/svg/symbols.svg#report")}"></use>
+                                                </svg> -->
+                                                <apex:image value="{!$Resource.CCADB}" width="150" height="80"/>
+                                            </div>
+                                            <div class="slds-media__body" style="margin-top: 8px;">
+                                                <p class="slds-text-title--caps slds-line-height--reset">{!if(isPreview, 'Preview Email','Run Mass Email Batch Job')}</p>
+                                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle">{!Mass_Email__c.Name}</h1>
+                                            </div>              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!--Body-->
+                            <div id="mainbody" style="margin-top:25px;">
+                                <!-- Preview Email Body start-->
+                                <apex:outputPanel rendered="{!isPreview}" layout="block">
+                                    <div style="text-align:center;">
+                                        <apex:commandButton action="{!cancel}" value="Go Back" styleClass="slds-button slds-button_brand" />
+                                    </div>
+                                    <apex:pageMessages />
+                                    <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                        <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;background-color:lightblue;padding-left:10px;">
+                                            Preview of Email
+                                        </h3>
+                                        <div aria-hidden="false" class="slds-section__content">
+                                            <div class="slds-form" role="list">
+                                                <div class="slds-form__row">
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div class="slds-form-element slds-form-element_horizontal">
+                                                            <span class="slds-form-element__label">From Address</span>
+                                                            <div class="slds-form-element__control" style="padding-left: 18%;">
+                                                                <apex:outputField value="{!Mass_Email__c.From_In_Text__c}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-form__row">
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div class="slds-form-element slds-form-element_horizontal">
+                                                            <span class="slds-form-element__label">Reply To</span>
+                                                            <div class="slds-form-element__control" style="padding-left: 18%;">
+                                                                <apex:outputField value="{!Mass_Email__c.Reply_To_In_Text__c}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-form__row">
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div class="slds-form-element slds-form-element_horizontal">
+                                                            <span class="slds-form-element__label">Send To</span>
+                                                            <div class="slds-form-element__control" style="padding-left: 18%;">
+                                                                <apex:outputField value="{!Mass_Email__c.Send_To__c}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-form__row">
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div class="slds-form-element slds-form-element_horizontal">
+                                                            <span class="slds-form-element__label">CC To</span>
+                                                            <div class="slds-form-element__control" style="padding-left: 18%;">
+                                                                <apex:outputField value="{!Mass_Email__c.CC_To__c}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-form__row">
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div class="slds-form-element slds-form-element_horizontal">
+                                                            <span class="slds-form-element__label">Subject</span>
+                                                            <div class="slds-form-element__control" style="padding-left: 18%;">
+                                                                <apex:outputField value="{!Mass_Email__c.Subject__c}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-form__row">
+                                                    <div class="slds-form__item" role="listitem">
+                                                        <div class="slds-form-element slds-form-element_horizontal">
+                                                            <span class="slds-form-element__label">Email Body</span>
+                                                            <div class="slds-form-element__control" style="padding-left: 18%;">
+                                                                <apex:outputField value="{!Mass_Email__c.Message__c}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                        <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;background-color:lightblue;padding-left:10px;">
+                                            To List (Number of Recipients Filtered: {!toLst.size})
+                                        </h3>
+                                        <div aria-hidden="false" class="slds-section__content">
+                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th width="20%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            CA Owner
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            Full Name
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            Email
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            Is Community User Active?
+                                                        </th>
+                                                        <th width="20%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            Last Login
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <apex:repeat value="{!toLst}" var="displayToInfoWrapper">
+                                                        <tr>
+                                                            <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                                {!displayToInfoWrapper.ownername}
+                                                            </td>
+                                                            <td>
+                                                                {!displayToInfoWrapper.fullname}
+                                                            </td>
+                                                            <td>
+                                                                {!displayToInfoWrapper.email}
+                                                            </td>
+                                                            <td>
+                                                                <apex:outputPanel rendered="{!displayToInfoWrapper.IsCommunityUserActive}" styleClass="slds-icon_container slds-icon__svg--default">
+                                                                    <svg class="slds-icon slds-icon-text-default" style="width:1rem;height:1rem;" aria-hidden="true">
+                                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#check")}"></use>
+                                                                    </svg>
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                            <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                                {!displayToInfoWrapper.lastlogin}
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                    <tr style="display:{!if(toLst == null || toLst.size == 0,'','none')}">
+                                                        <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                            Number records to display.
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="slds-section slds-is-open" style="margin-top:10px;">
+                                        <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;background-color:lightblue;padding-left:10px;">
+                                            CC List  (Number of Recipients Filtered: {!ccLst.size})
+                                        </h3>
+                                        <div aria-hidden="false" class="slds-section__content">
+                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th width="20%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            CA Owner
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            Full Name
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            Email
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            Is Community User Active?
+                                                        </th>
+                                                        <th width="20%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            Last Login
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <apex:repeat value="{!ccLst}" var="displayToInfoWrapper">
+                                                        <tr>
+                                                            <td style="border-left: 1px solid rgb(221, 219, 218);">
+                                                                {!displayToInfoWrapper.ownername}
+                                                            </td>
+                                                            <td>
+                                                                {!displayToInfoWrapper.fullname}
+                                                            </td>
+                                                            <td>
+                                                                {!displayToInfoWrapper.email}
+                                                            </td>
+                                                            <td>
+                                                                <apex:outputPanel rendered="{!displayToInfoWrapper.IsCommunityUserActive}" styleClass="slds-icon_container slds-icon__svg--default">
+                                                                    <svg class="slds-icon slds-icon-text-default" style="width:1rem;height:1rem;" aria-hidden="true">
+                                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#check")}"></use>
+                                                                    </svg>
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                            <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                                {!displayToInfoWrapper.lastlogin}
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                    <tr style="display:{!if(ccLst == null || ccLst.size == 0,'','none')}">
+                                                        <td colspan="5" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                            Number records to display.
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <div style="text-align:center;">
+                                        <apex:commandButton action="{!cancel}" value="Go Back" styleClass="slds-button slds-button_brand" />
+                                    </div>
+                                </apex:outputPanel>
+                                <!-- Preview Email Body end-->
+                                <!-- Send Mass Email Body start-->
+                                <apex:outputPanel rendered="{!!isPreview}" layout="block">
+                                    <apex:pageMessages />
+                                    <apex:outputPanel id="opStartMassEmail" layout="block" style="text-align:Center;">
+                                        <apex:commandButton value="Start Mass Email Batch NOW" status="startBatchConfirmationMsg"  action="{!startBatch}" 
+                                                reRender="jobs,opStartMassEmail,error" rendered="{!showStartBatchButton}" styleClass="slds-button slds-button_destructive" /> 
+                                        <apex:commandButton action="{!cancel}" value="Go Back" styleClass="slds-button slds-button_brand" /><br/>
+                                        <apex:outputText rendered="{!showStartBatchButton}">
+                                            <div style="color:red;margin-top:10px;margin-bottom:10px;">CAUTION: This action will initiate the batch job to send out email to all the recipients selected below.</div>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!(!showConfirmBatchButton && !showStartBatchButton && !hasErrors) }">
+                                            <div style="margin-top:10px;margin-bottom:10px;color:green;font-weight:bold;">Mass Email Batch Initiated. To view email activity records, click on 'Reports' tab and run 'All Activity Records' report from folder 'CA Program Misc. Reports'.</div>
+                                        </apex:outputText>
+                                        <apex:actionStatus id="startBatchConfirmationMsg" >
+                                            <apex:facet name="start" >
+                                                <img src="/img/loading.gif" />                    
+                                            </apex:facet>
+                                        </apex:actionStatus>
+                                    </apex:outputPanel>
+                                    <!--<apex:outputPanel id="opStartMassEmailBatchConfirmation" layout="block">
+                                        <br/>
+                                        <apex:outputText rendered="{!showConfirmBatchButton}">This action will initiate the batch job to send out email to all the recipients selected below. Are you sure you want to continue with this action?</apex:outputText>
+                                        <br/>
+                                        <apex:commandButton value="Yes" action="{!startBatch}" status="startBatchProcess" rendered="{!showConfirmBatchButton }"  
+                                            reRender="jobs,error,massEmailSection" styleClass="slds-button slds-button_destructive" /> 
+                                        <apex:actionStatus id="startBatchProcess" >
+                                            <apex:facet name="start" >
+                                                <img src="/img/loading.gif" />                    
+                                            </apex:facet>
+                                        </apex:actionStatus>
+                                        <apex:outputText rendered="{!(!showConfirmBatchButton && !showStartBatchButton && !hasErrors) }">
+                                            Mass Email Batch Initiated. To view email activity records, click on 'Reports' tab and run 'All Activity Records' report from folder 'CA Program Misc. Reports'.
+                                        </apex:outputText>
+                                    </apex:outputPanel>-->
+                                    <apex:outputPanel layout="block" styleClass="slds-section slds-is-open">
+                                        <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;background-color:lightblue;padding-left:10px;">
+                                            To Recipients List
+                                        </h3>
+                                        <div aria-hidden="false" class="slds-section__content">
+                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th width="5%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);text-align:center;">
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-checkbox">
+                                                                        <apex:inputCheckbox selected="true" id="chkallTOList" onclick="updateToLstCheckboxes(this)"/>
+                                                                        <label class="slds-checkbox__label" for="{!$Component.chkallTOList}">
+                                                                            <span class="slds-checkbox_faux"></span>
+                                                                            <span class="slds-form-element__label"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <th width="20%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);">
+                                                            CA Owner
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            Full Name
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            Email
+                                                        </th>
+                                                        <th width="15%" scope="col">
+                                                            Is Community User Active?
+                                                        </th>
+                                                        <th width="20%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            Last Login
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <apex:repeat value="{!toLst}" var="displayToInfoWrapper">
+                                                        <tr>
+                                                            <td width="5%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);text-align:center;">
+                                                                <div class="slds-form-element">
+                                                                    <div class="slds-form-element__control">
+                                                                        <div class="slds-checkbox">
+                                                                            <apex:inputCheckbox selected="true" value="{!displayToInfoWrapper.selected}" id="toLstChkBox"/>
+                                                                            <label class="slds-checkbox__label" for="{!$Component.toLstChkBox}">
+                                                                                <span class="slds-checkbox_faux"></span>
+                                                                                <span class="slds-form-element__label"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                {!displayToInfoWrapper.ownername}
+                                                            </td>
+                                                            <td>
+                                                                {!displayToInfoWrapper.fullname}
+                                                            </td>
+                                                            <td>
+                                                                {!displayToInfoWrapper.email}
+                                                            </td>
+                                                            <td>
+                                                                <apex:outputPanel rendered="{!displayToInfoWrapper.IsCommunityUserActive}" styleClass="slds-icon_container slds-icon__svg--default">
+                                                                    <svg class="slds-icon slds-icon-text-default" style="width:1rem;height:1rem;" aria-hidden="true">
+                                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#check")}"></use>
+                                                                    </svg>
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                            <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                                {!displayToInfoWrapper.lastlogin}
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                    <tr style="display:{!if(toLst == null || toLst.size == 0,'','none')}">
+                                                        <td colspan="6" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                            Number records to display.
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="block" styleClass="slds-section slds-is-open" style="margin-top:10px;">
+                                        <h3 class="slds-section__title slds-theme_shade" style="color: black;font-size:14px;background-color:lightblue;padding-left:10px;">
+                                            CC Recipients List
+                                        </h3>
+                                        <div aria-hidden="false" class="slds-section__content">
+                                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                                <thead>
+                                                    <tr class="slds-line-height_reset">
+                                                        <th width="5%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);text-align:center;">
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element__control">
+                                                                    <div class="slds-checkbox">
+                                                                        <apex:inputCheckbox selected="true" id="chkallCCList" onclick="updateCCLstCheckboxes(this)"/>
+                                                                        <label class="slds-checkbox__label" for="{!$Component.chkallCCList}">
+                                                                            <span class="slds-checkbox_faux"></span>
+                                                                            <span class="slds-form-element__label"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            CA Owner
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            Full Name
+                                                        </th>
+                                                        <th width="20%" scope="col">
+                                                            Email
+                                                        </th>
+                                                        <th width="15%" scope="col">
+                                                            Is Community User Active?
+                                                        </th>
+                                                        <th width="20%" scope="col" style="border-right: 1px solid rgb(221, 219, 218);">
+                                                            Last Login
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <apex:repeat value="{!ccLst}" var="displayToInfoWrapper">
+                                                        <tr>
+                                                            <td width="5%" scope="col" style="border-left: 1px solid rgb(221, 219, 218);text-align:center;">
+                                                                <div class="slds-form-element">
+                                                                    <div class="slds-form-element__control">
+                                                                        <div class="slds-checkbox">
+                                                                            <apex:inputCheckbox selected="true" value="{!displayToInfoWrapper.selected}" id="ccLstChkBox" />
+                                                                            <label class="slds-checkbox__label" for="{!$Component.ccLstChkBox}">
+                                                                                <span class="slds-checkbox_faux"></span>
+                                                                                <span class="slds-form-element__label"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                {!displayToInfoWrapper.ownername}
+                                                            </td>
+                                                            <td>
+                                                                {!displayToInfoWrapper.fullname}
+                                                            </td>
+                                                            <td>
+                                                                {!displayToInfoWrapper.email}
+                                                            </td>
+                                                            <td>
+                                                                <apex:outputPanel rendered="{!displayToInfoWrapper.IsCommunityUserActive}" styleClass="slds-icon_container slds-icon__svg--default">
+                                                                    <svg class="slds-icon slds-icon-text-default" style="width:1rem;height:1rem;" aria-hidden="true">
+                                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Asset.SLDS, "/assets/icons/utility-sprite/svg/symbols.svg#check")}"></use>
+                                                                    </svg>
+                                                                </apex:outputPanel>
+                                                            </td>
+                                                            <td style="border-right: 1px solid rgb(221, 219, 218);">
+                                                                {!displayToInfoWrapper.lastlogin}
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                    <tr style="display:{!if(ccLst == null || ccLst.size == 0,'','none')}">
+                                                        <td colspan="6" style="border-left: 1px solid rgb(221, 219, 218);border-right: 1px solid rgb(221, 219, 218);">
+                                                            Number records to display.
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                <!-- Send Mass Email Body end-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    function updateToLstCheckboxes(obj){
+                        var inputCheckBox = obj;
+                        var inputs = document.getElementsByTagName("input"); 
+                        for(var i = 0; i < inputs.length; i++){
+                            if(inputs[i].type == "checkbox" && inputs[i].id.indexOf("toLstChkBox") > -1){   
+                                if(obj.checked){  
+                                    inputs[i].checked = true; 
+                                } else {
+                                    inputs[i].checked = false; 
+                                }
+                            } 
+                         }
+                    }   
+                    function updateCCLstCheckboxes(obj){
+                        var inputCheckBox = obj;
+                        var inputs = document.getElementsByTagName("input"); 
+                        for(var i = 0; i < inputs.length; i++){
+                            if(inputs[i].type == "checkbox" && inputs[i].id.indexOf("ccLstChkBox") > -1){   
+                                if(obj.checked){  
+                                    inputs[i].checked = true; 
+                                } else {
+                                    inputs[i].checked = false; 
+                                }
+                            } 
+                        }
+                    }  
+                    $(document).ready(function(){
+                        overridePageMessages();
+                    });
+                    function overridePageMessages(){    
+                        var textureEffect = '';
+                        //Uncomment below line for texture effect on page messages
+                        textureEffect = 'slds-theme--alert-texture';
+                                     
+                        $('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);          
+                        $('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);    
+                        $('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+                        $('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);    
+                                         
+                        $('.errorM3').removeClass('errorM3'); 
+                        $('.confirmM3').removeClass('confirmM3'); 
+                        $('.infoM3').removeClass('infoM3');   
+                        $('.warningM3').removeClass('warningM3'); 
+                        $('.btnTempClickLeftclass').trigger('click'); 
+                    }
+                </script>
+                <apex:outputPanel rendered="{!!isPreview}" layout="block">
+                    <c:BatchJobs id="jobs" numberOfJob="10"/>
+                </apex:outputPanel>
+            </apex:form>
+        </body>
+    </html>
+    
+ 
+    
+    <!--<apex:pageMessages rendered="{!isPreview}" />
+      
+    <apex:form rendered="{!isPreview}">
+        <br/>
+        <apex:commandButton action="{!cancel}" value="Go Back"  />
+        <br/>
+        <br/>
+        <apex:pageBlock title="To List - Preview">
+        <apex:pageBlockTable value="{!toLst}" var="displayToInfoWrapper">
+        <apex:column value="{!displayToInfoWrapper.ownername}">
+        <apex:facet name="header" > Owner Name </apex:facet> </apex:column>
+        
+        <apex:column value="{!displayToInfoWrapper.fullname}">
+        <apex:facet name="header" > Full Name </apex:facet> </apex:column>
+        <apex:column value="{!displayToInfoWrapper.email}">
+        <apex:facet name="header" > Email </apex:facet> </apex:column>
+        <apex:column >
+        <apex:facet name="header" > Is Community User Active?</apex:facet> 
+        <apex:inputCheckbox disabled="true" value="{!displayToInfoWrapper.IsCommunityUserActive}" />
+        </apex:column>
+        <apex:column value="{!displayToInfoWrapper.LastLogin}">
+        <apex:facet name="header" > Last Login</apex:facet> 
+        </apex:column>
+        </apex:pageBlockTable>
+        </apex:pageBlock>
+        <apex:pageBlock title="CC List - Preview">
+        <apex:pageBlockTable value="{!ccLst}" var="displayCCInfoWrapper">
+        <apex:column value="{!displayCCInfoWrapper.ownername}">
+        <apex:facet name="header" > Owner Name </apex:facet> </apex:column>
+        
+        <apex:column value="{!displayCCInfoWrapper.fullname}">
+        <apex:facet name="header" > Full Name </apex:facet> </apex:column>
+        <apex:column value="{!displayCCInfoWrapper.email}">
+        <apex:facet name="header" > Email </apex:facet> </apex:column>
+        <apex:column >
+        <apex:facet name="header" > Is Community User Active?</apex:facet> 
+        <apex:inputCheckbox disabled="true" value="{!displayCCInfoWrapper.IsCommunityUserActive}" />
+        </apex:column>
+        <apex:column value="{!displayCCInfoWrapper.LastLogin}">
+        <apex:facet name="header" > Last Login</apex:facet> 
+        </apex:column>
+        </apex:pageBlockTable>
+        </apex:pageBlock>
+        
+        
+        
+        </apex:form>
+        
+        <apex:sectionHeader title="Run Mass Email Batch Job" rendered="{!!isPreview}" id="massEmailSection"/>
+        
+        <apex:pageMessages rendered="{!!isPreview}"/>
+        
+        
+        <apex:form rendered="{!!isPreview}" id="jobs">
+        
+        <br/>
+        
+        <apex:pageBlock id="idMassEmailBatch" mode="edit">
+        
+        
+        <div align="left" draggable="false" >
+        <br/>
+        <apex:commandButton value="Start Mass Email Batch" status="startBatchConfirmationMsg"  action="{!startBatchConfirmation}" rendered="{!showStartBatchButton }"  reRender="jobs,error" /> 
+        <apex:actionStatus id="startBatchConfirmationMsg" >
+        <apex:facet name="start" >
+        <img src="/img/loading.gif" />                    
+        </apex:facet>
+        </apex:actionStatus>
+        </div>
+        <div align="left" draggable="false" >
+        <apex:outputText rendered="{!showConfirmBatchButton }">This action will initiate the batch job to send out email to all the recipients selected below. Are you sure you want to continue with this action?</apex:outputText>
+        
+        <br/><apex:commandButton value="Yes" action="{!startBatch}" status="startBatchProcess" rendered="{!showConfirmBatchButton }"  reRender="jobs,error,massEmailSection" /> 
+        <apex:actionStatus id="startBatchProcess" >
+        <apex:facet name="start" >
+        <img src="/img/loading.gif" />                    
+        </apex:facet>
+        </apex:actionStatus>
+        <apex:outputText rendered="{!(!showConfirmBatchButton && !showStartBatchButton && !hasErrors) }">
+        Mass Email Batch Initiated. To view email activity records, click on 'Reports' tab and run 'All Activity Records' report from folder 'CA Program Misc. Reports'.
+        </apex:outputText>
+        </div>
+        <br/>        
+        
+        <apex:commandButton action="{!cancel}" value="Go Back"  />
+        <br/> <br/>
+        <apex:pageBlock id="block1" title="{!toListPBTitle}"  >   
+        
+        <apex:inputCheckbox label="Check/Uncheck All" title="Check/Uncheck All" selected="true"  onclick="updateToLstCheckboxes(this)"/>
+        <apex:outputText > <font color="blue"> Select/deselect email addresses before clicking on 'Start Mass Email Batch' button. Click on 'Go Back' if you do not want to send mass emails. </font></apex:outputText>
+        
+        <apex:pageBlockTable value="{!toLst}" var="displayToInfoWrapper">
+        <apex:column >
+        
+        <apex:inputCheckbox id="toLstChkBox"  value="{!displayToInfoWrapper.selected}"/>
+        </apex:column>
+        
+        <apex:column value="{!displayToInfoWrapper.ownername}">
+        <apex:facet name="header" > Owner Name </apex:facet> </apex:column>
+        
+        <apex:column value="{!displayToInfoWrapper.fullname}">
+        <apex:facet name="header" > Full Name </apex:facet> </apex:column>
+        <apex:column value="{!displayToInfoWrapper.email}">
+        <apex:facet name="header" > Email </apex:facet> </apex:column>
+        <apex:column >
+        <apex:facet name="header" > Is Community User Active?</apex:facet> 
+        <apex:inputCheckbox disabled="true" value="{!displayToInfoWrapper.IsCommunityUserActive}" />
+        </apex:column>
+        <apex:column value="{!displayToInfoWrapper.LastLogin}">
+        <apex:facet name="header" > Last Login</apex:facet> 
+        </apex:column>
+        </apex:pageBlockTable>
+        </apex:pageBlock> 
+        <apex:pageBlock id="block2" title="{!ccListPBTitle}"  >  
+        <apex:inputCheckbox label="Check/Uncheck All" title="Check/Uncheck All" selected="true"  onclick="updateCCLstCheckboxes(this)"/>
+        <apex:outputText > <font color="blue"> Select/deselect email addresses before clicking on 'Start Mass Email Batch' button. Click on 'Go Back' if you do not want to send mass emails. </font></apex:outputText>
+        
+        <apex:pageBlockTable value="{!ccLst}" var="displayCCInfoWrapper">
+        <apex:column >
+        
+        <apex:inputCheckbox id="ccLstChkBox" label="ccLstChkBox" value="{!displayCCInfoWrapper.selected}"/>
+        </apex:column>
+        <apex:column value="{!displayCCInfoWrapper.ownername}">
+        <apex:facet name="header" > Owner Name </apex:facet> </apex:column>
+        
+        <apex:column value="{!displayCCInfoWrapper.fullname}">
+        <apex:facet name="header" > Full Name </apex:facet> </apex:column>
+        <apex:column value="{!displayCCInfoWrapper.email}">
+        <apex:facet name="header" > Email </apex:facet> </apex:column>
+        <apex:column >
+        <apex:facet name="header" > Is Community User Active?</apex:facet> 
+        <apex:inputCheckbox disabled="true" value="{!displayCCInfoWrapper.IsCommunityUserActive}" />
+        </apex:column>
+        <apex:column value="{!displayCCInfoWrapper.LastLogin}">
+        <apex:facet name="header" > Last Login</apex:facet> </apex:column>
+        </apex:pageBlockTable>
+        
+        </apex:pageBlock>
+        <br/>    
+        </apex:pageBlock>-->
+</apex:page>

@@ -1,0 +1,344 @@
+<apex:page standardController="Case" extensions="SyncAuditUpdateOnRootFromCaseController" cache="false" >
+
+
+<apex:sectionHeader title="" subtitle="Sync audit info from Root Case to Root Certificate Record"/>
+    <apex:outputPanel id="opMainCAOwnerSync">
+        <apex:pageBlock title="CA Owner Fields To Be Synced" id="pbCAOwner" rendered="{!isCWOwnerSync && isRequestStatusDataVerified}">
+            <apex:pageBlockSection columns="2">
+               <apex:outputText label=" " value="(Source) Case Fields"  style="color:red;font-weight:bold" />
+               <apex:outputText label=" " value="(Target) CA Owner Fields" style="color:red;font-weight:bold" />
+               
+               <apex:outputText label="Recognized CAA Domains" value="{!caseDetailsSo.Recognized_CAA_Domains__c}" rendered="{!(caseDetailsSo.Recognized_CAA_Domains__c != null)}" style="{!IF (caseDetailsSo.Recognized_CAA_Domains__c != caseDetailsSo.Account.Recognized_CAA_Domains__c,'color:blue','')}"/>
+               <apex:outputText label="Recognized CAA Domains" value="{!caseDetailsSo.Account.Recognized_CAA_Domains__c}" rendered="{!(caseDetailsSo.Recognized_CAA_Domains__c != null)}"  style="{!IF (caseDetailsSo.Recognized_CAA_Domains__c != caseDetailsSo.Account.Recognized_CAA_Domains__c,'color:blue','')}"/>
+          
+               <apex:outputText label="Problem Reporting Mechanism" value="{!caseDetailsSo.Problem_Reporting_Mechanism__c}" rendered="{!(caseDetailsSo.Problem_Reporting_Mechanism__c != null)}" style="{!IF (caseDetailsSo.Problem_Reporting_Mechanism__c != caseDetailsSo.Account.Problem_Reporting_Mechanism__c,'color:blue','')}"/>
+               <apex:outputText label="Problem Reporting Mechanism" value="{!caseDetailsSo.Account.Problem_Reporting_Mechanism__c}" rendered="{!(caseDetailsSo.Problem_Reporting_Mechanism__c != null)}" style="{!IF (caseDetailsSo.Problem_Reporting_Mechanism__c != caseDetailsSo.Account.Problem_Reporting_Mechanism__c,'color:blue','')}"/> 
+               
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:outputPanel>
+    <apex:outputPanel id="opMainRootSync">
+        <apex:pageBlock title="Audit Fields To Be Synced" id="pbHeader" rendered="{!AND(isRequestStatusDataVerified, isMoreRootCasesAvailable, !isCWOwnerSync)}">
+             
+             <!--<apex:pageBlockSection columns="1">        
+               <apex:outputText label="WIP... " value="{!rootCaseSO.Name}"  style="color:red;font-weight:bold" />
+              </apex:pageBlockSection> -->
+               
+             <apex:pageBlockSection columns="2">
+      
+               <apex:outputText label=" " value="(Source) Case/Root Case Fields"  style="color:red;font-weight:bold" />
+               <apex:outputText label=" " value="(Target) Root Certificate Fields" style="color:red;font-weight:bold" />
+      
+               <apex:outputText label="Root Certificate Name" value="{!rootCaseSO.Root_Certificate_Name_Existing__r.Name}" style="{!IF (rootCaseSO.Root_Certificate_Name_Existing__r.Name != rootAccountSO.name,'color:blue','')}"/>
+               <apex:outputText label="Root Certificate Name" value="{!rootAccountSO.Name}" style="{!IF (rootCaseSO.Root_Certificate_Name_Existing__r.Name != rootAccountSO.name,'color:blue','')}"/>
+          
+               <apex:outputText label="SHA-256 Fingerprint" value="{!rootCaseSO.SHA_256_Fingerprint__c}" style="{!IF (rootCaseSO.SHA_256_Fingerprint__c != rootAccountSO.SHA_256_Fingerprint__c,'color:blue','')}"/>
+               <apex:outputText label="SHA-256 Fingerprint" value="{!rootAccountSO.SHA_256_Fingerprint__c}" style="{!IF (rootCaseSO.SHA_256_Fingerprint__c != rootAccountSO.SHA_256_Fingerprint__c,'color:blue','')}"/> 
+                
+               <!------------- Standard Audit Fields ------------->           
+                   
+                   <apex:outputText label="Standard Audit" value="{!caseDetailsSO.Standard_Audit_Statement_Link__c}" style="{!IF(caseDetailsSO.Standard_Audit_Statement_Link__c != rootAccountSO.Standard_Audit__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}"/>
+                   <apex:outputText label="Standard Audit" value="{!rootAccountSO.Standard_Audit__c}" style="{!IF (caseDetailsSO.Standard_Audit_Statement_Link__c != rootAccountSO.Standard_Audit__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}"/>            
+        
+                   <apex:outputText label="Standard Audit Type" value="{!caseDetailsSO.Standard_Audit_Type__c}" style="{!IF (caseDetailsSO.Standard_Audit_Type__c != rootAccountSO.Standard_Audit_Type__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}"/>
+                   <apex:outputText label="Standard Audit Type" value="{!rootAccountSO.Standard_Audit_Type__c}" style="{!IF (caseDetailsSO.Standard_Audit_Type__c != rootAccountSO.Standard_Audit_Type__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}"/>
+         
+                   <apex:outputText label="Standard Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF(caseDetailsSO.Standard_Audit_Statement_Date__c != rootAccountSO.Standard_Audit_Statement_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}"> 
+                          <apex:param value="{!caseDetailsSO.Standard_Audit_Statement_Date__c}" /> 
+                   </apex:outputText>      
+                   <apex:outputText label="Standard Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF(caseDetailsSO.Standard_Audit_Statement_Date__c != rootAccountSO.Standard_Audit_Statement_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}"> 
+                          <apex:param value="{!rootAccountSO.Standard_Audit_Statement_Date__c}" /> 
+                   </apex:outputText>  
+                    
+                   <apex:outputText label="Standard Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF(caseDetailsSO.Standard_Audit_Period_Start_Date__c != rootAccountSO.Standard_Audit_Period_Start_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.Standard_Audit_Period_Start_Date__c}" /> 
+                   </apex:outputText> 
+                   <apex:outputText label="Standard Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF(caseDetailsSO.Standard_Audit_Period_Start_Date__c != rootAccountSO.Standard_Audit_Period_Start_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.Standard_Audit_Period_Start_Date__c}" /> 
+                   </apex:outputText>  
+                              
+                   <apex:outputText label="Standard Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF(caseDetailsSO.Standard_Audit_Period_End_Date__c != rootAccountSO.Standard_Audit_Period_End_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.Standard_Audit_Period_End_Date__c}" /> 
+                   </apex:outputText> 
+                   <apex:outputText label="Standard Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF(caseDetailsSO.Standard_Audit_Period_End_Date__c != rootAccountSO.Standard_Audit_Period_End_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}"> 
+                          <apex:param value="{!rootAccountSO.Standard_Audit_Period_End_Date__c}" /> 
+                   </apex:outputText>
+                   
+                   <apex:outputText label="Standard Deviation" value="{!caseDetailsSO.Standard_Deviation__c}" style="{!IF (caseDetailsSO.Standard_Deviation__c != rootAccountSO.Standard_Deviation__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}"/>
+                   <apex:outputText label="Standard Deviation" value="{!rootAccountSO.Standard_Deviation__c}" style="{!IF (caseDetailsSO.Standard_Deviation__c != rootAccountSO.Standard_Deviation__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Standard_Audit__c == True}"/>
+                                     
+                   
+               <!------------- Code Signing Audit Fields ------------->   
+                   <apex:outputText label="Code Signing Audit" value="{!caseDetailsSO.Code_Signing_Audit_Statement_Link__c}" style="{!IF (caseDetailsSO.Code_Signing_Audit_Statement_Link__c != rootAccountSO.Code_Signing_Audit__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}"/>
+                   <apex:outputText label="Code Signing Audit" value="{!rootAccountSO.Code_Signing_Audit__c}" style="{!IF (caseDetailsSO.Code_Signing_Audit_Statement_Link__c != rootAccountSO.Code_Signing_Audit__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}"/>
+        
+                   <apex:outputText label="Code Signing Audit Type" value="{!caseDetailsSO.Code_Signing_Audit_Type__c}" style="{!IF (caseDetailsSO.Code_Signing_Audit_Type__c != rootAccountSO.Code_Signing_Audit_Type__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}"/>
+                   <apex:outputText label="Code Signing Audit Type" value="{!rootAccountSO.Code_Signing_Audit_Type__c}" style="{!IF (caseDetailsSO.Code_Signing_Audit_Type__c != rootAccountSO.Code_Signing_Audit_Type__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}"/>
+        
+                   <apex:outputText label="Code Signing Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.Code_Signing_Audit_Statement_Date__c != rootAccountSO.Code_Signing_Audit_Statement_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.Code_Signing_Audit_Statement_Date__c}" /> 
+                   </apex:outputText>             
+                   <apex:outputText label="Code Signing Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.Code_Signing_Audit_Statement_Date__c != rootAccountSO.Code_Signing_Audit_Statement_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.Code_Signing_Audit_Statement_Date__c}" /> 
+                   </apex:outputText>  
+        
+                   <apex:outputText label="Code Signing Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.Code_Signing_Audit_Period_Start_Date__c != rootAccountSO.Code_Signing_Audit_Period_Start_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.Code_Signing_Audit_Period_Start_Date__c}" /> 
+                   </apex:outputText> 
+                   <apex:outputText label="Code Signing Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.Code_Signing_Audit_Period_Start_Date__c != rootAccountSO.Code_Signing_Audit_Period_Start_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.Code_Signing_Audit_Period_Start_Date__c}" /> 
+                   </apex:outputText>  
+                              
+                   <apex:outputText label="Code Signing Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.Code_Signing_Audit_Period_End_Date__c != rootAccountSO.Code_Signing_Audit_Period_End_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.Code_Signing_Audit_Period_End_Date__c}" /> 
+                   </apex:outputText> 
+                   <apex:outputText label="Code Signing Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.Code_Signing_Audit_Period_End_Date__c != rootAccountSO.Code_Signing_Audit_Period_End_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.Code_Signing_Audit_Period_End_Date__c}" /> 
+                   </apex:outputText> 
+
+                   <apex:outputText label="Code Signing Deviation" value="{!caseDetailsSO.Code_Signing_Deviation__c}" style="{!IF (caseDetailsSO.Code_Signing_Deviation__c != rootAccountSO.Code_Signing_Deviation__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}"/>
+                   <apex:outputText label="Code Signing Deviation" value="{!rootAccountSO.Code_Signing_Deviation__c}" style="{!IF (caseDetailsSO.Code_Signing_Deviation__c != rootAccountSO.Code_Signing_Deviation__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_Code_Signing_Audit__c == True}"/>
+                
+                      
+               <!------------- BR Audit Fields ------------->   
+                   <apex:outputText label="BR Audit" value="{!caseDetailsSO.BR_Audit_Statement_Link__c}" style="{!IF (caseDetailsSO.BR_Audit_Statement_Link__c != rootAccountSO.BR_Audit__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}"/>
+                   <apex:outputText label="BR Audit" value="{!rootAccountSO.BR_Audit__c}" style="{!IF (caseDetailsSO.BR_Audit_Statement_Link__c != rootAccountSO.BR_Audit__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}"/>
+        
+                   <apex:outputText label="BR Audit Type" value="{!caseDetailsSO.BR_Audit_Type__c}" style="{!IF (caseDetailsSO.BR_Audit_Type__c != rootAccountSO.BR_Audit_Type__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}"/>
+                   <apex:outputText label="BR Audit Type" value="{!rootAccountSO.BR_Audit_Type__c}" style="{!IF (caseDetailsSO.BR_Audit_Type__c != rootAccountSO.BR_Audit_Type__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}"/>
+        
+                   <apex:outputText label="BR Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.BR_Audit_Statement_Date__c != rootAccountSO.BR_Audit_Statement_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.BR_Audit_Statement_Date__c}" /> 
+                   </apex:outputText>             
+                   <apex:outputText label="BR Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.BR_Audit_Statement_Date__c != rootAccountSO.BR_Audit_Statement_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.BR_Audit_Statement_Date__c}" /> 
+                   </apex:outputText>  
+        
+                   <apex:outputText label="BR Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.BR_Audit_Period_Start_Date__c != rootAccountSO.BR_Audit_Period_Start_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.BR_Audit_Period_Start_Date__c}" /> 
+                   </apex:outputText> 
+                   <apex:outputText label="BR Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.BR_Audit_Period_Start_Date__c != rootAccountSO.BR_Audit_Period_Start_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.BR_Audit_Period_Start_Date__c}" /> 
+                   </apex:outputText>  
+                              
+                   <apex:outputText label="BR Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.BR_Audit_Period_End_Date__c != rootAccountSO.BR_Audit_Period_End_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.BR_Audit_Period_End_Date__c}" /> 
+                   </apex:outputText> 
+                   <apex:outputText label="BR Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.BR_Audit_Period_End_Date__c != rootAccountSO.BR_Audit_Period_End_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.BR_Audit_Period_End_Date__c}" /> 
+                   </apex:outputText> 
+
+                   <apex:outputText label="BR Deviation" value="{!caseDetailsSO.BR_Deviation__c}" style="{!IF (caseDetailsSO.BR_Deviation__c != rootAccountSO.BR_Deviation__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}"/>
+                   <apex:outputText label="BR Deviation" value="{!rootAccountSO.BR_Deviation__c}" style="{!IF (caseDetailsSO.BR_Deviation__c != rootAccountSO.BR_Deviation__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_BR_Audit__c == True}"/>
+                      
+               <!------------- EV SSL Audit Fields ------------->       
+                      
+                              
+                   <apex:outputText label="EV SSL Audit" value="{!caseDetailsSO.EV_Audit_Statement_Link__c}" style="{!IF (caseDetailsSO.EV_Audit_Statement_Link__c != rootAccountSO.EV_Audit__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}"/>
+                   <apex:outputText label="EV SSL Audit" value="{!rootAccountSO.EV_Audit__c}" style="{!IF (caseDetailsSO.EV_Audit_Statement_Link__c != rootAccountSO.EV_Audit__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}"/>
+                     
+                   <apex:outputText label="EV SSL Audit Type" value="{!caseDetailsSO.EV_Audit_Type__c}" style="{!IF (caseDetailsSO.EV_Audit_Type__c != rootAccountSO.EV_Audit_Type__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}"/>
+                   <apex:outputText label="EV SSL Audit Type" value="{!rootAccountSO.EV_Audit_Type__c}" style="{!IF (caseDetailsSO.EV_Audit_Type__c != rootAccountSO.EV_Audit_Type__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}"/>
+        
+                   <apex:outputText label="EV SSL Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Audit_Statement_Date__c != rootAccountSO.EV_Audit_Statement_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.EV_Audit_Statement_Date__c}" /> 
+                   </apex:outputText>            
+                   <apex:outputText label="EV SSL Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Audit_Statement_Date__c != rootAccountSO.EV_Audit_Statement_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.EV_Audit_Statement_Date__c}" /> 
+                   </apex:outputText> 
+        
+                   <apex:outputText label="EV SSL Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Audit_Period_Start_Date__c != rootAccountSO.EV_Audit_Period_Start_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.EV_Audit_Period_Start_Date__c}" /> 
+                   </apex:outputText> 
+                   <apex:outputText label="EV SSL Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Audit_Period_Start_Date__c != rootAccountSO.EV_Audit_Period_Start_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.EV_Audit_Period_Start_Date__c}" /> 
+                   </apex:outputText>  
+                                         
+                   <apex:outputText label="EV SSL Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Audit_Period_End_Date__c != rootAccountSO.EV_Audit_Period_End_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.EV_Audit_Period_End_Date__c}" /> 
+                   </apex:outputText> 
+                   <apex:outputText label="EV SSL Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Audit_Period_End_Date__c != rootAccountSO.EV_Audit_Period_End_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.EV_Audit_Period_End_Date__c}" /> 
+                   </apex:outputText> 
+                    
+                   <apex:outputText label="EV SSL Deviation" value="{!caseDetailsSO.EV_SSL_Deviation__c}" style="{!IF (caseDetailsSO.EV_SSL_Deviation__c != rootAccountSO.EV_SSL_Deviation__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}"/>
+                   <apex:outputText label="EV SSL Deviation" value="{!rootAccountSO.EV_SSL_Deviation__c}" style="{!IF (caseDetailsSO.EV_SSL_Deviation__c != rootAccountSO.EV_SSL_Deviation__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Audit__c == True}"/>
+ 
+                   
+               <!------------- EV Code Signing Audit Fields ------------->       
+                      
+                              
+                   <apex:outputText label="EV Code Signing Audit" value="{!caseDetailsSO.EV_Code_Signing_Audit_Statement_Link__c}" style="{!IF (caseDetailsSO.EV_Code_Signing_Audit_Statement_Link__c != rootAccountSO.EV_Code_Signing_Audit__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}"/>
+                   <apex:outputText label="EV Code Signing Audit" value="{!rootAccountSO.EV_Code_Signing_Audit__c}" style="{!IF (caseDetailsSO.EV_Code_Signing_Audit_Statement_Link__c != rootAccountSO.EV_Code_Signing_Audit__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}"/>
+                     
+                   <apex:outputText label="EV Code Signing Audit Type" value="{!caseDetailsSO.EV_Code_Signing_Audit_Type__c}" style="{!IF (caseDetailsSO.EV_Code_Signing_Audit_Type__c != rootAccountSO.EV_Code_Signing_Audit_Type__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}"/>
+                   <apex:outputText label="EV Code Signing Audit Type" value="{!rootAccountSO.EV_Code_Signing_Audit_Type__c}" style="{!IF (caseDetailsSO.EV_Code_Signing_Audit_Type__c != rootAccountSO.EV_Code_Signing_Audit_Type__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}"/>
+        
+                   <apex:outputText label="EV Code Signing Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Code_Signing_Audit_Statement_Date__c != rootAccountSO.EV_Code_Signing_Audit_Statement_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.EV_Code_Signing_Audit_Statement_Date__c}" /> 
+                   </apex:outputText>            
+                   <apex:outputText label="EV Code Signing Audit Statement Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Code_Signing_Audit_Statement_Date__c != rootAccountSO.EV_Code_Signing_Audit_Statement_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.EV_Code_Signing_Audit_Statement_Date__c}" /> 
+                   </apex:outputText> 
+        
+                   <apex:outputText label="EV Code Signing Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Code_Signing_Audit_Period_Start_Date__c != rootAccountSO.EV_Code_Signing_Audit_Period_Start_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.EV_Code_Signing_Audit_Period_Start_Date__c}" /> 
+                   </apex:outputText> 
+                   <apex:outputText label="EV Code Signing Audit Period Start Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Code_Signing_Audit_Period_Start_Date__c != rootAccountSO.EV_Code_Signing_Audit_Period_Start_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.EV_Code_Signing_Audit_Period_Start_Date__c}" /> 
+                   </apex:outputText>  
+                                         
+                   <apex:outputText label="EV Code Signing Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Code_Signing_Audit_Period_End_Date__c != rootAccountSO.EV_Code_Signing_Audit_Period_End_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!caseDetailsSO.EV_Code_Signing_Audit_Period_End_Date__c}" /> 
+                   </apex:outputText> 
+                   <apex:outputText label="EV Code Signing Audit Period End Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.EV_Code_Signing_Audit_Period_End_Date__c != rootAccountSO.EV_Code_Signing_Audit_Period_End_Date__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}">
+                          <apex:param value="{!rootAccountSO.EV_Code_Signing_Audit_Period_End_Date__c}" /> 
+                   </apex:outputText>  
+
+                   <apex:outputText label="EV Code Signing Deviation" value="{!caseDetailsSO.EV_Code_Signing_Deviation__c}" style="{!IF (caseDetailsSO.EV_Code_Signing_Deviation__c != rootAccountSO.EV_Code_Signing_Deviation__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}"/>
+                   <apex:outputText label="EV Code Signing Deviation" value="{!rootAccountSO.EV_Code_Signing_Deviation__c}" style="{!IF (caseDetailsSO.EV_Code_Signing_Deviation__c != rootAccountSO.EV_Code_Signing_Deviation__c,'color:blue','')}" rendered="{!rootCaseSO.Apply_EV_Code_Signing_Audit__c == True}"/>
+                              
+               <!------------- Auditor Info Fields -------------> 
+               
+               
+               <apex:outputText label="Auditor" value="{!caseDetailsSO.Auditor_New__r.Name}" style="{!IF (caseDetailsSO.Auditor_New__r.Name != rootAccountSO.Auditor_New__r.Name,'color:blue','')}"/>
+               <apex:outputText label="Auditor" value="{!rootAccountSO.Auditor_New__r.Name}" style="{!IF (caseDetailsSO.Auditor_New__r.Name != rootAccountSO.Auditor_New__r.Name,'color:blue','')}"/> 
+               
+               <apex:outputText label="Auditor Location" value="{!caseDetailsSO.Auditor_Location_New__r.Name}" style="{!IF (caseDetailsSO.Auditor_Location_New__r.Name != rootAccountSO.Auditor_Location_New__r.Name,'color:blue','')}"/>
+               <apex:outputText label="Auditor Location" value="{!rootAccountSO.Auditor_Location_New__r.Name}" style="{!IF (caseDetailsSO.Auditor_Location_New__r.Name != rootAccountSO.Auditor_Location_New__r.Name,'color:blue','')}"/> 
+                
+               <!--<apex:outputText label="Management Assertions By" value="{!caseDetailsSO.Management_Assertions_By__c}" style="{!IF (caseDetailsSO.Management_Assertions_By__c != rootAccountSO.Management_Assertions_By__c,'color:blue','')}"/>
+               <apex:outputText label="Management Assertions By" value="{!rootAccountSO.Management_Assertions_By__c}" style="{!IF (caseDetailsSO.Management_Assertions_By__c != rootAccountSO.Management_Assertions_By__c,'color:blue','')}"/> -->
+                            
+               <!-- old auditor fields deprecated
+               <apex:outputText label="Auditor" value="{!caseDetailsSO.Auditor__c}" style="{!IF (caseDetailsSO.Auditor__c != rootAccountSO.Auditor__c,'color:blue','')}"/>
+               <apex:outputText label="Auditor" value="{!rootAccountSO.Auditor__c}" style="{!IF (caseDetailsSO.Auditor__c != rootAccountSO.Auditor__c,'color:blue','')}"/> 
+    
+               <apex:outputText label="Auditor Website" value="{!caseDetailsSO.Auditor_Website__c}" style="{!IF (caseDetailsSO.Auditor_Website__c != rootAccountSO.Auditor_Website__c,'color:blue','')}"/>
+               <apex:outputText label="Auditor Website" value="{!rootAccountSO.Auditor_Website__c}" style="{!IF (caseDetailsSO.Auditor_Website__c != rootAccountSO.Auditor_Website__c,'color:blue','')}"/> 
+    
+               <apex:outputText label="Auditor Qualifications" value="{!caseDetailsSO.Auditor_Qualifications__c}" style="{!IF (caseDetailsSO.Auditor_Qualifications__c != rootAccountSO.Auditor_Qualifications__c,'color:blue','')}"/>
+               <apex:outputText label="Auditor Qualifications" value="{!rootAccountSO.Auditor_Qualifications__c}" style="{!IF (caseDetailsSO.Auditor_Qualifications__c != rootAccountSO.Auditor_Qualifications__c,'color:blue','')}"/> 
+               -->
+               
+               <!------------ Policies and Practices Information -------------> 
+               <!--Commented on 6th May 2020 as CP/CPS documentation moved in different object -->
+               <!--<apex:outputText label="Policy Documentation" value="{!caseDetailsSO.Policy_Documentation__c}" style="{!IF (caseDetailsSO.Policy_Documentation__c != rootAccountSO.Policy_Documentation__c,'color:blue','')}"/>
+               <apex:outputText label="Policy Documentation" value="{!rootAccountSO.Policy_Documentation__c}" style="{!IF (caseDetailsSO.Policy_Documentation__c != rootAccountSO.Policy_Documentation__c,'color:blue','')}"/> 
+               
+               <apex:outputText label="CA Document Repository" value="{!caseDetailsSO.CA_Document_Repository__c}" style="{!IF (caseDetailsSO.CA_Document_Repository__c != rootAccountSO.CA_Document_Repository__c,'color:blue','')}"/>
+               <apex:outputText label="CA Document Repository" value="{!rootAccountSO.CA_Document_Repository__c}" style="{!IF (caseDetailsSO.CA_Document_Repository__c != rootAccountSO.CA_Document_Repository__c,'color:blue','')}"/> 
+     
+               <apex:outputText label="Certificate Policy (Link)" value="{!caseDetailsSO.Certificate_Policy_Link__c}" style="{!IF (caseDetailsSO.Certificate_Policy_Link__c != rootAccountSO.Certificate_Policy_CP__c,'color:blue','')}"/>
+               <apex:outputText label="Certificate Policy (CP)" value="{!rootAccountSO.Certificate_Policy_CP__c}" style="{!IF (caseDetailsSO.Certificate_Policy_Link__c != rootAccountSO.Certificate_Policy_CP__c,'color:blue','')}"/>
+                                                                                                              
+               <apex:outputText label="Certification Practice Statement (Link)" value="{!caseDetailsSO.Certification_Practice_Statement_Link__c}" style="{!IF (caseDetailsSO.Certification_Practice_Statement_Link__c != rootAccountSO.Certification_Practice_Statement_CPS__c,'color:blue','')}"/>
+               <apex:outputText label="Certificate Policy (CPS)" value="{!rootAccountSO.Certification_Practice_Statement_CPS__c}" style="{!IF (caseDetailsSO.Certification_Practice_Statement_Link__c != rootAccountSO.Certification_Practice_Statement_CPS__c,'color:blue','')}"/>
+    
+               <apex:outputText label="CP/CPS Last Updated Date" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.CP_CPS_Last_Updated_Date__c != rootAccountSO.CP_CPS_Last_Updated_Date__c,'color:blue','')}"> 
+                      <apex:param value="{!caseDetailsSO.CP_CPS_Last_Updated_Date__c}" /> 
+               </apex:outputText> 
+               <apex:outputText label="CP/CPS Last Updated Dat" value="{0,date,MM/dd/yyyy}" style="{!IF (caseDetailsSO.CP_CPS_Last_Updated_Date__c != rootAccountSO.CP_CPS_Last_Updated_Date__c,'color:blue','')}"> 
+                      <apex:param value="{!rootAccountSO.CP_CPS_Last_Updated_Date__c}" /> 
+               </apex:outputText> --> 
+               
+               <!------------ Test Websites -------------> 
+               
+               <apex:outputText label="Test Website - Valid" value="{!rootCaseSO.Test_Website_Valid__c}" style="{!IF (rootCaseSO.Test_Website_Valid__c != rootAccountSO.Test_Website_Valid__c,'color:blue','')}"/>
+               <apex:outputText label="Test Website - Valid" value="{!rootAccountSO.Test_Website_Valid__c}" style="{!IF (rootCaseSO.Test_Website_Valid__c != rootAccountSO.Test_Website_Valid__c,'color:blue','')}"/> 
+    
+               <apex:outputText label="Test Website - Expired" value="{!rootCaseSO.Test_Website_Expired__c}" style="{!IF (rootCaseSO.Test_Website_Expired__c != rootAccountSO.Test_Website_Expired__c,'color:blue','')}"/>
+               <apex:outputText label="Test Website - Expired" value="{!rootAccountSO.Test_Website_Expired__c}" style="{!IF (rootCaseSO.Test_Website_Expired__c != rootAccountSO.Test_Website_Expired__c,'color:blue','')}"/> 
+    
+               <apex:outputText label="Test Website - Revoked" value="{!rootCaseSO.Test_Website_Revoked__c}" style="{!IF (rootCaseSO.Test_Website_Revoked__c != rootAccountSO.Test_Website_Revoked__c,'color:blue','')}"/>
+               <apex:outputText label="Test Website - Revoked" value="{!rootAccountSO.Test_Website_Revoked__c}" style="{!IF (rootCaseSO.Test_Website_Revoked__c != rootAccountSO.Test_Website_Revoked__c,'color:blue','')}"/> 
+                           
+            </apex:pageBlockSection>   
+    
+         </apex:pageBlock>
+     </apex:outputPanel>
+     <style>
+     .btn{ width:50px;}
+     </style>
+
+    <apex:form id="theFrm">
+        <apex:pageMessages ></apex:pageMessages>
+       <apex:pageBlock title="User Confirmation" rendered="{!isCWOwnerSync && !isRecordUpdated && isRequestStatusDataVerified && !isCPACanadaURLDoesntMatch}">
+            <apex:outputText value="Do you want to update the fields on the CA Owner?"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton value="Yes"  action="{!SyncCAOwner}" reRender="opMainRootSync,theFrm,opMainCAOwnerSync"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton value="No" action="{!cancelSyncCAOwner}" reRender="opMainRootSync,theFrm,opMainCAOwnerSync" />
+       </apex:pageBlock>
+       <apex:pageBlock title="Record Updated Successfully" rendered="{!AND(isCWOwnerSync ,isRecordUpdated,!isErrorFound, !isCPACanadaURLDoesntMatch)}" >
+          <apex:outputText value="Please click on the next button to continue"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:commandButton value="Next" action="{!nexttoRootCase}" reRender="opMainRootSync,theFrm,opMainCAOwnerSync"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       </apex:pageBlock>
+       <apex:pageBlock title="User Confirmation" id="userConfirm" rendered="{!AND(!isRecordUpdated, !isUpdateCancelled,isRequestStatusDataVerified, isDataVerified,!isErrorFound, !isCWOwnerSync, !isCPACanadaURLDoesntMatch)}">
+            <apex:outputText value="Do you want to update the fields on the Target Root Certificate?"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+            <apex:commandButton value="Yes" id="saveButton"  action="{!syncAccount}" reRender="theFrm,pbHeader,opMainRootSync"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--recordUpdated, userConfirm-->
+            <apex:commandButton value="No" id="cancelButton" action="{!cancelSyncAccount}" reRender="theFrm,opMainRootSync" /><!--reRender="updateCancelled, userConfirm"-->
+        </apex:pageBlock>
+        
+        <!-- Show next button when data is not verified -->
+        <apex:pageBlock title="Data is not verified" id="noSyncBlock" rendered="{!AND(!(isRecordUpdated || isUpdateCancelled), !isDataVerified, isMoreRootCasesAvailable, isRequestStatusDataVerified, !isCWOwnerSync, !isCPACanadaURLDoesntMatch)}">
+            <apex:outputText value="Data is not verified for this Root Case. Please click on next button."/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+            <apex:commandButton value="Next" id="nextBtn" action="{!next}" reRender="theFrm, pbHeader" /><!--reRender="updateCancelled, userConfirm"-->
+        </apex:pageBlock>        
+        
+       <apex:outputPanel id="GoBackWhenPolicyDocsNotSynced">     
+          <apex:pageBlock title="Cannot proceed to sync" rendered="{!!isPolicyDocSynced}">       
+              <apex:outputText value="Please sync all policy doc before proceeding with sync process."/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <apex:commandButton value="Back" id="redirectToCaseButton"  action="{!goBack}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </apex:pageBlock>
+       </apex:outputPanel> 
+      
+    <apex:outputPanel id="recordUpdated">        
+       <apex:pageBlock title="Record Updated Successfully" rendered="{!AND(isRecordUpdated,!isUpdateCancelled,isRequestStatusDataVerified, isMoreRootCasesAvailable, !isCWOwnerSync)}" >
+          <apex:outputText value="Please click on the next button to continue"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:commandButton value="Next" id="redirectToSyncRootButton" action="{!next}" reRender="theFrm, pbHeader"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       </apex:pageBlock>
+    </apex:outputPanel> 
+    
+     <apex:outputPanel id="updateCancelled">
+     
+       <apex:pageBlock title="Root certificate not updated" rendered="{!AND(!isRecordUpdated, isUpdateCancelled, isRequestStatusDataVerified, isMoreRootCasesAvailable)}">
+          <apex:outputText value="Please click on the button to view the next Root Case"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:commandButton value="Next" id="redirectToCaseButton" action="{!next}" reRender="theFrm, pbHeader"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       </apex:pageBlock>
+     </apex:outputPanel> 
+     
+     <apex:outputPanel id="errorfound">
+     
+       <apex:pageBlock title="Error occurred during sync process" rendered="{!isErrorFound}">
+          <apex:outputText value="Error occurred during sync process. Please click on the button to view the next Root Case"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:commandButton value="Next" id="redirectToCaseButton" action="{!next}" reRender="theFrm, pbHeader"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       </apex:pageBlock>
+     </apex:outputPanel> 
+     
+     <apex:pageBlock title="No more root cases to sync" rendered="{!!isMoreRootCasesAvailable && !isCWOwnerSync && isRequestStatusDataVerified}">
+            <apex:outputText value="Please click on the button to return to the Case"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <apex:commandButton action="{!goBack}" value="Back" id="redirectToRootCaseButton2" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </apex:pageBlock>
+         
+     <apex:outputPanel id="GoBackToCase">
+     
+       <apex:pageBlock title="Cannot proceed to sync" rendered="{!!isRequestStatusDataVerified && !isCPACanadaURLDoesntMatch}">
+       
+          <apex:outputText value="{!If(Case.Auditor_New__c == null || Case.Auditor_Location_New__c == null,'Fill in Auditor and Auditor Location fields before proceeding with sync process.',IF(Case.Request_Status__c == 'Complete', 'Sync process is already complete', 'Case Request Status is not Data Verified or Verification By Root Store. Please verify the Case and/or Root Cases data before running the sync process.'))}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <apex:commandButton value="Back" id="redirectToCaseButton"  action="{!goBack}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       </apex:pageBlock>
+     </apex:outputPanel> 
+     
+     <apex:outputPanel id="opCPACanadaURL">
+     
+       <apex:pageBlock title="Cannot proceed to sync" rendered="{!isCPACanadaURLDoesntMatch}">
+       
+          <apex:outputText escape="false" value="{!strCPACanadaURLDoesntMatch}"/> <br/>
+          <apex:commandButton value="Back" id="redirectToCaseButton"  action="{!goBack}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       </apex:pageBlock>
+     </apex:outputPanel> 
+     
+     </apex:form>
+     
+</apex:page>

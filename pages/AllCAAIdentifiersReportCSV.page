@@ -1,0 +1,5 @@
+<apex:page controller="AllCAAIdentifiersReportController" cache="true" expires="3600" showHeader="false" sidebar="false" standardStylesheets="false" contentType="text/csv#AllCAAIdentifiersReport.csv;charset=UTF-8" readOnly="true">"Recognized CAA Domains","CA Owner / Intermediate Certificate Name","Parent Name",
+<apex:repeat value="{!accountSoLst}" var="account">
+"{!account.Recognized_CAA_Domains__c}","{!account.Name}","{!account.Parent.Name}"
+</apex:repeat>
+</apex:page>
